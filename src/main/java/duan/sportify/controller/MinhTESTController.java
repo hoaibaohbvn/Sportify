@@ -1,5 +1,9 @@
 package duan.sportify.controller;
 
-public class MinhTESTController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
 
+public class MinhTESTController {
+	
 }
