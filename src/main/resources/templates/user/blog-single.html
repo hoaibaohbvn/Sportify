@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
@@ -48,7 +48,7 @@
     
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Sport<span>ify</span></a>
+	      <a class="navbar-brand" th:href="@{/}"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 	      <div class="order-lg-last btn-group">
           <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           	<span class="flaticon-shopping-bag"></span>
@@ -76,7 +76,7 @@
 				    		<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity: 01</span></p>
 				    	</div>
 				    </div>
-				    <a class="dropdown-item text-center btn-link d-block w-100" href="cart.html">
+				    <a class="dropdown-item text-center btn-link d-block w-100" th:href="@{/san}">
 				    	View All
 				    	<span class="ion-ios-arrow-round-forward"></span>
 				    </a>
@@ -89,21 +89,20 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Trang chủ</a></li>
-			  <li class="nav-item"><a href="san.html" class="nav-link">Sân</a></li>
-			  <li class="nav-item"><a href="doi.html" class="nav-link">Đội</a></li>
-			  <li class="nav-item"><a href="blog.html" class="nav-link">Giải đấu</a></li>
+			  <li class="nav-item"><a th:href="@{/san}" class="nav-link">Sân</a></li>
+			  <li class="nav-item"><a th:href="@{/doi}" class="nav-link">Đội</a></li>
+			  <li class="nav-item"><a th:href="@{/blog}" class="nav-link">Giải đấu</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cửa hàng</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="product.html">Products</a>
-                <a class="dropdown-item" href="product-single.html">Single Product</a>
-                <a class="dropdown-item" href="cart.html">Giỏ Hàng</a>
-                <a class="dropdown-item" href="checkout.html">Thanh toán</a>
+              	<a class="dropdown-item" th:href="@{/product}">Products</a>
+                <a class="dropdown-item" th:href="@{/product-single}">Single Product</a>
+                <a class="dropdown-item" th:href="@{/cart}">Giỏ Hàng</a>
+                <a class="dropdown-item" th:href="@{/checkout}">Thanh toán</a>
               </div>
             </li>
-			  <li class="nav-item"><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
+			  <li class="nav-item"><a th:href="@{/about}" class="nav-link">Về chúng tôi</a></li>
+	          <li class="nav-item"><a th:href="@{/contact}" class="nav-link">Liên hệ</a></li>
 	        </ul>
 	      </div>
 	    </div>
