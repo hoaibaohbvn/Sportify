@@ -71,4 +71,9 @@ public class TestFEController {
 	public String viewSan() {
 		return "user/san";
 	}
+	// view trang san detail
+		@RequestMapping("san-detail")
+		public String viewSanDetail() {
+			return "user/san-single";
+		}
 }
