@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import duan.sportify.dao.AuthorizedDAO;
 import duan.sportify.dao.EventDAO;
 import duan.sportify.entities.Authorized;
-import duan.sportify.entities.Events;
+
+import duan.sportify.entities.Eventweb;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.EventService;
 
@@ -18,19 +19,19 @@ public class EventServiceImpl implements EventService{
 	EventDAO eventDAO;
 
 	@Override
-	public List<Events> findAll() {
+	public List<Eventweb> findAll() {
 		// TODO Auto-generated method stub
 		return eventDAO.findAll();
 	}
 
 	@Override
-	public Events create(Events events) {
+	public Eventweb create(Eventweb events) {
 		// TODO Auto-generated method stub
 		return eventDAO.save(events);
 	}
 
 	@Override
-	public Events update(Events events) {
+	public Eventweb update(Eventweb events) {
 		// TODO Auto-generated method stub
 		return eventDAO.save(events);
 	}
@@ -42,7 +43,7 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public Events findById(Integer id) {
+	public Eventweb findById(Integer id) {
 		// TODO Auto-generated method stub
 		return eventDAO.findById(id).get();
 	}
