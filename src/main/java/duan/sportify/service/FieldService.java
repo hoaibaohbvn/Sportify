@@ -3,18 +3,19 @@ package duan.sportify.service;
 import java.util.List;
 
 import duan.sportify.entities.Authorized;
-import duan.sportify.entities.Fields;
+import duan.sportify.entities.Field;
+
 
 
 
 public interface FieldService {
-	List<Fields> findAll();
+	List<Field> findAll();
 
-	Fields create(Fields fields);
+	Field create(Field fields);
 
-	Fields update(Fields fields);
+	Field update(Field fields);
 
 	void delete(Integer id);
 	
-	Fields findById(Integer id);
+	Field findById(Integer id);
 }
