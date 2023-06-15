@@ -110,7 +110,7 @@
 	  </nav>
     <!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('user/images/giaidau1.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -127,15 +127,18 @@
         <div class="row d-flex">
           <div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="e : ${eventList}">
           	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_2.jpg');">
-              </a>
+          		<img class="block-40 img" alt="" th:src="@{'/user/images/' + ${e.image}}">
+              
               <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar" th:text="${e.datestart}" >  </span> </p> 
+              	<div class="meta d-flex">
+              		<span class="fa fa-calendar m-2">  </span>
+              		 <p  th:utext="${#dates.format(e.datestart, 'dd-MM-yyyy')}" class="m-1 text-info"></p>
+              		 <p class="m-1">-</p>
+              		 <p th:utext="${#dates.format(e.dateend, 'dd-MM-yyyy')}" class="m-1 text-danger"></p>
               	</div>
-                <h3  class="heading mb-3"><a href="#" th:text="${e.nameevent}"></a></h3>
+                <h3  class="heading mb-3 m-1"><a href="#" th:text="${e.nameevent}"></a></h3>
                 
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                <a th:href="@{/user/blog-single}" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
               </div>
             </div>
