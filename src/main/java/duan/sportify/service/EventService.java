@@ -2,19 +2,20 @@ package duan.sportify.service;
 
 import java.util.List;
 
-import duan.sportify.entities.Authorized;
-import duan.sportify.entities.Events;
+
+
+import duan.sportify.entities.Eventweb;
 
 
 
 public interface EventService {
-	List<Events> findAll();
+	List<Eventweb> findAll();
 
-	Events create(Events events);
+	Eventweb create(Eventweb events);
 
-	Events update(Events events);
+	Eventweb update(Eventweb events);
 
 	void delete(Integer id);
 	
-	Events findById(Integer id);
+	Eventweb findById(Integer id);
 }
