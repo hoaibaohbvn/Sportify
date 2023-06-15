@@ -4,7 +4,7 @@ public class MySQLExample {
 	public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/sportify";
         String username = "root";
-        String password = "123456";
+        String password = "12345";
 
         try {
             // Tạo kết nối

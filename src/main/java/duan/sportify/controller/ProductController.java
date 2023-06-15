@@ -7,18 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.ui.Model;
-import duan.sportify.entities.Products;
-import duan.sportify.service.ProductService;
 
+import duan.sportify.dao.ProductDAO;
+import duan.sportify.entities.Products;
 @Controller
 
 public class ProductController {
 	@Autowired 
-	ProductService productService;
+	ProductDAO productDAO;
 	
 	@RequestMapping("/product")
 	public String list(Model model) {
-	List<Products> list = productService.findAll();
+	List<Products> list = productDAO.findAll();
 	model.addAttribute("items",list);
 		return "user/product";
 	}
