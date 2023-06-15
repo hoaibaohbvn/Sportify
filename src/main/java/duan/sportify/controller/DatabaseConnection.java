@@ -10,7 +10,7 @@ public class DatabaseConnection {
             // Thiết lập thông tin kết nối
             String url = "jdbc:mysql://localhost:3306/sportify";
             String username = "root";
-            String password = "123456";
+            String password = "12345";
 
             // Thiết lập kết nối
             conn = DriverManager.getConnection(url, username, password);
