@@ -126,16 +126,16 @@
       <div class="container">
         <div class="row d-flex">
           
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+          <div th:each="s: ${team}" class="col-lg-6 d-flex align-items-stretch ftco-animate">
           	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_2.jpg');">
-              </a>
+          		<img class="block-20 img bg-dark block-19" th:src="@{|/user/images/${s.avatar}|}" alt="" src="">
               <div class="text p-4 bg-light">
               	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              		<p class="fa fa-calendar" ></p>s
+              		<span th:text="${#dates.format(s.createdate, 'dd-MM-yyyy')}"></span>
               	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <h3 th:text="${s.nameteam}" class="heading mb-3"><a href="#"></a></h3>
+                <p th:text="${s.descriptions}"></p>
                 <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
               </div>

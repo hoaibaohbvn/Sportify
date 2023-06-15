@@ -19,7 +19,7 @@ public class TeamController {
 	@RequestMapping("/team")
 	public String viewTeam(Model model) {
 		List<Teams> list = teamdao.findAll();
-		model.addAttribute("items", list);
+		model.addAttribute("team", list);
 		return "user/doi";
 	}
 }
