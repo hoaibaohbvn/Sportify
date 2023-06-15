@@ -123,98 +123,24 @@
 
     <section class="ftco-section">
       <div class="container">
-        <div class="row d-flex">
+        <div class="row d-flex" th:each="event : ${eventList}">
           <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
           	<div class="blog-entry d-md-flex">
           		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_2.jpg');">
               </a>
               <div class="text p-4 bg-light">
               	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              		<p th:text="${event.datestart}"><span class="fa fa-calendar"></span></p> Đến
+              		<p th:text="${event.dateend}"><span class="fa fa-calendar"></span> </p>
               	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <h3 class="heading mb-3"><a th:text="${event.nameevent}" href="#"></a></h3>
+                <p th:text="${event.descriptions}"></p>
                 <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
               </div>
             </div>
           </div>
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_1.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_3.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_4.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_5.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('/user/images/image_6.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-              </div>
-            </div>
-          </div>
-        </div>
+         </div>
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">

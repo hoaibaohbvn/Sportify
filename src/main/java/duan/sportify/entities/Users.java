@@ -29,25 +29,25 @@ public class Users implements Serializable {
     @Column(name="passwords", nullable=false, length=16)
     private String     passwords ;
 
-    @Column(name="firstName", nullable=false, length=50)
+    @Column(name="firstName", nullable=true, length=50)
     private String     firstname ;
 
-    @Column(name="lastName", nullable=false, length=50)
+    @Column(name="lastName", nullable=true, length=50)
     private String     lastname ;
 
     @Column(name="phone", nullable=false, length=10)
     private String     phone ;
 
-    @Column(name="email", nullable=false, length=50)
+    @Column(name="email", nullable=true, length=50)
     private String     email ;
 
-    @Column(name="address", nullable=false, length=100)
+    @Column(name="address", nullable=true, length=100)
     private String     address ;
 
     @Column(name="image", length=50)
     private String     image ;
 
-    @Column(name="gender", nullable=false)
+    @Column(name="gender", nullable=true)
     private Boolean    gender ;
 
 
