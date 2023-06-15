@@ -9531,13 +9531,19 @@ textarea.form-control {
 
 .block-20 {
   overflow: hidden;
-  background-size: auto;
+  width:100%;
   background-repeat: no-repeat;
   background-position: center center;
   position: relative;
   display: block;
-  width: 100%;
   z-index: -1; }
+  
+.block-19{
+  width:100%;
+  min-height:350px;
+  max-height:400px;
+  object-fit: cover;
+}
 
 .blog-entry {
   overflow: hidden;
