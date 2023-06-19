@@ -18,7 +18,7 @@ import duan.sportify.entities.Field;
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("sportify")
 public class FieldController {
 	@Autowired 
 	FieldDAO fieldDAO;

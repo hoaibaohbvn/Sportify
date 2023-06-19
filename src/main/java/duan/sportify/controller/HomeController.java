@@ -15,18 +15,18 @@ import duan.sportify.entities.Eventweb;
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("sportify")
 public class HomeController {
 	@Autowired 
 	FieldDAO fieldDAO;
 	@Autowired 
 	EventDAO eventDAO;
-	@GetMapping("event")
+	@GetMapping("")
 	public String view(Model model) {
 		
 		List<Eventweb> eventList = eventDAO.findAll();
 		model.addAttribute("eventList", eventList);
-		return "user/blog";
+		return "user/index";
 	}
 
 }
