@@ -2,14 +2,15 @@ package duan.sportify.dao;
 
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import duan.sportify.entities.Field;
 
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
-//	@Query("SELECT bd.fieldID, COUNT(*) AS luot_dat FROM BookingDetails bd GROUP BY bd.fieldID ORDER BY luot_dat DESC")
-//    List<Object[]> getTop4BookingCounts();
+	
 }
