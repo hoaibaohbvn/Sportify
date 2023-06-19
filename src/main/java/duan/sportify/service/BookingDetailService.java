@@ -2,6 +2,10 @@ package duan.sportify.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import duan.sportify.dao.BookingDAO;
+import duan.sportify.dao.BookingDetailDAO;
 import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Bookingdetails;
 import duan.sportify.entities.Bookings;
@@ -9,6 +13,7 @@ import duan.sportify.entities.Bookings;
 
 
 public interface BookingDetailService {
+	
 	List<Bookingdetails> findAll();
 
 	Bookingdetails create(Bookingdetails bookingdetails);
@@ -18,4 +23,6 @@ public interface BookingDetailService {
 	void delete(Integer id);
 	
 	Bookingdetails findById(Integer id);
+	
+	
 }

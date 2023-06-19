@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
@@ -9,12 +9,12 @@
 		href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
 		rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="/user/css/animate.css">
+	<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="/user/css/magnific-popup.css">
+	<link rel="stylesheet" href="/user/css/flaticon.css">
+	<link rel="stylesheet" href="/user/css/style.css">
 </head>
 
 <body ng-app="">
@@ -52,7 +52,7 @@
 					<div class="dropdown m-1" ng-hide="false">
 						<a class="dropdown-toggle" id="dropdownMenuAccount" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">
-							<img class="rounded-circle border border-white" src="/images/person_1.jpg" alt=""
+							<img class="rounded-circle border border-white" src="/user/images/person_1.jpg" alt=""
 								style="width: 30px; height: 30px;">
 							<span id="nameuser">User</span>
 						</a>
@@ -71,7 +71,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html"><img src="/images/Logo3.png" style="width: 350px;" alt=""></a>
+			<a class="navbar-brand" href="index.html"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 			<div class="order-lg-last btn-group">
 				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
@@ -80,7 +80,7 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
+						<div class="img" style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Bacardi 151</h4>
 							<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
@@ -88,7 +88,7 @@
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-2.jpg);"></div>
+						<div class="img" style="background-image: url(/user/images/prod-2.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Jim Beam Kentucky Straight</h4>
 							<p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
@@ -96,7 +96,7 @@
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-3.jpg);"></div>
+						<div class="img" style="background-image: url(/user/images/prod-3.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Citadelle</h4>
 							<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
@@ -137,7 +137,7 @@
 	</nav>
 	<!-- END nav -->
 
-	<div class="hero-wrap" style="background-image: url('images/bg_index1.png');" data-stellar-background-ratio="0.5">
+	<div class="hero-wrap" style="background-image: url('/user/images/bg_index1.png');" data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -199,7 +199,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 img img-3 d-flex justify-content-center align-items-center"
-					style="background-image: url(images/bg_index3.png);">
+					style="background-image: url(/user/images/bg_index3.png);">
 				</div>
 				<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
 					<div class="heading-section">
@@ -228,37 +228,37 @@
 			<div class="row">
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/vot.png);"></div>
+						<div class="img" style="background-image: url(/user/images/vot.png);"></div>
 						<h3>Vợt Tennis</h3>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/bong.png);"></div>
+						<div class="img" style="background-image: url(/user/images/bong.png);"></div>
 						<h3>Bóng Đá</h3>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/caulong.png);"></div>
+						<div class="img" style="background-image: url(/user/images/caulong.png);"></div>
 						<h3>Vợt Cầu Lông</h3>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/do_the_thao.png);"></div>
+						<div class="img" style="background-image: url(/user/images/do_the_thao.png);"></div>
 						<h3>Đồ Thể Thao</h3>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/giay.png);"></div>
+						<div class="img" style="background-image: url(/user/images/giay.png);"></div>
 						<h3>Giày Thể Thao</h3>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
-						<div class="img" style="background-image: url(images/bongro.png);"></div>
+						<div class="img" style="background-image: url(/user/images/bongro.png);"></div>
 						<h3>Bóng Rổ</h3>
 					</div>
 				</div>
@@ -276,62 +276,19 @@
 				</div>
 			</div>
 			<div class="row d-flex">
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="f, iterStat : ${fieldList}" th:if="${iterStat.index} &lt; 4">
 					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/san.png');">
-						</a>
+							<img class="block-20 img" alt="" src="/user/images/san.png">
 						<div class="text p-4 bg-light">
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
+							<h3 class="heading mb-3"><a href="#" th:text="${f.namefield}"></a></h3>
+							<p th:text="${f.price}"></p> VND
+							<p th:text="${f.descriptionfield}"></p>
 							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/bong.png');">
-						</a>
-						<div class="text p-4 bg-light">
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/bong.png');">
-						</a>
-						<div class="text p-4 bg-light">
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/san.png');">
-						</a>
-						<div class="text p-4 bg-light">
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
+				
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-4">
@@ -341,7 +298,7 @@
 			</div>
 	</section>
 
-	<section class="ftco-section testimony-section img" style="background-image: url(images/bg_4.jpg);">
+	<section class="ftco-section testimony-section img" style="background-image: url(/user/images/bg_4.jpg);">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row justify-content-center mb-5">
@@ -362,7 +319,7 @@
 										trì, học hỏi, học tập, hy sinh và hơn hết, tình yêu của những gì bạn đang làm
 										hoặc học tập để làm”. </p>
 									<div class="d-flex align-items-center">
-										<div class="user-img" style="background-image: url(images/pele.png)"></div>
+										<div class="user-img" style="background-image: url(/user/images/pele.png)"></div>
 										<div class="pl-3">
 											<p class="name">Pelé</p>
 											<span class="position">Ngôi sao vĩ đại trên sân cỏ</span>
@@ -380,7 +337,7 @@
 										tôi không muốn sự nghiệp của mình đi theo một lối mòn. Tôi luôn cố gắng trong
 										mỗi trận đấu theo mọi cách có thể.”</p>
 									<div class="d-flex align-items-center">
-										<div class="user-img" style="background-image: url(images/messi.png)"></div>
+										<div class="user-img" style="background-image: url(/user/images/messi.png)"></div>
 										<div class="pl-3">
 											<p class="name">Lionel Messi</p>
 											<span class="position">ầu thủ xuất sắc nhất thế giới.</span>
@@ -399,7 +356,7 @@
 										và trượt. Tôi đã thất bại hết lần này đến lần khác trong đời. Và đó là lý do tại
 										sao tôi thành công.</p>
 									<div class="d-flex align-items-center">
-										<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+										<div class="user-img" style="background-image: url(/user/images/person_3.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">Michael Jordan</p>
 											<span class="position">Cầu thủ bóng rổ vĩ đại nhất mọi thời đại.</span>
@@ -416,7 +373,7 @@
 									<p class="mb-4">Far far away, behind the word mountains, far from the countries
 										Vokalia and Consonantia, there live the blind texts.</p>
 									<div class="d-flex align-items-center">
-										<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+										<div class="user-img" style="background-image: url(/user/images/person_1.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">Roger Scott</p>
 											<span class="position">Marketing Manager</span>
@@ -433,7 +390,7 @@
 									<p class="mb-4">Far far away, behind the word mountains, far from the countries
 										Vokalia and Consonantia, there live the blind texts.</p>
 									<div class="d-flex align-items-center">
-										<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+										<div class="user-img" style="background-image: url(/user/images/person_2.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">Roger Scott</p>
 											<span class="position">Marketing Manager</span>
@@ -459,74 +416,26 @@
 				</div>
 			</div>
 			<div class="row d-flex">
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="e: ${eventList}">
 					<div class="blog-entry d-flex">
 						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/image_1.jpg');">
+							style="background-image: url('/user/images/image_1.jpg');">
 						</a>
 						<div class="text p-4 bg-light">
-							<div class="meta">
-								<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+							<div class="meta d-flex" >
+								<p class="fa fa-calendar m-2"></p>
+								<span class="m-1" th:text="${e.datestart}"></span>
+								<p>|</p>
+								 <p class="m-1" th:text="${e.dateend}"></p>
 							</div>
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
+							<h3 th:text="${e.nameevent}" class="heading mb-3"><a href="#"></a></h3>
+							<p th:text="${e.descriptions}"></p>
 							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/image_2.jpg');">
-						</a>
-						<div class="text p-4 bg-light">
-							<div class="meta">
-								<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-							</div>
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/image_3.jpg');">
-						</a>
-						<div class="text p-4 bg-light">
-							<div class="meta">
-								<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-							</div>
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('images/image_4.jpg');">
-						</a>
-						<div class="text p-4 bg-light">
-							<div class="meta">
-								<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-							</div>
-							<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-							<p>A small river named Duden flows by their place and supplies it with the necessary
-								regelialia.</p>
-							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -624,22 +533,22 @@
 		</svg></div>
 
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/angular.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
+	<script src="/user/js/jquery.min.js"></script>
+	<script src="/user/js/angular.min.js"></script>
+	<script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/user/js/popper.min.js"></script>
+	<script src="/user/js/bootstrap.min.js"></script>
+	<script src="/user/js/jquery.easing.1.3.js"></script>
+	<script src="/user/js/jquery.waypoints.min.js"></script>
+	<script src="/user/js/jquery.stellar.min.js"></script>
+	<script src="/user/js/owl.carousel.min.js"></script>
+	<script src="/user/js/jquery.magnific-popup.min.js"></script>
+	<script src="/user/js/jquery.animateNumber.min.js"></script>
+	<script src="/user/js/scrollax.min.js"></script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
+	<script src="/user/js/google-map.js"></script>
+	<script src="/user/js/main.js"></script>
 
 </body>
 

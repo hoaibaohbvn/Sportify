@@ -127,14 +127,15 @@
         <div class="row d-flex">
           <div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="e : ${eventList}">
           	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('images/image_2.jpg');">
+          		<a href="blog-single.html" class="block-20 img" style="background-image: url('user/images/image_2.jpg');">
               </a>
               <div class="text p-4 bg-light">
               	<div class="meta">
               		<p><span class="fa fa-calendar" th:text="${e.datestart}" >  </span> </p> 
+              		Den <p><span class="fa fa-calendar" th:text="${e.dateend}" >  </span> </p>
               	</div>
                 <h3  class="heading mb-3"><a href="#" th:text="${e.nameevent}"></a></h3>
-                
+                <p th:text="${e.descriptions}"></p>
                 <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
               </div>

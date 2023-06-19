@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import duan.sportify.dao.EventDAO;
 import duan.sportify.dao.FieldDAO;
 import duan.sportify.entities.Eventweb;
+import duan.sportify.entities.Field;
 
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("sportify")
 public class HomeController {
 	@Autowired 
 	FieldDAO fieldDAO;
@@ -26,6 +27,8 @@ public class HomeController {
 		
 		List<Eventweb> eventList = eventDAO.findAll();
 		model.addAttribute("eventList", eventList);
-		return "user/blog";
+		List<Field> fieldList = fieldDAO.findAll();
+		model.addAttribute("fieldList", fieldList);
+		return "user/index";
 	}
 }
