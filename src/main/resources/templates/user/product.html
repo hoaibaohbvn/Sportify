@@ -189,7 +189,8 @@
 							<div class="product ftco-animate">
 								<div
 									class="img d-flex align-items-center justify-content-center"
-									style="background-image: url(images/prod-1.jpg);">
+									style="background-image: url(images/product_img/${product.image});">
+									<img alt="" th:src="@{'/main/resources/static/user/images/product_img/' + ${product.image} }">
 									<div class="desc">
 										<p class="meta-prod d-flex">
 											<a href="#"
