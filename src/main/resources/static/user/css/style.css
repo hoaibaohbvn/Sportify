@@ -9322,6 +9322,7 @@ textarea.form-control {
 .blog-img,
 .user-img {
   background-size: cover;
+  width: 100%;
   background-repeat: no-repeat;
   background-position: center center; }
 
@@ -9531,19 +9532,13 @@ textarea.form-control {
 
 .block-20 {
   overflow: hidden;
-  width:100%;
+  height: 40px;
   background-repeat: no-repeat;
   background-position: center center;
   position: relative;
   display: block;
+  width: 100%;
   z-index: -1; }
-  
-.block-19{
-  width:100%;
-  min-height:350px;
-  max-height:400px;
-  object-fit: cover;
-}
 
 .blog-entry {
   overflow: hidden;
@@ -9971,3 +9966,41 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+    
+.hoverIcons {
+	/* background-color: green;
+	height: 20vh; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.link {
+	height: 60px;
+	width: 60px;
+	background-color: #caf7e3;
+	border-radius: 30px;
+	text-align: center;
+	/*margin: 7px;
+	line-height: 80px;*/
+}
+
+a span {
+	transition: all 0.3s linear;
+}
+
+a:hover span {
+	transform: scale(1.3);
+}
+
+.shopping-bag:hover {
+	color: red;
+}
+
+.heart:hover {
+	color: red;
+}
+
+.visibility:hover {
+	color: red;
+}
