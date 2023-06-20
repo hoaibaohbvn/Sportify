@@ -27,6 +27,7 @@ public class ProductController {
 	ProductDAO productDAO;
 	
 	@GetMapping("product")
+	//view all, đổ dữ liệu
 	public String viewProduct(Model model) {
 		List<Products> productList = productDAO.findAll();
 		model.addAttribute("productList", productList);
