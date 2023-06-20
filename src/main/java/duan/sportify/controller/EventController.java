@@ -3,23 +3,23 @@ package duan.sportify.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import duan.sportify.dao.EventDAO;
-import duan.sportify.dao.FieldDAO;
 import duan.sportify.entities.Eventweb;
 
-public class EventDetailController {
-	@Autowired 
-	FieldDAO fieldDAO;
-	@Autowired 
+@Controller
+@RequestMapping("sportify")
+public class EventController {
+	@Autowired
 	EventDAO eventDAO;
-	@GetMapping()
+	@GetMapping("event")
 	public String view(Model model) {
-		
-		List<Eventweb> eventList = eventDAO.findAll();
-		model.addAttribute("eventList", eventList);
-		return "user/blog-single";
+		List<Eventweb> eventwebList = eventDAO.findAll();
+		model.addAttribute("eventList", eventwebList);
+		return "user/blog";
 	}
 }
