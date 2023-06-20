@@ -22,7 +22,7 @@ public class HomeController {
 	FieldDAO fieldDAO;
 	@Autowired 
 	EventDAO eventDAO;
-	@GetMapping()
+	@GetMapping("")
 	public String view(Model model) {
 		
 		List<Eventweb> eventList = eventDAO.findAll();
