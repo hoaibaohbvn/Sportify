@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <title>Mini Shop</title>
 <meta charset="utf-8">
@@ -24,9 +25,10 @@
 
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
+<link rel="stylesheet" href="/user/css/customCSS.css">
 </head>
-<body>
 
+<body>
 	<div class="wrap">
 		<div class="container">
 			<div class="row">
@@ -63,7 +65,7 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- navbar -->
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
@@ -148,7 +150,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-
+	<!-- background -->
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('images/bg_2.jpg');"
 		data-stellar-background-ratio="0.5">
@@ -184,38 +186,44 @@
 							</select>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-4 d-flex" th:each="product : ${productList}">
-							<div class="product ftco-animate">
+					<div class="row" >
+						<div class="col-md-4 d-flex" th:each="product : ${productList}" >
+							<div class="product ftco-animate" style="background-color: #F7FFE5">
 								<div>
 									<img
 										class="img d-flex align-items-center justify-content-center"
 										th:src="@{'../user/images/products_img/' + ${product.image}}"
-										alt="Error">
-									<div class="desc">
-										<p class="meta-prod d-flex">
+										alt="Error" style="width: 255px; height: 250px">
+								</div>
+								<div class="text text-center">
+									<!-- <span class="sale"
+										th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'">Sale</span> -->
+									<div class="row hoverIcons">
+										<p class="col-md-4">
 											<a href="#"
-												class="d-flex align-items-center justify-content-center"><span
-												class="flaticon-shopping-bag"></span></a> <a href="#"
-												class="d-flex align-items-center justify-content-center"><span
-												class="flaticon-heart"></span></a> <a href="#"
-												class="d-flex align-items-center justify-content-center"><span
+												class="d-flex align-items-center justify-content-center link shopping-bag"><span
+												class="flaticon-shopping-bag"></span></a>
+										</p>
+
+										<p class="col-md-4">
+											<a href="#"
+												class="d-flex align-items-center justify-content-center link heart"><span
+												class="flaticon-heart"></span></a>
+										</p>
+										<p class="col-md-4">
+											<a href="#"
+												class="d-flex align-items-center justify-content-center link visibility"><span
 												class="flaticon-visibility"></span></a>
 										</p>
 									</div>
-								</div>
-								<div class="text text-center">
-									<span class="sale"
-										th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'">Sale</span>
-									<span class="category">?</span>
 									<h2 th:text="${product.productname}"></h2>
 									<p class="mb-0">
-										<span class="price price-sale">0</span> <span class="price"
-											th:text="${product.price}"></span>
+										 <span class="price" th:text="${product.price}"></span>
 									</p>
 								</div>
 							</div>
 						</div>
+
 
 					</div>
 					<div class="row mt-5">
@@ -429,7 +437,8 @@
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke="#eeeeee" />
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
 	</div>
 
 
@@ -452,4 +461,5 @@
 	<script src="/user/js/main.js"></script>
 
 </body>
+
 </html>
