@@ -418,9 +418,9 @@
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="e: ${eventList}">
 					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('/user/images/image_1.jpg');">
-						</a>
+						
+						<img class="block-19 block-20 img" alt=""
+									th:src="@{'/user/images/' + ${e.image}}">
 						<div class="text p-4 bg-light">
 							<div class="meta d-flex" >
 								<p class="fa fa-calendar m-2"></p>
