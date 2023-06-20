@@ -71,7 +71,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
+			<a class="navbar-brand" th:href="@{/sportify}"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 			<div class="order-lg-last btn-group">
 				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false">
@@ -103,7 +103,7 @@
 									01</span></p>
 						</div>
 					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100" href="cart.html">
+					<a class="dropdown-item text-center btn-link d-block w-100" th:href="@{/sportify/cart}">
 						View All
 						<span class="ion-ios-arrow-round-forward"></span>
 					</a>
@@ -116,21 +116,21 @@
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="san.html" class="nav-link">Sân</a></li>
-					<li class="nav-item"><a href="doi.html" class="nav-link">Đội</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">Giải đấu</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/field}" class="nav-link">Sân</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/team}" class="nav-link">Đội</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/event}" class="nav-link">Sự kiện</a></li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">Cửa hàng</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" href="product.html">Products</a>
-							<a class="dropdown-item" href="product-single.html">Single Product</a>
-							<a class="dropdown-item" href="cart.html">Giỏ Hàng</a>
-							<a class="dropdown-item" href="checkout.html">Thanh toán</a>
+							<a class="dropdown-item" th:href="@{/sportify/product}">Products</a>
+							<a class="dropdown-item" th:href="@{/sportify/single-product}">Single Product</a>
+							<a class="dropdown-item" th:href="@{/sportify/cart}">Giỏ Hàng</a>
+							<a class="dropdown-item" th:href="@{/sportify/check-out}">Thanh toán</a>
 						</div>
 					</li>
-					<li class="nav-item"><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/about}" class="nav-link">Về chúng tôi</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/contact}" class="nav-link">Liên hệ</a></li>
 				</ul>
 			</div>
 		</div>
@@ -278,10 +278,10 @@
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="f, iterStat : ${fieldList}" th:if="${iterStat.index} &lt; 4">
 					<div class="blog-entry d-flex">
-							<img class="block-20 img" alt="" src="/user/images/san.png">
+							<img class="block-20 img" alt="" th:src="@{'/user/images/' + ${f.image}}">
 						<div class="text p-4 bg-light">
 							<h3 class="heading mb-3"><a href="#" th:text="${f.namefield}"></a></h3>
-							<p th:text="${f.price}"></p> VND
+							<p>Giá tiền / 1 giờ: <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(f.price)}"></span></p>
 							<p th:text="${f.descriptionfield}"></p>
 							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
@@ -418,9 +418,9 @@
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="e: ${eventList}">
 					<div class="blog-entry d-flex">
-						<a href="blog-single.html" class="block-20 img"
-							style="background-image: url('/user/images/image_1.jpg');">
-						</a>
+						
+						<img class="block-19 block-20 img" alt=""
+									th:src="@{'/user/images/' + ${e.image}}">
 						<div class="text p-4 bg-light">
 							<div class="meta d-flex" >
 								<p class="fa fa-calendar m-2"></p>

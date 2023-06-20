@@ -50,9 +50,10 @@ public class FieldController {
 		model.addAttribute("fieldList", eventList);
 		return "user/san";
 	}
-	@GetMapping("fieldDetail")
+	@GetMapping("/sandetail")
 	public String viewFieldDetail(Model model) {
 		
 		return "user/san-single";
 	}
+	
 }
