@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.hoverIcons {
+	background-color: green;
+	height: 20vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.link {
+	height: 70px;
+	width: 70px;
+	background-color: #caf7e3;
+	border-radius: 35px;
+	text-align: center;
+	margin: 7px;
+	line-height: 80px;
+}
+
+a span {
+	transition: all 0.3s linear;
+}
+
+a:hover span {
+	transform: scale(1.5);
+}
+
+.shopping-bag:hover {
+	color: white;
+}
+
+.heart:hover {
+	color: white;
+}
+
+.visibility:hover {
+	color: white;
+}
