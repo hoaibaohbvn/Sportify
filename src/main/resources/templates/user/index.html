@@ -203,19 +203,13 @@
 				</div>
 				<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
 					<div class="heading-section">
-						<span class="subheading">Since 1905</span>
-						<h2 class="mb-4">Desire Meets A New Taste</h2>
+						<h2 class="mb-4">GIẢM GIÁ 30% QUẦN ÁO - NÂNG CẤP TỦ ĐỒ CỦA BẠN</h2>
 
-						<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-							It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-						<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
-							would have been rewritten a thousand times and everything that was left from its origin
-							would be the word "and" and the Little Blind Text should turn around and return to its own,
-							safe country.</p>
-						<p class="year">
-							<strong class="number" data-number="115">0</strong>
-							<span>Years of Experience In Business</span>
-						</p>
+						<p>Chào mừng mùa hè! Chúng tôi rất vui thông báo về chương trình giảm giá 30% quần áo tại cửa hàng. Đây là cơ hội tuyệt vời để bạn cải thiện tủ đồ của mình với một phong cách mới.</p>
+						<p>Chúng tôi tự hào mang đến bộ sưu tập thời trang đa dạng, từ trang phục công sở đến thời trang dạo phố. Bạn sẽ tìm thấy những món đồ ưng ý trong bộ sưu tập của chúng tôi.</p>
+						<p>Chất lượng là ưu tiên hàng đầu. Sản phẩm được chú trọng đến từng chi tiết, mang lại sự thoải mái và phong cách thời thượng. Với giảm giá 30%, bạn còn có cơ hội tiết kiệm một khoản tiền đáng kể.</p>
+						<p>Hãy nhanh chóng đến cửa hàng để tận hưởng chương trình giảm giá này. Thời gian giới hạn, đừng bỏ lỡ cơ hội tuyệt vời này. Cập nhật tủ đồ và thể hiện phong cách mới với giá ưu đãi!</p>
+						
 					</div>
 
 				</div>
@@ -278,11 +272,11 @@
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate" th:each="f, iterStat : ${fieldList}" th:if="${iterStat.index} &lt; 4">
 					<div class="blog-entry d-flex">
-							<img class="block-20 img" alt="" th:src="@{'/user/images/' + ${f.image}}">
+							<img class="block-20 img" alt="" th:src="@{'/user/images/' + ${f[5]}}">
 						<div class="text p-4 bg-light">
-							<h3 class="heading mb-3"><a href="#" th:text="${f.namefield}"></a></h3>
-							<p>Giá tiền / 1 giờ: <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(f.price)}"></span></p>
-							<p th:text="${f.descriptionfield}"></p>
+							<h3 class="heading mb-3"><a href="#" th:text="${f[2]}"></a></h3>
+							<p>Giá tiền / 1 giờ: <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(f[4])}"></span></p>
+							<p th:text="${f[3]}"></p>
 							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 						</div>
@@ -411,8 +405,9 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<span class="subheading">Blog</span>
-					<h2>Recent Blog</h2>
+				<h3>Event</h3>
+					<span class="subheading">Sự kiện trong tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></span>
+					
 				</div>
 			</div>
 			<div class="row d-flex">
@@ -420,16 +415,16 @@
 					<div class="blog-entry d-flex">
 						
 						<img class="block-19 block-20 img" alt=""
-									th:src="@{'/user/images/' + ${e.image}}">
+									th:src="@{'/user/images/' + ${e[4]}}">
 						<div class="text p-4 bg-light">
 							<div class="meta d-flex" >
 								<p class="fa fa-calendar m-2"></p>
-								<span class="m-1" th:text="${e.datestart}"></span>
+								<span class="m-1" th:text="${e[2]}"></span>
 								<p>|</p>
-								 <p class="m-1" th:text="${e.dateend}"></p>
+								 <p class="m-1" th:text="${e[3]}"></p>
 							</div>
-							<h3 th:text="${e.nameevent}" class="heading mb-3"><a href="#"></a></h3>
-							<p th:text="${e.descriptions}"></p>
+							<h3 th:text="${e[1]}" class="heading mb-3"><a href="#"></a></h3>
+							<p th:text="${e[5]}"></p>
 							<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 						</div>
