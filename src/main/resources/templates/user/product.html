@@ -113,21 +113,18 @@
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a th:href="@{/sportify/field}" class="nav-link">Sân</a></li>
-					<li class="nav-item"><a th:href="@{/sportify/team}" class="nav-link">Đội</a></li>
-					<li class="nav-item"><a th:href="@{/sportify/event}" class="nav-link">Sự kiện</a></li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Cửa hàng</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" th:href="@{/sportify/product}">Products</a>
-							<a class="dropdown-item" th:href="@{/sportify/single-product}">Single Product</a>
-							<a class="dropdown-item" th:href="@{/sportify/cart}">Giỏ Hàng</a>
-							<a class="dropdown-item" th:href="@{/sportify/check-out}">Thanh toán</a>
-						</div>
-					</li>
-					<li class="nav-item"><a th:href="@{/sportify/about}" class="nav-link">Về chúng tôi</a></li>
-					<li class="nav-item"><a th:href="@{/sportify/contact}" class="nav-link">Liên hệ</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/field}"
+						class="nav-link">Sân</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/team}"
+						class="nav-link">Đội</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/event}"
+						class="nav-link">Sự kiện</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/product}"
+						class="nav-link">Cửa hàng</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/about}"
+						class="nav-link">Về chúng tôi</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/contact}"
+						class="nav-link">Liên hệ</a></li>
 				</ul>
 			</div>
 		</div>
@@ -156,6 +153,11 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
+				<form class="mb-5 d-flex justify-content-center col-12">
+					<input class="form-control me-2 col-6" type="search"
+						placeholder="Tìm kiếm theo tên" aria-label="Search">
+					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+				</form>
 				<div class="col-md-9">
 					<div class="row mb-4">
 						<div

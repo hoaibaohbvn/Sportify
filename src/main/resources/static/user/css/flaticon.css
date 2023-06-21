@@ -37,7 +37,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.flaticon-shopping-bag:before { content: "\f100"; }
+.flaticon-shopping-bag:before { 
+	content: "\f100";
+	font-size: 23px;  }
 .flaticon-support:before { content: "\f101"; }
 .flaticon-cashback:before { content: "\f102"; }
 .flaticon-free-delivery:before { content: "\f103"; }
