@@ -12,5 +12,6 @@ import duan.sportify.entities.Field;
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
-	
+	@Query(value="SELECT COUNT(*) FROM field;", nativeQuery = true)
+	List<Object> CountField();
 }
