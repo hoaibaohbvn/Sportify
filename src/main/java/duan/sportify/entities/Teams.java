@@ -57,7 +57,7 @@ public class Teams implements Serializable {
     private String     username ;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="createDate", nullable=false)
+    @Column(name="createdate", nullable=false)
     private Date       createdate ;
 
 

@@ -9,26 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import duan.sportify.dao.EventDAO;
-import duan.sportify.entities.Events;
-
+import duan.sportify.entities.Eventweb;
 
 @Controller
 @RequestMapping("sportify")
 public class EventController {
-//	@GetMapping("event")
-//	public String viewEvent(Model model) {
-//	return "user/blog";
-//	}
-
-	@Autowired 
+	@Autowired
 	EventDAO eventDAO;
 	@GetMapping("event")
-	public String viewEvent(Model model) {
-		List<Events> eventList = eventDAO.findAll();
-		model.addAttribute("eventList", eventList);
+	public String view(Model model) {
+		List<Eventweb> eventwebList = eventDAO.findAll();
+		model.addAttribute("eventList", eventwebList);
 		return "user/blog";
 	}
-	
-	
-	
 }

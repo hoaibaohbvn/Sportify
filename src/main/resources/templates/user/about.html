@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
@@ -9,14 +9,14 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="/user/css/animate.css">
     
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/user/css/magnific-popup.css">
     
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/user/css/flaticon.css">
+    <link rel="stylesheet" href="/user/css/style.css">
   </head>
   <body>
 
@@ -47,70 +47,71 @@
 		</div>
     
 		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-			<div class="container">
-			  <a class="navbar-brand" href="index.html">Sport<span>ify</span></a>
-			  <div class="order-lg-last btn-group">
-			  <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				  <span class="flaticon-shopping-bag"></span>
-				  <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
-			  </a>
-			  <div class="dropdown-menu dropdown-menu-right">
-						<div class="dropdown-item d-flex align-items-start" href="#">
-							<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
-							<div class="text pl-3">
-								<h4>Bacardi 151</h4>
-								<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity: 01</span></p>
-							</div>
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/sportify}"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
+			<div class="order-lg-last btn-group">
+				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					<span class="flaticon-shopping-bag"></span>
+					<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<div class="dropdown-item d-flex align-items-start" href="#">
+						<div class="img" style="background-image: url(/user/images/prod-1.jpg);"></div>
+						<div class="text pl-3">
+							<h4>Bacardi 151</h4>
+							<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
+									01</span></p>
 						</div>
-						<div class="dropdown-item d-flex align-items-start" href="#">
-							<div class="img" style="background-image: url(images/prod-2.jpg);"></div>
-							<div class="text pl-3">
-								<h4>Jim Beam Kentucky Straight</h4>
-								<p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity: 02</span></p>
-							</div>
+					</div>
+					<div class="dropdown-item d-flex align-items-start" href="#">
+						<div class="img" style="background-image: url(/user/images/prod-2.jpg);"></div>
+						<div class="text pl-3">
+							<h4>Jim Beam Kentucky Straight</h4>
+							<p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
+									02</span></p>
 						</div>
-						<div class="dropdown-item d-flex align-items-start" href="#">
-							<div class="img" style="background-image: url(images/prod-3.jpg);"></div>
-							<div class="text pl-3">
-								<h4>Citadelle</h4>
-								<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity: 01</span></p>
-							</div>
+					</div>
+					<div class="dropdown-item d-flex align-items-start" href="#">
+						<div class="img" style="background-image: url(/user/images/prod-3.jpg);"></div>
+						<div class="text pl-3">
+							<h4>Citadelle</h4>
+							<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
+									01</span></p>
 						</div>
-						<a class="dropdown-item text-center btn-link d-block w-100" href="cart.html">
-							View All
-							<span class="ion-ios-arrow-round-forward"></span>
-						</a>
-					  </div>
+					</div>
+					<a class="dropdown-item text-center btn-link d-block w-100" th:href="@{/sportify/cart}">
+						View All
+						<span class="ion-ios-arrow-round-forward"></span>
+					</a>
+				</div>
 			</div>
-	
-			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
-			  </button>
-	
-			  <div class="collapse navbar-collapse" id="ftco-nav">
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-				  <li class="nav-item active"><a href="index.html" class="nav-link">Trang chủ</a></li>
-				  <li class="nav-item"><a href="san.html" class="nav-link">Sân</a></li>
-				  <li class="nav-item"><a href="doi.html" class="nav-link">Đội</a></li>
-				  <li class="nav-item"><a href="blog.html" class="nav-link">Giải đấu</a></li>
-				  <li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cửa hàng</a>
-				  <div class="dropdown-menu" aria-labelledby="dropdown04">
-					  <a class="dropdown-item" href="product.html">Products</a>
-					<a class="dropdown-item" href="product-single.html">Single Product</a>
-					<a class="dropdown-item" href="cart.html">Giỏ Hàng</a>
-					<a class="dropdown-item" href="checkout.html">Thanh toán</a>
-				  </div>
-				</li>
-				  <li class="nav-item"><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-				  <li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/field}"
+						class="nav-link">Sân</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/team}"
+						class="nav-link">Đội</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/event}"
+						class="nav-link">Sự kiện</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/product}"
+						class="nav-link">Cửa hàng</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/about}"
+						class="nav-link">Về chúng tôi</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/contact}"
+						class="nav-link">Liên hệ</a></li>
 				</ul>
-			  </div>
 			</div>
-		  </nav>
-    <!-- END nav -->
+		</div>
+	</nav>
+	<!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -165,7 +166,7 @@
     <section class="ftco-section ftco-no-pb">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6 img img-3 d-flex justify-content-center align-items-center" style="background-image: url(images/about.jpg);">
+					<div class="col-md-6 img img-3 d-flex justify-content-center align-items-center" style="background-image: url(/user/images/about.jpg);">
 					</div>
 					<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
 	          <div class="heading-section">
@@ -190,37 +191,37 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-1.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-1.jpg);"></div>
 							<h3>Brandy</h3>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-2.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-2.jpg);"></div>
 							<h3>Gin</h3>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-3.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-3.jpg);"></div>
 							<h3>Rum</h3>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-4.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-4.jpg);"></div>
 							<h3>Tequila</h3>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-5.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-5.jpg);"></div>
 							<h3>Vodka</h3>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-4 ">
 						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(images/kind-6.jpg);"></div>
+							<div class="img" style="background-image: url(/user/images/kind-6.jpg);"></div>
 							<h3>Whiskey</h3>
 						</div>
 					</div>
@@ -230,7 +231,7 @@
 		</section>
 
   
-    <section class="ftco-section testimony-section img" style="background-image: url(images/bg_4.jpg);">
+    <section class="ftco-section testimony-section img" style="background-image: url(/user/images/bg_4.jpg);">
     	<div class="overlay"></div>
       <div class="container">
         <div class="row justify-content-center mb-5">
@@ -248,7 +249,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(/user/images/person_1.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -263,7 +264,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(/user/images/person_2.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -278,7 +279,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(/user/images/person_3.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -293,7 +294,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(/user/images/person_1.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -308,7 +309,7 @@
                   <div class="text">
                     <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
+                    	<div class="user-img" style="background-image: url(/user/images/person_2.jpg)"></div>
                     	<div class="pl-3">
 		                    <p class="name">Roger Scott</p>
 		                    <span class="position">Marketing Manager</span>
@@ -444,20 +445,20 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
+  <script src="/user/js/jquery.min.js"></script>
+  <script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/user/js/popper.min.js"></script>
+  <script src="/user/js/bootstrap.min.js"></script>
+  <script src="/user/js/jquery.easing.1.3.js"></script>
+  <script src="/user/js/jquery.waypoints.min.js"></script>
+  <script src="/user/js/jquery.stellar.min.js"></script>
+  <script src="/user/js/owl.carousel.min.js"></script>
+  <script src="/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="/user/js/jquery.animateNumber.min.js"></script>
+  <script src="/user/js/scrollax.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/user/js/google-map.js"></script>
+  <script src="/user/js/main.js"></script>
     
   </body>
 </html>
