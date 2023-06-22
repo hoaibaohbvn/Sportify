@@ -39,13 +39,17 @@ public class FieldController {
 		model.addAttribute("fieldList", eventList);
 		return "user/san";
 	}
+	private String selectedSportTypeId;
+
 	@GetMapping("/field/{cid}")
 	public String list(Model model, @PathVariable("cid") String cid) {
-			Sporttype sport = sporttypeservice.findById(cid);
+			selectedSportTypeId = cid;
+
 			List<Field> fieldList = fieldservice.findBySporttypeId(cid);
 			List<Sporttype> sporttypeList = sporttypeservice.findAll();
 			model.addAttribute("cates",sporttypeList);
 			model.addAttribute("fieldList",fieldList);
+			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
 			return "user/san";
 	}
 	@GetMapping("/sandetail")
