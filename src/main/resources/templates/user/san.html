@@ -147,15 +147,15 @@
 				</form>
 				<div class="col-md-2 m-4">
 					<div class="sidebar-box ftco-animate">
-						<div class="categories">
-							<h3>Loại sân</h3>
-							<ul class="p-0">
-								<li><a href="#">Tất cả<span class="fa fa-chevron-right"></span></a></li>
-								<li><a href="#">Đá bóng<span class="fa fa-chevron-right"></span></a></li>
-								<li><a href="#">Bóng rổ<span class="fa fa-chevron-right"></span></a></li>
-								<li><a href="#">Cầu lông<span class="fa fa-chevron-right"></span></a></li>
-								<li><a href="#">Tennis<span class="fa fa-chevron-right"></span></a></li>
-							</ul>
+						<div class="list-group" style="background-color: #a3b18a">
+							<a href="#"
+								class="text-center list-group-item list-group-item-action active"
+								aria-current="true" style="background-color: #588157"> <i
+								class="bi bi-list-ul"></i> Loại Sân
+							</a> 
+							<a th:each="c : ${cates}" th:href="@{/sportify/field/{sporttypeid}(sporttypeid=${c.sporttypeid})}"
+   class="list-group-item list-group-item-action">[[${c.categoryname}]]</a>
+
 						</div>
 					</div>
 				</div>

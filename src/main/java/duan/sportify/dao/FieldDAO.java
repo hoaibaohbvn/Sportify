@@ -12,5 +12,7 @@ import duan.sportify.entities.Field;
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
+	@Query("SELECT f FROM Field f WHERE f.sporttype.sporttypeid = ?1")
+	List<Field> findBySporttypeId(String cid);
 	
 }
