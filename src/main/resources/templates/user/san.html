@@ -148,14 +148,14 @@
 				<div class="col-md-2 m-4">
 					<div class="sidebar-box ftco-animate">
 						<div class="list-group" >
-							<a th:href="@{/sportify/field}"
-								class="text-center list-group-item list-group-item-action text-info font-weight-bold"
-								aria-current="true" style="font-size: 17.2px;"> <i
-								class="bi bi-list-ul"></i> Môn Thể Thao
-							</a> <a th:each="c : ${cates}" style="font-size: 16.7px; font-family:  'Times New Roman', Times, serif; "
+						
+							<h4 class="text-center border-bottom font-weight-bold text-success">LOẠI SÂN</h4>
+							 <a th:each="c : ${cates}" style="font-size: 18px;"
 								th:href="@{/sportify/field/{sporttypeid}(sporttypeid=${c.sporttypeid})}"
-								th:class="${c.sporttypeid == selectedSportTypeId} ? 'list-group-item list-group-item-action active bg-info text-white' : 'list-group-item list-group-item-action'">
+								th:class="${c.sporttypeid == selectedSportTypeId} ? 'list-group-item list-group-item-action active bg-success text-white' : 'list-group-item list-group-item-action'">
 								[[${c.categoryname}]] </a>
+
+							
 						</div>
 						
 					</div>
