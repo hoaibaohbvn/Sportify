@@ -9997,11 +9997,10 @@ textarea.form-control {
 }
 
 .link {
-	height: 45px;
-	width: 45px;
-	/*background-color: #82CD47;*/
+	height: 60px;
+	width: 60px;
+	background-color: #caf7e3;
 	border-radius: 30px;
-	border: 1px solid grey;
 	text-align: center;
 	/*margin: 7px;
 	line-height: 80px;*/
