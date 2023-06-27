@@ -26,17 +26,20 @@
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
   font-family: Flaticon;
   font-style: normal;
-  font-weight: normal;
+  /*font-weight: normal;*/
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  font-size: 30px;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.flaticon-shopping-bag:before { content: "\f100"; }
+.flaticon-shopping-bag:before { 
+	content: "\f100";
+	font-size: 23px;  }
 .flaticon-support:before { content: "\f101"; }
 .flaticon-cashback:before { content: "\f102"; }
 .flaticon-free-delivery:before { content: "\f103"; }

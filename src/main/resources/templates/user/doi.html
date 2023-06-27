@@ -12,7 +12,8 @@
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="/user/css/animate.css">
 
 <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
@@ -22,9 +23,9 @@
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
 </head>
-<body>
+<body >
 
-	<div class="wrap">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -35,7 +36,7 @@
 					</p>
 				</div>
 				<div class="col-md-6 d-flex justify-content-md-end">
-					<div class="social-media mr-4">
+					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
 								class="d-flex align-items-center justify-content-center"><span
@@ -51,12 +52,29 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
-					<div class="reg">
+
+					<!-- check login -->
+					<div class="reg m-1" ng-hide="true">
 						<p class="mb-0">
 							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
 					</div>
+					<div class="dropdown m-1" ng-hide="false">
+						<a class="dropdown-toggle" id="dropdownMenuAccount"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="rounded-circle border border-white"
+							src="/user/images/person_1.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Thông tin</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Đăng xuất</a>
+						</div>
+					</div>
+					<!-- end check login -->
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -65,7 +83,8 @@
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Sport<span>ify</span></a>
+			<a class="navbar-brand" th:href="@{/sportify}"><img
+				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 			<div class="order-lg-last btn-group">
 				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,7 +95,8 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Bacardi 151</h4>
 							<p class="mb-0">
@@ -86,7 +106,8 @@
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-2.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-2.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Jim Beam Kentucky Straight</h4>
 							<p class="mb-0">
@@ -96,7 +117,8 @@
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(images/prod-3.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-3.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Citadelle</h4>
 							<p class="mb-0">
@@ -106,12 +128,11 @@
 						</div>
 					</div>
 					<a class="dropdown-item text-center btn-link d-block w-100"
-						href="cart.html"> View All <span
+						th:href="@{/sportify/cart}"> View All <span
 						class="ion-ios-arrow-round-forward"></span>
 					</a>
 				</div>
 			</div>
-
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -120,26 +141,18 @@
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="index.html"
-						class="nav-link">Trang chủ</a></li>
-					<li class="nav-item"><a href="san.html" class="nav-link">Sân</a></li>
-					<li class="nav-item"><a href="doi.html" class="nav-link">Đội</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">Giải
-							đấu</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="dropdown04"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cửa
-							hàng</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" href="product.html">Products</a> <a
-								class="dropdown-item" href="product-single.html">Single
-								Product</a> <a class="dropdown-item" href="cart.html">Giỏ Hàng</a> <a
-								class="dropdown-item" href="checkout.html">Thanh toán</a>
-						</div></li>
-					<li class="nav-item"><a href="about.html" class="nav-link">Về
-							chúng tôi</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Liên
-							hệ</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/field}"
+						class="nav-link">Sân</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/team}"
+						class="nav-link">Đội</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/event}"
+						class="nav-link">Sự kiện</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/product}"
+						class="nav-link">Cửa hàng</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/about}"
+						class="nav-link">Về chúng tôi</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/contact}"
+						class="nav-link">Liên hệ</a></li>
 				</ul>
 			</div>
 		</div>
@@ -147,7 +160,7 @@
 	<!-- END nav -->
 
 	<section class="hero-wrap hero-wrap-2"
-		style="background-image: url('images/bg_2.jpg');"
+		style="background-image: url('/user/images/bg_2.jpg');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -167,43 +180,70 @@
 
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row d-flex">
-
-				<div th:each="s: ${team}"
-					class="col-lg-6 d-flex align-items-stretch ftco-animate">
-					<div class="blog-entry d-md-flex">
-						<img class="block-20 img bg-dark block-19"
-							th:src="@{|/user/images/${s.avatar}|}" alt="" src="">
-						<div class="text p-4 bg-light">
-							<div class="meta">
-								<span> Ngày tạo:
-									<p class="fa fa-calendar"></p>
-								</span> <span th:text="${#dates.format(s.createdate, 'dd-MM-yyyy')}"></span>
+			<div class="row">
+				<form class="mb-5 d-flex justify-content-center col-12">
+					<input class="form-control me-2 col-6" type="search"
+						placeholder="Tìm kiếm theo tên" aria-label="Search">
+					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+				</form>
+				<div class="col-md-12">
+					<div class="row mb-4">
+						<div
+							class="col-md-12 d-flex justify-content-between align-items-center">
+							<h4 class="product-select">Lọc theo môn thể thao</h4>
+							<div class="dropdown filter">
+								<button class="btn btn-success dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Lọc</button>
+								<div class="dropdown-menu dropdown-menu-right filter-item" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Bóng đá</a>
+									<a class="dropdown-item" href="#">Bóng rổ</a> 
+									<a class="dropdown-item" href="#">Tennis</a>
+									<a class="dropdown-item" href="#">Cầu lông</a>
+								</div>
 							</div>
-							<h3 th:text="${s.nameteam}" class="heading mb-3">
-								<a href="#"></a>
-							</h3>
-							<span class="d-flex">" <p th:text="${s.descriptions}"></p> "</span>
-							<a href="#" class="btn-custom">Continue <span
-								class="fa fa-long-arrow-right"></span></a>
-
 						</div>
 					</div>
-				</div>
+					<div class="row d-flex">
+						<div th:each="s: ${team}"
+							class="col-lg-6 d-flex align-items-stretch ftco-animate">
+							<div class="blog-entry d-md-flex">
+								<img class="block-20 img bg-dark block-19"
+									th:src="@{|/user/images/${s.avatar}|}" alt="" src="">
+								<div class="text p-4 bg-light d-flex flex-column">
+									<div class="meta">
+										<p class="fa fa-calendar"></p>
+										<span th:text="${#dates.format(s.createdate, 'dd-MM-yyyy')}"></span>
+									</div>
+									<h3 th:text="${s.nameteam}" class="heading mb-3">
+										<a href="#"></a>
+									</h3>
+									<p th:text="${s.descriptions}"></p>
+									<a href="#" class="btn-custom">Continue <span
+										class="fa fa-long-arrow-right"></span></a>
+									<div class="submit-section align-self-end mt-auto">
+										<button class="btn btn-success ">Tham gia ngay</button>
+									</div>
 
-			</div>
-			<div class="row mt-5">
-				<div class="col text-center">
-					<div class="block-27">
-						<ul>
-							<li><a href="#">&lt;</a></li>
-							<li class="active"><span>1</span></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">&gt;</a></li>
-						</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mt-5">
+						<div class="col text-center">
+							<div class="block-27">
+								<ul>
+									<li><a href="#">&lt;</a></li>
+									<li class="active"><span>1</span></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">&gt;</a></li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -338,6 +378,8 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="/user/js/google-map.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
 
 </body>

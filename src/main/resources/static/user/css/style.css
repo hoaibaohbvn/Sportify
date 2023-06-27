@@ -5292,7 +5292,8 @@ button.bg-light:focus {
   background-color: #dae0e5 !important; }
 
 .bg-dark {
-  background-color: #343a40 !important; }
+    background-color: rgba(0, 0, 0, 0.3) /* Màu đen với độ mờ 50% */
+ !important; }
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
@@ -8072,7 +8073,6 @@ h1, h2, h3, h4, h5,
           color: #fff; }
 
 .ftco-navbar-light {
-  background: transparent !important;
   position: absolute;
   top: 35px;
   left: 0;
@@ -8097,19 +8097,32 @@ h1, h2, h3, h4, h5,
   .ftco-navbar-light .btn-cart {
     display: inline-block;
     position: relative; }
+    
     .ftco-navbar-light .btn-cart span {
-      font-size: 20px; }
+      font-size: 20px;
+     	color: white; }
+    
+    @media (max-width: 767.98px) {
+        .ftco-navbar-light .btn-group .dropdown-menu:after, .ftco-navbar-light .btn-group .dropdown-menu:before {
+          right: 70px; } }
+    .ftco-navbar-light .btn-group .dropdown-menu:before {
+      top: -.6em;
+      border-bottom-color: rgba(0, 0, 0, 0.02); }
+    .ftco-navbar-light .btn-group .dropdown-menu:after {
+      top: -.5em;
+      border-bottom-color: #fff; }
+    
     .ftco-navbar-light .btn-cart div {
       position: absolute;
       top: 0;
       right: 0px;
-      height: 18px;
+      height: 16px;
       line-height: 1;
       border-radius: 50%;
       padding: 0 5px;
-      background: rgba(255, 255, 255, 0.2); }
+      background:#EB5E5C; 	}
       .ftco-navbar-light .btn-cart div small {
-        color: rgba(255, 255, 255, 0.5); }
+        color: white; }
   .ftco-navbar-light .btn-group .dropdown-toggle::after {
     display: none; }
   .ftco-navbar-light .btn-group .dropdown-menu {
@@ -8271,14 +8284,16 @@ h1, h2, h3, h4, h5,
     .ftco-navbar-light.scrolled .btn-cart div {
       position: absolute;
       top: 0;
-      right: -5px;
-      height: 18px;
+      right: 0px;
+      height: 16px;
       line-height: 1;
       border-radius: 50%;
       padding: 0 5px;
-      background: rgba(0, 0, 0, 0.1); }
+      background:#EB5E5C; }
+      .ftco-navbar-light.scrolled .flaticon-shopping-bag:before{
+      color: black;}
       .ftco-navbar-light.scrolled .btn-cart div small {
-        color: #2E7D32; }
+        color: white; }
     @media (max-width: 991.98px) {
       .ftco-navbar-light.scrolled .nav-item > .nav-link {
         padding-left: 0 !important;
@@ -9410,6 +9425,7 @@ textarea.form-control {
         background: #2E7D32; }
 
 .testimony-wrap {
+	height:350px;
   display: block;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -10008,4 +10024,12 @@ a:hover span {
 
 .visibility:hover {
 	color: red;
+}
+.filter{
+	position: relative;
+  z-index: 1;
+}
+.filter-item 	{
+	  border	: 1px solid #00cc33;
+	
 }
