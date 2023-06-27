@@ -24,4 +24,5 @@ public class TeamController {
 		model.addAttribute("team", list);
 		return "user/doi";
 	}
+	
 }
