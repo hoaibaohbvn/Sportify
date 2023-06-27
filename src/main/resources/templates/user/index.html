@@ -63,7 +63,7 @@
 							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Thông tin</a> <a
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
 								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
 								class="dropdown-item" href="#">Đăng xuất</a>
 						</div>
@@ -307,8 +307,9 @@
 		<div class="container">
 			<div class="row justify-content-center pb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<span class="subheading">Ưu đãi của chúng tôi</span>
+					
 					<h2>Sân Thể Thao</h2>
+					<span class="subheading">Sân được đặt nhiều nhất</span>
 				</div>
 			</div>
 			<div class="row d-flex">
@@ -320,13 +321,16 @@
 							th:src="@{'/user/images/' + ${f[5]}}">
 						<div class="text p-4 bg-light">
 							<h3 class="heading mb-3">
-								<a href="#" th:text="${f[2]}"></a>
+							 <a href="#" th:text="${f[2]}"></a>
 							</h3>
 							<p>
 								Giá tiền / 1 giờ: <span class="text-danger font-weight-bold"
 									th:text="${#numbers.formatCurrency(f[4])}"></span>
 							</p>
-							<p th:text="${f[3]}"></p>
+							<p>
+								Địa chỉ: <span class="text-primary font-weight-bold"
+									th:text="${f[6]}"></span>
+							</p>
 							<a href="#" class="btn-custom">Continue <span
 								class="fa fa-long-arrow-right"></span></a>
 
@@ -337,15 +341,14 @@
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-4">
-					<a href="product.html" class="btn btn-primary d-block">View All
-						Products <span class="fa fa-long-arrow-right"></span>
+					<a href="product.html" class="btn btn-primary d-block">Xem tất cả sân    <span class="fa fa-long-arrow-right"></span>
 					</a>
 				</div>
 			</div>
 	</section>
 
 	<section class="ftco-section testimony-section img"
-		style="background-image: url(/user/images/bg_4.jpg);">
+		style="background-image: url(/user/images/bgcaunoi.jpg);">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row justify-content-center mb-5">
@@ -368,7 +371,7 @@
 									<p class="mb-4">“Thành công không phải là bất ngờ. Đó là
 										công việc khó khăn, kiên trì, học hỏi, học tập, hy sinh và hơn
 										hết, tình yêu của những gì bạn đang làm hoặc học tập để làm”.
-									</p>
+									</p><br><br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/pele.png)"></div>
@@ -390,7 +393,7 @@
 									<p class="mb-4">“Mỗi năm tôi đều cố gắng phấn đấu với tư
 										cách là một cầu thủ. Và tôi không muốn sự nghiệp của mình đi
 										theo một lối mòn. Tôi luôn cố gắng trong mỗi trận đấu theo mọi
-										cách có thể.”</p>
+										cách có thể.”</p> <br><br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/messi.png)"></div>
@@ -413,7 +416,7 @@
 										nghiệp của mình. Tôi đã thua gần 300 trò chơi. 26 lần, tôi đã
 										được tin tưởng để thực hiện cú đánh thắng trận và trượt. Tôi
 										đã thất bại hết lần này đến lần khác trong đời. Và đó là lý do
-										tại sao tôi thành công.</p>
+										tại sao tôi thành công.</p> 
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/person_3.jpg)"></div>
@@ -435,7 +438,7 @@
 								<div class="text">
 									<p class="mb-4">Far far away, behind the word mountains,
 										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
+										blind texts.</p><br><br><br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/person_1.jpg)"></div>
@@ -456,7 +459,7 @@
 								<div class="text">
 									<p class="mb-4">Far far away, behind the word mountains,
 										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p>
+										blind texts.</p><br><br><br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/person_2.jpg)"></div>
@@ -521,10 +524,9 @@
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
@@ -583,12 +585,11 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
 										class="text">+2 392 3929 210</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -608,7 +609,7 @@
 							</script>
 							All rights reserved | This template is made with <i
 								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+								href="#" target="_blank">IT17202T</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
