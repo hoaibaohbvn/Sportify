@@ -9999,11 +9999,9 @@ textarea.form-control {
 .link {
 	height: 60px;
 	width: 60px;
-	background-color: #caf7e3;
 	border-radius: 30px;
 	text-align: center;
-	/*margin: 7px;
-	line-height: 80px;*/
+	border: 1px solid grey;
 }
 
 a span {
