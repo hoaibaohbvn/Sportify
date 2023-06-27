@@ -12,12 +12,12 @@ import duan.sportify.entities.Field;
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
-<<<<<<< HEAD
+
 	@Query(value="SELECT COUNT(*) FROM field;", nativeQuery = true)
 	List<Object> CountField();
-=======
+
 	@Query("SELECT f FROM Field f WHERE f.sporttype.sporttypeid = ?1")
 	List<Field> findBySporttypeId(String cid);
 	
->>>>>>> developer
+
 }
