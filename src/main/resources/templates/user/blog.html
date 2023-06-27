@@ -62,48 +62,63 @@
 		</div>
 	</div>
 
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" th:href="@{/sportify}"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
+			<a class="navbar-brand" th:href="@{/sportify}"><img
+				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
+				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+					<div class="d-flex justify-content-center align-items-center">
+						<small>3</small>
+					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-1.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Bacardi 151</h4>
-							<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
+									01</span>
+							</p>
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-2.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-2.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
+									02</span>
+							</p>
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-3.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-3.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Citadelle</h4>
-							<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
+									01</span>
+							</p>
 						</div>
 					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100" th:href="@{/sportify/cart}">
-						View All
-						<span class="ion-ios-arrow-round-forward"></span>
+					<a class="dropdown-item text-center btn-link d-block w-100"
+						th:href="@{/sportify/cart}"> View All <span
+						class="ion-ios-arrow-round-forward"></span>
 					</a>
 				</div>
 			</div>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
@@ -129,7 +144,7 @@
 	<!-- END nav -->
 
 	<section class="hero-wrap hero-wrap-2"
-		style="background-image: url('/user/images/eventbanner.png');"
+		style="background-image: url('/user/images/be.png');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -158,22 +173,29 @@
 
 				<div class="col-md-12">
 					<div class="row mb-4">
-						<div class="col-md-12 d-flex justify-content-between align-items-center">
+						<div
+							class="col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Lọc theo tháng</h4>
-							<select class="selectpicker" multiple>
-								<option>Tháng 1</option>
-								<option>Tháng 2</option>
-								<option>Tháng 3</option>
-								<option>Tháng 4</option>
-								<option>Tháng 5</option>
-								<option>Tháng 6y</option>
-								<option>Tháng 7</option>
-								<option>Tháng 8</option>
-								<option>Tháng 9</option>
-								<option>Tháng 10</option>
-								<option>Tháng 11</option>
-								<option>Tháng 12</option>
-							</select>
+							<form th:action="@{/sportify/event/search/}" method="GET">
+								<label for="month">Tháng:</label> <select id="month"
+									name="month" required>
+									<option >-- Chọn tháng --</option>
+									<option th:value="1">Tháng 1</option>
+									<option th:value="2">Tháng 2</option>
+									<option th:value="3">Tháng 3</option>
+									<option th:value="4">Tháng 4</option>
+									<option th:value="5">Tháng 5</option>
+									<option th:value="6">Tháng 6</option>
+									<option th:value="7">Tháng 7</option>
+									<option th:value="8">Tháng 8</option>
+									<option th:value="9">Tháng 9</option>
+									<option th:value="10">Tháng 10</option>
+									<option th:value="11">Tháng 11</option>
+									<option th:value="12">Tháng 12</option>
+									
+								</select>
+								<button type="submit">Tìm kiếm</button>
+							</form>
 						</div>
 					</div>
 					<div class="row d-flex">
@@ -182,7 +204,6 @@
 							<div class="blog-entry d-md-flex">
 								<img class="block-19 block-20 img" alt=""
 									th:src="@{'/user/images/' + ${e.image}}">
-
 								<div class="text p-4 bg-light">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
