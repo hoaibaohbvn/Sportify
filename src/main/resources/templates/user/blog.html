@@ -25,7 +25,7 @@
 </head>
 <body>
 
-	<div class="wrap">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -36,7 +36,7 @@
 					</p>
 				</div>
 				<div class="col-md-6 d-flex justify-content-md-end">
-					<div class="social-media mr-4">
+					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
 								class="d-flex align-items-center justify-content-center"><span
@@ -52,12 +52,29 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
-					<div class="reg">
+
+					<!-- check login -->
+					<div class="reg m-1" ng-hide="true">
 						<p class="mb-0">
 							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
 					</div>
+					<div class="dropdown m-1" ng-hide="false">
+						<a class="dropdown-toggle" id="dropdownMenuAccount"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="rounded-circle border border-white"
+							src="/user/images/person_1.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Thông tin</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Đăng xuất</a>
+						</div>
+					</div>
+					<!-- end check login -->
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -141,10 +158,9 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-	<!-- END nav -->
 
 	<section class="hero-wrap hero-wrap-2"
-		style="background-image: url('/user/images/be.png');"
+		style="background-image: url('/user/images/eventbanner.png');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -176,26 +192,26 @@
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Lọc theo tháng</h4>
-							<form th:action="@{/sportify/event/search/}" method="GET">
-								<label for="month">Tháng:</label> <select id="month"
-									name="month" required>
-									<option >-- Chọn tháng --</option>
-									<option th:value="1">Tháng 1</option>
-									<option th:value="2">Tháng 2</option>
-									<option th:value="3">Tháng 3</option>
-									<option th:value="4">Tháng 4</option>
-									<option th:value="5">Tháng 5</option>
-									<option th:value="6">Tháng 6</option>
-									<option th:value="7">Tháng 7</option>
-									<option th:value="8">Tháng 8</option>
-									<option th:value="9">Tháng 9</option>
-									<option th:value="10">Tháng 10</option>
-									<option th:value="11">Tháng 11</option>
-									<option th:value="12">Tháng 12</option>
-									
-								</select>
-								<button type="submit">Tìm kiếm</button>
-							</form>
+							<div class="dropdown filter">
+								<button class="btn btn-success dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Lọc</button>
+								<div class="dropdown-menu dropdown-menu-right filter-item"
+									aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Tháng 1</a> <a
+										class="dropdown-item" href="#">Tháng 2</a> <a
+										class="dropdown-item" href="#">Tháng 3</a> <a
+										class="dropdown-item" href="#">Tháng 4 </a> <a
+										class="dropdown-item" href="#">Tháng 5</a> <a
+										class="dropdown-item" href="#">Tháng 6</a> <a
+										class="dropdown-item" href="#">Tháng 7</a> <a
+										class="dropdown-item" href="#">Tháng 8</a> <a
+										class="dropdown-item" href="#">Tháng 9</a> <a
+										class="dropdown-item" href="#">Tháng 10 </a> <a
+										class="dropdown-item" href="#">Tháng 11</a> <a
+										class="dropdown-item" href="#">Tháng 12</a>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="row d-flex">
@@ -204,6 +220,7 @@
 							<div class="blog-entry d-md-flex">
 								<img class="block-19 block-20 img" alt=""
 									th:src="@{'/user/images/' + ${e.image}}">
+
 								<div class="text p-4 bg-light">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>

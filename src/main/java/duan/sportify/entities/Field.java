@@ -6,6 +6,9 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -58,8 +61,9 @@ public class Field implements Serializable {
     private List<Favoritefield> listOfFavoritefield ; 
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="sporttypeid", referencedColumnName="sporttypeid", insertable=false, updatable=false)
-    private Sporttype  sporttype ; 
+     Sporttype  sporttype ; 
 
     @OneToMany(mappedBy="field")
     private List<Bookingdetails> listOfBookingdetails ; 

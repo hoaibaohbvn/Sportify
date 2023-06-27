@@ -5,25 +5,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import duan.sportify.dao.AuthorizedDAO;
+
 import duan.sportify.dao.FieldDAO;
-import duan.sportify.entities.Authorized;
+
 import duan.sportify.entities.Field;
 
-import duan.sportify.service.AuthorizedService;
+
 import duan.sportify.service.FieldService;
+
 
 @Service
 public class FieldServiceImpl implements FieldService{
 	@Autowired
 	FieldDAO fieldDAO;
-
+	
 	@Override
 	public List<Field> findAll() {
 		// TODO Auto-generated method stub
 		return fieldDAO.findAll();
 	}
-
+	@Override
+	public Field findById(Integer id) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findById(id).get();
+	}
+	@Override
+	public List<Field> findBySporttypeId(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findBySporttypeId(cid);
+	}
 	@Override
 	public Field create(Field fields) {
 		// TODO Auto-generated method stub
@@ -42,10 +52,9 @@ public class FieldServiceImpl implements FieldService{
 		fieldDAO.deleteById(id);
 	}
 
-	@Override
-	public Field findById(Integer id) {
-		// TODO Auto-generated method stub
-		return fieldDAO.findById(id).get();
-	}
+
+
+
+	
 	
 }

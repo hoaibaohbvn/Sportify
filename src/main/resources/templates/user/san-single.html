@@ -27,78 +27,117 @@
 
 <body>
 
-	<div class="wrap">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
 					<p class="mb-0 phone pl-md-2">
-						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +00 1234 567</a>
-						<a href="#"><span class="fa fa-paper-plane mr-1"></span> youremail@email.com</a>
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							youremail@email.com</a>
 					</p>
 				</div>
 				<div class="col-md-6 d-flex justify-content-md-end">
-					<div class="social-media mr-4">
+					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
-							<a href="#" class="d-flex align-items-center justify-content-center"><span
-									class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
-							<a href="#" class="d-flex align-items-center justify-content-center"><span
-									class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
-							<a href="#" class="d-flex align-items-center justify-content-center"><span
-									class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
-							<a href="#" class="d-flex align-items-center justify-content-center"><span
-									class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
+							<a href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a> <a
+								href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a> <a
+								href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
+							<a href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
-					<div class="reg">
-						<p class="mb-0"><a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a></p>
+
+					<!-- check login -->
+					<div class="reg m-1" ng-hide="true">
+						<p class="mb-0">
+							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+						</p>
 					</div>
+					<div class="dropdown m-1" ng-hide="false">
+						<a class="dropdown-toggle" id="dropdownMenuAccount"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="rounded-circle border border-white"
+							src="/user/images/person_1.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Thông tin</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Đăng xuất</a>
+						</div>
+					</div>
+					<!-- end check login -->
 				</div>
+
 			</div>
 		</div>
 	</div>
 
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" th:href="@{/sportify}"><img src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
+			<a class="navbar-brand" th:href="@{/sportify}"><img
+				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
 			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
+				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+					<div class="d-flex justify-content-center align-items-center">
+						<small>3</small>
+					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-1.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Bacardi 151</h4>
-							<p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
+									01</span>
+							</p>
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-2.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-2.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
+									02</span>
+							</p>
 						</div>
 					</div>
 					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img" style="background-image: url(/user/images/prod-3.jpg);"></div>
+						<div class="img"
+							style="background-image: url(/user/images/prod-3.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Citadelle</h4>
-							<p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span></p>
+							<p class="mb-0">
+								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
+									01</span>
+							</p>
 						</div>
 					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100" th:href="@{/sportify/cart}">
-						View All
-						<span class="ion-ios-arrow-round-forward"></span>
+					<a class="dropdown-item text-center btn-link d-block w-100"
+						th:href="@{/sportify/cart}"> View All <span
+						class="ion-ios-arrow-round-forward"></span>
 					</a>
 				</div>
 			</div>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 

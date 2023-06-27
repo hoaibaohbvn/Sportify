@@ -23,9 +23,9 @@
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
 </head>
-<body>
+<body >
 
-	<div class="wrap">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -36,7 +36,7 @@
 					</p>
 				</div>
 				<div class="col-md-6 d-flex justify-content-md-end">
-					<div class="social-media mr-4">
+					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
 								class="d-flex align-items-center justify-content-center"><span
@@ -52,12 +52,29 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
-					<div class="reg">
+
+					<!-- check login -->
+					<div class="reg m-1" ng-hide="true">
 						<p class="mb-0">
 							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
 					</div>
+					<div class="dropdown m-1" ng-hide="false">
+						<a class="dropdown-toggle" id="dropdownMenuAccount"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="rounded-circle border border-white"
+							src="/user/images/person_1.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Thông tin</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Đăng xuất</a>
+						</div>
+					</div>
+					<!-- end check login -->
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -174,12 +191,17 @@
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Lọc theo môn thể thao</h4>
-							<select class="selectpicker" multiple>
-								<option>Bóng đá</option>
-								<option>Bóng rổ</option>
-								<option>Cầu lông</option>
-								<option>Tennis</option>
-							</select>
+							<div class="dropdown filter">
+								<button class="btn btn-success dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Lọc</button>
+								<div class="dropdown-menu dropdown-menu-right filter-item" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Bóng đá</a>
+									<a class="dropdown-item" href="#">Bóng rổ</a> 
+									<a class="dropdown-item" href="#">Tennis</a>
+									<a class="dropdown-item" href="#">Cầu lông</a>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="row d-flex">
