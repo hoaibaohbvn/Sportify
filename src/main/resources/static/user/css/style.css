@@ -10031,5 +10031,10 @@ a:hover span {
 }
 .filter-item 	{
 	  border	: 1px solid #00cc33;
-	
 }
+
+.lable_team{
+	margin-right:10px;
+	font-weight: bold;
+}
+

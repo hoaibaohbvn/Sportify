@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("sportify")
 public class ProfilesController {
-	@GetMapping("/profiles")
+	@GetMapping("/profile")
 	public String view() {
 		
 		return "/user/profiles";
