@@ -5292,7 +5292,8 @@ button.bg-light:focus {
   background-color: #dae0e5 !important; }
 
 .bg-dark {
-  background-color: #343a40 !important; }
+    background-color: rgba(0, 0, 0, 0.3) /* Màu đen với độ mờ 50% */
+ !important; }
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
@@ -8072,7 +8073,6 @@ h1, h2, h3, h4, h5,
           color: #fff; }
 
 .ftco-navbar-light {
-  background: transparent !important;
   position: absolute;
   top: 35px;
   left: 0;
@@ -10022,4 +10022,12 @@ a:hover span {
 
 .visibility:hover {
 	color: red;
+}
+.filter{
+	position: relative;
+  z-index: 1;
+}
+.filter-item 	{
+	  border	: 1px solid #00cc33;
+	
 }
