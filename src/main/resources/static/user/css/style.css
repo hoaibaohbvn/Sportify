@@ -9200,6 +9200,15 @@ textarea.form-control {
   @media (max-width: 767.98px) {
     .ftco-section {
       padding: 6em 0; } }
+      
+.btn-product {
+	background-color: #379237;
+	color: white;
+}
+
+.btn-product:hover {
+	background-color: #82CD47;
+}
 
 .ftco-no-pt {
   padding-top: 0; }

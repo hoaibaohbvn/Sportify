@@ -97,6 +97,7 @@
 						<small>3</small>
 					</div>
 				</a>
+				<!-- giỏ hàng ảo -->
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex align-items-start" href="#">
 						<div class="img"
@@ -191,6 +192,7 @@
 					<button class="btn btn-outline-success col-2" type="submit">Search</button>
 				</form>
 				<div class="col-md-9">
+					<!-- bộ lọc -->
 					<div class="row mb-4">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
@@ -199,20 +201,23 @@
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">Lọc</button>
-								<div class="dropdown-menu dropdown-menu-right filter-item" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Giá cao - thấp</a>
-									<a class="dropdown-item" href="#">Giá thấp - cao</a> 
-									<a class="dropdown-item" href="#">Tên A - Z</a>
-									<a class="dropdown-item" href="#">Tên Z - A </a>
-									<a class="dropdown-item" href="#">Giảm giá nhiều</a>
-									<a class="dropdown-item" href="#">Giảm giá ít</a>
+								<div class="dropdown-menu dropdown-menu-right filter-item"
+									aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Giá cao - thấp</a> <a
+										class="dropdown-item" href="#">Giá thấp - cao</a> <a
+										class="dropdown-item" href="#">Tên A - Z</a> <a
+										class="dropdown-item" href="#">Tên Z - A </a> <a
+										class="dropdown-item" href="#">Giảm giá nhiều</a> <a
+										class="dropdown-item" href="#">Giảm giá ít</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row" >
-						<div class="col-md-4 d-flex" th:each="product : ${productList}" >
-							<div class="product ftco-animate" style="background-color: #EEEEEE">
+					<div class="row"> <a th:href="@{/sportify/product-single}"> Link test chi tiết SP</a> </div>
+					<div class="row">
+						<div class="col-md-4 d-flex" th:each="product : ${productList}">
+							<div class="product ftco-animate"
+								style="background-color: #EEEEEE">
 								<div>
 									<img
 										class="img d-flex align-items-center justify-content-center"
@@ -235,14 +240,14 @@
 												class="flaticon-heart"></span></a>
 										</p>
 										<p class="col-md-4">
-											<a href="#"
+											<a th:href=@{/sportify/product-single/@{product.productid}}
 												class="d-flex align-items-center justify-content-center link visibility"><span
 												class="flaticon-visibility"></span></a>
 										</p>
 									</div>
 									<h2 th:text="${product.productname}"></h2>
 									<p class="mb-0">
-										 <span class="price" th:text="${product.price}"></span>
+										<span class="price" th:text="${product.price}"></span>
 									</p>
 								</div>
 							</div>
