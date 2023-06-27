@@ -63,7 +63,7 @@
 							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Thông tin</a> <a
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
 								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
 								class="dropdown-item" href="#">Đăng xuất</a>
 						</div>
@@ -321,13 +321,16 @@
 							th:src="@{'/user/images/' + ${f[5]}}">
 						<div class="text p-4 bg-light">
 							<h3 class="heading mb-3">
-								<a href="#" th:text="${f[2]}"></a>
+							 <a href="#" th:text="${f[2]}"></a>
 							</h3>
 							<p>
 								Giá tiền / 1 giờ: <span class="text-danger font-weight-bold"
 									th:text="${#numbers.formatCurrency(f[4])}"></span>
 							</p>
-							<p th:text="${f[3]}"></p>
+							<p>
+								Địa chỉ: <span class="text-primary font-weight-bold"
+									th:text="${f[6]}"></span>
+							</p>
 							<a href="#" class="btn-custom">Continue <span
 								class="fa fa-long-arrow-right"></span></a>
 
