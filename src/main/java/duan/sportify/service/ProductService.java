@@ -14,13 +14,15 @@ public interface ProductService {
 
 	Products update(Products products);
 
-	void delete(Integer id);
+	void delete(Integer productid);
 	
 	
 	
 	Products findByCategory(Integer categoryid);
 
-	static Products findById(Integer productid) {
-		return ProductDAO.findById(productid).get();
-	}
+	Products findById(Integer productid);
+
+	
+
+
 }

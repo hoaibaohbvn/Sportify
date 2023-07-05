@@ -223,6 +223,7 @@
 										class="img d-flex align-items-center justify-content-center"
 										th:src="@{'/user/images/products_img/' + ${product.image}}"
 										alt="Error" style="width: 255px; height: 250px">
+										
 								</div>
 								<div class="text text-center">
 									<!-- <span class="sale"
@@ -240,7 +241,7 @@
 												class="flaticon-heart"></span></a>
 										</p>
 										<p class="col-md-4">
-											<a th:href=@{/sportify/product-single/@{product.productid}}
+											<a th:href="@{'/sportify/product-single/' + ${product.productid}}"
 												class="d-flex align-items-center justify-content-center link visibility"><span
 												class="flaticon-visibility"></span></a>
 										</p>

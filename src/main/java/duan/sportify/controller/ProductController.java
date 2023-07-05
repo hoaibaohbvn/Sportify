@@ -19,6 +19,9 @@ public class ProductController {
 	@Autowired 
 	ProductDAO productDAO;
 	
+	@Autowired
+	ProductService productService;
+	
 	@GetMapping("product")
 	public String list(Model model) {
 	List<Products> list = productDAO.findAll();
@@ -32,9 +35,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("product-single/{productid}")
-	public String viewDetail(Model model, @PathVariable("productid") Integer productid) {
-		Products product = ProductService.findById(productid);
-		model.addAttribute("product", productid);
+	public String detail(Model model, @PathVariable("productid") Integer productid) {
+		Products product = productService.findById(productid);
+		model.addAttribute("product", product);
 		return"user/product-single";
 	}
 }
