@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
 <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
-
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
 </head>
@@ -54,7 +53,7 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<div class="reg m-1" ng-show="true">
 						<p class="mb-0">
 							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
@@ -235,10 +234,10 @@
 									</div>
 									
 									<div class="d-flex">
-									"<p th:text="${s[6]}" style="font-style: italic;"></p>"
+									"<p th:text="${s[6]}" class="limited-length" style="font-style: italic;"></p>"
 									</div>
 									
-									<a href="#" class="btn-custom">Continue <span
+									<a class="btn-custom">Continue <span
 										class="fa fa-long-arrow-right"></span></a>
 									<div class="submit-section align-self-end mt-auto">
 										<button class="btn btn-success ">Tham gia ngay</button>

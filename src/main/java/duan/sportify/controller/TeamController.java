@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import duan.sportify.dao.TeamDAO;
+import duan.sportify.entities.Teams;
+import duan.sportify.service.TeamDetailService;
 
 @Controller
 @RequestMapping("/sportify")
