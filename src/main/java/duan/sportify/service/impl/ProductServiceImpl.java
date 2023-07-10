@@ -52,4 +52,9 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Products> findByCategoryId(String categoryid) {
+		return productDAO.findByCategoryId(categoryid);
+	}
 }
