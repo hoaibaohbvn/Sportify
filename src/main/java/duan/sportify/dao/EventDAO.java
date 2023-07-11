@@ -14,4 +14,9 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	List<Object[]> fillEventInMonth();
 	@Query("SELECT s FROM Eventweb s WHERE MONTH(s.datestart) = :month")
     List<Eventweb> findByMonth(@Param("month") int month);
+	@Query("SELECT e FROM Eventweb e WHERE e.datestart <= CURRENT_DATE ORDER BY e.datestart DESC")
+	List<Eventweb> findLatestEvents();
+	// Sort All theo ngày cao đến thấp
+	@Query("SELECT e FROM Eventweb e ORDER BY e.datestart DESC")
+	List<Eventweb> findAllOrderByDateStart();
 }

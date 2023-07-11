@@ -20,7 +20,7 @@ public class EventController {
 	EventDAO eventDAO;
 	@GetMapping("event")
 	public String view(Model model) {
-		List<Eventweb> eventwebList = eventDAO.findAll();
+		List<Eventweb> eventwebList = eventDAO.findAllOrderByDateStart();
 		model.addAttribute("eventList", eventwebList);
 		return "user/blog";
 	}
@@ -31,4 +31,10 @@ public class EventController {
         model.addAttribute("eventList", eventList);
         return "user/blog"; // Trả về tên template Thymeleaf để hiển thị danh sách sân
     }
+	
+	@GetMapping("eventsingle")
+	public String vieweventsingle(Model model) {
+		
+		return "user/blog-single";
+	}
 }
