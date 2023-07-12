@@ -51,7 +51,25 @@ public class FieldServiceImpl implements FieldService{
 		// TODO Auto-generated method stub
 		fieldDAO.deleteById(id);
 	}
-
+	@Override
+	public List<Field> listPriceMin(){
+		return fieldDAO.listPriceMin();
+	}
+	@Override
+	public List<Field> listMinPriceOfSportype(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.listMinPriceOfSportype(cid);
+	}
+	@Override
+	public List<Field> listMaxPriceOfSportype(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.listMaxPriceOfSportype(cid);
+	}
+	@Override
+	public List<Field> listPriceMax() {
+		// TODO Auto-generated method stub
+		return fieldDAO.listPriceMax();
+	}
 
 
 

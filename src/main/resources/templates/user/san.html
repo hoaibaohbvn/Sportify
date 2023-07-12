@@ -212,20 +212,24 @@
 				<div class="col-md-9">
 					<div class="row mb-4">
 						<div
-							class="col-md-12 d-flex justify-content-between align-items-center">
-							<h4 class="product-select">Sắp xếp theo giá</h4>
-							<div class="dropdown filter">
+							class="col-md-12 d-flex justify-content-end align-items-center">
+							
+							<div  class="dropdown filter">
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">Lọc</button>
+									
 								<div class="dropdown-menu dropdown-menu-right filter-item"
 									aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Giá cao - thấp</a> <a
-										class="dropdown-item" href="#">Giá thấp - cao</a> <a
-										class="dropdown-item" href="#">Tên A - Z</a> <a
-										class="dropdown-item" href="#">Tên Z - A </a> <a
-										class="dropdown-item" href="#">Giảm giá nhiều</a> <a
-										class="dropdown-item" href="#">Giảm giá ít</a>
+									
+										<a class="dropdown-item" th:href="@{/sportify/field/}+ ${selectedSportTypeId}">Mặc định</a>
+									
+									 <a  th:href="@{/sportify/field/pricemin/{selectedValue}(selectedValue=${true})}"
+  										 th:class="${selectedValue} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá thấp - cao</a>
+									 <a  th:href="@{/sportify/field/pricemax/{selectedValue1}(selectedValue1=${true})}"
+  										 th:class="${selectedValue1} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá cao - thấp</a>
+									 
+										
 								</div>
 							</div>
 						</div>

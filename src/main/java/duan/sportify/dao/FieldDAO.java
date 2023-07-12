@@ -19,5 +19,15 @@ public interface FieldDAO extends JpaRepository<Field, Integer>{
 	@Query("SELECT f FROM Field f WHERE f.sporttype.sporttypeid = ?1")
 	List<Field> findBySporttypeId(String cid);
 	
-
+	@Query(value="select * from field order by price ASC", nativeQuery = true)
+	List<Field> listPriceMin();
+	
+	@Query(value="select * from field where sporttypeid = ?1 order by price ASC", nativeQuery = true)
+	List<Field> listMinPriceOfSportype(String cid);
+	
+	@Query(value="select * from field order by price DESC", nativeQuery = true)
+	List<Field> listPriceMax();
+	
+	@Query(value="select * from field where sporttypeid = ?1 order by price DESC", nativeQuery = true)
+	List<Field> listMaxPriceOfSportype(String cid);
 }

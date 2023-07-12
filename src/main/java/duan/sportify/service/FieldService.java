@@ -21,4 +21,12 @@ public interface FieldService {
 	void delete(Integer id);
 	
 	Field findById(Integer id);
+	List<Field> listPriceMin();
+	
+	List<Field> listMinPriceOfSportype(String cid);
+	
+	List<Field> listMaxPriceOfSportype(String cid);
+	
+	List<Field> listPriceMax();
+
 }

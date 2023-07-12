@@ -1,13 +1,12 @@
 package duan.sportify.controller;
 
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import duan.sportify.dao.FieldDAO;
-import duan.sportify.dao.SportTypeDAO;
+
+
 import duan.sportify.entities.Field;
 import duan.sportify.entities.Sporttype;
 import duan.sportify.service.FieldService;
@@ -33,8 +31,12 @@ public class FieldController {
 	FieldService fieldservice;
 	@Autowired
 	SportTypeService sporttypeservice;
+	
+	private String selectedSportTypeId;
+
 	@GetMapping("/field")
 	public String viewField(Model model) {
+		selectedSportTypeId = "tatca";
 		List<Field> eventList = fieldservice.findAll();
 		List<Sporttype> sporttypeList = sporttypeservice.findAll();
 		Sporttype tatca = new Sporttype();
@@ -58,12 +60,13 @@ public class FieldController {
 		for (Sporttype sporttype : sporttypeList) {
 		    model.addAttribute("cates",sporttype);
 		}
+		model.addAttribute("selectedSportTypeId",selectedSportTypeId);
 		model.addAttribute("cates",sporttypeList);
 		model.addAttribute("fieldList", eventList);
 		return "user/san";
 	}
-	private String selectedSportTypeId;
-	
+
+
 	@GetMapping("/field/{cid}")
 	public String list(Model model, @PathVariable("cid") String cid) {
 			selectedSportTypeId = cid;
@@ -97,6 +100,7 @@ public class FieldController {
 			
 				model.addAttribute("fieldList",fieldList);
 			}
+			
 			model.addAttribute("cates",sporttypeList);
 
 			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
@@ -107,4 +111,78 @@ public class FieldController {
 		return "user/san-single";
 	}
 
+	@GetMapping("/field/pricemin/{selectedValue}")
+	public String listFieldMin(Model model, @PathVariable("selectedValue") String selectedValue) {
+		   List<Field> eventList = new ArrayList<>();
+		   if(selectedSportTypeId.equals("tatca")) {
+			   eventList = fieldservice.listPriceMin();
+		   }
+		   else {
+			   eventList = fieldservice.listMinPriceOfSportype(selectedSportTypeId);
+		   }
+		   List<Sporttype> sporttypeList = sporttypeservice.findAll();
+			Sporttype tatca = new Sporttype();
+			tatca.setCategoryname("Tất cả");
+			tatca.setSporttypeid("tatca");
+			sporttypeList.add(tatca);
+			Collections.sort(sporttypeList, new Comparator<Sporttype>() {
+			    @Override
+			    public int compare(Sporttype s1, Sporttype s2) {
+			        // Xác định logic sắp xếp
+			        if (s1.getCategoryname().equals("Tất cả")) {
+			            return -1; // Đẩy "Tất cả" lên đầu
+			        } else if (s2.getCategoryname().equals("Tất cả")) {
+			            return 1; // Đẩy "Tất cả" lên đầu
+			        } else {
+			            return s1.getCategoryname().compareTo(s2.getCategoryname());
+			        }
+			    }
+			});
+			// Hiển thị danh sách đã sắp xếp
+			for (Sporttype sporttype : sporttypeList) {
+			    model.addAttribute("cates",sporttype);
+			}
+			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
+
+			model.addAttribute("cates",sporttypeList);
+		    model.addAttribute("fieldList",eventList);
+		    return "user/san";
+	}
+	@GetMapping("/field/pricemax/{selectedValue1}")
+	public String listFieldMax(Model model, @PathVariable("selectedValue1") String selectedValue1) {
+		   List<Field> eventList = new ArrayList<>();
+		   if(selectedSportTypeId.equals("tatca")) {
+			   eventList = fieldservice.listPriceMax();
+		   }
+		   else {
+			   eventList = fieldservice.listMaxPriceOfSportype(selectedSportTypeId);
+		   }
+		   List<Sporttype> sporttypeList = sporttypeservice.findAll();
+			Sporttype tatca = new Sporttype();
+			tatca.setCategoryname("Tất cả");
+			tatca.setSporttypeid("tatca");
+			sporttypeList.add(tatca);
+			Collections.sort(sporttypeList, new Comparator<Sporttype>() {
+			    @Override
+			    public int compare(Sporttype s1, Sporttype s2) {
+			        // Xác định logic sắp xếp
+			        if (s1.getCategoryname().equals("Tất cả")) {
+			            return -1; // Đẩy "Tất cả" lên đầu
+			        } else if (s2.getCategoryname().equals("Tất cả")) {
+			            return 1; // Đẩy "Tất cả" lên đầu
+			        } else {
+			            return s1.getCategoryname().compareTo(s2.getCategoryname());
+			        }
+			    }
+			});
+			// Hiển thị danh sách đã sắp xếp
+			for (Sporttype sporttype : sporttypeList) {
+			    model.addAttribute("cates",sporttype);
+			}
+			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
+
+			model.addAttribute("cates",sporttypeList);
+		    model.addAttribute("fieldList",eventList);
+		    return "user/san";
+	}
 }
