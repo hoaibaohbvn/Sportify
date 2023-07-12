@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import duan.sportify.dao.TeamDAO;
+import duan.sportify.entities.Sporttype;
+import duan.sportify.service.SportTypeService;
 
 @Controller
 @RequestMapping("/sportify")
@@ -18,12 +20,18 @@ public class TeamController {
 
 	@Autowired
 	private TeamDAO teamdao;
+	
+	@Autowired
+	SportTypeService sportTypeService;
 
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
 	public String viewTeam(Model model) {
 		List<Object[]> listall = teamdao.findAllTeam();
 		model.addAttribute("team", listall);
+		List<Sporttype> sporttypeList = sportTypeService.findAll();
+		model.addAttribute("sporttype",sporttypeList);
+		System.out.println(sporttypeList.size());
 		return "user/doi";
 	}
 	// Đỗ dự liệu đã tìm kiếm 
