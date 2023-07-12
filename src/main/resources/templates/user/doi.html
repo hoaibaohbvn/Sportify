@@ -196,8 +196,11 @@
 						<div
 							class=" col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Lọc theo môn thể thao</h4>
-							<select class=" custom-select filter col-md-3 border border-success ">
-								<option th:each="spt:${sporttype}"  th:text="${spt.categoryname}" class="filter-item " selected></option>
+							<select class=" custom-select filter col-md-2 border border-success ">
+								<option class="filter-item " selected>Tất cả</option>
+								<option class="filter-item " value="1">One</option>
+								<option class="filter-item " value="2">Two</option>
+								<option class="filter-item 	" value="3">Three</option>
 							</select>
 						</div>
 					</div>
