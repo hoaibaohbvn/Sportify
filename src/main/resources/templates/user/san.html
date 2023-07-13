@@ -188,24 +188,16 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
-				<form
-					class="mb-4 pb-4 d-flex justify-content-center border-bottom col-11">
-					<input class="form-control mr-2 me-2 col-3" type="date"
-						placeholder="Search" aria-label="Search"> <select
-						class=" mr-2 form-control custom-select me-2 col-2"
-						id="inputGroupSelect01">
-						<option value="0">Tất cả</option>
-						<option value="1">Bóng đá</option>
-						<option value="2">Bóng rổ</option>
-						<option value="3">Cầu lông</option>
-						<option value="3">Tennis</option>
-
-					</select> <select class=" mr-2 form-control custom-select me-2 col-2"
+				<form class="mb-4 pb-4 d-flex justify-content-center border-bottom col-11">
+					<input id="dateInput" class="form-control mr-2 me-2 col-3" type="date" placeholder="Search" aria-label="Search"> 
+						<select  class=" mr-2 form-control custom-select me-2 col-2" id="inputGroupSelect01">
+						<option th:each="c : ${cates}" value="0">[[${c.categoryname}]]</option>
+						
+						</select> 
+					<select class=" mr-2 form-control custom-select me-2 col-2"
 						placeholder="Tìm kiếm theo tên" id="inputGroupSelect01">
-						<option value="0">Tất cả</option>
-						<option value="1">07:00 - 08:00</option>
-						<option value="2">07:00 - 08:00</option>
-						<option value="3">07:00 - 08:00</option>
+						<option  value="0">Test</option>
+						
 					</select>
 
 					<button class="btn btn-outline-success col-2 " type="submit">Search</button>
@@ -295,7 +287,7 @@
 						</div>
 
 					</div>
-					<div class="row mt-5">
+				<!--  	<div class="row mt-5">
 						<div class="col text-center">
 							<div class="block-27">
 								<ul>
@@ -310,6 +302,7 @@
 							</div>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div>

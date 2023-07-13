@@ -9,17 +9,18 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
 import duan.sportify.entities.Field;
+import duan.sportify.entities.Shifts;
 import duan.sportify.entities.Sporttype;
 import duan.sportify.service.FieldService;
+import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
 
 
@@ -32,11 +33,14 @@ public class FieldController {
 	@Autowired
 	SportTypeService sporttypeservice;
 	
+	
 	private String selectedSportTypeId;
-
+	
+	
 	@GetMapping("/field")
 	public String viewField(Model model) {
 		selectedSportTypeId = "tatca";
+		
 		List<Field> eventList = fieldservice.findAll();
 		List<Sporttype> sporttypeList = sporttypeservice.findAll();
 		Sporttype tatca = new Sporttype();
@@ -60,9 +64,12 @@ public class FieldController {
 		for (Sporttype sporttype : sporttypeList) {
 		    model.addAttribute("cates",sporttype);
 		}
+//		System.out.println(shifts);
+//		model.addAttribute("shift", shift);
 		model.addAttribute("selectedSportTypeId",selectedSportTypeId);
 		model.addAttribute("cates",sporttypeList);
 		model.addAttribute("fieldList", eventList);
+
 		return "user/san";
 	}
 
