@@ -10029,5 +10029,16 @@ a:hover span {
 }
 .filter-item 	{
 	  border	: 1px solid #00cc33;
-	
+}
+
+.lable_team{
+	margin-right:10px;
+	font-weight: bold;
+}
+
+.limited-length {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
