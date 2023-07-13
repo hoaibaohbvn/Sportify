@@ -188,10 +188,27 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
-				<form class="mb-5 d-flex justify-content-center col-12">
-					<input class="form-control me-2 col-6" type="date"
-						placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+				<form
+					class="mb-4 pb-4 d-flex justify-content-center border-bottom col-11">
+					<input class="form-control mr-2 me-2 col-3" type="date"
+						placeholder="Search" aria-label="Search"> <select
+						class=" mr-2 form-control custom-select me-2 col-2"
+						id="inputGroupSelect01">
+						<option value="0">Tất cả</option>
+						<option value="1">Bóng đá</option>
+						<option value="2">Bóng rổ</option>
+						<option value="3">Cầu lông</option>
+						<option value="3">Tennis</option>
+
+					</select> <select class=" mr-2 form-control custom-select me-2 col-2"
+						placeholder="Tìm kiếm theo tên" id="inputGroupSelect01">
+						<option value="0">Tất cả</option>
+						<option value="1">07:00 - 08:00</option>
+						<option value="2">07:00 - 08:00</option>
+						<option value="3">07:00 - 08:00</option>
+					</select>
+
+					<button class="btn btn-outline-success col-2 " type="submit">Search</button>
 				</form>
 				<div class="col-md-2 m-4">
 					<div class="sidebar-box ftco-animate">
@@ -225,9 +242,9 @@
 										<a class="dropdown-item" th:href="@{/sportify/field/}+ ${selectedSportTypeId}">Mặc định</a>
 									
 									 <a  th:href="@{/sportify/field/pricemin/{selectedValue}(selectedValue=${true})}"
-  										 th:class="${selectedValue} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá thấp - cao</a>
+  										 th:class="${selectedValue} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá thấp -> cao</a>
 									 <a  th:href="@{/sportify/field/pricemax/{selectedValue1}(selectedValue1=${true})}"
-  										 th:class="${selectedValue1} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá cao - thấp</a>
+  										 th:class="${selectedValue1} ? 'selected-item dropdown-item action active bg-success text-white' : 'dropdown-item dropdown-item-action'">Giá cao -> thấp</a>
 									 
 										
 								</div>
