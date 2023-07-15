@@ -188,26 +188,24 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
-				<form class="mb-4 pb-4 d-flex justify-content-center border-bottom col-11">
-					<input id="dateInput" class="form-control mr-2 me-2 col-3" type="date" placeholder="Search" aria-label="Search"> 
-						<select  class=" mr-2 form-control custom-select me-2 col-2" id="inputGroupSelect01">
-						<option th:each="c : ${cates}" value="0">[[${c.categoryname}]]</option>
+				<form onsubmit="return validateDate()" th:action="@{/sportify/field/search}" method="post" class="mb-4 pb-4 d-flex justify-content-center border-bottom col-11">
+					<input id="dateInput" name="dateInput" required class="form-control mr-2 me-2 col-3" type="date" placeholder="Search" aria-label="Search"> 
+						<select name="categorySelect" class=" mr-2 form-control custom-select me-2 col-2" id="inputGroupSelect01">
+						<option th:each="c : ${cateNotAll}" value="0" th:value="${c.sporttypeid}">[[${c.categoryname}]]</option>
 						
 						</select> 
-					<select class=" mr-2 form-control custom-select me-2 col-2"
+					<select name="shiftSelect" class="mr-2 form-control custom-select me-2 col-2"
 						placeholder="Tìm kiếm theo tên" id="inputGroupSelect01">
-						<option  value="0">Test</option>
+						<option th:each="s : ${shift}" value="0"  th:value="${s.shiftid}">[[${s.nameshift}]]</option>
 						
 					</select>
 
-					<button class="btn btn-outline-success col-2 " type="submit">Search</button>
+					<button  class="btn btn-outline-success col-2 " type="submit">Search</button>
 				</form>
 				<div class="col-md-2 m-4">
 					<div class="sidebar-box ftco-animate">
 						<div class="list-group">
-							<h4
-								class="text-center border-bottom font-weight-bold text-success">LOẠI
-								SÂN</h4>
+							<h4 class="text-center border-bottom font-weight-bold text-success">LOẠI SÂN</h4>
 							<a th:each="c : ${cates}" style="font-size: 18px;"
 								th:href="@{/sportify/field/{sporttypeid}(sporttypeid=${c.sporttypeid})}"
 								th:class="${c.sporttypeid == selectedSportTypeId} ? 'list-group-item list-group-item-action active bg-success text-white' : 'list-group-item list-group-item-action'">
@@ -220,9 +218,18 @@
 				</div>
 				<div class="col-md-9">
 					<div class="row mb-4">
+
+						<p style="font-size: 20px;margin-right: 2px;" class="font-weight-bold"
+							th:text="${thongbao}"> </p>
+						<p style="font-size: 18px; margin: 2px;"
+							class="font-weight-bold text-success" th:text="${namesporttype}"></p>
+						<p style="font-size: 18px; margin: 2px;"
+							class="font-weight-bold text-info" th:text="${nameshift}"></p>
+						<p style="font-size: 18px; margin: 2px;"
+							class="font-weight-bold text-danger" th:text="${formattedDate}"></p>
+
 						<div
 							class="col-md-12 d-flex justify-content-end align-items-center">
-							
 							<div  class="dropdown filter">
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
@@ -287,22 +294,7 @@
 						</div>
 
 					</div>
-				<!--  	<div class="row mt-5">
-						<div class="col text-center">
-							<div class="block-27">
-								<ul>
-									<li><a href="#">&lt;</a></li>
-									<li class="active"><span>1</span></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&gt;</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					-->
+	
 				</div>
 			</div>
 		</div>
@@ -441,6 +433,31 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
 	<script src="/user/jscode/favoriteHeart.js"></script>
+	<script>
+		var dateInput = document.getElementById("dateInput");
+
+		dateInput.oninvalid = function(event) {
+			event.target
+					.setCustomValidity("Vui lòng chọn một ngày");
+		};
+
+		dateInput.oninput = function(event) {
+			event.target.setCustomValidity("");
+		};
+		function validateDate() {
+			  var dateInput = document.getElementById("dateInput").value;
+			  var selectedDate = new Date(dateInput);
+			  var currentDate = new Date();
+
+			  if (selectedDate <= currentDate) {
+			    alert("Vui lòng chọn một ngày lớn hơn ngày hiện tại");
+			    return false; // Ngăn chặn gửi form
+			  }
+
+			  return true; // Cho phép gửi form
+			}
+	</script>
+
 </body>
 
 </html>

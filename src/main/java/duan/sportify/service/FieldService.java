@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import duan.sportify.entities.Field;
+import duan.sportify.entities.Shifts;
 
 
 
@@ -28,5 +29,6 @@ public interface FieldService {
 	List<Field> listMaxPriceOfSportype(String cid);
 	
 	List<Field> listPriceMax();
-
+	
+	List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect);
 }

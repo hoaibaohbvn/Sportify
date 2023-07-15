@@ -79,7 +79,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.estore</groupId>
+			<artifactId>estore</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

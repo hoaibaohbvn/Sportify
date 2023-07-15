@@ -16,5 +16,5 @@ public interface SportTypeService {
 
 	void delete(String id);
 	
-	Sporttype findById(String id);
+	List<Sporttype> findSporttypeById(String id);
 }

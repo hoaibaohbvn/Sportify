@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import duan.sportify.dao.FieldDAO;
 
 import duan.sportify.entities.Field;
-
-
+import duan.sportify.entities.Shifts;
 import duan.sportify.service.FieldService;
 
 
@@ -70,6 +69,12 @@ public class FieldServiceImpl implements FieldService{
 		// TODO Auto-generated method stub
 		return fieldDAO.listPriceMax();
 	}
+	@Override
+	public List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findSearch(dateInput, categorySelect, shiftSelect);
+	}
+	
 	
 
 

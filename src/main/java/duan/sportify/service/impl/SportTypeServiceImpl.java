@@ -41,9 +41,11 @@ public class SportTypeServiceImpl implements SportTypeService{
 		sportTypeDAO.deleteById(id);
 	}
 
+	
+
 	@Override
-	public Sporttype findById(String id) {
+	public List<Sporttype> findSporttypeById(String id) {
 		// TODO Auto-generated method stub
-		return sportTypeDAO.findById(id).get();
+		return sportTypeDAO.findSporttypeById(id);
 	}
 }
