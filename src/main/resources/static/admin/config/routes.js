@@ -1,67 +1,68 @@
+var app = angular.module("app", ["ngRoute"]);
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
     
 
     $routeProvider
-        .when('/', {
-            templateUrl: '/views/index.html',
+        .when('/admin/index.html', {
+            templateUrl: '/admin/views/index.html',
             pageTitle: 'Dashboard'
         })
-        .when('/index.html', {
-            redirectTo : '/'
+        .when('/', {
+            redirectTo : '/admin/index.html'
         })
-        .when('/account', {
-            templateUrl: '/views/account.html',
+        .when('/admin/accounts', {
+            templateUrl: '/admin/views/account.html',
             pageTitle: 'Account'
         })
-        .when('/booking', {
-            templateUrl: '/views/booking.html',
+        .when('/admin/bookings', {
+            templateUrl: '/admin/views/booking.html',
             pageTitle: 'Booking'
         })
-        .when('/event', {
-            templateUrl: '/views/event-list.html',
+        .when('/admin/events', {
+            templateUrl: '/admin/views/event-list.html',
             pageTitle: 'Event'
         })
-        .when('/field', {
-            templateUrl: '/views/field-list.html',
+        .when('/admin/fields', {
+            templateUrl: '/admin/views/field-list.html',
             pageTitle: 'Field'
         })
-        .when('/login', {
-            templateUrl: '/views/login.html',
+        .when('/admin/login', {
+            templateUrl: '/admin/views/login.html',
             pageTitle: 'Login',
             
         })
-        .when('/order-product', {
-            templateUrl: '/views/orderproduct.html',
+        .when('/admin/order-products', {
+            templateUrl: '/admin/views/orderproduct.html',
             pageTitle: 'Order Product'
         })
-        .when('/products', {
-            templateUrl: '/views/products-list.html',
+        .when('/admin/products', {
+            templateUrl: '/admin/views/products-list.html',
             pageTitle: 'Products'
         })
-        .when('/profile', {
-            templateUrl: '/views/profile.html',
+        .when('/admin/profiles', {
+            templateUrl: '/admin/views/profile.html',
             pageTitle: 'Profile'
         })
-        .when('/register', {
-            templateUrl: '/views/register.html',
+        .when('/admin/register', {
+            templateUrl: '/admin/views/register.html',
             pageTitle: 'Register'
         })
-        .when('/report', {
-            templateUrl: '/views/report.html',
+        .when('/admin/reports', {
+            templateUrl: '/admin/views/report.html',
             pageTitle: 'Report'
         })
-        .when('/resignation', {
-            templateUrl: '/views/resignation.html',
+        .when('/admin/resignation', {
+            templateUrl: '/admin/views/resignation.html',
             pageTitle: 'Resignation'
         })
-        .when('/team', {
-            templateUrl: '/views/team-list.html',
+        .when('/admin/teams', {
+            templateUrl: '/admin/views/team-list.html',
             pageTitle: 'Team'
         })
-        .when('/voucher', {
-            templateUrl: '/views/voucher-list.html',
+        .when('/admin/vouchers', {
+            templateUrl: '/admin/views/voucher-list.html',
             pageTitle: 'Voucher'
         })
 
