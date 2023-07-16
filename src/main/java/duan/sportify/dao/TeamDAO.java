@@ -24,4 +24,12 @@ public interface TeamDAO extends JpaRepository<Teams, Integer>{
 				+ "            where nameteam like %:searchText%\r\n"
 				+ "			GROUP BY teams.teamid;",nativeQuery = true)
 		List<Object[]> SearchTeam(@Param("searchText") String searchText);
+		
+		@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
+				+ "			FROM teams\r\n"
+				+ "			LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
+				+ "			LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid\r\n"
+				+ "            where sporttype.sporttypeid like :cid\r\n"
+				+ "			GROUP BY teams.teamid;",nativeQuery = true)
+		List<Object[]> FilterTeam(String cid);
 }
