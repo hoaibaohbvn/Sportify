@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import duan.sportify.entities.Eventweb;
 
 public interface EventDAO extends JpaRepository<Eventweb, Integer>{
+	@Query(value="SELECT COUNT(*) FROM eventweb;", nativeQuery = true)
+	List<Object> CountEvent();
 	@Query(value = "SELECT * FROM eventweb\r\n"
 			+ "WHERE MONTH(datestart) = MONTH(CURDATE()) AND YEAR(datestart) = YEAR(CURDATE());", nativeQuery = true)
 	List<Object[]> fillEventInMonth();
