@@ -17,7 +17,14 @@
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
-
+<style>
+body {
+  background-image: url('/user/images/bgAll.png');
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  
+}
+</style>
 </head>
 
 <body ng-app="">
@@ -188,7 +195,7 @@
 							<span class="flaticon-support"></span>
 						</div>
 						<div class="text">
-							<h2>Hỗ trợ 24/7</h2>
+							<h2>Hỗ trợ 24/7</h2> <br>
 							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn, ngay cả vào cuối tuần và ngày lễ.</p>
 						</div>
 					</div>
@@ -199,7 +206,7 @@
 							<span class="flaticon-cashback"></span>
 						</div>
 						<div class="text">
-							<h2>Thanh toán nhiều hình thức</h2>
+							<h2>Thanh toán với nhiều hình thức</h2>
 							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh toán phù hợp với bạn.</p>
 						</div>
 					</div>
@@ -258,42 +265,42 @@
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/vot.png);"></div>
-						<h3>Vợt Tennis</h3>
+						<h5>Vợt Tennis</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/bong.png);"></div>
-						<h3>Bóng Đá</h3>
+						<h5>Bóng Đá</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/caulong.png);"></div>
-						<h3>Vợt Cầu Lông</h3>
+						<h5>Vợt Cầu Lông</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/do_the_thao.png);"></div>
-						<h3>Đồ Thể Thao</h3>
+						<h5>Đồ Thể Thao</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/giay.png);"></div>
-						<h3>Giày Thể Thao</h3>
+						<h5>Giày Thể Thao</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/bongro.png);"></div>
-						<h3>Bóng Rổ</h3>
+						<h5>Bóng Rổ</h5>
 					</div>
 				</div>
 
@@ -322,11 +329,11 @@
 							 <a href="#" th:text="${f[2]}"></a>
 							</h3>
 							<p>
-								Giá tiền / 1 giờ: <span class="text-danger font-weight-bold"
+								<span class="text-success font-weight-bold">Giá tiền</span>: <span class="text-danger font-weight-bold"
 									th:text="${#numbers.formatCurrency(f[4])}"></span>
 							</p>
 							<p>
-								Địa chỉ: <span class="text-primary font-weight-bold"
+								<span class="text-success font-weight-bold">Địa chỉ</span>: <span class="text-dark font-weight"
 									th:text="${f[6]}"></span>
 							</p>
 							<a href="#" class="btn-custom">Continue <span
@@ -472,7 +479,7 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h3>Event</h3>
+					<h2>Event</h2>
 					<span class="subheading">Sự kiện trong tháng <span
 						th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></span>
 
