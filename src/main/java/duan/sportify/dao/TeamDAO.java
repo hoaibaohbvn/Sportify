@@ -19,20 +19,23 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n" + "FROM teams\r\n"
 			+ "LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
 			+ "LEFT JOIN sporttype ON  teams.sporttypeid = sporttype.sporttypeid \r\n"
-			+ "GROUP BY teams.teamid;", countQuery = "SELECT COUNT(*) FROM teams", nativeQuery = true)
+			+ "GROUP BY teams.teamid;", 
+			nativeQuery = true)
 	Page<Object[]> findAllTeam(Pageable pageable);
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "			FROM teams\r\n" + "			LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
 			+ "			LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid\r\n"
 			+ "            where nameteam like %:searchText%\r\n"
-			+ "			GROUP BY teams.teamid;", countQuery = "SELECT COUNT(*) FROM teams", nativeQuery = true)
+			+ "			GROUP BY teams.teamid;", 
+			nativeQuery = true)
 	Page<Object[]> SearchTeam(@Param("searchText") String searchText,Pageable pageable);
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "			FROM teams\r\n" + "			LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
 			+ "			LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid\r\n"
-			+ "            where sporttype.sporttypeid like :cid\r\n"
-			+ "			GROUP BY teams.teamid;", nativeQuery = true)
-	List<Object[]> FilterTeam(String cid);
+			+ "            where sporttype.sporttypeid like :sporttypeid\r\n"
+			+ "			GROUP BY teams.teamid;",
+			nativeQuery = true)
+	Page<Object[]> FilterTeam(String sporttypeid ,Pageable pageable);
 }
