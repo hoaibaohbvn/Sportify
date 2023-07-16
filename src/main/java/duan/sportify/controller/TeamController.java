@@ -2,10 +2,8 @@ package duan.sportify.controller;
 
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +29,7 @@ public class TeamController {
 	@Autowired
 	SportTypeService sportTypeService;
 
-	// Đỗ lọc
+	// Đỗ danh Sách bộ Lọc
 	@ModelAttribute("sporttypeList")
 	public List<Sporttype> getSporttypeList() {
 		return sportTypeService.findAll();
@@ -56,21 +54,30 @@ public class TeamController {
 		} else {
 			teamPage = teamdao.findAllTeam(pageable);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 		}
-
+		
+		
 		List<Object[]> teams = teamPage.getContent();
 		model.addAttribute("team", teams);
 		model.addAttribute("page", teamPage);
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("sporttypeid", sporttypeid);
+		
+		//Kiểm tra để hiển thị thông báo 
+		if (!searchText.isEmpty() && teamPage.getTotalElements()>0) {
+		    model.addAttribute("FoundMessage", "Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
+		}
+		if(teamPage.getTotalElements()==0){
+		    model.addAttribute("notFoundMessage", "Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
+		}
+		
 		return "user/doi";
 	}
 
 	@PostMapping("/team/search")
 	public String search(Model model, @RequestParam("searchText") String searchText, Pageable pageable) {
 		// Xử lý tìm kiếm và chuyển hướng đến trang /team với query parameter searchText
-		if (searchText == "") {
+		if(searchText=="") {
 			return "redirect:/sportify/team";
-
 		}
 		return "redirect:/sportify/team?searchText=" + searchText;
 	}
