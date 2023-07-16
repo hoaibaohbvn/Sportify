@@ -41,17 +41,27 @@ public class TeamController {
 	@GetMapping("/team")
 	public String viewTeam(Model model,
 			@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText,
+			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid,
 			Pageable pageable) {
+
 		Page<Object[]> teamPage;
-		if (searchText.isEmpty()) {
-			teamPage = teamdao.findAllTeam(pageable);
-		} else {
+
+		int searchTextLength = searchText.length();// Kiểm tra xem ng dùng có nhập vào ô tìm kiếm không
+		int sporttypeidLength = sporttypeid.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
+
+		if (searchTextLength > 0 && sporttypeidLength == 0) {// Kiểm tra nếu ng dùng có nhập vào ô tìm kiếm thì sẽ dỗ dữ liệu theo SearchTeam
 			teamPage = teamdao.SearchTeam(searchText, pageable);
+		} else if (searchTextLength == 0 && sporttypeidLength > 0) {// Kiểm tra nếu ng dùng chọn vào lọc thì sẽ dỗ dữ liệu theo FilterTeam
+			teamPage = teamdao.FilterTeam(sporttypeid, pageable);
+		} else {
+			teamPage = teamdao.findAllTeam(pageable);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 		}
+
 		List<Object[]> teams = teamPage.getContent();
 		model.addAttribute("team", teams);
 		model.addAttribute("page", teamPage);
 		model.addAttribute("searchText", searchText);
+		model.addAttribute("sporttypeid", sporttypeid);
 		return "user/doi";
 	}
 
@@ -67,10 +77,8 @@ public class TeamController {
 
 	@GetMapping("/team/{sporttypeid}")
 	public String handleSportifyTeam(Model model, @PathVariable("sporttypeid") String sporttypeid) {
-		String cid = sporttypeid;
-		List<Object[]> filterName = teamdao.FilterTeam(sporttypeid);
-		model.addAttribute("team", filterName);
-		return "user/doi";
+		// Xử lý Lọc và chuyển hướng đến trang /team với query parameter sporttypeid
+		return "redirect:/sportify/team?sporttypeid=" + sporttypeid;
 	}
 
 	@Autowired

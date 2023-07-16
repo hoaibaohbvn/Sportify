@@ -205,7 +205,8 @@
 									aria-labelledby="dropdownMenuButton">
 									<a th:each="spt : ${sporttypeList}"
 										th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
-										class="dropdown-item" th:text="${spt.categoryname}"></a>
+										th:value="${sporttypeid}" class="dropdown-item"
+										th:text="${spt.categoryname}"></a>
 								</div>
 							</div>
 						</div>
@@ -265,30 +266,32 @@
 					</div>
 
 				</div>
+				<div class="row col-md-12 mt-5">
+					<div class="col text-center">
+						<div class="block-27 ml-5">
+							<ul class="pagination d-flex justify-content-center ml-5">
+								<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
+									th:href="@{/sportify/team(page=${page.number - 1}, searchText=${searchText}, sporttypeid=${sporttypeid})}">&laquo;</a>
+								</li>
+								<li class="ml-1 mr-1 mb-5"
+									th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}">
+									<a
+									th:class="${page.number == pageNumber-1} ? 'bg-success text-white' : ''"
+									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${searchText}, sporttypeid=${sporttypeid})}"
+									th:text="${pageNumber}"></a>
+								</li>
+								<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
+									th:href="@{/sportify/team(page=${page.number + 1}, searchText=${searchText} , sporttypeid=${sporttypeid})}">&raquo;</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<div class="row col-md-12 mt-5">
-		<div class="col text-center">
-			<div class="block-27">
-				<ul class="pagination d-flex justify-content-center ml-5">
-					<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
-						th:href="@{/sportify/team(page=${page.number - 1}, searchText=${searchText})}">&laquo;</a>
-					</li>
-					<li class="ml-1 mr-1 mb-5"
-						th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}">
-						<a
-						th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${searchText})}"
-						th:text="${pageNumber}"></a>
-					</li>
-					<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
-						th:href="@{/sportify/team(page=${page.number + 1}, searchText=${searchText})}">&raquo;</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+
 
 
 	<footer class="ftco-footer">
