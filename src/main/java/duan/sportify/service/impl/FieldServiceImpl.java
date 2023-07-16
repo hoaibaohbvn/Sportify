@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import duan.sportify.dao.FieldDAO;
 
 import duan.sportify.entities.Field;
-
-
+import duan.sportify.entities.Shifts;
 import duan.sportify.service.FieldService;
 
 
@@ -51,8 +50,32 @@ public class FieldServiceImpl implements FieldService{
 		// TODO Auto-generated method stub
 		fieldDAO.deleteById(id);
 	}
-
-
+	@Override
+	public List<Field> listPriceMin(){
+		return fieldDAO.listPriceMin();
+	}
+	@Override
+	public List<Field> listMinPriceOfSportype(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.listMinPriceOfSportype(cid);
+	}
+	@Override
+	public List<Field> listMaxPriceOfSportype(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.listMaxPriceOfSportype(cid);
+	}
+	@Override
+	public List<Field> listPriceMax() {
+		// TODO Auto-generated method stub
+		return fieldDAO.listPriceMax();
+	}
+	@Override
+	public List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findSearch(dateInput, categorySelect, shiftSelect);
+	}
+	
+	
 
 
 	
