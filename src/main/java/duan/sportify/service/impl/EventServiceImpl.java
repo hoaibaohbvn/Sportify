@@ -47,4 +47,10 @@ public class EventServiceImpl implements EventService{
 		// TODO Auto-generated method stub
 		return eventDAO.findById(id).get();
 	}
+	
+    
+    @Override
+    public List<Eventweb> getEventByMonth(int month) {
+        return eventDAO.findByMonth(month);
+    }
 }
