@@ -2,6 +2,10 @@ package duan.sportify.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,61 +27,61 @@ public class TeamController {
 
 	@Autowired
 	private TeamDAO teamdao;
-	
+
 	@Autowired
 	SportTypeService sportTypeService;
-	
-	//Đỗ lọc
+
+	// Đỗ lọc
 	@ModelAttribute("sporttypeList")
 	public List<Sporttype> getSporttypeList() {
-	    return sportTypeService.findAll();
+		return sportTypeService.findAll();
 	}
 
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
-	public String viewTeam(Model model) {
-		List<Object[]> listall = teamdao.findAllTeam();
-		model.addAttribute("team", listall);
+	public String viewTeam(Model model,
+			@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText,
+			Pageable pageable) {
+		Page<Object[]> teamPage;
+		if (searchText.isEmpty()) {
+			teamPage = teamdao.findAllTeam(pageable);
+		} else {
+			teamPage = teamdao.SearchTeam(searchText, pageable);
+		}
+		List<Object[]> teams = teamPage.getContent();
+		model.addAttribute("team", teams);
+		model.addAttribute("page", teamPage);
+		model.addAttribute("searchText", searchText);
 		return "user/doi";
 	}
-	// tìm kiếm 
-	@PostMapping("team/search")
-	public String search(Model model, @RequestParam("SearchText") String searchText) {
-		//Tìm kiếm theo searchText
-	    List<Object[]> teams = teamdao.SearchTeam(searchText);
-	    model.addAttribute("team", teams);
-	    //Kiểm tra tìm kiếm được kết quả bao nhiêu team
-	    if (searchText=="") {
-	    	return "user/doi";
-		}else 
-			
-	    if (teams.isEmpty()) {
-	        model.addAttribute("notFoundMessage", "Không tìm thấy đội nào.");
-	    }else {
-	    	model.addAttribute("FoundMessage","Tìm thấy "+teams.size()+" kết quả tìm kiếm của '"+searchText+"'");
-	    }
-		return "user/doi";	}
-	
-	
-	 @GetMapping("/team/{sporttypeid}")
-	    public String handleSportifyTeam(Model model, @PathVariable("sporttypeid") String sporttypeid) {
-		 	String cid=sporttypeid;
-	        List<Object[]> filterName = teamdao.FilterTeam(sporttypeid);
-		    model.addAttribute("team", filterName);		    
-	        return "user/doi";
-	    }
-	 
-	 
-	 @Autowired
-	 TeamDetailDAO detailDAO;
-	 
-	 @GetMapping("team/teamdetail/{teamId}")
-		public String teamdetail(Model model, @PathVariable("teamId") String teamId) {
-		 	String Tid=teamId;
-	        System.out.println(Tid);
-	        List<Object[]> listall = detailDAO.findByIdTeam(Tid);
-			model.addAttribute("team", listall);
-			return "user/team-single";	}
-}
 
-	
+	@PostMapping("/team/search")
+	public String search(Model model, @RequestParam("searchText") String searchText, Pageable pageable) {
+		// Xử lý tìm kiếm và chuyển hướng đến trang /team với query parameter searchText
+		if (searchText == "") {
+			return "redirect:/sportify/team";
+
+		}
+		return "redirect:/sportify/team?searchText=" + searchText;
+	}
+
+	@GetMapping("/team/{sporttypeid}")
+	public String handleSportifyTeam(Model model, @PathVariable("sporttypeid") String sporttypeid) {
+		String cid = sporttypeid;
+		List<Object[]> filterName = teamdao.FilterTeam(sporttypeid);
+		model.addAttribute("team", filterName);
+		return "user/doi";
+	}
+
+	@Autowired
+	TeamDetailDAO detailDAO;
+
+	@GetMapping("team/teamdetail/{teamId}")
+	public String teamdetail(Model model, @PathVariable("teamId") String teamId) {
+		String Tid = teamId;
+		System.out.println(Tid);
+		List<Object[]> listall = detailDAO.findByIdTeam(Tid);
+		model.addAttribute("team", listall);
+		return "user/team-single";
+	}
+}
