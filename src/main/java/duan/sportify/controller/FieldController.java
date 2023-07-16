@@ -50,7 +50,7 @@ public class FieldController {
 		 	// Lấy List sân thỏa mãn đầu vào người dùng tìm: date, môn thể thao, giờ chơi theo ID ca
 		    List<Field> listsearch = fieldservice.findSearch(dateInput, categorySelect, shiftSelect);
 		    List<Shifts> shiftById = shiftservice.findShiftById(shiftSelect); // List này để lấy tên ca đổ lên thông báo
-		    List<Sporttype> sportypeById = sporttypeservice.findSporttypeById(categorySelect);
+		    List<Sporttype> sportypeById = sporttypeservice.findSporttypeById(categorySelect); // List này lấy tên môn thể thao đổ lên thông báo
 			@SuppressWarnings("unused")
 			List<Shifts> shift = shiftservice.findAll(); // Đổ tất cả ca lên dropdown tìm kiếm
 			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
