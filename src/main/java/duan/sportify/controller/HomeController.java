@@ -18,7 +18,6 @@ import duan.sportify.dao.FieldDAO;
 
 @CrossOrigin(origins = "*")
 @Controller
-// Tạo đường dẫn chung http://localhost:8080/sportify
 @RequestMapping("sportify")
 public class HomeController {
 	// Tiêm FieldDAO
@@ -45,15 +44,7 @@ public class HomeController {
 		model.addAttribute("fieldList", fieldList);
 		return "user/index";
 	}
-	/**
-	 * Phương thức gọi đến trang admin
-	 * Đường dẫn: http://localhost:8080/sportify/admin
-	 * @return dường dẫn http://localhost:8080/admin/index.html
-	 */
-	@GetMapping("admin")
-	public String admin() {
-		return "redirect:/admin/index.html";
-	}
+
 	
 	
 }
