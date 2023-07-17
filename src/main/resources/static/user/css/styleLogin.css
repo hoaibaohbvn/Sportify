@@ -82,7 +82,7 @@ button:hover {
 	height: 460px;
 	background: linear-gradient(to bottom, #000000, #00cc00, #003300);
 	border-radius: 60% /10%;
-	transform: translateY(80px);
+	transform: translateY(100px);
 	transition: .8s ease-in-out;
 }
 
@@ -98,7 +98,7 @@ button:hover {
 
 
 #chk:checked~.signup {
-	transform: translateY(-270px);
+	transform: translateY(-265px);
 }
 
 #chk:checked~.login label {
