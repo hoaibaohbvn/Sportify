@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SecurityController {
 	@GetMapping("login")
 	public String view() {
-		return "/security/dist/index";
+		return "/security/index";
 	}
 }
