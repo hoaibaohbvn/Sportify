@@ -31,4 +31,12 @@ public interface FieldService {
 	List<Field> listPriceMax();
 	
 	List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect);
+	
+	List<Field> findFieldById(Integer id);
+	
+	List<Field> findBySporttypeIdlimit3(String cid);
+	String findNameSporttypeById(Integer id);
+	
+	String findIdSporttypeById(Integer id);
+	
 }

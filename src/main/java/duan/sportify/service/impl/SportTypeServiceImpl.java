@@ -48,4 +48,6 @@ public class SportTypeServiceImpl implements SportTypeService{
 		// TODO Auto-generated method stub
 		return sportTypeDAO.findSporttypeById(id);
 	}
+
+	
 }

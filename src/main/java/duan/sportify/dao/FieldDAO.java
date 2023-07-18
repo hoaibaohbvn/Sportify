@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import duan.sportify.entities.Field;
+import duan.sportify.entities.Sporttype;
 
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
-
+	
 	@Query(value="SELECT COUNT(*) FROM field;", nativeQuery = true)
 	List<Object> CountField();
 	@Query("SELECT f FROM Field f WHERE f.sporttype.sporttypeid = ?1")
@@ -35,4 +36,17 @@ public interface FieldDAO extends JpaRepository<Field, Integer>{
 			+ "LEFT JOIN bookingdetails bd ON f.fieldid = bd.fieldid AND bd.playdate LIKE :dateInput and bd.shiftid LIKE :shiftSelect and st.sporttypeid LIKE :categorySelect \r\n"
 			+ "WHERE bd.fieldid IS NULL and st.sporttypeid LIKE :categorySelect", nativeQuery = true)
 	List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect);
+	
+	@Query(value="select * from field where fieldid = :id", nativeQuery = true)
+	List<Field> findFieldById(Integer id);
+	
+	@Query(value="SELECT s.categoryname FROM field f INNER JOIN sporttype s ON f.sporttypeid = s.sporttypeid WHERE f.fieldid = :id", nativeQuery = true)
+	String findNameSporttypeById(Integer id);
+	
+	@Query(value="SELECT s.sporttypeid FROM field f INNER JOIN sporttype s ON f.sporttypeid = s.sporttypeid WHERE f.fieldid = :id", nativeQuery = true)
+	String findIdSporttypeById(Integer id);
+	
+	@Query(value="select * from field where sporttypeid = :cid LIMIT 3", nativeQuery = true)
+	List<Field> findBySporttypeIdlimit3(String cid);
+
 }

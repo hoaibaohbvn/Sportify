@@ -74,6 +74,27 @@ public class FieldServiceImpl implements FieldService{
 		// TODO Auto-generated method stub
 		return fieldDAO.findSearch(dateInput, categorySelect, shiftSelect);
 	}
+	@Override
+	public List<Field> findFieldById(Integer id) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findFieldById(id);
+	}
+	@Override
+	public String findNameSporttypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findNameSporttypeById(id);
+	}
+	@Override
+	public String findIdSporttypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findIdSporttypeById(id);
+	}
+	@Override
+	public List<Field> findBySporttypeIdlimit3(String cid) {
+		// TODO Auto-generated method stub
+		return fieldDAO.findBySporttypeIdlimit3(cid);
+	}
+	
 	
 	
 

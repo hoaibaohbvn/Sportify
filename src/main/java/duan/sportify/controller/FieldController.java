@@ -282,4 +282,15 @@ public class FieldController {
 		    // Load lại trang sân
 		    return "user/san";
 	}
+	@GetMapping("/field/detail/{idField}")
+	public String viewDetail(Model model, @PathVariable Integer idField) {
+		List<Field> fieldListById = fieldservice.findFieldById(idField);
+		String nameSportype = fieldservice.findNameSporttypeById(idField);
+		String idSporttype = fieldservice.findIdSporttypeById(idField);
+		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Lấy sân theo Id môn thể thao
+		model.addAttribute("fieldListByIdSporttype",fieldListByIdSporttype);
+		model.addAttribute("nameSportype",nameSportype);
+		model.addAttribute("fieldListById",fieldListById);
+		return "user/san-single";
+	}
 }
