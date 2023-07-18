@@ -1,9 +1,20 @@
 package duan.sportify.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import duan.sportify.entities.Teamdetails;
 
 public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
+	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
+			+ "FROM teams\r\n"
+			+ "LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
+			+ "LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid \r\n"
+			+"where teams.teamid like :Tid \r\n"
+			+ "GROUP BY teams.teamid;",nativeQuery = true)
+		List<Object[]> findByIdTeam(String Tid);
 
 }

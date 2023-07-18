@@ -2,6 +2,7 @@ package duan.sportify.service;
 
 import java.util.List;
 
+import duan.sportify.dao.ProductDAO;
 import duan.sportify.entities.Products;
 
 
@@ -13,7 +14,16 @@ public interface ProductService {
 
 	Products update(Products products);
 
-	void delete(Integer id);
+	void delete(Integer productid);
 	
-	Products findById(Integer id);
+	
+	
+	Products findByCategory(Integer categoryid);
+
+	Products findById(Integer productid);
+
+	List<Products> findByCategoryId(String string);
+
+
+
 }

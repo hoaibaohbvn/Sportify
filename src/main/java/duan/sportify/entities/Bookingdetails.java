@@ -5,6 +5,8 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +40,10 @@ public class Bookingdetails implements Serializable {
 
     @Column(name="shiftid", nullable=false)
     private Integer    shiftid ;
+    
+    @Temporal(TemporalType.TIME)
+    @Column(name="playdate", nullable=false)
+    private Date       playdate ;
 
     @Column(name="fieldid", nullable=false)
     private Integer    fieldid ;

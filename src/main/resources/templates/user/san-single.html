@@ -56,7 +56,7 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<div class="reg m-1" ng-show="true">
 						<p class="mb-0">
 							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
@@ -69,8 +69,8 @@
 							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="#">Thông tin</a> <a
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
 								class="dropdown-item" href="#">Đăng xuất</a>
 						</div>
 					</div>

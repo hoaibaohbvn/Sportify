@@ -5,13 +5,16 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.List;
-import jakarta.persistence.*;
 
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 
 /**
  * JPA entity class for "Shifts"
@@ -40,11 +43,11 @@ public class Shifts implements Serializable {
 
     @Temporal(TemporalType.TIME)
     @Column(name="starttime", nullable=false)
-    private Date       starttime ;
+    private LocalTime       starttime ;
 
     @Temporal(TemporalType.TIME)
     @Column(name="endtime", nullable=false)
-    private Date       endtime ;
+    private LocalTime       endtime ;
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )

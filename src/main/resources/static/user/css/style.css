@@ -8367,7 +8367,7 @@ h1, h2, h3, h4, h5,
   background-position: top center;
   position: relative;
   z-index: 0;
-  height: 750px; }
+  height: 650px; }
   @media (max-width: 1199.98px) {
     .hero-wrap {
       background-position: center center !important; } }
@@ -9200,6 +9200,15 @@ textarea.form-control {
   @media (max-width: 767.98px) {
     .ftco-section {
       padding: 6em 0; } }
+      
+.btn-product {
+	background-color: #379237;
+	color: white;
+}
+
+.btn-product:hover {
+	background-color: #82CD47;
+}
 
 .ftco-no-pt {
   padding-top: 0; }
@@ -9999,11 +10008,9 @@ textarea.form-control {
 .link {
 	height: 60px;
 	width: 60px;
-	background-color: #caf7e3;
 	border-radius: 30px;
 	text-align: center;
-	/*margin: 7px;
-	line-height: 80px;*/
+	border: 1px solid grey;
 }
 
 a span {
@@ -10031,5 +10038,16 @@ a:hover span {
 }
 .filter-item 	{
 	  border	: 1px solid #00cc33;
-	
+}
+
+.lable_team{
+	margin-right:10px;
+	font-weight: bold;
+}
+
+.limited-length {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
