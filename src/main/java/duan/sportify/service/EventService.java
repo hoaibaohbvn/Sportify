@@ -18,4 +18,9 @@ public interface EventService {
 	void delete(Integer id);
 	
 	Eventweb findById(Integer id);
+	
+	
+	List<Eventweb> getEventByMonth(int month);
+	
+
 }

@@ -42,8 +42,14 @@ public class Sporttype implements Serializable {
     private List<Field> listOfField ; 
 
     @OneToMany(mappedBy="sporttype")
-    private List<Teams> listOfTeams ; 
+    private List<Teams> listOfTeams ;
 
+	public Sporttype(String sporttypeid) {
+
+		this.sporttypeid = sporttypeid;
+	} 
+    
+    
 
     
 }

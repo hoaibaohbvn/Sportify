@@ -12,5 +12,27 @@ import duan.sportify.entities.Field;
 
 
 public interface FieldDAO extends JpaRepository<Field, Integer>{
+
+	@Query(value="SELECT COUNT(*) FROM field;", nativeQuery = true)
+	List<Object> CountField();
+	@Query("SELECT f FROM Field f WHERE f.sporttype.sporttypeid = ?1")
+	List<Field> findBySporttypeId(String cid);
 	
+	@Query(value="select * from field order by price ASC", nativeQuery = true)
+	List<Field> listPriceMin();
+	
+	@Query(value="select * from field where sporttypeid = ?1 order by price ASC", nativeQuery = true)
+	List<Field> listMinPriceOfSportype(String cid);
+	
+	@Query(value="select * from field order by price DESC", nativeQuery = true)
+	List<Field> listPriceMax();
+	
+	@Query(value="select * from field where sporttypeid = ?1 order by price DESC", nativeQuery = true)
+	List<Field> listMaxPriceOfSportype(String cid);
+	
+	@Query(value="SELECT f.*\r\n"
+			+ "FROM field f inner join sporttype st on f.sporttypeid = st.sporttypeid\r\n"
+			+ "LEFT JOIN bookingdetails bd ON f.fieldid = bd.fieldid AND bd.playdate LIKE :dateInput and bd.shiftid LIKE :shiftSelect and st.sporttypeid LIKE :categorySelect \r\n"
+			+ "WHERE bd.fieldid IS NULL and st.sporttypeid LIKE :categorySelect", nativeQuery = true)
+	List<Field> findSearch(String dateInput, String categorySelect, Integer shiftSelect);
 }
