@@ -128,6 +128,6 @@ public class TeamController {
         session.removeAttribute("loggedInUser");
         
         // Điều hướng người dùng đến trang chủ hoặc trang đăng nhập (tuỳ chọn)
-        return "redirect:/sportify/login";
+        return "redirect:/sportify";
     }
 }
