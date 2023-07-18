@@ -9737,9 +9737,10 @@ textarea.form-control {
 
 .block-21 .blog-img {
   display: block;
-  height: 70px;
-  width: 70px;
-  border-radius: 4px; }
+  height: 100px;
+  width: 100px;
+  border-radius: 4px;
+  object-fit: cover; }
 
 .block-21 .text {
   width: calc(100% - 70px); }
