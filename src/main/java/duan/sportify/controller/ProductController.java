@@ -15,12 +15,18 @@ import duan.sportify.dao.CategoryDAO;
 import duan.sportify.dao.ProductDAO;
 import duan.sportify.entities.Categories;
 import duan.sportify.entities.Products;
+import duan.sportify.entities.Users;
 import duan.sportify.service.CategoryService;
 import duan.sportify.service.ProductService;
+import duan.sportify.service.UserService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/sportify")
 public class ProductController {
+
+	@Autowired
+	UserService userService;
 	@Autowired
 	ProductDAO productDAO;
 	@Autowired
@@ -32,7 +38,20 @@ public class ProductController {
 	CategoryService categoryService;
 
 	@GetMapping("product")
-	public String list(Model model, Model model2, @RequestParam("categoryid") Optional<String> categoryid) {
+	public String list(Model model, Model model2, @RequestParam("categoryid") Optional<String> categoryid,
+			HttpSession session) {
+
+		// Kiểm tra show thông tin người dùng
+		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		if (loggedInUser != null) {
+			// Thực hiện các thao tác cần thiết để hiển thị thông tin người dùng trên trang
+			// /team
+			// System.out.println("Username: " + loggedInUser.getUsername());
+			model.addAttribute("loggedInUser", loggedInUser);
+			Users users = userService.findById(loggedInUser.getUsername());
+			model.addAttribute("users", users);
+		}
+
 		if (categoryid.isPresent()) {
 			List<Products> productList = productService.findByCategoryId(categoryid.get());
 			model.addAttribute("productList", productList);
@@ -40,7 +59,7 @@ public class ProductController {
 			List<Products> productList = productDAO.findAll();
 			model.addAttribute("productList", productList);
 		}
-		//category list
+		// category list
 		List<Categories> categoryList = categoryDAO.findAll();
 		model2.addAttribute("categoryList", categoryList);
 		return "user/product";
