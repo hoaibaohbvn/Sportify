@@ -1,5 +1,6 @@
 package duan.sportify.controller;
 
+import java.awt.SystemColor;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,6 @@ public class TeamController {
 	public List<Sporttype> getSporttypeList() {
 		return sportTypeService.findAll();
 	}
-
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
 	public String viewTeam(Model model,
@@ -93,10 +93,10 @@ public class TeamController {
 
 	@GetMapping("team/teamdetail/{teamId}")
 	public String teamdetail(Model model, @PathVariable("teamId") String teamId) {
-		String Tid = teamId;
-		System.out.println(Tid);
-		List<Object[]> listall = detailDAO.findByIdTeam(Tid);
+		List<Object[]> listall = detailDAO.findByIdTeam(teamId);
+		List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
 		model.addAttribute("team", listall);
+		model.addAttribute("user",userTeam);
 		return "user/team-single";
 	}
 }

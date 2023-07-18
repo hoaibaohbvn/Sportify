@@ -25,7 +25,6 @@
 </head>
 
 <body>
-
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
@@ -171,7 +170,7 @@
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Home <i
 								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="blog.html">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Team
+							href="blog.html">Team <i class="fa fa-chevron-right"></i></a></span> <span>Team
 							Single <i class="fa fa-chevron-right"></i>
 						</span>
 					</p>
@@ -181,167 +180,81 @@
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-degree-bg">
+	<section class="ftco-section ftco-degree-">
 		<div class="container">
 			<div class="row">
-					<div class="col-md-12 row d-flex">
-						<div th:each="s: ${team}"
-							class="col-lg-12 d-flex align-items-stretch ftco-animate">
-							<div class="blog-entry d-md-flex">
-								<img class="block-20 img bg-dark block-19"
-									th:src="@{'/user/images/' + ${s[4]}}" alt="" src="">
-								<div class="text p-4 bg-light d-flex flex-column">
+				<div class="col-md-12 row d-flex" th:each="s: ${team}">
+					<div class="col-lg-12 d-flex align-items-stretch ftco-animate">
+						<div class="blog-entry col-md-12 d-md-flex">
+							<img class="block-20 img bg-dark block-19 rounded"
+								th:src="@{'/user/images/' + ${s[4]}}" alt="" src="">
+							<div class="ml-5 text p-4 bg-light d-flex flex-column">
 
-									<h3 th:text="${s[2]}" class="heading mb-3"
-										style="color: #2E7D32; font-weight: bold;">
-										<a href="#"></a>
-									</h3>
-									<div class="meta">
-										<p class="fa fa-calendar"></p>
-										<span th:text="${#dates.format(s[8], 'dd-MM-yyyy')}"></span>
-									</div>
-									<div class="d-flex ">
-										<p class="lable_team">Thành viên:</p>
-										<p th:text="${s[10]}" style="margin-right: 5px"></p>
-										<p style="margin-right: 5px">/</p>
-										<p th:text="${s[3]}" style="margin-right: 5px"></p>
-									</div>
-									<div class="d-flex">
-										<p class="lable_team">Môn thể thao :</p>
-										<p th:text="${s[9]}"></p>
-									</div>
-
-									<div class="d-flex">
-										<p class="lable_team">Liên hệ :</p>
-										<p th:text="${s[5]}"></p>
-									</div>
-
-									<div class="d-flex">
-										"
-										<p th:text="${s[6]}" class="limited-length"
-											style="font-style: italic;"></p>
-										"
-									</div>
-
-									<a class="btn-custom">Continue <span
-										class="fa fa-long-arrow-right"></span></a>
-									<div class="submit-section align-self-end mt-auto">
-										<a
-											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${s[0]})}"
-											class="btn btn-success">Tham gia ngay</a>
-									</div>
-
+								<h3 th:text="${s[2]}" class="heading"
+									style="color: #2E7D32; font-weight: bold;">
+									<a href="#"></a>
+								</h3>
+								<div class="meta">
+									<p class="fa fa-calendar"></p>
+									<span th:text="${#dates.format(s[8], 'dd-MM-yyyy')}"></span>
 								</div>
+								<div class="d-flex ">
+									<p class="lable_team">Thành viên:</p>
+									<p th:text="${s[10]}" style="margin-right: 5px"></p>
+									<p style="margin-right: 5px">/</p>
+									<p th:text="${s[3]}" style="margin-right: 5px"></p>
+								</div>
+								<div class="d-flex">
+									<p class="lable_team">Môn thể thao :</p>
+									<p th:text="${s[9]}"></p>
+								</div>
+
+								<div class="d-flex">
+									<p class="lable_team">Liên hệ :</p>
+									<p th:text="${s[5]}"></p>
+								</div>
+
+								<div class="d-flex">
+									"
+									<p th:text="${s[6]}" style="font-style: italic;"></p>
+									"
+								</div>
+								<div class="submit-section align-self-end mt-auto"></div>
+
 							</div>
 						</div>
 					</div>
-					<div class="pt-5 mt-5">
-						<h3 class="mb-5">6 Comments</h3>
-						<ul class="comment-list">
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-							<!-- END comment-list -->
+				</div>
+				<div class="pt-5 mt-5">
+					<div class="d-flex">
+						<h3 class="mb-5"></h3>
+						<h3 class="mb-5 ml-2">Thành viên</h3>
 					</div>
-
+					<ul th:each="u:${user}" class="comment-list">
+						<li class="comment">
+							<div class="vcard bio">
+								<img src="/user/images/person_1.jpg" alt="Image placeholder">
+							</div>
+							<div class="comment-body">
+								<!-- Họ tên -->
+								<div class="d-flex">
+									<h3 th:text="${u[2]}"></h3>
+									<h3 th:text="${u[3]}" class="ml-1"></h3>
+								</div>
+								<div th:value="${u[0]}" class="show" style="display: none;"> Chào !!!!!!!!!!!</div>
+								</div>
+								<div class="meta">April 12, 2020 at 1:21am</div>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
+									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
+									voluptas earum impedit necessitatibus, nihil?</p>
+								<p>
+									<a href="#" class="reply">Xem thêm...</a>
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -477,6 +390,15 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="/user/js/google-map.js"></script>
 	<script src="/user/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.reply').click(function() {
+            const value = $(this).closest('.comment-body').find('.show').attr('th:value');
+            $(`.show[th\\:value="${value}"]`).show();
+        });
+    });
+</script>
 
 </body>
 
