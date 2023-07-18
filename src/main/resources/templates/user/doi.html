@@ -216,6 +216,9 @@
 								<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
 								<div class="dropdown-menu dropdown-menu-right filter-item"
 									aria-labelledby="dropdownMenuButton">
+										<a
+										th:href="@{/sportify/team}"
+										class="dropdown-item">Tất cả</a>
 									<a th:each="spt : ${sporttypeList}"
 										th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 										th:value="${sporttypeid}" class="dropdown-item"
