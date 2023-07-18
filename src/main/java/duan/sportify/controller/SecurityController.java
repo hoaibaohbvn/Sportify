@@ -41,12 +41,4 @@ public class SecurityController {
         }
 
     }
-	@GetMapping("/logout")
-    public String logout(HttpSession session) {
-        // Xóa thông tin đăng nhập khỏi session
-        session.removeAttribute("loggedInUser");
-        
-        // Điều hướng người dùng đến trang chủ hoặc trang đăng nhập (tuỳ chọn)
-        return "redirect:/sportify";
-    }
 }
