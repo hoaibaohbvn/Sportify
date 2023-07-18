@@ -26,9 +26,12 @@
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
 <link rel="stylesheet" href="/user/css/customCSS.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src = "https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 
-<body>
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
@@ -94,7 +97,7 @@
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="flaticon-shopping-bag"></span>
 					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
+						<small>0</small>
 					</div>
 				</a>
 				<!-- giỏ hàng ảo -->
@@ -106,28 +109,6 @@
 							<h4>Bacardi 151</h4>
 							<p class="mb-0">
 								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
 									01</span>
 							</p>
 						</div>
@@ -182,7 +163,7 @@
 			</div>
 		</div>
 	</section>
-
+	<!-- container sản phẩm -->
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
@@ -217,11 +198,11 @@
 						<div class="col-md-4 d-flex" th:each="product : ${productList}">
 							<div class="product ftco-animate"
 								style="background-color: #EEEEEE">
-								<div>
+								<div class="d-flex align-items-center justify-content-center">
 									<img
 										class="img d-flex align-items-center justify-content-center"
 										th:src="@{'/user/images/products_img/' + ${product.image}}"
-										alt="Error" style="width: 255px; height: 250px">
+										alt="Error" style="height: 250px; width: 255px; object-fit: fill">
 
 								</div>
 								<div class="text text-center">
@@ -229,13 +210,13 @@
 										th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'">Sale</span> -->
 									<div class="row hoverIcons">
 										<p class="col-md-4">
-											<a href="#"
+											<a href="" th:attr="ng-click=@{'cart.addProduct(' + ${product.productid} + ')'}"
 												class="d-flex align-items-center justify-content-center link shopping-bag"><span
 												class="flaticon-shopping-bag"></span></a>
 										</p>
-
+										
 										<p class="col-md-4">
-											<a href="#"
+											<a href=""
 												class="d-flex align-items-center justify-content-center link heart"><span
 												class="flaticon-heart"></span></a>
 										</p>
@@ -482,7 +463,7 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
-
+	<script src="/user/js/shopping-cart-app.js"></script>
 </body>
 
 </html>

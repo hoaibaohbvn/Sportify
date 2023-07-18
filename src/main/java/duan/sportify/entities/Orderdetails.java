@@ -28,7 +28,7 @@ public class Orderdetails implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="orderdetailsid", nullable=false)
     private Integer    orderdetailsid ;
 
