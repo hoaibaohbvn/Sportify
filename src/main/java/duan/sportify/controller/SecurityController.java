@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -26,12 +27,13 @@ public class SecurityController {
     
     @PostMapping("/login/check")
     public String checkLogin(Model model,@RequestParam("usernameLogin") String usernameLogin, 
-                              @RequestParam("passwordLogin") String passwordLogin) {
+                              @RequestParam("passwordLogin") String passwordLogin,  HttpSession session) {
         // Xử lý đăng nhập với username và password ở đây
         Users users = userDAO.findAcc(usernameLogin,passwordLogin);
         if (users != null) {
             // Thực hiện các thao tác tiếp theo
     		model.addAttribute("username", usernameLogin);
+            session.setAttribute("loggedInUser", users);
             return "redirect:/sportify";
         } else {
             // Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác

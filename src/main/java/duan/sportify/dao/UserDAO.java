@@ -13,5 +13,4 @@ public interface UserDAO extends JpaRepository<Users, String>{
 	
 	@Query(value = "SELECT * FROM sportify.users WHERE username like :usernameLogin  AND passwords like :passwordLogin ", nativeQuery = true)
 	Users findAcc(@Param("usernameLogin") String usernameLogin, @Param("passwordLogin") String passwordLogin);
-
 }
