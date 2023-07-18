@@ -49,17 +49,6 @@ public class TeamController {
 			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid,
 			Pageable pageable) {
 
-		// Kiểm tra show thông tin người dùng
-			Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-			if (loggedInUser != null) {
-			// Thực hiện các thao tác cần thiết để hiển thị thông tin người dùng trên trang
-			// /team
-			//		    System.out.println("Username: " + loggedInUser.getUsername());
-			model.addAttribute("loggedInUser", loggedInUser);
-			Users users= userService.findById(loggedInUser.getUsername());
-			model.addAttribute("users",users);
-			}
-
 		// Thực hiện show Team
 		Page<Object[]> teamPage;
 
@@ -122,12 +111,4 @@ public class TeamController {
 		return "user/team-single";
 	}
 	
-	@GetMapping("/logout")
-    public String logout(HttpSession session) {
-        // Xóa thông tin đăng nhập khỏi session
-        session.removeAttribute("loggedInUser");
-        
-        // Điều hướng người dùng đến trang chủ hoặc trang đăng nhập (tuỳ chọn)
-        return "redirect:/sportify";
-    }
 }
