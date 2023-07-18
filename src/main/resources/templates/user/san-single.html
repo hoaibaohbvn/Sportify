@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+	<title>Chi Tiết Sân</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,6 +23,7 @@
 
 	<link rel="stylesheet" href="/user/css/flaticon.css">
 	<link rel="stylesheet" href="/user/css/style.css">
+	
 </head>
 
 <body>
@@ -161,17 +162,16 @@
 	</nav>
 	<!-- END nav -->
 
-	<section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/bg_2.jpg');"
+	<section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/backgroundField.jpg');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
-					<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Trang Chủ <i
-									class="fa fa-chevron-right"></i></a></span> <span><a href="product.html">Sân<i
-									class="fa fa-chevron-right"></i></a></span> <span>Đặt Sân<i
-								class="fa fa-chevron-right"></i></span></p>
-					<h2 class="mb-0 bread">Đặt Sân</h2>
+					<p class="breadcrumbs mb-0"><span class="mr-2"><a th:href="@{/sportify}">Trang Chủ <i
+									class="fa fa-chevron-right"></i></a></span> <span><a th:href="@{/sportify/field}">Sân<i
+									class="fa fa-chevron-right"></i></a></span> <span>Chi tiết sân</span></p>
+					<h2 class="mb-0 bread">Chi Tiết Sân</h2>
 				</div>
 			</div>
 		</div>
@@ -179,23 +179,26 @@
 
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row">
+			<div class="row" th:each="e : ${fieldListById}">
 				<div class="col-lg-6 mb-5 ftco-animate">
-					<a href="images/prod-1.jpg" class="image-popup prod-img-bg"><img src="/user/images/prod-1.jpg"
-							class="img-fluid" alt="Colorlib Template"></a>
+					<img class="block-20 block-19 img"
+									th:src="@{'/user/images/' + ${e.image}}" alt="Image">
 				</div>
-				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-					<h3>Bacardi 151 Degree</h3>
-					<p class="price"><span>$120.00</span></p>
-					<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It
-						is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-					<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
-						would have been rewritten a thousand times and everything that was left from its origin would be
-						the word "and" and the Little Blind Text should turn around and return to its own, safe country.
-						But nothing the copy said could convince her and so it didn’t take long until a few insidious
-						Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their
-						agency, where they abused her for their.
-					</p>
+				<div  class="col-lg-6  pl-md-5 ftco-animate">
+					<h3 th:text="${e.namefield}"></h3>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+						fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+  					<path
+							d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+					</svg>
+					<b class="text-info font-weight-bold" th:text="${e.address}"></b>
+					<p><span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(e.price)}"></span> / <span class="font-weight-bold">Giờ</span>
+					<div class=" align-self-end mt-auto">
+						<button class="btn btn-success">Đặt sân ngay</button>
+					</div> <br>
+					<h5 class="font-weight-bold" style="font-family: Arial, sans-serif;">Mô tả chi tiết:</h5>
+					 <div  style="font-family: 14/18px Arial, sans-serif;text-align: justify; font-size: 16px; line-height: 1.5;" th:utext="${e.descriptionfield}"> </div>
+					
 					<div class="row mt-4">
 						<div class="input-group col-md-6 d-flex mb-3">
 						</div>
@@ -205,71 +208,28 @@
 					</div>
 				</div>
 			</div>
-			<h4 class="mb-5">Sản phẩm liên quan</h4>
+			<h4 class="mb-5">Các sân liên quan đến môn <span class="font-weight-bold text-info" th:text="${nameSportype}"></span> </h4>
 		</div>
-		<div class="row m-2">
-			<div class="col-lg-4 d-flex align-items-stretch ftco-animate">
+		<div  class="row m-2">
+			<div th:each="f : ${fieldListByIdSporttype}" class="col-lg-4 d-flex align-items-stretch ftco-animate">
 				<div class="blog-entry d-flex">
-					<a href="blog-single.html" class="block-20 img"
-						style="background-image: url('/user/images/san.png');">
-					</a>
+					<img class="block-20 img" 
+									th:src="@{'/user/images/' + ${f.image}}" alt="Image">
+
 					<div class="text p-4 bg-light">
-						<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a>
+						<h3 class="heading mb-3"><a href="#" th:text="${f.namefield}"></a>
 						</h3>
-						<p>A small river named Duden flows by their place and supplies it with the necessary
-							regelialia.</p>
-						<a href="#" class="btn-custom">Continue <span
+						<p class="truncate-text" style="max-width: 200px;" th:utext="${#strings.length(f.descriptionfield) > 200 ? #strings.substring(f.descriptionfield, 0, 105) + '...' : f.descriptionfield}"></p>
+						<a th:href="@{/sportify/field/detail/{idField}(idField=${f.fieldid})}" class="btn-custom">xem chi tiết <span
 								class="fa fa-long-arrow-right"></span></a>
 
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 d-flex align-items-stretch ftco-animate">
-				<div class="blog-entry d-flex">
-					<a href="blog-single.html" class="block-20 img"
-						style="background-image: url('/user/images/bong.png');">
-					</a>
-					<div class="text p-4 bg-light">
-						<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a>
-						</h3>
-						<p>A small river named Duden flows by their place and supplies it with the necessary
-							regelialia.</p>
-						<a href="#" class="btn-custom">Continue <span
-								class="fa fa-long-arrow-right"></span></a>
-
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 d-flex align-items-stretch ftco-animate">
-				<div class="blog-entry d-flex">
-					<a href="blog-single.html" class="block-20 img"
-						style="background-image: url('/user/images/bong.png');">
-					</a>
-					<div class="text p-4 bg-light">
-						<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a>
-						</h3>
-						<p>A small river named Duden flows by their place and supplies it with the necessary
-							regelialia.</p>
-						<a href="#" class="btn-custom">Continue <span
-								class="fa fa-long-arrow-right"></span></a>
-
-					</div>
-				</div>
-			</div>
+		
+			
 		</div>
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						<li><a href="#">&lt;</a></li>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">&gt;</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+		
 	</section>
 
 	<footer class="ftco-footer">
@@ -379,8 +339,10 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="/user/js/google-map.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
+	<script src="/user/jscode/favoriteHeart.js"></script>
 
 	<script>
 		$(document).ready(function () {
