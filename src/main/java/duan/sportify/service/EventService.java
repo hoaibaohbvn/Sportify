@@ -21,6 +21,9 @@ public interface EventService {
 	
 	
 	List<Eventweb> getEventByMonth(int month);
+
+	
+	
 	
 
 }
