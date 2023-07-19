@@ -18,12 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import duan.sportify.entities.Users;
 import duan.sportify.service.UserService;
 import duan.sportify.dao.TeamDAO;
-import duan.sportify.entities.Teams;
 import duan.sportify.dao.TeamDetailDAO;
-import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Sporttype;
 import duan.sportify.service.SportTypeService;
-import duan.sportify.service.TeamService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -35,15 +32,9 @@ public class TeamController {
 
 	@Autowired
 	UserService userService;
-
+	
 	@Autowired
 	SportTypeService sportTypeService;
-
-	@Autowired
-	TeamDetailDAO detailDAO;
-
-	@Autowired
-	UserDAO userDAO;
 
 	// Đỗ danh Sách bộ Lọc
 	@ModelAttribute("sporttypeList")
@@ -93,7 +84,6 @@ public class TeamController {
 		return "user/doi";
 	}
 
-	// tìm kiếm team theo tên
 	@PostMapping("/team/search")
 	public String search(Model model, @RequestParam("searchText") String searchText, Pageable pageable) {
 		// Xử lý tìm kiếm và chuyển hướng đến trang /team với query parameter searchText
@@ -103,56 +93,22 @@ public class TeamController {
 		return "redirect:/sportify/team?searchText=" + searchText;
 	}
 
-	// Điều hướng lọc
 	@GetMapping("/team/{sporttypeid}")
 	public String handleSportifyTeam(Model model, @PathVariable("sporttypeid") String sporttypeid) {
 		// Xử lý Lọc và chuyển hướng đến trang /team với query parameter sporttypeid
 		return "redirect:/sportify/team?sporttypeid=" + sporttypeid;
 	}
-@Autowired 
-Teams teams;
-@Autowired
-TeamService teamService;
 
-	// Điều hướng đến trang chi tiết
+	@Autowired
+	TeamDetailDAO detailDAO;
+
 	@GetMapping("team/teamdetail/{teamId}")
-	public String teamdetail(Model model, @PathVariable("teamId") String teamId, HttpSession session) {
-		// kiểm tra đăng nhập
-		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-		//Người dùng đã đăng nhập
-		if (loggedInUser != null) {
-			// Người dùng tồn tại và thông tin đăng nhập chính xác
-			// Kiểm tra user đã tồn tại trong team
-			String username = loggedInUser.getUsername();
-			Users user = detailDAO.checkTeamUser(username, teamId);
-			Teams teams = teamService.findById(teamId);
-			//username đã có trong team
-			if (user != null) {
-				// Show thông tin + thành viên trong team
-				List<Object[]> listall = detailDAO.findByIdTeam(teamId);
-				List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
-				model.addAttribute("team", listall);
-				model.addAttribute("user", userTeam);
-				return "user/team-single";
-			//Người dùng chưa có trong team
-			}else {
-			// Add vô team 
-				System.out.println("Thêm thành viên vô team !");
-			//show team chuyển hướng đến detail
-				// Show thông tin + thành viên trong team
-				List<Object[]> listall = detailDAO.findByIdTeam(teamId);
-				List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
-				model.addAttribute("team", listall);
-				model.addAttribute("user", userTeam);
-			return "user/team-single";
-			}
-
-			
-		//Chưa đăng nhập trả về login
-		} else {
-			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login";
-		}
+	public String teamdetail(Model model, @PathVariable("teamId") String teamId) {
+		List<Object[]> listall = detailDAO.findByIdTeam(teamId);
+		List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
+		model.addAttribute("team", listall);
+		model.addAttribute("user", userTeam);
+		return "user/team-single";
 	}
-
+	
 }
