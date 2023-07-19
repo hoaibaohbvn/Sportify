@@ -17,6 +17,14 @@
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
+<style>
+body {
+  background-image: url('/user/images/bgAll.png');
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  
+}
+</style>
 </head>
 
 <body ng-app="">
@@ -50,24 +58,33 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
 						<p class="mb-0">
-							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
+							<a th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
-					<div class="dropdown m-1" ng-hide="false">
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
 						<a class="dropdown-toggle" id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img class="rounded-circle border border-white"
-							src="/user/images/person_1.jpg" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" href="#">Đăng xuất</a>
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+								xuất</a>
 						</div>
 					</div>
+
 					<!-- end check login -->
 				</div>
 
@@ -156,7 +173,7 @@
 	<!-- END nav -->
 
 	<div class="hero-wrap"
-		style="background-image: url('/user/images/bg_index1.png');"
+		style="background-image: url('/user/images/bgSum.jpg');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -164,8 +181,9 @@
 				class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-8 ftco-animate d-flex align-items-end">
 					<div class="text w-100 text-center">
-						<h1 class="mb-4">
-							Good <span>Sport</span> for Good <span>Health</span>.
+					
+						<h1 class="mb-2" style="font-size: 100px">
+							 <span>Good Sport <br> For  Good Health</span>
 						</h1>
 						<p>
 							<a href="#" class="btn btn-primary py-2 px-4">Tham gia</a> <a
@@ -187,9 +205,8 @@
 							<span class="flaticon-support"></span>
 						</div>
 						<div class="text">
-							<h2>Online Support 24/7</h2>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<h2>Hỗ trợ 24/7</h2> <br>
+							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn, ngay cả vào cuối tuần và ngày lễ.</p>
 						</div>
 					</div>
 				</div>
@@ -199,9 +216,8 @@
 							<span class="flaticon-cashback"></span>
 						</div>
 						<div class="text">
-							<h2>Money Back Guarantee</h2>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<h2>Thanh toán với nhiều hình thức</h2>
+							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh toán phù hợp với bạn.</p>
 						</div>
 					</div>
 				</div>
@@ -211,9 +227,8 @@
 							<span class="flaticon-free-delivery"></span>
 						</div>
 						<div class="text">
-							<h2>Free Shipping &amp; Return</h2>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<h2>Miễn phí giao hàng &amp; Hoàn trả</h2>
+							<p>Chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng và miễn phí cho mọi đơn hàng của bạn. Chúng tôi cũng nhận đổi hoặc hoàn trả một cách dễ dàng và không mất phí.</p>
 						</div>
 					</div>
 				</div>
@@ -225,12 +240,12 @@
 		<div class="container">
 			<div class="row">
 				<div
-					class="col-md-6 img img-3 d-flex justify-content-center align-items-center"
+					class="col-md-5 img img-3 d-flex justify-content-center align-items-center"
 					style="background-image: url(/user/images/bg_index3.png);"></div>
-				<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
+				<div class="col-md-7 wrap-about pl-md-5 ftco-animate py-5">
 					<div class="heading-section">
-						<h2 class="mb-4">GIẢM GIÁ 30% QUẦN ÁO - NÂNG CẤP TỦ ĐỒ CỦA
-							BẠN</h2>
+						<h3 class="mb-4">GIẢM GIÁ 30% QUẦN ÁO - NÂNG CẤP TỦ ĐỒ CỦA
+							BẠN</h3>
 
 						<p>Chào mừng mùa hè! Chúng tôi rất vui thông báo về chương
 							trình giảm giá 30% quần áo tại cửa hàng. Đây là cơ hội tuyệt vời
@@ -260,42 +275,42 @@
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/vot.png);"></div>
-						<h3>Vợt Tennis</h3>
+						<h5>Vợt Tennis</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/bong.png);"></div>
-						<h3>Bóng Đá</h3>
+						<h5>Bóng Đá</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/caulong.png);"></div>
-						<h3>Vợt Cầu Lông</h3>
+						<h5>Vợt Cầu Lông</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/do_the_thao.png);"></div>
-						<h3>Đồ Thể Thao</h3>
+						<h5>Đồ Thể Thao</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/giay.png);"></div>
-						<h3>Giày Thể Thao</h3>
+						<h5>Giày Thể Thao</h5>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
 							style="background-image: url(/user/images/bongro.png);"></div>
-						<h3>Bóng Rổ</h3>
+						<h5>Bóng Rổ</h5>
 					</div>
 				</div>
 
@@ -324,11 +339,11 @@
 							 <a href="#" th:text="${f[2]}"></a>
 							</h3>
 							<p>
-								Giá tiền / 1 giờ: <span class="text-danger font-weight-bold"
+								<span class="text-success font-weight-bold">Giá tiền</span>: <span class="text-danger font-weight-bold"
 									th:text="${#numbers.formatCurrency(f[4])}"></span>
 							</p>
 							<p>
-								Địa chỉ: <span class="text-primary font-weight-bold"
+								<span class="text-success font-weight-bold">Địa chỉ</span>: <span class="text-dark font-weight"
 									th:text="${f[6]}"></span>
 							</p>
 							<a href="#" class="btn-custom">Continue <span
@@ -399,7 +414,7 @@
 											style="background-image: url(/user/images/messi.png)"></div>
 										<div class="pl-3">
 											<p class="name">Lionel Messi</p>
-											<span class="position">ầu thủ xuất sắc nhất thế giới.</span>
+											<span class="position">Cầu thủ xuất sắc nhất thế giới.</span>
 										</div>
 									</div>
 								</div>
@@ -412,18 +427,32 @@
 									<span class="fa fa-quote-left">
 								</div>
 								<div class="text">
-									<p class="mb-4">Tôi đã bỏ lỡ hơn 9000 cú sút trong sự
-										nghiệp của mình. Tôi đã thua gần 300 trò chơi. 26 lần, tôi đã
-										được tin tưởng để thực hiện cú đánh thắng trận và trượt. Tôi
-										đã thất bại hết lần này đến lần khác trong đời. Và đó là lý do
-										tại sao tôi thành công.</p> 
+									<p class="mb-4">"Đã chọn thể thao thì bắt buộc phải nỗ lực và hy sinh, bởi tôi muốn vươn lên đỉnh cao trong sự nghiệp, bởi kỷ lục không bao giờ có giới hạn, nên với tôi ngày hôm nay phải tốt hơn ngày hôm qua."</p><br> 
 									<div class="d-flex align-items-center">
 										<div class="user-img"
-											style="background-image: url(/user/images/person_3.jpg)"></div>
+											style="background-image: url(/user/images/anhvien.jpg)"></div>
+										<div class="pl-3">
+											<p class="name">Nguyễn Thị Ánh Viên</p>
+											<span class="position">Vận động viên bơi lội</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<div class="testimony-wrap py-4">
+								<div
+									class="icon d-flex align-items-center justify-content-center">
+									<span class="fa fa-quote-left">
+								</div>
+								<div class="text">
+									<p class="mb-4">"Tôi đã trượt hơn 9000 cú ném trong sự nghiệp của mình. Tôi đã thua gần 300 trận đấu. 26 lần tôi được tin tưởng giao cho cú ném quyết định trận đấu và bỏ lỡ chúng. Tôi đã thất bại hết lần này đến lần khác trong đời mình. Và đó là lý do tôi thành công."</p>
+									<div class="d-flex align-items-center">
+										<div class="user-img"
+											style="background-image: url(/user/images/ro.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">Michael Jordan</p>
-											<span class="position">Cầu thủ bóng rổ vĩ đại nhất mọi
-												thời đại.</span>
+											<span class="position">Cựu cầu thủ bóng rổ nhà nghề nổi tiếng thế giới</span>
 										</div>
 									</div>
 								</div>
@@ -436,36 +465,13 @@
 									<span class="fa fa-quote-left">
 								</div>
 								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p><br><br><br>
+									<p class="mb-4">"Đừng ngại thất bại, đó là con đường dẫn đến thành công."</p><br><br><br><br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
-											style="background-image: url(/user/images/person_1.jpg)"></div>
+											style="background-image: url(/user/images/LeBron_James.jpg)"></div>
 										<div class="pl-3">
-											<p class="name">Roger Scott</p>
-											<span class="position">Marketing Manager</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="testimony-wrap py-4">
-								<div
-									class="icon d-flex align-items-center justify-content-center">
-									<span class="fa fa-quote-left">
-								</div>
-								<div class="text">
-									<p class="mb-4">Far far away, behind the word mountains,
-										far from the countries Vokalia and Consonantia, there live the
-										blind texts.</p><br><br><br>
-									<div class="d-flex align-items-center">
-										<div class="user-img"
-											style="background-image: url(/user/images/person_2.jpg)"></div>
-										<div class="pl-3">
-											<p class="name">Roger Scott</p>
-											<span class="position">Marketing Manager</span>
+											<p class="name">LeBron James</p>
+											<span class="position">Vận động viên bóng rổ chuyên nghiệp Hoa Kỳ</span>
 										</div>
 									</div>
 								</div>
@@ -483,7 +489,7 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h3>Event</h3>
+					<h2>Event</h2>
 					<span class="subheading">Sự kiện trong tháng <span
 						th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></span>
 
@@ -530,7 +536,7 @@
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>

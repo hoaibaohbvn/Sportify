@@ -36,14 +36,25 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(Integer productid) {
 		// TODO Auto-generated method stub
-		productDAO.deleteById(id);
+		productDAO.deleteById(productid);
 	}
 
 	@Override
-	public Products findById(Integer id) {
+	public Products findById(Integer productid) {
 		// TODO Auto-generated method stub
-		return productDAO.findById(id).get();
+		return productDAO.findById(productid).get();
+	}
+
+	@Override
+	public Products findByCategory(Integer categoryid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Products> findByCategoryId(String categoryid) {
+		return productDAO.findByCategoryId(categoryid);
 	}
 }

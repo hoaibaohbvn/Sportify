@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
 <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
-
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
 </head>
@@ -54,24 +53,33 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
 						<p class="mb-0">
-							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
+							<a th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
-					<div class="dropdown m-1" ng-hide="false">
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
 						<a class="dropdown-toggle" id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img class="rounded-circle border border-white"
-							src="/user/images/person_1.jpg" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
 								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" href="#">Đăng xuất</a>
+								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+								xuất</a>
 						</div>
 					</div>
+
 					<!-- end check login -->
 				</div>
 
@@ -181,93 +189,130 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
-				<form class="mb-5 d-flex justify-content-center col-12">
-					<input class="form-control me-2 col-6" type="search"
+				<!-- Lấy giá trị searchText trả về trang /sportify/team/search với method="post" -->
+				<form th:action="@{/sportify/team/search}" method="post"
+					class="mb-0 d-flex justify-content-center col-md-12">
+					<input th:value="${searchText}" value="" name="searchText"
+						class="form-control me-2 col-6" type="search"
 						placeholder="Tìm kiếm theo tên" aria-label="Search">
 					<button class="btn btn-outline-success col-2" type="submit">Search</button>
 				</form>
-				<div class="row col-md-12 ml-5">
+				<!-- Hiển thị thông báo kết quả tìm kiếm( KQ > 0 ) -->
+				<div class="d-flex justify-content-center col-md-12 mt-1">
+					<div class="mr-4 col-md-8" th:if="${FoundMessage}"
+						th:text="${FoundMessage}"></div>
+				</div>
+
+				<div class="row col-md-12 ml-5 mt-4">
 					<div class="row col-md-12 mb-4">
-						<div class="col-md-12 d-flex justify-content-between align-items-center">
+						<div
+							class="col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Lọc theo môn thể thao</h4>
 							<div class="dropdown filter">
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">Lọc</button>
+
+								<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
 								<div class="dropdown-menu dropdown-menu-right filter-item"
 									aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Bóng đá</a> <a
-										class="dropdown-item" href="#">Bóng rổ</a> <a
-										class="dropdown-item" href="#">Tennis</a> <a
-										class="dropdown-item" href="#">Cầu lông</a>
+										<a
+										th:href="@{/sportify/team}"
+										class="dropdown-item">Tất cả</a>
+									<a th:each="spt : ${sporttypeList}"
+										th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
+										th:value="${sporttypeid}" class="dropdown-item"
+										th:text="${spt.categoryname}"></a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Hiển thị thông báo tìm kiếm khi KQ =0 -->
+					<div class="col-md-12" th:if="${notFoundMessage}"
+						th:text="${notFoundMessage}"></div>
+					<!-- Đỗ dự liệu khi trong team  -->
 					<div class="col-md-12 row d-flex">
-						<div th:each="s: ${team}"class="col-lg-6 d-flex align-items-stretch ftco-animate">
+						<div th:each="team: ${team}"
+							class="col-lg-6 d-flex align-items-stretch ftco-animate">
 							<div class="blog-entry d-md-flex">
 								<img class="block-20 img bg-dark block-19"
-									th:src="@{'/user/images/' + ${s[4]}}" alt="" src="">
+									th:src="@{'/user/images/' + ${team[4]}}" alt="" src="">
 								<div class="text p-4 bg-light d-flex flex-column">
-									
-									<h3 th:text="${s[2]}" class="heading mb-3" style="color: #2E7D32; font-weight: bold;">
+
+									<h3 th:text="${team[2]}" class="heading mb-3"
+										style="color: #2E7D32; font-weight: bold;">
 										<a href="#"></a>
 									</h3>
 									<div class="meta">
 										<p class="fa fa-calendar"></p>
-										<span th:text="${#dates.format(s[8], 'dd-MM-yyyy')}"></span>
+										<span th:text="${#dates.format(team[8], 'dd-MM-yyyy')}"></span>
 									</div>
 									<div class="d-flex ">
-									<p class="lable_team">Thành viên: </p>
-										<p th:text="${s[10]}" style="margin-right:5px"> </p>
-										<p style="margin-right:5px">/</p>
-										<p th:text="${s[3]}"style="margin-right:5px"></p>
+										<p class="lable_team">Thành viên:</p>
+										<p th:text="${team[10]}" style="margin-right: 5px"></p>
+										<p style="margin-right: 5px">/</p>
+										<p th:text="${team[3]}" style="margin-right: 5px"></p>
 									</div>
 									<div class="d-flex">
-									<p class="lable_team">Môn thể thao :</p>
-									<p th:text="${s[9]}"></p>
+										<p class="lable_team">Môn thể thao :</p>
+										<p th:text="${team[9]}"></p>
 									</div>
-									
+
 									<div class="d-flex">
-									<p class="lable_team">Liên hệ :</p>
-									<p th:text="${s[5]}"></p>
+										<p class="lable_team">Liên hệ :</p>
+										<p th:text="${team[5]}"></p>
 									</div>
-									
+
 									<div class="d-flex">
-									"<p th:text="${s[6]}" style="font-style: italic;"></p>"
+										<p th:text="${team[6]}" class="limited-length"
+											style="font-style: italic;"></p>
 									</div>
-									
-									<a href="#" class="btn-custom">Continue <span
+
+									<a class="btn-custom">Continue <span
 										class="fa fa-long-arrow-right"></span></a>
 									<div class="submit-section align-self-end mt-auto">
-										<button class="btn btn-success ">Tham gia ngay</button>
+										<!-- Chuyển đến trang Detail của Team được chọn -->
+										<a
+											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${team[0]})}"
+											class="btn btn-success">Tham gia ngay</a>
 									</div>
 
 								</div>
 							</div>
 						</div>
-
 					</div>
-					<div class="row col-md-12 mt-5">
-						<div class="col text-center">
-							<div class="block-27">
-								<ul>
-									<li><a href="#">&lt;</a></li>
-									<li class="active"><span>1</span></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&gt;</a></li>
-								</ul>
-							</div>
+
+				</div>
+				<div class="row col-md-12 mt-5">
+					<div class="col text-center">
+						<div class="block-27 ml-5">
+							<!-- Các nút điều hướng của trang -->
+							<ul class="pagination d-flex justify-content-center ml-5">
+								<!-- Nút lùi lại 1 -->
+								<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
+									th:href="@{/sportify/team(page=${page.number - 1}, searchText=${searchText}, sporttypeid=${sporttypeid})}">&laquo;</a>
+								</li>
+								<!-- Các nút số Trang -->
+								<li class="ml-1 mr-1 mb-5"
+									th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
+									th:unless="${page.totalPages <= 1}"><a
+									th:class="${page.number == pageNumber-1} ? 'bg-success text-white' : ''"
+									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${searchText}, sporttypeid=${sporttypeid})}"
+									th:text="${pageNumber}"></a></li>
+								<!-- Nút tiếng lên 1 -->
+								<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
+									th:href="@{/sportify/team(page=${page.number + 1}, searchText=${searchText} , sporttypeid=${sporttypeid})}">&raquo;</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+
+
 
 	<footer class="ftco-footer">
 		<div class="container">
@@ -400,6 +445,5 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
-
 </body>
 </html>

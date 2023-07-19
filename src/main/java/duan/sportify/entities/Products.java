@@ -5,6 +5,7 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
@@ -20,8 +21,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name="products", catalog="sportify" )
 public class Products implements Serializable {
@@ -49,7 +49,7 @@ public class Products implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name="datecreate", nullable=false)
-    private Date       datecreate ;
+    private LocalDate       datecreate ;
 
     @Column(name="price", nullable=false)
     private Double     price ;
