@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import duan.sportify.entities.Teamdetails;
+import duan.sportify.entities.Users;
 
 public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
@@ -27,5 +28,9 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 			+ "INNER JOIN teams ON teamdetails.teamid = teams.teamid\r\n"
 			+ "WHERE teams.teamid like :teamId",nativeQuery = true)
 	List<Object[]> findUserByIdTeam(String teamId);
+	
+	@Query(value = "SELECT * FROM sportify.teamdetails\r\n"
+			+ "where teamid like :teamId And username like :username",nativeQuery = true)
+	Users checkTeamUser(String username, String teamId);
 
 }
