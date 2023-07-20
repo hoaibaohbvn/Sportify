@@ -1,0 +1,116 @@
+<!-- Header -->
+<div ng-include="'/admin/templates/header.html'"></div>
+<!-- /Header -->
+
+<!-- Sidebar -->
+<div ng-include="'/admin/templates/sidebar.html'"></div>
+<!-- /Sidebar -->
+
+<!-- Page Wrapper -->
+<div class="page-wrapper" ng-controller="CategoryProductController">
+
+	<!-- Page Content -->
+	<div class="content container-fluid">
+
+		<!-- Page Header -->
+		<div class="page-header">
+			<div class="row align-items-center">
+				<div class="col">
+					<h3 class="page-title">Category Product</h3>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item active">Category Product</li>
+					</ul>
+				</div>
+				<div class="col-auto float-right ml-auto">
+					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_categoryproduct" ng-click="newForm()"><i
+							class="fa fa-plus"></i> Add
+						Category Product</a>
+				</div>
+
+
+			</div>
+		</div>
+		<!-- /Page Header -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table table-striped custom-table mb-0 datatable" id="tableCategoryProduct">
+						<thead>
+							<tr>
+								<th style="width: 30px;">#</th>
+								<th>Category Product Name</th>
+								<th class="text-right">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Page Content -->
+
+	<!-- Add & Edit Allowance Modal -->
+	<div id="add_categoryproduct" class="modal custom-modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">{{submitButtonText }} Category Product</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form name="addAllowanceTypeForm">
+						<div class="form-group">
+							<label>Allowance Name <span class="text-danger">*</span></label>
+							<input class="form-control" type="text" ng-model="allowancetypeData.name" ng-change="clearErrors()">
+							<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'name' ">{{
+										error.message }}</errors>
+						</div>
+						<div class="submit-section">
+							<button ng-click="addOrUpdate()" class="btn btn-primary submit-btn">{{submitButtonText}}</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- Toast message -->
+		<div id="toast"></div>
+		<!-- Toast message -->
+	</div>
+	<!-- /Add Allowance Modal -->
+<!-- Delete Job Modal -->
+<div id="delete_allowancetype" class="modal custom-modal fade" role="dialog">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="form-header">
+					<h3>Delete Job</h3>
+					<p>Are you sure you want to delete <b>{{text}}</b><strong>this</strong>?</p>
+</div>
+				<div class="modal-btn delete-action">
+					<div class="row">
+						<div class="col-6">
+							<a class="btn btn-primary continue-btn" ng-click="deleteAllowanceType()" >Xóa</a>
+						</div>
+						<div class="col-6">
+							<a href="javascript:void(0);" data-dismiss="modal"
+								class="btn btn-primary cancel-btn">Thoát</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Delete Job Modal -->
+
+
+</div>

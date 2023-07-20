@@ -2,19 +2,22 @@ package duan.sportify.service;
 
 import java.util.List;
 
-import duan.sportify.entities.Authorized;
+import org.springframework.stereotype.Service;
+
+import duan.sportify.dto.CategoryDTO;
 import duan.sportify.entities.Categories;
 
 
-
+@Service
 public interface CategoryService {
-	List<Categories> findAll();
-
-	Categories create(Categories categories);
-
-	Categories update(Categories categories);
-
-	void delete(Integer id);
+	public List<Categories> getAll();
 	
-	Categories findById(Integer id);
+	public CategoryDTO getOne(Integer id);
+
+	public void delete(Integer id);
+
+	CategoryDTO createOrUpdate(CategoryDTO dto);
+
+	Categories findByCategoryid(Integer categoryid);
+	
 }

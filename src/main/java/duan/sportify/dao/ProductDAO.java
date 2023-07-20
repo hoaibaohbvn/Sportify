@@ -12,5 +12,5 @@ public interface ProductDAO extends JpaRepository<Products, Integer>{
 	List<Object> CountProduct();
 	@Query("Select p From Products p Where p.categoryid=?1")
 	List<Products> findByCategoryId(String categoryid);
-
+	
 }
