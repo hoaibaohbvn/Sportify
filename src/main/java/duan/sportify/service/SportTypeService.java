@@ -2,24 +2,22 @@ package duan.sportify.service;
 
 import java.util.List;
 
-import duan.sportify.dto.CategoryDTO;
-import duan.sportify.dto.SportTypeDTO;
 import duan.sportify.entities.Authorized;
-import duan.sportify.entities.Categories;
+import duan.sportify.entities.Field;
 import duan.sportify.entities.Sporttype;
 
 
 
 public interface SportTypeService {
 	List<Sporttype> findAll();
-	
-	public List<Sporttype> getAll();
-	
-	public SportTypeDTO getOne(Integer id);
 
-	public void delete(Integer id);
+	Sporttype create(Sporttype sporttype);
 
-	SportTypeDTO createOrUpdate(SportTypeDTO dto);
+	Sporttype update(Sporttype sporttype);
+
+	void delete(String id);
 	
 	List<Sporttype> findSporttypeById(String id);
+	
+
 }
