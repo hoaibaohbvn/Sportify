@@ -10051,3 +10051,16 @@ a:hover span {
   text-overflow: ellipsis;
   max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
+
+.infouser{
+	display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Tùy chỉnh màu nền (có thể thay đổi độ mờ) */
+        z-index: 9999;
+}
