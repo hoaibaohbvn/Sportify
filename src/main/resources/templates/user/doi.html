@@ -57,8 +57,8 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> <a
+								th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
 
@@ -186,6 +186,27 @@
 		</div>
 	</section>
 
+	<!-- Đoạn mã để hiển thị thông báo nếu có -->
+	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
+		style="display: none;">
+		<div class="col-3 alert alert-success"
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message}"></p>
+
+		</div>
+	</div>
+	<div class="col-12 fixed-top" id="messageDiv1" th:if="${message1}"
+		style="display: none;">
+		<div class="col-3 alert alert-danger "
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message1}"></p>
+
+		</div>
+	</div>
+
+
+
+
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
@@ -216,9 +237,7 @@
 								<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
 								<div class="dropdown-menu dropdown-menu-right filter-item"
 									aria-labelledby="dropdownMenuButton">
-										<a
-										th:href="@{/sportify/team}"
-										class="dropdown-item">Tất cả</a>
+									<a th:href="@{/sportify/team}" class="dropdown-item">Tất cả</a>
 									<a th:each="spt : ${sporttypeList}"
 										th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 										th:value="${sporttypeid}" class="dropdown-item"
@@ -231,6 +250,8 @@
 					<div class="col-md-12" th:if="${notFoundMessage}"
 						th:text="${notFoundMessage}"></div>
 					<!-- Đỗ dự liệu khi trong team  -->
+
+
 					<div class="col-md-12 row d-flex">
 						<div th:each="team: ${team}"
 							class="col-lg-6 d-flex align-items-stretch ftco-animate">
@@ -267,22 +288,19 @@
 										<p th:text="${team[6]}" class="limited-length"
 											style="font-style: italic;"></p>
 									</div>
-
-									<a class="btn-custom">Continue <span
-										class="fa fa-long-arrow-right"></span></a>
 									<div class="submit-section align-self-end mt-auto">
-										<!-- Chuyển đến trang Detail của Team được chọn -->
 										<a
 											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${team[0]})}"
-											class="btn btn-success">Tham gia ngay</a>
+											class="btn btn-success">Xem thêm</a>
+
 									</div>
 
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
+
 				<div class="row col-md-12 mt-5">
 					<div class="col text-center">
 						<div class="block-27 ml-5">
@@ -445,5 +463,6 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
+
 </body>
 </html>

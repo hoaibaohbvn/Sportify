@@ -58,8 +58,8 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> <a
+								th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
 
@@ -168,6 +168,8 @@
 	</nav>
 	<!-- END nav -->
 
+
+
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('/user/images/bg_2.jpg');"
 		data-stellar-background-ratio="0.5">
@@ -188,6 +190,46 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Đoạn mã để hiển thị thông báo nếu có -->
+	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
+		style="display: none;">
+		<div class="col-3 alert alert-success"
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message}"></p>
+
+		</div>
+	</div>
+
+	<div class="col-12 infouser" id="descriptionModal"
+		th:if="${infouser == null}">
+		<div class="col-4" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Nhập mô tả</h5>
+					<button type="button" class="close" id="closeButton">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Đặt tên cho trường textarea -->
+					<form th:action="@{/sportify/team/teamdetail/updateinfoUser}"
+						method="post">
+						<input type="hidden" name="teamId" th:value="${teamId}" />
+						<div class="form-group">
+							<label>Mô tả:</label>
+							<textarea th:value="${description}" class="form-control"
+								name="description" rows="4"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Lưu</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<section class="ftco-section ftco-degree-">
 		<div class="container">
@@ -228,39 +270,48 @@
 									<p th:text="${s[6]}" style="font-style: italic;"></p>
 									"
 								</div>
-								<div class="submit-section align-self-end mt-auto"></div>
+								<div class="submit-section align-self-end mt-auto">
+									<!-- Chuyển đến trang Detail của Team được chọn -->
+									<a
+										th:href="@{/sportify/team/teamdetail/{teamId}/exit(teamId=${s[0]})}"
+										class="btn btn-success">Rời Team</a>
+								</div>
 
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="pt-5 mt-5">
+				<div class="pt-5 mt-5 col-12">
 					<div class="d-flex">
 						<h3 class="mb-5"></h3>
 						<h3 class="mb-5 ml-2">Thành viên</h3>
 					</div>
-					<ul th:each="u:${user}" class="comment-list">
-						<li class="comment">
+					<ul th:each="u:${user}" class="comment-list col-12">
+						<li class="comment col-12">
 							<div class="vcard bio">
 								<img src="/user/images/person_1.jpg" alt="Image placeholder">
 							</div>
-							<div class="comment-body">
+							<div class="comment-body d-flex">
+								<h3 th:text="${u[2]}"></h3>
+								<h3 th:text="${u[3]}" class="ml-1"></h3>
 								<!-- Họ tên -->
-								<div class="d-flex">
-									<h3 th:text="${u[2]}"></h3>
-									<h3 th:text="${u[3]}" class="ml-1"></h3>
-								</div>
-								<div th:value="${u[0]}" class="show" style="display: none;"> Chào !!!!!!!!!!!</div>
-								</div>
-								<div class="meta">April 12, 2020 at 1:21am</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-									autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-									voluptas earum impedit necessitatibus, nihil?</p>
-								<p>
-									<a href="#" class="reply">Xem thêm...</a>
-								</p>
 							</div>
+							<div>
+								<p class="fa fa-calendar"></p>
+								<span th:text="${#dates.format(u[12	], 'dd-MM-yyyy')}"></span>
+							</div>
+							<div class="col-12 d-flex bg-dark">
+								<p th:text="${u[13]}"></p>
+								<button
+									th:href="@{/sportify/team/teamdetail/edit/{teamId}(teamId=${teamId})}">Edit</button>
+							</div>
+							
+							<div  class="meta metaDiv" style="display: none">
+								<p>hello</p>
+							</div>
+							<p  class="showMoreParagraph">
+								<a class="reply" onclick="showMore(event)">Xem thêm...</a>
+							</p>
 						</li>
 					</ul>
 				</div>
@@ -400,15 +451,6 @@
 	<script src="/user/js/google-map.js"></script>
 	<script src="/user/js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.reply').click(function() {
-            const value = $(this).closest('.comment-body').find('.show').attr('th:value');
-            $(`.show[th\\:value="${value}"]`).show();
-        });
-    });
-</script>
-
+	<!-- Script để hiển thị modal nhập mô tả -->
 </body>
-
 </html>

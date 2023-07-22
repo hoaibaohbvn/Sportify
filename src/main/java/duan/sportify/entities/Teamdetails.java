@@ -5,6 +5,8 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ public class Teamdetails implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="teamdetailid", nullable=false)
     private Integer    teamdetailid ;
 
@@ -38,6 +40,13 @@ public class Teamdetails implements Serializable {
 
     @Column(name="username", nullable=false, length=16)
     private String     username ;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name="joindate", nullable=false)
+    private LocalDate joindate ;
+    
+    @Column(name="infouser", length=5000)
+    private String     infouser ;
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
