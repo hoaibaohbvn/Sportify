@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>SPORTIFY - About</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/user/css/animate.css">
+    
+    <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/user/css/magnific-popup.css">
+    
+    <link rel="stylesheet" href="/user/css/flaticon.css">
+    <link rel="stylesheet" href="/user/css/style.css">
+    <style>
+	p{
+		font-size:26px;
+	}
+</style>
+  </head>
+  <body>
+
+  	<div class="wrap" style="z-index: 9; position: relative">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 d-flex align-items-center">
+					<p class="mb-0 phone pl-md-2">
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+84123456789</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							sportify@gmail.com</a>
+					</p>
+				</div>
+				<div class="col-md-6 d-flex justify-content-md-end">
+					<div class="social-media mr-4 m-1">
+						<p class="mb-0 d-flex">
+							<a href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a> <a
+								href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a> <a
+								href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
+							<a href="#"
+								class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
+						</p>
+					</div>
+
+					<!-- check login -->
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
+						<p class="mb-0">
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
+							<a th:href="@{/sportify/login}">Log In</a>
+						</p>
+					</div>
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
+						<a class="dropdown-toggle" id="dropdownMenuAccount"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img class="rounded-circle border border-white"
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+								xuất</a>
+						</div>
+					</div>
+
+					<!-- end check login -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/sportify}"><img
+				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a th:href="@{/sportify/field}"
+						class="nav-link">Sân</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/team}"
+						class="nav-link">Đội</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/event}"
+						class="nav-link">Sự kiện</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/product}"
+						class="nav-link">Cửa hàng</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/about}"
+						class="nav-link">Về chúng tôi</a></li>
+					<li class="nav-item"><a th:href="@{/sportify/contact}"
+						class="nav-link">Liên hệ</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- END nav -->
+    
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/about.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate mb-5 text-center">
+          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Trang Chủ <i class="fa fa-chevron-right"></i></a></span> <span>Quy định & Điều Kiện <i class="fa fa-chevron-right"></i></span></p>
+            <h2 class="mb-0 bread">Quy Định & Điều Kiện</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="ftco-section ftco-no-pb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 img img-3  justify-content-center align-items-center" style="background-image: url(/user/images/Logo3.png);">
+					</div>
+					<div class="col-md-12 wrap-about pl-md-5 ftco-animate py-5">
+	          <div class="heading-section">
+	          	
+	            <h2 class="mb-4">Sportify - Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</h2>
+				
+				<h4 style="color:green; font-weight: bold;">1. Chính sách đặt sân</h4>
+	          	<p>(a) Khi bạn sử dụng dịch vụ ở <b class="font-weight-bold">SPORTIFY</b> sẽ được hưởng quyền lợi:<br>
+	          	+ Hoàn tiền cọc Đặt sân 100% giá trị đã thanh toán thành công nếu hệ thống bị lỗi do đội ngũ phát triển website. <br>
+	          	+ Bồi thường 200% giá trị cọc đã thành toán thành công nếu hệ thống ghi nhận có lịch trùng ca với người khác đã đặt trên cùng 1 tên sân.</p>
+	          <p>(b) Nếu bạn hủy Đơn đặt hoặc vắng mặt, mọi khoản phí cọc đã thanh toán thành công bên chúng tôi sẽ <b class="font-weight-bold">Không được hỗ trợ hoàn lại.</b> </p>
+	          <p>(c) Nếu bạn nghĩ rằng bạn sẽ không thể đến đúng hẹn, vui lòng liên hệ cho chúng tôi biết thời gian đến dự kiến, để chúng tôi không hủy Đơn đặt của bạn. Nếu bạn đến muộn, chúng tôi <b class="font-weight-bold">không</b> chịu trách nhiệm về hậu quả (ví dụ: Đơn đặt bị hủy, hoặc bất kỳ khoản phí nào chúng tôi có thể thu).</p>
+	         	<h4 style="color:green; font-weight: bold;">2. Chính sách đặt hàng tại SHOP-SPORTIFY:</h4>
+	         	<p>(a) Khi bạn mua sắm ở <b class="font-weight-bold">SHOP-SPORTIFY</b> sẽ được hưởng quyền lợi:<br>
+	          	+ Hoàn tiền Đơn hàng & Phí ship 100% giá trị đã thanh toán thành công nếu hệ thống bị lỗi do đội ngũ phát triển website. <br>
+	          	+ Hoàn tiền Đơn hàng <b class="font-weight-bold">Không hoàn phí ship</b> 100% giá trị trên từng sản phẩm đã thanh toán thành công nếu quý khách từ chối nhận hàng hoặc không nghe máy khi shipper liên hệ 3 lần <br>
+	          	+ Hoàn tiền Đơn hàng & Phí ship 100% giá trị trên từng sản phẩm đã thanh toán thành công nếu hết hàng hoặc hàng không đủ chất lượng để cung cấp đến tay Quý khách. <br>
+	          	+ Bồi thường 200% giá trị sản phẩm nếu khách hàng nhận sản phẩm kém chất lượng không giống như mô tả <b class="font-weight-bold">( phải có video bóc kiểm hàng và gửi lại shop đúng sản phẩm còn tem )</b> tại website <b class="font-weight-bold">Sportify.com</b> </p>
+	         	<p>(b) Chúng tôi sẽ <b class="font-weight-bold">Không hoàn tiền</b> đã thanh toán thành công khi hàng bị lỗi hoặc không như mong muốn đã <b class="font-weight-bold">bị mất tem hoặc không có video bóc hàng chứng minh.</b></p>
+	          	<p>(c) Chúng tôi sẽ <b class="font-weight-bold">Không hoàn tiền Phí ship</b> đã thanh toán thành công khi hàng được shipper liên hệ giao cho quý khách không nghe máy hoặc lý do khác.</p>
+	          </div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		
+
+  
+    
+
+
+		
+
+    <footer class="ftco-footer">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2 logo">
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
+						</h2>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<ul class="ftco-footer-social list-unstyled mt-2">
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-twitter"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+									class="fa fa-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-instagram"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4 ml-md-4">
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
+						<div class="block-23 mb-3">
+							<ul>
+								<li><span class="icon fa fa-map marker"></span><span
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+								<li><a href="#"><span class="icon fa fa-phone"></span><span
+										class="text">0123456789</span></a></li>
+								<li><a href="#"><span
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid px-0 py-5 bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+
+						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Bản quyền &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="/user/js/jquery.min.js"></script>
+  <script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/user/js/popper.min.js"></script>
+  <script src="/user/js/bootstrap.min.js"></script>
+  <script src="/user/js/jquery.easing.1.3.js"></script>
+  <script src="/user/js/jquery.waypoints.min.js"></script>
+  <script src="/user/js/jquery.stellar.min.js"></script>
+  <script src="/user/js/owl.carousel.min.js"></script>
+  <script src="/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="/user/js/jquery.animateNumber.min.js"></script>
+  <script src="/user/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="/user/js/google-map.js"></script>
+  <script src="/user/js/main.js"></script>
+    
+  </body>
+</html>
