@@ -208,4 +208,8 @@ public class FieldController {
 		model.addAttribute("fieldListById",fieldListById);
 		return "user/san-single";
 	}
+	@GetMapping("/field/booking/{idField}")
+	public String Booking(Model model, @PathVariable Integer idField) {
+		return "user/checkout-dat-san";
+	}
 }

@@ -282,7 +282,7 @@
 	
 
 <div class="row d-flex">
-  <div class="col-lg-12 d-flex align-items-stretch ftco-animate" th:each="e : ${fieldList}" >
+  <div  class="col-lg-12 d-flex align-items-stretch ftco-animate" th:each="e : ${fieldList}" >
     <div class="blog-entry d-flex"  >
       <img class="block-20 img" th:src="@{'/user/images/' + ${e.image}}" alt="Image">
       <div class="text p-4 bg-light d-flex flex-column">
@@ -325,7 +325,9 @@
           </a>
         </span>
         <div class="submit-section align-self-end mt-auto">
-          <button class="btn btn-success">Đặt sân ngay</button>
+        <a th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
+          <button  class="btn btn-success">Đặt sân ngay</button>
+        </a>
         </div>
       </div>
     </div>
