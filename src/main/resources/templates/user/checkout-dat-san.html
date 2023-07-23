@@ -2,29 +2,63 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Booking - Thông Tin Đặt Sân</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
-        rel="stylesheet">
+ <link
+	href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="/user/css/animate.css">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/user/css/magnific-popup.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/user/css/flaticon.css">
+<link rel="stylesheet" href="/user/css/style.css">
 </head>
+<style>
+.info-content {
+    display: none; /* Ẩn thông tin ban đầu */
+    background-color: #FBEAEB;
+    color: #2F3C7E;
+    font-weight:bold;
+    padding: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1;
+}
 
+/* Định dạng biểu tượng "i" */
+.info-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: graytext;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Hiển thị thông tin khi hover vào phần tử chứa thông tin */
+.info-container:hover .info-content {
+    display: block;
+}
+</style>
 <body>
 
    <div class="wrap" style="z-index: 9; position: relative">
@@ -170,17 +204,19 @@
 	</nav>
 	<!-- END nav -->
 
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');"
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/bgcheckoutField.png');"
         data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
-                    <p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Trang Chủ <i
-                                    class="fa fa-chevron-right"></i></a></span> <span><a href="product.html">Sân<i
-                                    class="fa fa-chevron-right"></i></a></span> <span>Đặt Sân<i
-                                class="fa fa-chevron-right"></i></span></p>
-                    <h2 class="mb-0 bread">Thanh Toán</h2>
+                   <p class="breadcrumbs mb-0" >
+						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ
+								<i class="fa fa-chevron-right"></i>
+						</a></span><span class="mr-2"><a th:href="@{/sportify/field}">Sân <i class="fa fa-chevron-right"></i>
+						</a></span> <span>Đặt Sân</span>
+					</p>
+					<h2 class="mb-0 bread">Thanh Toán</h2>
                 </div>
             </div>
         </div>
@@ -191,36 +227,83 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-10 ftco-animate">
-                        <form action="#" class="billing-form">
+                        <form action="#" class="billing-form" th:each="e : ${fieldListById}">
                             <h3 class="mb-4 billing-heading">Thông tin</h3>
-                            <div class="row align-items-end">
+                            <div class="row align-items-end" th:each="user : ${InfoUser}" >
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="firstname">Họ</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <label for="lastname">Họ</label>
+                                        <input th:value="${user.firstname}" th:type="text" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lastname">Tên</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <label for="firstname">Tên</label>
+                                        <input th:value="${user.lastname}" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label><span class="info-container"> <span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
+										</span> </span>
+										<input th:value="${user.phone}" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Mail">Email</label> 
+                                        <input th:value="${user.email != null ? user.email : ''}" type="email" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="country">Môn thể thao</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <label for="country">Môn Thể Thao</label>
+                                        <span class="info-container">
+                                        <span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Đây là loại sân dành riêng cho môn thể thao này.</p>
+										</span> </span>
+                                        <input th:value="${nameSportype}" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="streetaddress">Ngày đặt</label>
-                                        <input type="text" class="form-control"
-                                            placeholder="House number and street name">
+                                        <label for="streetaddress">Tên Sân</label>
+                                        <span class="info-container"><span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Sân quý khách đã chọn.</p>
+										</span> </span>
+                                        <input th:value="${e.namefield}" type="text" class="form-control" >
                                     </div>
                                 </div>
-                                <div class="col-md-12 ">
+                              
+                                <div class="w-100"></div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="streetaddress">Ngày Nhận Sân:</label>
+                                        <span class="info-container"><span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Đây là ngày nhận sân của quý khách.</p>
+										</span> </span>
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="streetaddress">Giá</label>
+                                        <span class="info-container"><span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Giá này được tính trên 1 giờ & có phụ thu 30% khi chọn các ca sau 17h00.</p>
+										</span> </span>
+                                        <input th:value="${#numbers.formatCurrency(e.price)}" type="text" class="form-control"
+                                            placeholder="Appartment, suite, unit etc: (optional)">
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                              	 <div class="col-md-12 ">
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
@@ -236,32 +319,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="streetaddress">Tên Sân</label>
-                                        <input type="text" class="form-control"
-                                            placeholder="House number and street name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="streetaddress">Giá</label>
-                                        <input type="text" class="form-control"
-                                            placeholder="Appartment, suite, unit etc: (optional)">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="towncity">Số điện thoại</label>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="postcodezip">Số ca</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
@@ -417,22 +478,24 @@
         </svg></div>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script src="js/main.js"></script>
+ <script src="/user/js/jquery.min.js"></script>
+	<script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/user/js/popper.min.js"></script>
+	<script src="/user/js/bootstrap.min.js"></script>
+	<script src="/user/js/jquery.easing.1.3.js"></script>
+	<script src="/user/js/jquery.waypoints.min.js"></script>
+	<script src="/user/js/jquery.stellar.min.js"></script>
+	<script src="/user/js/owl.carousel.min.js"></script>
+	<script src="/user/js/jquery.magnific-popup.min.js"></script>
+	<script src="/user/js/jquery.animateNumber.min.js"></script>
+	<script src="/user/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="/user/js/google-map.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	<script src="/user/js/main.js"></script>
+	<script src="/user/jscode/favoriteHeart.js"></script>
 
     <script>
         $(document).ready(function () {
