@@ -1,6 +1,5 @@
 package duan.sportify.controller;
 
-import java.awt.SystemColor;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -192,7 +191,7 @@ public class TeamController {
 	@PostMapping("/team/teamdetail/updateinfoUser")
 	public String updateUser(Model model,@RequestParam("description") String description,@ModelAttribute("teamId") Integer teamId,HttpSession session,RedirectAttributes redirectAttributes) {
 		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-		System.out.print(description);
+//		System.out.print(description);
 		// Kiểm tra user đã tồn tại trong team
 		String username = loggedInUser.getUsername();
 		Teamdetails checkTeamUser = detailDAO.checkTeamUser(username, teamId);

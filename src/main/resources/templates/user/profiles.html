@@ -172,7 +172,8 @@
 			<div class="col-md-5">
 				<div
 					class="d-flex flex-column align-items-center text-center p-3 py-5">
-					<img class="border border-dark rounded-circle mt-5" width="250px" height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
+					<img class="border border-dark rounded-circle mt-5" width="250px"
+						height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
 					<div class="d-flex mt-4">
 						<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
 						<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
@@ -184,74 +185,95 @@
 			</div>
 			<div class="col-md-7">
 				<div class="p-3 py-5">
-					<div class="d-flex justify-content-between align-items-center mb-3">
-						<h4 class="text-right text-uppercase">Thông tin</h4>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<label class="labels">Họ</label> <input
-								th:value="${prf.firstname}" type="text" class="form-control"
-								placeholder="" value="">
+					<form th:action="@{/sportify/profiles/save-profile}" method="post">
+						<div
+							class="d-flex justify-content-between align-items-center mb-3">
+							<h4 class="text-right text-uppercase">Thông tin</h4>
 						</div>
-						<div class="col-md-6">
-							<label class="labels">Tên</label> <input
-								th:value="${prf.lastname}" type="text" class="form-control"
-								value="" placeholder="">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="labels">Tài khoản</label> <input
-								th:value="${prf.username}" type="text" class="form-control"
-								placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Mật khẩu</label> <input
-								th:value="${prf.passwords}" type="password" class="form-control"
-								placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Số điện thoại</label> <input
-								th:value="${prf.phone}" type="text" class="form-control"
-								placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Email</label> <input
-								th:value="${prf.email}" type="text" class="form-control"
-								placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Giới tính</label>
-							<div class="d-flex">
-							<div class="radio-container mr-4" >
-								<input type="radio" name="gender" class="form-control mr-1"
-									th:checked="${prf.gender}" th:value="${prf.gender} ? '1' : '0'" />
-								<span>Nam</span>
+						<div class="row">
+							<div class="col-md-6">
+								<label class="labels">Họ</label> <input
+									th:value="${prf.firstname}"  type="text" class="form-control" name="firstname">
 							</div>
-							<div class="radio-container">
-								<input type="radio" name="gender" class="form-control mr-1"
-									th:checked="${!prf.gender}"
-									th:value="${prf.gender} ? '1' : '0'" /> <span>Nữ</span>
+							<div class="col-md-6">
+								<label class="labels">Tên</label> <input
+								 th:value="${prf.lastname}"  type="text" class="form-control"
+									name="lastname">
 							</div>
-							</div>
-							
 						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<label class="labels">Tài khoản</label> <input
+									th:value="${prf.username}" type="text" class="form-control"
+									readonly name="username">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Mật khẩu</label> <input
+									th:value="${prf.passwords}" type="password"
+									class="form-control" name="passwords">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Số điện thoại</label> <input
+									th:value="${prf.phone}" type="text" class="form-control"
+									name="phone">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Email</label> <input
+									th:value="${prf.email}" type="text" class="form-control"
+									name="email">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Giới tính</label>
+								<div class="d-flex">
+									<div class="radio-container mr-4">
+										<input type="radio" name="gender" id="male" value="true" class="form-control mr-1"
+											th:checked="${prf.gender}"
+											/> <span>Nam</span>
+									</div>
+									<div class="radio-container">
+										<input type="radio" name="gender" id="female" value="false" class="form-control mr-1"
+											   th:checked="${!prf.gender}"
+											 /> <span>Nữ</span>
+									</div>
+								</div>
+
+							</div>
 
 
-						<div class="col-md-12">
-							<label class="labels">Địa chỉ</label> <input
-								th:value="${prf.address}" type="text" class="form-control"
-								placeholder="" value="">
+							<div class="col-md-12">
+								<label class="labels">Địa chỉ</label> <input
+									th:value="${prf.address}" type="text" class="form-control"
+									name="address">
+							</div>
 						</div>
-					</div>
-					<div class="mt-5 text-center">
-						<button class="btn btn-primary profile-button" type="button">Save
-							Profile</button>
-					</div>
+						<div class="mt-5 text-center">
+							<button class="btn btn-primary profile-button" type="submit">Save
+								Profile</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<!-- Đoạn mã để hiển thị thông báo nếu có -->
+	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
+		style="display: none;">
+		<div class="col-3 alert alert-success"
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message}"></p>
+
+		</div>
+	</div>
+	<div class="col-12 fixed-top" id="messageDiv1" th:if="${message1}"
+		style="display: none;">
+		<div class="col-3 alert alert-danger "
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message1}"></p>
+
+		</div>
+	</div>
+	
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen">
 		<svg class="circular" width="48px" height="48px">
