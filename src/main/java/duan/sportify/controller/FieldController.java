@@ -20,13 +20,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import duan.sportify.entities.Field;
 import duan.sportify.entities.Shifts;
 import duan.sportify.entities.Sporttype;
+import duan.sportify.entities.Users;
 import duan.sportify.service.FieldService;
 import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
+import duan.sportify.service.UserService;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -39,7 +43,8 @@ public class FieldController {
 	FieldService fieldservice; // Service sân
 	@Autowired
 	SportTypeService sporttypeservice; // Service loại môn thể thao
-	
+	@Autowired
+	UserService userService;
 	// Biến chứa ID kiểu sportype khi click vào chọn
 	private String selectedSportTypeId;
 	
@@ -209,7 +214,20 @@ public class FieldController {
 		return "user/san-single";
 	}
 	@GetMapping("/field/booking/{idField}")
-	public String Booking(Model model, @PathVariable Integer idField) {
+	public String Booking(Model model, @PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes) {
+		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		if (loggedInUser != null) {
+			List<Field> fieldListById = fieldservice.findFieldById(idField);
+			String nameSportype = fieldservice.findNameSporttypeById(idField);
+			model.addAttribute("nameSportype",nameSportype);
+			model.addAttribute("InfoUser",loggedInUser);
+			model.addAttribute("fieldListById",fieldListById);
+		
+		}else {
+			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
+			return "redirect:/sportify/login";
+		}
+		
 		return "user/checkout-dat-san";
 	}
 }
