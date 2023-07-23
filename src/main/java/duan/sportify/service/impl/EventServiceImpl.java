@@ -1,5 +1,6 @@
 package duan.sportify.service.impl;
 
+import java.awt.Event;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,5 @@ public class EventServiceImpl implements EventService{
     public List<Eventweb> getEventByMonth(int month) {
         return eventDAO.findByMonth(month);
     }
+    
 }

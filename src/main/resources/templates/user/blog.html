@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+<title>Giải Đấu</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -197,32 +197,7 @@
 				</form>
 
 				<div class="col-md-12">
-					<div class="row mb-4">
-						<div
-							class="col-md-12 d-flex justify-content-between align-items-center">
-							<h4 class="product-select">Lọc theo tháng</h4>
-							<div class="dropdown filter">
-								<button class="btn btn-success dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">Lọc</button>
-								<div class="dropdown-menu dropdown-menu-right filter-item"
-									aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="#">Tháng 1</a> <a
-										class="dropdown-item" href="#">Tháng 2</a> <a
-										class="dropdown-item" href="#">Tháng 3</a> <a
-										class="dropdown-item" href="#">Tháng 4 </a> <a
-										class="dropdown-item" href="#">Tháng 5</a> <a
-										class="dropdown-item" href="#">Tháng 6</a> <a
-										class="dropdown-item" href="#">Tháng 7</a> <a
-										class="dropdown-item" href="#">Tháng 8</a> <a
-										class="dropdown-item" href="#">Tháng 9</a> <a
-										class="dropdown-item" href="#">Tháng 10 </a> <a
-										class="dropdown-item" href="#">Tháng 11</a> <a
-										class="dropdown-item" href="#">Tháng 12</a>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<div class="row d-flex">
 						<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
 							th:each="e : ${eventList}">
@@ -240,7 +215,7 @@
 											class="m-1 "></p>
 									</div>
 									<h3 class="heading mb-3 m-1">
-										<a href="#" th:text="${e.nameevent}"></a>
+										<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${e.eventid})}" th:text="${e.nameevent}"></a>
 									</h3>
 
 									<a th:href="@{/user/blog-single}" class="btn-custom">Continue
