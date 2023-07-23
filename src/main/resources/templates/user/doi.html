@@ -176,9 +176,9 @@
 				class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
-						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Đội/Nhóm <i
-							class="fa fa-chevron-right"></i></span>
+						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ <i
+								class="fa fa-chevron-right"></i></a></span> <span> <a th:href="@{/sportify/team}">Đội/Nhóm <i
+							class="fa fa-chevron-right"></i></a></span>
 					</p>
 					<h2 class="mb-0 bread">Đội/Nhóm</h2>
 				</div>
@@ -216,7 +216,7 @@
 					<input th:value="${searchText}" value="" name="searchText"
 						class="form-control me-2 col-6" type="search"
 						placeholder="Tìm kiếm theo tên" aria-label="Search">
-					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+					<button class="btn btn-success col-2" type="submit">Search</button>
 				</form>
 				<!-- Hiển thị thông báo kết quả tìm kiếm( KQ > 0 ) -->
 				<div class="d-flex justify-content-center col-md-12 mt-1">

@@ -200,13 +200,21 @@
 
 		</div>
 	</div>
+	<div class="col-12 fixed-top" id="messageDiv1" th:if="${message1}"
+		style="display: none;">
+		<div class="col-3 alert alert-danger "
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message1}"></p>
+
+		</div>
+	</div>
 
 	<div class="col-12 infouser" id="descriptionModal"
-		th:if="${infouser == null}">
+		th:if="${infouser == null or infouser == ''}">
 		<div class="col-4" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Nhập mô tả</h5>
+					<h5 class="modal-title">Giới thiệu về bản thân hoặc sở trường của bạn để mọi người hiểu hơn về bạn.</h5>
 					<button type="button" class="close" id="closeButton">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -217,7 +225,7 @@
 						method="post">
 						<input type="hidden" name="teamId" th:value="${teamId}" />
 						<div class="form-group">
-							<label>Mô tả:</label>
+							<label>Giới thiệu:</label>
 							<textarea th:value="${description}" class="form-control"
 								name="description" rows="4"></textarea>
 						</div>
@@ -300,16 +308,25 @@
 								<p class="fa fa-calendar"></p>
 								<span th:text="${#dates.format(u[12	], 'dd-MM-yyyy')}"></span>
 							</div>
-							<div class="col-12 d-flex bg-dark">
+							<div>
 								<p th:text="${u[13]}"></p>
-								<button
-									th:href="@{/sportify/team/teamdetail/edit/{teamId}(teamId=${teamId})}">Edit</button>
 							</div>
-							
-							<div  class="meta metaDiv" style="display: none">
-								<p>hello</p>
+
+							<div class="meta metaDiv" style="display: none">
+								<div class="d-flex">
+									<p>SDT :</p>
+									<p th:text="${u[4]}"></p>
+								</div>
+								<div class="d-flex">
+									<p>Email :</p>
+									<p th:text="${u[5]}"></p>
+								</div>
+								<div class="d-flex">
+									<p>Địa chỉ :</p>
+									<p th:text="${u[6]}"></p>
+								</div>
 							</div>
-							<p  class="showMoreParagraph">
+							<p class="showMoreParagraph">
 								<a class="reply" onclick="showMore(event)">Xem thêm...</a>
 							</p>
 						</li>

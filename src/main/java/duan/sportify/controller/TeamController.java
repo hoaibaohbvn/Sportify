@@ -196,26 +196,14 @@ public class TeamController {
 		// Kiểm tra user đã tồn tại trong team
 		String username = loggedInUser.getUsername();
 		Teamdetails checkTeamUser = detailDAO.checkTeamUser(username, teamId);
-		if(checkTeamUser != null) {
-			checkTeamUser.setInfouser(description);
-			detailDAO.save(checkTeamUser);
-			redirectAttributes.addFlashAttribute("message", "Thêm giới thiệu thành công !");
-		}else {
+		checkTeamUser.setInfouser(description);
+		detailDAO.save(checkTeamUser);
+		if(description == null || description=="") {
 			redirectAttributes.addFlashAttribute("message1", "Thêm giới thiệu thất bại !");
 
-		}
-		return "redirect:/sportify/team/teamdetail/" + teamId;
-	}
-	
-	@GetMapping("/team/teamdetail/edit/{teamId}")
-	public String updateUser1(Model model, @PathVariable("teamId") Integer teamId,HttpSession session) {
-		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-		// Kiểm tra user đã tồn tại trong team
-		String username = loggedInUser.getUsername();
-		Teamdetails checkTeamUser = detailDAO.checkTeamUser(username, teamId);
-		if(checkTeamUser != null) {
-			checkTeamUser.setInfouser(null);
-			detailDAO.save(checkTeamUser);
+		}else {
+			redirectAttributes.addFlashAttribute("message", "Thêm giới thiệu thành công !");
+
 		}
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
