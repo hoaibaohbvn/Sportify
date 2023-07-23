@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,64 +17,62 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import duan.sportify.GlobalExceptionHandler;
-import duan.sportify.dao.ProductDAO;
-import duan.sportify.dto.ProductDTO;
-import duan.sportify.entities.Products;
-import duan.sportify.service.ProductService;
+import duan.sportify.dao.SportTypeDAO;
+
+import duan.sportify.entities.Sporttype;
+
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/products/")
-public class ProductRestController {
+@RequestMapping("/rest/sportTypes/")
+public class CategorySportRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	ProductDAO productDAO;
+	SportTypeDAO sportTypeDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Products>> getAll(Model model){
-		return ResponseEntity.ok(productDAO.findAll());
+	public ResponseEntity<List<Sporttype>> getAll(Model model){
+		return ResponseEntity.ok(sportTypeDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Products> getOne(@PathVariable("id") Integer id) {
-		if(!productDAO.existsById(id)) {
+	public ResponseEntity<Sporttype> getOne(@PathVariable("id") String id) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(productDAO.findById(id).get());
+		return ResponseEntity.ok(sportTypeDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Products> create(@RequestBody Products product) {
-		if(!productDAO.existsById(product.getProductid())) {
+	public ResponseEntity<Sporttype> create(@RequestBody Sporttype sportType) {
+		if(!sportTypeDAO.existsById(sportType.getSporttypeid())) {
 			
 			return ResponseEntity.badRequest().build();
 		}
-		productDAO.save(product);
-		return ResponseEntity.ok(product);
+		sportTypeDAO.save(sportType);
+		return ResponseEntity.ok(sportType);
 	}
-	@PutMapping("update/{id}")
-	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @RequestBody Products product) {
-		if(!productDAO.existsById(id)) {
+	@PutMapping("update")
+	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @RequestBody Sporttype sportType) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		productDAO.save(product);
-		return ResponseEntity.ok(product);
+		sportTypeDAO.save(sportType);
+		return ResponseEntity.ok(sportType);
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!productDAO.existsById(id)) {
+	public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		productDAO.deleteById(id);
+		sportTypeDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

@@ -6,6 +6,9 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -38,16 +41,13 @@ public class Sporttype implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="sporttype")
     private List<Field> listOfField ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="sporttype")
     private List<Teams> listOfTeams ;
 
-	public Sporttype(String sporttypeid) {
-
-		this.sporttypeid = sporttypeid;
-	} 
     
     
 

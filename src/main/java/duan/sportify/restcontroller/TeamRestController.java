@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,64 +17,61 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import duan.sportify.GlobalExceptionHandler;
-import duan.sportify.dao.ProductDAO;
-import duan.sportify.dto.ProductDTO;
-import duan.sportify.entities.Products;
-import duan.sportify.service.ProductService;
-import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
 
+import duan.sportify.dao.TeamDAO;
+import duan.sportify.entities.Teams;
+
+import duan.sportify.utils.ErrorResponse;
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/products/")
-public class ProductRestController {
+@RequestMapping("/rest/teams/")
+public class TeamRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	ProductDAO productDAO;
+	TeamDAO teamDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Products>> getAll(Model model){
-		return ResponseEntity.ok(productDAO.findAll());
+	public ResponseEntity<List<Teams>> getAll(Model model){
+		return ResponseEntity.ok(teamDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Products> getOne(@PathVariable("id") Integer id) {
-		if(!productDAO.existsById(id)) {
+	public ResponseEntity<Teams> getOne(@PathVariable("id") Integer id) {
+		if(!teamDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(productDAO.findById(id).get());
+		return ResponseEntity.ok(teamDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Products> create(@RequestBody Products product) {
-		if(!productDAO.existsById(product.getProductid())) {
+	public ResponseEntity<Teams> create(@RequestBody Teams team) {
+		if(!teamDAO.existsById(team.getTeamid())) {
 			
 			return ResponseEntity.badRequest().build();
 		}
-		productDAO.save(product);
-		return ResponseEntity.ok(product);
+		teamDAO.save(team);
+		return ResponseEntity.ok(team);
 	}
-	@PutMapping("update/{id}")
-	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @RequestBody Products product) {
-		if(!productDAO.existsById(id)) {
+	@PutMapping("update")
+	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @RequestBody Teams team) {
+		if(!teamDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		productDAO.save(product);
-		return ResponseEntity.ok(product);
+		teamDAO.save(team);
+		return ResponseEntity.ok(team);
 	}
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!productDAO.existsById(id)) {
+		if(!teamDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		productDAO.deleteById(id);
+		teamDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

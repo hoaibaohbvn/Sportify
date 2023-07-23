@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,7 @@ public class Shifts implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="shifts")
     private List<Bookingdetails> listOfBookingdetails ; 
 
