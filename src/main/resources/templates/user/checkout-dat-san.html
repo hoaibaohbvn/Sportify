@@ -59,7 +59,7 @@
     display: block;
 }
 </style>
-<body>
+<body th:each="e : ${fieldListById}">
 
    <div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
@@ -130,54 +130,6 @@
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
-					</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-				</div>
-			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -227,24 +179,24 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-10 ftco-animate">
-                        <form action="#" class="billing-form" th:each="e : ${fieldListById}">
-                            <h3 class="mb-4 billing-heading">Thông tin</h3>
+                        <form action="#" class="billing-form" >
+                            <h1 class="mb-4 billing-heading">Chi tiết đặt sân của bạn</h1>
                             <div class="row align-items-end" th:each="user : ${InfoUser}" >
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lastname">Họ</label>
+                                        <label for="lastname">Họ <span class="text-danger">*</span></label>
                                         <input th:value="${user.firstname}" th:type="text" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="firstname">Tên</label>
+                                        <label for="firstname">Tên <span class="text-danger">*</span></label>
                                         <input th:value="${user.lastname}" type="text" class="form-control" readonly>
                                     </div>
                                 </div>
                                  <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="phone">Số điện thoại</label><span class="info-container"> <span class="info-icon">i</span>
+                                        <label for="phone">Số điện thoại <span class="text-danger">*</span></label><span class="info-container"> <span class="info-icon">i</span>
 										<span class="info-content">
 											<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
 										</span> </span>
@@ -253,14 +205,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="Mail">Email</label> 
-                                        <input th:value="${user.email != null ? user.email : ''}" type="email" class="form-control" placeholder="">
+                                        <label for="Mail">Email</label>
+                                        <span class="info-container"><span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Email để nhận thông báo thông tin dặt sân, được lấy từ tài khoản của bạn.</p>
+										</span> </span>
+                                        <input readonly th:value="${user.email != null ? user.email : ''}" type="email" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="country">Môn Thể Thao</label>
+                                        <label for="country">Môn Thể Thao <span class="text-danger">*</span></label>
                                         <span class="info-container">
                                         <span class="info-icon">i</span>
 										<span class="info-content">
@@ -271,7 +227,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="streetaddress">Tên Sân</label>
+                                        <label for="streetaddress">Tên Sân <span class="text-danger">*</span></label>
                                         <span class="info-container"><span class="info-icon">i</span>
 										<span class="info-content">
 											<p>Sân quý khách đã chọn.</p>
@@ -283,7 +239,7 @@
                                 <div class="w-100"></div>
                                  <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="streetaddress">Ngày Nhận Sân:</label>
+                                        <label for="streetaddress">Ngày Nhận Sân <span class="text-danger">*</span></label>
                                         <span class="info-container"><span class="info-icon">i</span>
 										<span class="info-content">
 											<p>Đây là ngày nhận sân của quý khách.</p>
@@ -293,18 +249,18 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="streetaddress">Giá</label>
+                                        <label for="streetaddress">Giá Tiền <span class="text-danger">*</span></label>
                                         <span class="info-container"><span class="info-icon">i</span>
 										<span class="info-content">
 											<p>Giá này được tính trên 1 giờ & có phụ thu 30% khi chọn các ca sau 17h00.</p>
 										</span> </span>
-                                        <input th:value="${#numbers.formatCurrency(e.price)}" type="text" class="form-control"
-                                            placeholder="Appartment, suite, unit etc: (optional)">
+                                        <input th:value="${#numbers.formatCurrency(e.price)}" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                               	 <div class="col-md-12 ">
                                     <div class="form-group">
+                                    <label for="streetaddress">Ca chơi <span class="text-danger">*</span></label>
                                         <div class="checkbox">
                                             <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
                                                     style="font-size: 15px; color: gray; margin-right: 20px;">(7h-8h)</span></label>
@@ -321,8 +277,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="postcodezip">Số ca</label>
-                                        <input type="text" class="form-control" >
+                                        <label for="postcodezip">Số ca đã chọn <span class="text-danger">*</span></label>
+                                        <input readonly type="number" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
@@ -335,24 +291,27 @@
                         <div class="row mt-5 pt-3 d-flex">
                             <div class="col-md-6 d-flex">
                                 <div class="cart-detail cart-total p-3 p-md-4">
-                                    <h3 class="billing-heading mb-4">Hóa Đơn</h3>
-                                    <p class="d-flex">
-                                        <span>Giá:</span>
-                                        <span>$20.60</span>
-                                    </p>
-                                    <p class="d-flex">
-                                        <span>Số ca:</span>
-                                        <span>2</span>
-                                    </p>
-                                    <p class="d-flex">
-                                        <span>Phụ thu:</span>
-                                        <span>$3.00</span>
-                                    </p>
-                                    <span style="color: red;">Sau 17h phụ thu 30%</span>
+                                    <h3 class="billing-heading mb-4">Thành Tiền</h3>
+                                    <div class="col-md-6">
+                               			<div class="form-group">
+                                        <label>Giá Tiền<span class="text-danger">*</span></label>
+                                        <span th:value="${#numbers.formatCurrency(e.price)}" th:text="${#numbers.formatCurrency(e.price)}" style="margin-left: 20px"></span>
+								
+                                        <label>Số ca <span class="text-danger">*</span></label>
+                                        <span style="margin-left: 30px">2</span>
+                                        <label>Phụ Thu <span class="text-danger">*</span></label>
+                                        <span class="info-container"><span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Phụ thu 30% giá sân theo quy định các ca sau 17h00.</p>
+										</span> </span>
+                                        <span style="margin-left: 7px">90.000</span>
+                                        
+                                   		</div>
+                              		 </div>
                                     <hr>
                                     <p class="d-flex total-price">
                                         <span>Total</span>
-                                        <span>$23.60</span>
+                                        <span >1.500.000</span>
                                     </p>
                                 </div>
                             </div>
@@ -386,87 +345,82 @@
     </section>
 
     <footer class="ftco-footer">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo"><a href="#">Liquor <span>Store</span></a></h2>
-                        <p>Far far away, behind the word mountains, far from the countries.</p>
-                        <ul class="ftco-footer-social list-unstyled mt-2">
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-4">
-                        <h2 class="ftco-heading-2">My Accounts</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-4">
-                        <h2 class="ftco-heading-2">Information</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact us</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Quick Link</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New User</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help Center</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report Spam</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
-                        <div class="block-23 mb-3">
-                            <ul>
-                                <li><span class="icon fa fa-map marker"></span><span class="text">203 Fake St. Mountain
-                                        View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929
-                                            210</span></a></li>
-                                <li><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span
-                                            class="text">info@yourdomain.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid px-0 py-5 bg-black">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2 logo">
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
+						</h2>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<ul class="ftco-footer-social list-unstyled mt-2">
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-twitter"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+									class="fa fa-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-instagram"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4 ml-md-4">
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
+						<div class="block-23 mb-3">
+							<ul>
+								<li><span class="icon fa fa-map marker"></span><span
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+								<li><a href="#"><span class="icon fa fa-phone"></span><span
+										class="text">0123456789</span></a></li>
+								<li><a href="#"><span
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid px-0 py-5 bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
 
-                        <p class="mb-0" style="color: rgba(255,255,255,.5);">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This
-                            template is made with <i class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-                                href="https://colorlib.com" target="_blank">Colorlib.com</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Bản quyền &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
 
