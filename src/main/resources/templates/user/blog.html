@@ -67,8 +67,8 @@
 							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
 								class="dropdown-item" href="#">Đăng xuất</a>
 						</div>
 					</div>
@@ -181,41 +181,65 @@
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
-				<form class="mb-5 d-flex justify-content-center col-12">
-					<input class="form-control me-2 col-6" type="search"
-						placeholder="Tìm kiếm theo tên" aria-label="Search">
+				<form class="mb-5 d-flex justify-content-center col-12"
+					th:action="@{/search}" method="get">
+					<input class="form-control me-2 col-6"
+						placeholder="Tìm kiếm theo tên..." aria-label="Search" type="text"
+						name="keyword">
 					<button class="btn btn-outline-success col-2" type="submit">Search</button>
 				</form>
 
 				<div class="col-md-12">
-					
+
 					<div class="row d-flex">
 						<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
 							th:each="e : ${eventList}">
 							<div class="blog-entry d-md-flex">
-								<img class="block-19 block-20 img " style="object-fit: cover;" alt=""
-									th:src="@{'/user/images/' + ${e.image}}">
+								<img class="block-19 block-20 img " style="object-fit: cover;"
+									alt="" th:src="@{'/user/images/' + ${e.image}}">
 
 								<div class="text p-4 bg-light">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(e.datestart, 'dd-MM-yyyy')}"
-											class="m-1 "></p>
-										<p class="m-1">-</p>
-										<p th:utext="${#dates.format(e.dateend, 'dd-MM-yyyy')}"
-											class="m-1 "></p>
+											class="m-1 " style="color: blue;"></p>
+
 									</div>
 									<h3 class="heading mb-3 m-1">
-										<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${e.eventid})}" th:text="${e.nameevent}"></a>
+										<a
+											th:href="@{/sportify/eventdetail/{eventid}(eventid=${e.eventid})}"
+											th:text="${e.nameevent}"></a>
 									</h3>
 
-									<a th:href="@{/user/blog-single}" class="btn-custom">Continue
-										<span class="fa fa-long-arrow-right"></span>
+									<a
+										th:href="@{/sportify/eventdetail/{eventid}(eventid=${e.eventid})}"
+										class="btn-custom">Chi Tiết <span
+										class="fa fa-long-arrow-right"></span>
 									</a>
 
 								</div>
 							</div>
 						</div>
+					</div>
+					<div>
+						<h2>Danh sách các sự kiện</h2>
+						<ul>
+							<!-- Sử dụng th:each để lặp qua danh sách các sự kiện tìm kiếm được -->
+							<li th:each="event : ${searchResults}">
+								<!-- Hiển thị thông tin của từng sự kiện -->
+								<p>
+									Tên sự kiện: <span th:text="${event.nameevent}"></span>
+								</p>
+								<p>
+									Ngày diễn ra: <span
+										th:text="${#dates.format(event.date, 'yyyy-MM-dd')}"></span>
+								</p>
+								<p>
+									<img class="block-19 block-20 img " style="object-fit: cover;"
+									alt="" th:src="@{'/user/images/' + ${event.image}}">
+								</p>
+							</li>
+						</ul>
 					</div>
 					<div class="row mt-5">
 						<div class="col text-center">
@@ -349,6 +373,8 @@
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
+	
+	
 
 
 	<script src="/user/js/jquery.min.js"></script>

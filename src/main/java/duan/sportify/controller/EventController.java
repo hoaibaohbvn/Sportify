@@ -1,9 +1,13 @@
 package duan.sportify.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +33,6 @@ public class EventController {
 		return "user/blog";
 	}
 	
-//	@GetMapping("/event/search/")
-//    public String searchEventByMonth(@RequestParam("month") int month, Model model) {
-//        List<Eventweb> eventList = eventDAO.findByMonth(month);
-//        model.addAttribute("eventList", eventList);
-//        return "user/blog"; // Trả về tên template Thymeleaf để hiển thị danh sách sân
-//    }
 	
 	@GetMapping("eventdetail/{eventid}")
 	public String showEventDetail(@PathVariable("eventid") Integer eventid, Model model) {
@@ -44,6 +42,22 @@ public class EventController {
         model.addAttribute("eventLQ", eventLQ);
 		return "user/blog-single";
 	}
+
 	
-	
+	@GetMapping("/search")
+    public String searchEvent(@RequestParam(value = "keyword", required = false) String keyword,
+                              @RequestParam(value = "eventDate", required = false)
+                              @DateTimeFormat(pattern = "yyyy-MM-dd") Date eventDate,
+                              Model model) {
+        List<Eventweb> searchResults;
+
+        if (keyword != null && !keyword.isEmpty() || eventDate != null) {
+            searchResults = eventDAO.searchEvents(keyword, eventDate);
+        } else {
+            searchResults = eventDAO.findAll();
+        }
+
+        model.addAttribute("searchResults", searchResults);
+        return "user/blog"; // Trả về trang hiển thị kết quả tìm kiếm
+    }
 }

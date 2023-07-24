@@ -1,5 +1,6 @@
 package duan.sportify.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,8 +30,19 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	@Query("SELECT e FROM Eventweb e WHERE e.eventid = ?1")
     Eventweb findEventById(Integer eventId);
 	
-	//
+	// Hiển thị các sự kiện diễn ra cùng tháng
 	@Query("SELECT ee FROM Eventweb ee WHERE MONTH(ee.datestart) = ?1")
     List<Eventweb> findEventsInMonth(int month);
+	 
+	// Tìm kiếm sự kiện theo tên chứa (tìm kiếm không phân biệt chữ hoa/thường)
+	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:eventName%")
+	    List<Eventweb> findByNameContainingIgnoreCase(String eventName);
+
+	    // Tìm kiếm sự kiện theo ngày diễn ra
+	    @Query("SELECT e FROM Eventweb e WHERE e.datestart = :eventDate")
+	    List<Eventweb> findByDate(Date eventDate);
+	    
+	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:keyword% OR e.datestart = :eventDate")
+	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
 	
 }

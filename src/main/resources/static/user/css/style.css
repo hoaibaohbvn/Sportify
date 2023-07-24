@@ -9741,6 +9741,12 @@ textarea.form-control {
   width: 100px;
   border-radius: 4px;
   object-fit: cover; }
+  
+.event-description {
+    white-space: pre-line; /* Hiển thị dòng mới dựa trên các ký tự xuống dòng (\n) trong văn bản */
+    word-wrap: break-word; /* Tự động ngắt từ khi vượt quá chiều rộng của div */
+}
+
 
 .block-21 .text {
   width: calc(100% - 70px); }
