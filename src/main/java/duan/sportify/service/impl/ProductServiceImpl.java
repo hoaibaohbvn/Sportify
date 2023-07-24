@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import duan.sportify.dao.AuthorizedDAO;
 import duan.sportify.dao.ProductDAO;
-import duan.sportify.dto.ProductDTO;
+
 import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Products;
 import duan.sportify.service.AuthorizedService;
@@ -59,15 +59,5 @@ public class ProductServiceImpl implements ProductService{
 		return productDAO.findByCategoryId(categoryid);
 	}
 
-	@Override
-	public ProductDTO createOrUpdate(ProductDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductDTO getProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

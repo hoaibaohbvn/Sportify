@@ -3,7 +3,7 @@ package duan.sportify.service;
 import java.util.List;
 
 import duan.sportify.dao.ProductDAO;
-import duan.sportify.dto.ProductDTO;
+
 import duan.sportify.entities.Products;
 
 
@@ -23,7 +23,4 @@ public interface ProductService {
 
 	List<Products> findByCategoryId(String string);
 
-	ProductDTO createOrUpdate(ProductDTO dto);
-	
-	ProductDTO getProductById(Integer id);
 }

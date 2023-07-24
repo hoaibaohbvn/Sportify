@@ -10,7 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +37,7 @@ public class Categories implements Serializable {
     private Integer    categoryid ;
 
     //--- ENTITY DATA FIELDS 
+    @NotBlank(message = "{NotNull.categories.categoryname}")
     @Column(name="categoryname", nullable=false, length=50)
     private String     categoryname ;
 

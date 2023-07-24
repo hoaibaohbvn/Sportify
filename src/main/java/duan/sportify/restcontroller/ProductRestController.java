@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,15 +18,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.ProductDAO;
-import duan.sportify.dto.ProductDTO;
+
 import duan.sportify.entities.Products;
-import duan.sportify.service.ProductService;
+
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -55,13 +54,13 @@ public class ProductRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Products> create(@RequestBody Products product) {
-		if(!productDAO.existsById(product.getProductid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		productDAO.save(product);
-		return ResponseEntity.ok(product);
+	    if (product.getProductid() != null && productDAO.existsById(product.getProductid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    productDAO.save(product);
+	    return ResponseEntity.ok(product);
 	}
+
 	@PutMapping("update/{id}")
 	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @RequestBody Products product) {
 		if(!productDAO.existsById(id)) {

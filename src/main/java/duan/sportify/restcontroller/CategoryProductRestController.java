@@ -50,14 +50,13 @@ public class CategoryProductRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Categories> create(@RequestBody Categories category) {
-		if(!categoryDAO.existsById(category.getCategoryid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		categoryDAO.save(category);
-		return ResponseEntity.ok(category);
+	    if (category.getCategoryid() != null && categoryDAO.existsById(category.getCategoryid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    categoryDAO.save(category);
+	    return ResponseEntity.ok(category);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Categories> update(@PathVariable("id") Integer id, @RequestBody Categories category) {
 		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

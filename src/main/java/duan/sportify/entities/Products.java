@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="products", catalog="sportify" )
 public class Products implements Serializable {
