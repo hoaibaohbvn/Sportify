@@ -167,25 +167,34 @@
 
 	<div class="container d-flex justify-content-center rounded mt-5 mb-5 ">
 		<div th:each="prf : ${prodiles}"
-			class="row col-md-9 bg-white d-flex justify-content-center rounded "
-			id="profiles">
-			<div class="col-md-5">
-				<div
-					class="d-flex flex-column align-items-center text-center p-3 py-5">
-					<img class="border border-dark rounded-circle mt-5" width="250px"
-						height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
-					<div class="d-flex mt-4">
-						<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
-						<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
-					</div>
-					<span class="text-black-50">Admin</span> <span
-						th:text="${prf.email}" class="text-black-50"></span>
+			class=" col-md-12 bg-white d-flex rounded " id="profiles">
+			<form th:action="@{/sportify/profile/save-profile}" method="post"
+				class="d-flex" enctype="multipart/form-data">
+				<div class="col-md-5">
+					<div
+						class="d-flex flex-column align-items-center text-center p-3 py-5">
+						<div style="position: relative;">
+							<img class="border border-dark rounded-circle mt-5" width="250px"
+								height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
+							<div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1;">
+								<label for="avatarFileInput"> <i style="font-size: 30px;color: white;"
+									class="fa fa-camera"></i> <!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
+								</label> <input id="avatarFileInput" type="file"
+									class="form-control-file" name="avatarFile"
+									style="display: none;">
+							</div>
+						</div>
+						<div class="d-flex mt-4">
+							<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
+							<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
+						</div>
+						<span class="text-black-50">Admin</span> <span
+							th:text="${prf.email}" class="text-black-50"></span>
 
+					</div>
 				</div>
-			</div>
-			<div class="col-md-7">
-				<div class="p-3 py-5">
-					<form th:action="@{/sportify/profiles/save-profile}" method="post">
+				<div class="col-md-6">
+					<div class="p-3 py-5">
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
 							<h4 class="text-right text-uppercase">Thông tin</h4>
@@ -193,11 +202,12 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label class="labels">Họ</label> <input
-									th:value="${prf.firstname}"  type="text" class="form-control" name="firstname">
+									th:value="${prf.firstname}" type="text" class="form-control"
+									name="firstname">
 							</div>
 							<div class="col-md-6">
 								<label class="labels">Tên</label> <input
-								 th:value="${prf.lastname}"  type="text" class="form-control"
+									th:value="${prf.lastname}" type="text" class="form-control"
 									name="lastname">
 							</div>
 						</div>
@@ -226,14 +236,12 @@
 								<label class="labels">Giới tính</label>
 								<div class="d-flex">
 									<div class="radio-container mr-4">
-										<input type="radio" name="gender" id="male" value="true" class="form-control mr-1"
-											th:checked="${prf.gender}"
-											/> <span>Nam</span>
+										<input type="radio" name="gender" id="male" value="true"
+											class="form-control mr-1" th:checked="${prf.gender}" /> <span>Nam</span>
 									</div>
 									<div class="radio-container">
-										<input type="radio" name="gender" id="female" value="false" class="form-control mr-1"
-											   th:checked="${!prf.gender}"
-											 /> <span>Nữ</span>
+										<input type="radio" name="gender" id="female" value="false"
+											class="form-control mr-1" th:checked="${!prf.gender}" /> <span>Nữ</span>
 									</div>
 								</div>
 
@@ -250,12 +258,13 @@
 							<button class="btn btn-primary profile-button" type="submit">Save
 								Profile</button>
 						</div>
-					</form>
+
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
-	
+
 	<!-- Đoạn mã để hiển thị thông báo nếu có -->
 	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
 		style="display: none;">
@@ -273,7 +282,7 @@
 
 		</div>
 	</div>
-	
+
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen">
 		<svg class="circular" width="48px" height="48px">
