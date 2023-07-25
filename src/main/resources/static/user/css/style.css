@@ -10064,3 +10064,14 @@ a:hover span {
         background-color: rgba(0, 0, 0, 0.5); /* Tùy chỉnh màu nền (có thể thay đổi độ mờ) */
         z-index: 9;
 }
+
+  /* Định dạng radio button nhỏ */
+  .form-control[type="radio"] {
+    width: 16px; /* Độ rộng */
+    height: 16px; /* Chiều cao */
+  }
+  .radio-container {
+    display: flex;
+    align-items: center;
+    /* Khoảng cách giữa các radio button */
+  }

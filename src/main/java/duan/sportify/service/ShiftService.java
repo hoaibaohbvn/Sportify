@@ -20,4 +20,7 @@ public interface ShiftService {
 
 	List<Shifts> findAll();
 	List<Shifts> findShiftById(Integer id);
+	List<Shifts> findShiftDate(Integer id,String date);
+	
+	List<Shifts> findShiftByName(String name);
 }

@@ -34,7 +34,7 @@ public class Shifts implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="shiftid", nullable=false)
     private Integer    shiftid ;
 

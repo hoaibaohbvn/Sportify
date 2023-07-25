@@ -1,6 +1,7 @@
 package duan.sportify.controller;
 
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +28,12 @@ import duan.sportify.entities.Field;
 import duan.sportify.entities.Shifts;
 import duan.sportify.entities.Sporttype;
 import duan.sportify.entities.Users;
+import duan.sportify.entities.Voucher;
 import duan.sportify.service.FieldService;
 import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
 import duan.sportify.service.UserService;
+import duan.sportify.service.VoucherService;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -45,9 +49,11 @@ public class FieldController {
 	SportTypeService sporttypeservice; // Service loại môn thể thao
 	@Autowired
 	UserService userService;
+	@Autowired
+	VoucherService voucherService;
 	// Biến chứa ID kiểu sportype khi click vào chọn
 	private String selectedSportTypeId;
-	
+	private String dateselect;
 	// Tìm sân trống theo input: date, sportype, giờ chơi
 	 @PostMapping("/field/search")
 	 public String SreachData(@RequestParam("dateInput") String dateInput,
@@ -99,6 +105,7 @@ public class FieldController {
 			}
 			String message = "Kết quả tìm kiếm sân trống: ";
 			// Add các đối tượng vào model để qua giao diện hiển thị
+			model.addAttribute("dateInput",dateInput);
 			model.addAttribute("namesporttype",namesporttype);
 			model.addAttribute("nameshift",nameshift);
 			model.addAttribute("formattedDate",formattedDate);
@@ -201,6 +208,7 @@ public class FieldController {
 			return "user/san";
 	}
 	//Chuyển hướng trang detail
+
 	@GetMapping("/field/detail/{idField}")
 	public String viewDetail(Model model, @PathVariable Integer idField) { // Lấy id sân về
 		List<Field> fieldListById = fieldservice.findFieldById(idField); // Đổ sân theo id lấy giao diện về.
@@ -213,12 +221,69 @@ public class FieldController {
 		model.addAttribute("fieldListById",fieldListById);
 		return "user/san-single";
 	}
+	LocalTime time = null;
+
 	@GetMapping("/field/booking/{idField}")
-	public String Booking(Model model, @PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String Booking(Model model, @RequestParam(value = "nameshift", required = false) String nameShift, 
+			@PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes,
+			@RequestParam(value = "voucher", required = false) String voucher) {
+		System.out.println(voucher);
+		System.out.println(nameShift);
+		int discountpercent = 0;
+		double pricevoucher = 0;
+		double totalprice = 0 ;
+		double thanhtien = 0;
 		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
+		for(int i = 0 ; i < shift.size();i++) {
+				time = shift.get(i).getStarttime();
+		}
+		// Khởi tạo giờ 17:00
+        LocalTime timeToCompare = LocalTime.of(17, 0);
+        double phuthu = 0; // giá phụ thu
 		if (loggedInUser != null) {
+			List<Voucher> listvoucher = voucherService.findAll();
 			List<Field> fieldListById = fieldservice.findFieldById(idField);
+			double giasan = fieldListById.get(0).getPrice();
+			
 			String nameSportype = fieldservice.findNameSporttypeById(idField);
+			List<Voucher> magiamgia = voucherService.findAll();
+			if(time.isAfter(timeToCompare)) {
+				phuthu = fieldListById.get(0).getPrice() * 30 / 100;
+				totalprice = giasan + phuthu;
+				System.out.println(totalprice);
+				model.addAttribute("totalprice",totalprice);
+
+				model.addAttribute("phuthu",phuthu);
+			}else {
+				totalprice = giasan;
+				model.addAttribute("totalprice",totalprice);
+				model.addAttribute("phuthu",phuthu);
+			}
+			if(voucher == null) {
+				thanhtien = totalprice;
+				model.addAttribute("thanhtien",thanhtien);
+				model.addAttribute("pricevoucher",pricevoucher);
+			}
+			else {
+				model.addAttribute("voucher",voucher);
+				for(int i = 0 ; i < magiamgia.size();i++) {
+					if(magiamgia.get(i).getVoucherid().equals(voucher)) {
+						discountpercent = magiamgia.get(i).getDiscountpercent();
+						pricevoucher = totalprice * discountpercent / 100;
+						thanhtien = totalprice - pricevoucher;
+						model.addAttribute("thanhtien",thanhtien);
+						model.addAttribute("pricevoucher",pricevoucher);
+					}
+					else {
+//						thanhtien = totalprice;
+//						model.addAttribute("thanhtien",thanhtien);
+					}
+				}
+			}
+			model.addAttribute("listvoucher",listvoucher);
+			model.addAttribute("nameShift",nameShift);
+			model.addAttribute("dateselect",dateselect);
 			model.addAttribute("nameSportype",nameSportype);
 			model.addAttribute("InfoUser",loggedInUser);
 			model.addAttribute("fieldListById",fieldListById);
@@ -230,4 +295,28 @@ public class FieldController {
 		
 		return "user/checkout-dat-san";
 	}
+	
+	@PostMapping("/field/detail/check")
+	public String searchShiftDefault(Model model ,@RequestParam("fieldid") int idField  ,@RequestParam("dateInput") String date) {
+		dateselect = date;
+		List<Field> fieldListById = fieldservice.findFieldById(idField); // Đổ sân theo id lấy giao diện về.
+		String nameSportype = fieldservice.findNameSporttypeById(idField); // Tên môn thể thao để hiện thị trong các sân liên quan ở Detail
+		String idSporttype = fieldservice.findIdSporttypeById(idField); // Lấy id môn thể thao dựa vào sân đang chọn Detail
+		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Danh sách 3 sân liên quan đến môn thể thao đang xem.
+		List<Shifts> shiftsNull = shiftservice.findShiftDate(idField, date);
+		// Format yyyy-mm-dd thành dd-mm-yyyy
+		LocalDate dateformat = LocalDate.parse(date);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formattedDate = dateformat.format(formatter);
+		// Dữ liệu hiển thị trong trang Detail
+		model.addAttribute("date",date);
+		model.addAttribute("formattedDate",formattedDate);
+		model.addAttribute("shiftsNull",shiftsNull);
+		model.addAttribute("fieldListByIdSporttype",fieldListByIdSporttype);
+		model.addAttribute("nameSportype",nameSportype);
+		model.addAttribute("fieldListById",fieldListById);
+		return "user/san-single";
+	}
+	
+
 }

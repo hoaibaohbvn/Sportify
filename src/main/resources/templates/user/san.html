@@ -113,54 +113,6 @@
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
-					</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-				</div>
-			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -213,9 +165,9 @@
 				</div>
 				
 				
-				<form  th:action="@{/sportify/field/search}" method="post" class=" mb-4 pb-4 d-flex justify-content-center col-11 ">
+				<form onsubmit="return validateDate()" th:action="@{/sportify/field/search}" method="post" class=" mb-4 pb-4 d-flex justify-content-center col-11 ">
 					
-					<input  style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" id="dateInput" name="dateInput" required class="form-control rounded-0 col-2" type="date" placeholder="Search" aria-label="Search" > 
+					<input style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" id="dateInput" name="dateInput" th:value="${dateInput}" required class="form-control rounded-0 col-2" type="date" placeholder="Search" aria-label="Search" > 
 					
 						<select style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" name="categorySelect" class="  form-control rounded-0 custom-select  col-2" id="inputGroupSelect01">
 						<option th:each="c : ${cateNotAll}" value="0" th:value="${c.sporttypeid}">[[${c.categoryname}]]</option>
@@ -325,8 +277,8 @@
           </a>
         </span>
         <div class="submit-section align-self-end mt-auto">
-        <a th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
-          <button  class="btn btn-success">Đặt sân ngay</button>
+        <a th:href="@{/sportify/field/detail/{idField}(idField=${e.fieldid})}">
+          <button  class="btn btn-success">Chọn sân này</button>
         </a>
         </div>
       </div>
@@ -345,74 +297,50 @@
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+				
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log
-									In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term
-									&amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New
-									User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help
-									Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report
-									Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
+										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -426,13 +354,13 @@
 
 						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							Bản quyền &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
@@ -496,7 +424,18 @@
 	            var maxDate = (yyyy) + '-12-31'; // Cập nhật 'max' là ngày cuối cùng trong năm
 	            document.getElementById('dateInput').max = maxDate;
 	        }
-		 
+		 function validateDate() {
+			  var dateInput = document.getElementById("dateInput").value;
+			  var selectedDate = new Date(dateInput);
+			  var currentDate = new Date();
+
+			  if (selectedDate <= currentDate) {
+			    alert("Vui lòng chọn một ngày lớn hơn ngày hiện tại");
+			    return false; // Ngăn chặn gửi form
+			  }
+
+			  return true; // Cho phép gửi form
+			}
 		 function parsePrice(priceString) {
 			  // Loại bỏ dấu chấm trong chuỗi giá tiền
 			  var priceWithoutDot = priceString.replace(/\./g, '');
