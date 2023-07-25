@@ -1,5 +1,7 @@
 package duan.sportify.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,10 +66,15 @@ public class EventController {
 	
 	@PostMapping("/search")
     public String search(@RequestParam("keyword")String keyword, Model model) {
-//        System.out.print(keyword);
-//        List<Eventweb> searchevent = eventDAO.searchEvents(keyword);
-//		model.addAttribute("eventList", searchevent);
-//        return "user/blog";
-        return "redirect:/sportify/event?keyword="+keyword;
+		try {
+	        String encodedSearchText = URLEncoder.encode(keyword, "UTF-8");
+	        if (encodedSearchText.isEmpty()) {
+	            return "redirect:/sportify/event";
+	        }
+	        return "redirect:/sportify/event?keyword=" + encodedSearchText;
+	    } catch (UnsupportedEncodingException e) {
+	        e.printStackTrace();
+	        return "error"; // Ví dụ: "error.html"
+	    }
     }
 }
