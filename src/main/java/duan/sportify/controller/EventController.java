@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +25,29 @@ import duan.sportify.service.impl.EventServiceImpl;
 import io.micrometer.observation.Observation.Event;
 
 @Controller
-@RequestMapping("sportify")
+@RequestMapping("/sportify")
 public class EventController {
 	@Autowired
 	EventDAO eventDAO;
-	@GetMapping("event")
-	public String view(Model model) {
-		List<Eventweb> eventwebList = eventDAO.findAllOrderByDateStart();
-		model.addAttribute("eventList", eventwebList);
+	@GetMapping("/event")
+	public String view(Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+		
+		Page<Eventweb> eventwebList;
+		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không		
+		if(keywordLength > 0 ) {
+			eventwebList = eventDAO.searchEvents(keyword, pageable);
+			
+		}else {
+			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
+		}
+		
+		
+		
+		List<Eventweb> events = eventwebList.getContent();
+		
+		model.addAttribute("eventList", events);
+		model.addAttribute("page", eventwebList);
+		model.addAttribute("keyword", keyword);
 		return "user/blog";
 	}
 	
@@ -47,9 +64,10 @@ public class EventController {
 	
 	@PostMapping("/search")
     public String search(@RequestParam("keyword")String keyword, Model model) {
-        System.out.print(keyword);
-        List<Eventweb> searchevent = eventDAO.searchEvents(keyword);
-		model.addAttribute("eventList", searchevent);
-        return "user/blog";
+//        System.out.print(keyword);
+//        List<Eventweb> searchevent = eventDAO.searchEvents(keyword);
+//		model.addAttribute("eventList", searchevent);
+//        return "user/blog";
+        return "redirect:/sportify/event?keyword="+keyword;
     }
 }

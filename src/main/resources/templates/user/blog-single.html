@@ -218,7 +218,7 @@
 					<div class="sidebar-box ftco-animate">
 						<h3 class="d-flex">Sự Kiện Trong Tháng</h3>
 						<div class="block-21 mb-4 d-flex" th:each="lq : ${eventLQ}" id="">
-							<img class="blog-img mr-4" alt="" th:src="@{'/user/images/' + ${lq[4]}}">
+							<img class="blog-img mr-4 img-event" alt="" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
 							
 							<div class="text">
 								<h3 class="heading">
