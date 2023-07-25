@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +24,8 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="products", catalog="sportify" )
 public class Products implements Serializable {
@@ -30,7 +34,7 @@ public class Products implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="productid", nullable=false)
     private Integer    productid ;
 
@@ -68,7 +72,7 @@ public class Products implements Serializable {
     @ManyToOne
     @JoinColumn(name="categoryid", referencedColumnName="categoryid", insertable=false, updatable=false)
     private Categories categories ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="products")
     private List<Orderdetails> listOfOrderdetails ; 
 

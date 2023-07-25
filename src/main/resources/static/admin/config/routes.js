@@ -1,8 +1,7 @@
-var app = angular.module("app", ["ngRoute"]);
+
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    $locationProvider.hashPrefix('!');
-    
+    $locationProvider.hashPrefix('');
 
     $routeProvider
         .when('/admin/index.html', {
@@ -64,6 +63,15 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/admin/vouchers', {
             templateUrl: '/admin/views/voucher-list.html',
             pageTitle: 'Voucher'
+        })
+        .when('/admin/category-product', {
+            templateUrl: '/admin/views/category-product.html',
+            pageTitle: 'Category Product'
+            
+        })
+        .when('/admin/category-sport', {
+            templateUrl: '/admin/views/category-sport.html',
+            pageTitle: 'Category Sport'
         })
 
 }).run(function ($rootScope, $route) {
