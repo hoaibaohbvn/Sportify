@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Booking - Thông Tin Đặt Sân</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Booking - Thông Tin Đặt Sân</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
- <link
+<link
 	href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
 	rel="stylesheet">
 
@@ -18,7 +19,8 @@
 <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
 <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
@@ -28,40 +30,40 @@
 </head>
 <style>
 .info-content {
-    display: none; /* Ẩn thông tin ban đầu */
-    background-color: #FBEAEB;
-    color: #2F3C7E;
-    font-weight:bold;
-    padding: 5px;
-    border: 1px solid #ccc;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    z-index: 1;
+	display: none; /* Ẩn thông tin ban đầu */
+	background-color: #FBEAEB;
+	color: #2F3C7E;
+	font-weight: bold;
+	padding: 5px;
+	border: 1px solid #ccc;
+	position: absolute;
+	top: 20px;
+	left: 0;
+	z-index: 1;
 }
 
 /* Định dạng biểu tượng "i" */
 .info-icon {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-color: graytext;
-    color: white;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background-color: graytext;
+	color: white;
+	text-align: center;
+	line-height: 15px;
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
 }
 
 /* Hiển thị thông tin khi hover vào phần tử chứa thông tin */
 .info-container:hover .info-content {
-    display: block;
+	display: block;
 }
 </style>
 <body th:each="e : ${fieldListById}">
 
-   <div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -94,8 +96,8 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> <a
+								th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
 
@@ -156,195 +158,222 @@
 	</nav>
 	<!-- END nav -->
 
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/bgcheckoutField.png');"
-        data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text align-items-end justify-content-center">
-                <div class="col-md-9 ftco-animate mb-5 text-center">
-                   <p class="breadcrumbs mb-0" >
+	<section class="hero-wrap hero-wrap-2"
+		style="background-image: url('/user/images/bgcheckoutField.png');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div
+				class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate mb-5 text-center">
+					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ
 								<i class="fa fa-chevron-right"></i>
-						</a></span><span class="mr-2"><a th:href="@{/sportify/field}">Sân <i class="fa fa-chevron-right"></i>
-						</a></span> <span>Đặt Sân</span>
+						</a></span><span class="mr-2"><a th:href="@{/sportify/field}">Sân
+								<i class="fa fa-chevron-right"></i>
+						</a></a></span><span class="mr-2"><a
+							th:href="@{/sportify/field/detail/{idField}(idField=${e.fieldid})}">Chi
+								Tiết Sân <i class="fa fa-chevron-right"></i>
+						</a></span> <span>Thanh Toán</span>
 					</p>
 					<h2 class="mb-0 bread">Thanh Toán</h2>
-                </div>
-            </div>
-        </div>
-    </section>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <section class="ftco-section">
-        <div class="container">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-10 ftco-animate">
-                        <form action="#" class="billing-form" >
-                            <h1 class="mb-4 billing-heading">Chi tiết đặt sân của bạn</h1>
-                            <div class="row align-items-end" th:each="user : ${InfoUser}" >
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Họ <span class="text-danger">*</span></label>
-                                        <input th:value="${user.firstname}" th:type="text" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="firstname">Tên <span class="text-danger">*</span></label>
-                                        <input th:value="${user.lastname}" type="text" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">Số điện thoại <span class="text-danger">*</span></label><span class="info-container"> <span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
-										</span> </span>
-										<input th:value="${user.phone}" type="text" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="Mail">Email</label>
-                                        <span class="info-container"><span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Email để nhận thông báo thông tin dặt sân, được lấy từ tài khoản của bạn.</p>
-										</span> </span>
-                                        <input readonly th:value="${user.email != null ? user.email : ''}" type="email" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="country">Môn Thể Thao <span class="text-danger">*</span></label>
-                                        <span class="info-container">
-                                        <span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Đây là loại sân dành riêng cho môn thể thao này.</p>
-										</span> </span>
-                                        <input th:value="${nameSportype}" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="streetaddress">Tên Sân <span class="text-danger">*</span></label>
-                                        <span class="info-container"><span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Sân quý khách đã chọn.</p>
-										</span> </span>
-                                        <input th:value="${e.namefield}" type="text" class="form-control" >
-                                    </div>
-                                </div>
-                              
-                                <div class="w-100"></div>
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="streetaddress">Ngày Nhận Sân <span class="text-danger">*</span></label>
-                                        <span class="info-container"><span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Đây là ngày nhận sân của quý khách.</p>
-										</span> </span>
-                                        <input type="date" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="streetaddress">Giá Tiền <span class="text-danger">*</span></label>
-                                        <span class="info-container"><span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Giá này được tính trên 1 giờ & có phụ thu 30% khi chọn các ca sau 17h00.</p>
-										</span> </span>
-                                        <input th:value="${#numbers.formatCurrency(e.price)}" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                              	 <div class="col-md-12 ">
-                                    <div class="form-group">
-                                    <label for="streetaddress">Ca chơi <span class="text-danger">*</span></label>
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
-                                                    style="font-size: 15px; color: gray; margin-right: 20px;">(7h-8h)</span></label>
-                                            <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
-                                                    style="font-size: 15px; color: gray;margin-right: 20px;">(7h-8h)</span></label>
-                                            <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
-                                                    style="font-size: 15px; color: gray;margin-right: 20px;">(7h-8h)</span></label>
-                                            <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
-                                                    style="font-size: 15px; color: gray;margin-right: 20px;">(7h-8h)</span></label>
-                                            <label><input type="checkbox" value="" class="mr-2">Ca 1 <span
-                                                    style="font-size: 15px; color: gray;margin-right: 20px;">(7h-8h)</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="postcodezip">Số ca đã chọn <span class="text-danger">*</span></label>
-                                        <input readonly type="number" class="form-control" >
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="w-100"></div>
-                            </div>
-                        </form><!-- END -->
+	<section class="ftco-section">
+		<div class="container">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-xl-10 ftco-animate">
+						<form action="#">
+							<h1 class="mb-4 d-flex justify-content-center">THÔNG TIN CHI
+								TIẾT SÂN BẠN ĐÃ CHỌN</h1>
+							<div class="row align-items-end" th:each="user : ${InfoUser}">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="lastname">Họ <span class="text-danger">*</span></label>
+										<input th:value="${user.firstname}" th:type="text"
+											class="form-control" readonly>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="firstname">Tên <span class="text-danger">*</span></label>
+										<input th:value="${user.lastname}" type="text"
+											class="form-control" readonly>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="phone">Số điện thoại <span
+											class="text-danger">*</span></label><span class="info-container">
+											<span class="info-icon">i</span> <span class="info-content">
+												<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
+										</span>
+										</span> <input th:value="${user.phone}" type="text"
+											class="form-control" readonly>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="Mail">Email</label> <span class="info-container"><span
+											class="info-icon">i</span> <span class="info-content">
+												<p>Email để nhận thông báo thông tin dặt sân, được lấy
+													từ tài khoản của bạn.</p>
+										</span> </span> <input readonly
+											th:value="${user.email != null ? user.email : ''}"
+											type="email" class="form-control" placeholder="">
+									</div>
+								</div>
+								<div class="w-100"></div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="country">Môn Thể Thao <span
+											class="text-danger">*</span></label> <span class="info-container">
+											<span class="info-icon">i</span> <span class="info-content">
+												<p>Đây là loại sân dành riêng cho môn thể thao này.</p>
+										</span>
+										</span> <input th:value="${nameSportype}" type="text"
+											class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="streetaddress">Tên Sân <span
+											class="text-danger">*</span></label> <span class="info-container"><span
+											class="info-icon">i</span> <span class="info-content">
+												<p>Sân quý khách đã chọn.</p>
+										</span> </span> <input th:value="${e.namefield}" type="text"
+											class="form-control">
+									</div>
+								</div>
+
+								<div class="w-100"></div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="streetaddress">Ngày Nhận Sân <span
+											class="text-danger">*</span></label> <span class="info-container"><span
+											class="info-icon">i</span> <span class="info-content">
+												<p>Đây là ngày nhận sân của quý khách.</p>
+										</span> </span> <input th:value="${dateselect}" type="date"
+											class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="streetaddress">Giá Tiền <span
+											class="text-danger">*</span></label> <span class="info-container"><span
+											class="info-icon">i</span> <span class="info-content">
+												<p>Giá này được tính trên 1 giờ & có phụ thu 30% khi
+													chọn các ca sau 17h00.</p>
+										</span> </span> <input th:value="${#numbers.formatCurrency(e.price)}"
+											type="text" class="form-control">
+									</div>
+								</div>
+								<div class="w-100"></div>
+								<div class="col-md-12 ">
+									<div class="form-group">
+										<label for="streetaddress">Giờ chơi <span
+											class="text-danger">*</span></label> <input id="nameshift-input"
+											name="nameshift" th:value="${nameShift}" type="text"
+											class="form-control" readonly>
+									</div>
+								</div>
+
+								<div class="w-100"></div>
+								<div class="w-100"></div>
+							</div>
+						</form>
+						<!-- END -->
 
 
 
-                        <div class="row mt-5 pt-3 d-flex">
-                            <div class="col-md-6 d-flex">
-                                <div class="cart-detail cart-total p-3 p-md-4">
-                                    <h3 class="billing-heading mb-4">Thành Tiền</h3>
-                                    <div class="col-md-6">
-                               			<div class="form-group">
-                                        <label>Giá Tiền<span class="text-danger">*</span></label>
-                                        <span th:value="${#numbers.formatCurrency(e.price)}" th:text="${#numbers.formatCurrency(e.price)}" style="margin-left: 20px"></span>
-								
-                                        <label>Số ca <span class="text-danger">*</span></label>
-                                        <span style="margin-left: 30px">2</span>
-                                        <label>Phụ Thu <span class="text-danger">*</span></label>
-                                        <span class="info-container"><span class="info-icon">i</span>
-										<span class="info-content">
-											<p>Phụ thu 30% giá sân theo quy định các ca sau 17h00.</p>
-										</span> </span>
-                                        <span style="margin-left: 7px">90.000</span>
-                                        
-                                   		</div>
-                              		 </div>
-                                    <hr>
-                                    <p class="d-flex total-price">
-                                        <span>Total</span>
-                                        <span >1.500.000</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="cart-detail p-3 p-md-4">
-                                    <h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2">Ví điện
-                                                    tử</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2">Thanh toán trực
-                                                    tiếp</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p><a href="#" class="btn btn-primary py-3 px-4">Đặt hàng</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- .col-md-8 -->
-                </div>
-            </div>
-        </div>
-    </section>
+						<div class="row mt-5 pt-3 d-flex">
+							<div class="col-md-6 d-flex">
+								<div class="cart-detail cart-total p-3 p-md-4">
+									<h3 class="billing-heading mb-4">Thành Tiền</h3>
+									<div class="">
+										<div class="form-group">
 
-    <footer class="ftco-footer">
+											<div class="d-flex">
+												<label>Giá Tiền</label> <span th:value="${e.price}"
+													th:text="${#numbers.formatCurrency(e.price)}"
+													style="margin-left: 20px"></span>
+											</div>
+											<div class="d-flex">
+												<label>Phụ Thu &nbsp;</label> <span class="info-container"><span
+													class="info-icon">i</span> <span class="info-content">
+														<p>Phụ thu 30% giá sân theo quy định các ca sau 17h00.</p>
+												</span> </span> <span style="margin-left: 7px" th:value="${phuthu}"
+													th:text="${#numbers.formatCurrency(phuthu)}"></span>
+											</div>
+										</div>
+
+										<label>Mã giảm giá ( nếu có )</label>
+										<div class="d-flex">
+											<input th:value="${voucher}" name="voucher" style="width: 100%" type="text"></input>
+
+											<a id="booking-link" class="col-4"
+												th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
+												<button class=" btn btn-outline-danger"
+													style="font-size: 17px; font-weight: bold;">Áp
+													Dụng</button>
+											</a>
+										</div>
+
+									</div>
+									<hr>
+									<div>
+										<span>Tạm tính :</span> 
+										<span th:value="${totalprice}"
+											th:text="${#numbers.formatCurrency(totalprice)}"></span>
+									</div>
+									<div>
+										<span>Giảm giá :</span> <span th:value="${pricevoucher}"
+											th:text="${#numbers.formatCurrency(pricevoucher)}"></span>
+									</div>
+									<div>
+										<span>Thành Tiền :</span> <span th:value="${thanhtien}"
+											th:text="${#numbers.formatCurrency(thanhtien)}"></span>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="cart-detail p-3 p-md-4">
+									<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="optradio"
+													class="mr-2">Ví điện tử</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="optradio"
+													class="mr-2">Thanh toán trực tiếp</label>
+											</div>
+										</div>
+									</div>
+									<p>
+										<a href="#" class="btn btn-primary py-3 px-4">Đặt hàng</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- .col-md-8 -->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">
 				<div class="col-sm-12 col-md">
@@ -352,25 +381,29 @@
 						<h2 class="ftco-heading-2 logo">
 							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
-				
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
 						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
-							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
-						
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
@@ -378,8 +411,9 @@
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
-							
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
@@ -389,7 +423,8 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
 										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
@@ -411,9 +446,10 @@
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
 								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
-								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
@@ -424,15 +460,18 @@
 
 
 
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#F96D00" />
-        </svg></div>
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+	</div>
 
 
- <script src="/user/js/jquery.min.js"></script>
+	<script src="/user/js/jquery.min.js"></script>
 	<script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="/user/js/popper.min.js"></script>
 	<script src="/user/js/bootstrap.min.js"></script>
@@ -451,42 +490,71 @@
 	<script src="/user/js/main.js"></script>
 	<script src="/user/jscode/favoriteHeart.js"></script>
 
-    <script>
-        $(document).ready(function () {
+	<script>
+		$(document).ready(function() {
 
-            var quantitiy = 0;
-            $('.quantity-right-plus').click(function (e) {
+			var quantitiy = 0;
+			$('.quantity-right-plus').click(function(e) {
 
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
 
-                // If is not undefined
+				// If is not undefined
 
-                $('#quantity').val(quantity + 1);
+				$('#quantity').val(quantity + 1);
 
+				// Increment
 
-                // Increment
+			});
 
-            });
+			$('.quantity-left-minus').click(function(e) {
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
 
-            $('.quantity-left-minus').click(function (e) {
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
+				// If is not undefined
 
-                // If is not undefined
+				// Increment
+				if (quantity > 0) {
+					$('#quantity').val(quantity - 1);
+				}
+			});
 
-                // Increment
-                if (quantity > 0) {
-                    $('#quantity').val(quantity - 1);
-                }
-            });
+		});
+	</script>
+	<script>
+		document.getElementById("booking-link").onclick = function(event) {
+			event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a> (chuyển đến URL)
 
-        });
-    </script>
+			// Lấy giá trị của trường nameshift từ trường input
+			const nameShiftInput = document.getElementById('nameshift-input');
+			const nameShiftValue = nameShiftInput.value;
+
+			// Lấy giá trị của trường voucher từ trường input
+			const voucherInput = document
+					.querySelector('input[name="voucher"]');
+			const voucherCode = voucherInput.value;
+
+			// Lấy URL của thẻ <a> (URL bạn muốn chuyển đến)
+			const bookingUrl = this.getAttribute('href');
+
+			// Thêm tham số "nameshift" và "voucher" vào URL nếu có
+			let updatedUrl = bookingUrl;
+			if (nameShiftValue) {
+				updatedUrl += `?nameshift=${encodeURIComponent(nameShiftValue)}`;
+			}
+			if (voucherCode) {
+				updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}voucher=${encodeURIComponent(voucherCode)}`;
+			}
+
+			// Chuyển đến URL mới với tham số nameshift và voucher (nếu có)
+			window.location.href = updatedUrl;
+		};
+	</script>
+
 
 </body>
 

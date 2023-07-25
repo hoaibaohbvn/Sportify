@@ -167,7 +167,7 @@
 				
 				<form onsubmit="return validateDate()" th:action="@{/sportify/field/search}" method="post" class=" mb-4 pb-4 d-flex justify-content-center col-11 ">
 					
-					<input style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" id="dateInput" name="dateInput" required class="form-control rounded-0 col-2" type="date" placeholder="Search" aria-label="Search" > 
+					<input style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" id="dateInput" name="dateInput" th:value="${dateInput}" required class="form-control rounded-0 col-2" type="date" placeholder="Search" aria-label="Search" > 
 					
 						<select style="border-top:3px solid #28a745;border-left:3px solid #28a745;border-bottom:3px solid #28a745; font-weight: lighter;" name="categorySelect" class="  form-control rounded-0 custom-select  col-2" id="inputGroupSelect01">
 						<option th:each="c : ${cateNotAll}" value="0" th:value="${c.sporttypeid}">[[${c.categoryname}]]</option>
@@ -277,8 +277,8 @@
           </a>
         </span>
         <div class="submit-section align-self-end mt-auto">
-        <a th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
-          <button  class="btn btn-success">Đặt sân ngay</button>
+        <a th:href="@{/sportify/field/detail/{idField}(idField=${e.fieldid})}">
+          <button  class="btn btn-success">Chọn sân này</button>
         </a>
         </div>
       </div>

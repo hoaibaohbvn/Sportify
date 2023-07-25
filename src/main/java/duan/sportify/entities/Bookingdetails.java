@@ -41,7 +41,7 @@ public class Bookingdetails implements Serializable {
     @Column(name="shiftid", nullable=false)
     private Integer    shiftid ;
     
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     @Column(name="playdate", nullable=false)
     private Date       playdate ;
 
