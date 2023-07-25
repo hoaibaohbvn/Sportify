@@ -223,4 +223,46 @@
 	$('[data-toggle="tooltip"]').tooltip()
 
 })(jQuery);
+    // Hiển thị hộp thoại thông báo
+    function showMessage(message) {
+        var messageDiv = $("#messageDiv");
+        var messageText = $("#messageText");
+        messageText.text(message);
+        messageDiv.fadeIn().delay(2000).fadeOut();
+    }
+
+    // Hiển thị hộp thoại thông báo1
+    function showMessage1(message1) {
+        var messageDiv1 = $("#messageDiv1");
+        var messageText1 = $("#messageText1");
+        messageText1.text(message1);
+        messageDiv1.fadeIn().delay(2000).fadeOut();
+    }
+
+    // Kiểm tra nếu có message thì hiển thị
+    if ($("#messageDiv").length) {
+        showMessage($("#messageText").text());
+    }
+
+    // Kiểm tra nếu có message1 thì hiển thị
+    if ($("#messageDiv1").length) {
+        showMessage1($("#messageText1").text());
+    }
+// Thêm sự kiện click vào nút đóng
+	document
+			.getElementById("closeButton")
+			.addEventListener(
+					"click",
+					function() {
+						// Ẩn thẻ <div> khi nút đóng được bấm
+						document.getElementById("descriptionModal").style.display = "none";
+					});
+// sự kiện nút xem thêm Teamdetail
+	function showMore(event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào thẻ <a>
+    var comment = $(event.target).closest(".comment"); // Tìm phần tử có class "comment" gần nhất
+    var metaDiv = comment.find(".meta"); // Tìm phần tử có class "meta" bên trong phần tử comment
+    metaDiv.show(); // Hiển thị div có class "meta"
+    $(event.target).closest(".showMoreParagraph").hide(); // Ẩn thẻ "Xem thêm..." bên trong phần tử có class "showMoreParagraph"
+}
 

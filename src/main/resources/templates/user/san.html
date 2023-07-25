@@ -5,7 +5,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <head>
-<title>Đặt Sân</title>
+<title>SPORTIFY - Sân Thể Thao</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,24 +61,33 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
 						<p class="mb-0">
-							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
+							<a th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
-					<div class="dropdown m-1" ng-hide="false">
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
 						<a class="dropdown-toggle" id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img class="rounded-circle border border-white"
-							src="/user/images/person_1.jpg" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" href="#">Đăng xuất</a>
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+								xuất</a>
 						</div>
 					</div>
+
 					<!-- end check login -->
 				</div>
 
@@ -174,10 +183,9 @@
 			<div
 				class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
-					<p class="breadcrumbs mb-0">
-						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Sân <i
-							class="fa fa-chevron-right"></i></span>
+					<p class="breadcrumbs mb-0" >
+						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ <i
+									class="fa fa-chevron-right"></i></a></span> <span>Sân</span>
 					</p>
 					<h2 class="mb-0 bread">Sân</h2>
 				</div>
@@ -254,23 +262,21 @@
 						<div class="col-lg-12 d-flex align-items-stretch ftco-animate "
 							th:each="e : ${fieldList}">
 							<div class="blog-entry d-flex">
-								<img class="block-20 block-19 img"
+								<img class="block-20 img"
 									th:src="@{'/user/images/' + ${e.image}}" alt="Image">
 								<div class="text p-4 bg-light d-flex flex-column">
-									<h3 class="heading mb-3">
-										<a href="#" th:text="${e.namefield}"></a>
+									<h3 class="heading mb-5">
+										<a th:href="@{/sportify/field/detail/{idField}(idField=${e.fieldid})}" th:text="${e.namefield}"></a>
 									</h3>
-									<p>
-										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-											viewBox="0 0 512 512">
-											<title>ionicons-v5-n</title><path
-												d="M256,48c-79.5,0-144,61.39-144,137,0,87,96,224.87,131.25,272.49a15.77,15.77,0,0,0,25.5,0C304,409.89,400,272.07,400,185,400,109.39,335.5,48,256,48Z"
-												style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" />
-											<circle cx="256" cy="192" r="48"
-												style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" /></svg>
+									<div>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-geo-alt-fill"
+											viewBox="0 0 16 16">
+  					<path
+												d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+					</svg>
 										<b class="text-info font-weight-bold" th:text="${e.address}"></b>
-									</p>
-
+									</div>
 									<p>Giá tiền / 1 giờ: <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(e.price)}"></span>
 									</p>
 									<span th:if="${isFavorited}"> 

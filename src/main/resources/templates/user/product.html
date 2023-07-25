@@ -58,24 +58,33 @@
 					</div>
 
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
 						<p class="mb-0">
-							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
+							<a th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
-					<div class="dropdown m-1" ng-hide="false">
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
 						<a class="dropdown-toggle" id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img class="rounded-circle border border-white"
-							src="/user/images/person_1.jpg" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông tin</a> <a
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" href="#">Đăng xuất</a>
+							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
+								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+								xuất</a>
 						</div>
 					</div>
+
 					<!-- end check login -->
 				</div>
 
