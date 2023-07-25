@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -19,58 +19,60 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
-import duan.sportify.dao.EventDAO;
+import duan.sportify.dao.FieldDAO;
 
-import duan.sportify.entities.Eventweb;
-import duan.sportify.entities.Products;
+import duan.sportify.entities.Field;
+
 import duan.sportify.utils.ErrorResponse;
+
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/events/")
-public class EventRestController {
+@RequestMapping("/rest/fields/")
+public class FieldRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	EventDAO eventDAO;
+	FieldDAO fieldDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Eventweb>> getAll(Model model){
-		return ResponseEntity.ok(eventDAO.findAll());
+	public ResponseEntity<List<Field>> getAll(Model model){
+		return ResponseEntity.ok(fieldDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Eventweb> getOne(@PathVariable("id") Integer id) {
-		if(!eventDAO.existsById(id)) {
+	public ResponseEntity<Field> getOne(@PathVariable("id") Integer id) {
+		if(!fieldDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(eventDAO.findById(id).get());
+		return ResponseEntity.ok(fieldDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Eventweb> create(@RequestBody Eventweb event) {
-	    if (event.getEventid() != null && eventDAO.existsById(event.getEventid())) {
-	        return ResponseEntity.badRequest().build();
-	    }
-	    eventDAO.save(event);
-	    return ResponseEntity.ok(event);
+	public ResponseEntity<Field> create(@RequestBody Field field) {
+		if(!fieldDAO.existsById(field.getFieldid())) {
+			
+			return ResponseEntity.badRequest().build();
+		}
+		fieldDAO.save(field);
+		return ResponseEntity.ok(field);
 	}
-	@PutMapping("update/{id}")
-	public ResponseEntity<Eventweb> update(@PathVariable("id") Integer id, @RequestBody Eventweb event) {
-		if(!eventDAO.existsById(id)) {
+	@PutMapping("update")
+	public ResponseEntity<Field> update(@PathVariable("id") Integer id, @RequestBody Field field) {
+		if(!fieldDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		eventDAO.save(event);
-		return ResponseEntity.ok(event);
+		fieldDAO.save(field);
+		return ResponseEntity.ok(field);
 	}
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!eventDAO.existsById(id)) {
+		if(!fieldDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		eventDAO.deleteById(id);
+		fieldDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

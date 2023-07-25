@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -19,60 +19,60 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
-
-import duan.sportify.dao.VoucherDAO;
-import duan.sportify.entities.Voucher;
+import duan.sportify.dao.SportTypeDAO;
+import duan.sportify.entities.Categories;
+import duan.sportify.entities.Sporttype;
 
 import duan.sportify.utils.ErrorResponse;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/vouchers/")
-public class VoucherRestController {
+@RequestMapping("/rest/sportTypes/")
+public class CategorySportRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	VoucherDAO voucherDAO;
+	SportTypeDAO sportTypeDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Voucher>> getAll(Model model){
-		return ResponseEntity.ok(voucherDAO.findAll());
+	public ResponseEntity<List<Sporttype>> getAll(Model model){
+		return ResponseEntity.ok(sportTypeDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Voucher> getOne(@PathVariable("id") String id) {
-		if(!voucherDAO.existsById(id)) {
+	public ResponseEntity<Sporttype> getOne(@PathVariable("id") String id) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(voucherDAO.findById(id).get());
+		return ResponseEntity.ok(sportTypeDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Voucher> create(@RequestBody Voucher voucher) {
-		if(!voucherDAO.existsById(voucher.getVoucherid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		voucherDAO.save(voucher);
-		return ResponseEntity.ok(voucher);
+	public ResponseEntity<Sporttype> create(@RequestBody Sporttype sporttype) {
+	    if (sporttype.getSporttypeid() != null && sportTypeDAO.existsById(sporttype.getSporttypeid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    sportTypeDAO.save(sporttype);
+	    return ResponseEntity.ok(sporttype);
 	}
-	@PutMapping("update")
-	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @RequestBody Voucher voucher) {
-		if(!voucherDAO.existsById(id)) {
+	@PutMapping("update/{id}")
+	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @RequestBody Sporttype sportType) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		voucherDAO.save(voucher);
-		return ResponseEntity.ok(voucher);
+		sportTypeDAO.save(sportType);
+		return ResponseEntity.ok(sportType);
 	}
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") String id) {
-		if(!voucherDAO.existsById(id)) {
+		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		voucherDAO.deleteById(id);
+		sportTypeDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -19,59 +19,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
+import duan.sportify.dao.EventDAO;
 
-import duan.sportify.dao.TeamDAO;
-import duan.sportify.entities.Teams;
-
+import duan.sportify.entities.Eventweb;
+import duan.sportify.entities.Products;
 import duan.sportify.utils.ErrorResponse;
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/teams/")
-public class TeamRestController {
+@RequestMapping("/rest/events/")
+public class EventRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	TeamDAO teamDAO;
+	EventDAO eventDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Teams>> getAll(Model model){
-		return ResponseEntity.ok(teamDAO.findAll());
+	public ResponseEntity<List<Eventweb>> getAll(Model model){
+		return ResponseEntity.ok(eventDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Teams> getOne(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+	public ResponseEntity<Eventweb> getOne(@PathVariable("id") Integer id) {
+		if(!eventDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(teamDAO.findById(id).get());
+		return ResponseEntity.ok(eventDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Teams> create(@RequestBody Teams team) {
-		if(!teamDAO.existsById(team.getTeamid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+	public ResponseEntity<Eventweb> create(@RequestBody Eventweb event) {
+	    if (event.getEventid() != null && eventDAO.existsById(event.getEventid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    eventDAO.save(event);
+	    return ResponseEntity.ok(event);
 	}
-	@PutMapping("update")
-	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @RequestBody Teams team) {
-		if(!teamDAO.existsById(id)) {
+	@PutMapping("update/{id}")
+	public ResponseEntity<Eventweb> update(@PathVariable("id") Integer id, @RequestBody Eventweb event) {
+		if(!eventDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+		eventDAO.save(event);
+		return ResponseEntity.ok(event);
 	}
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+		if(!eventDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.deleteById(id);
+		eventDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

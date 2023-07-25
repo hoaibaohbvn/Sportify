@@ -159,7 +159,7 @@
 								<div class="form-group">
 									<label class="col-form-label">Date Create <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datecreate">
+										type="date" ng-model="form.datecreate" disabled>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -264,7 +264,7 @@
 								<div class="form-group">
 									<label class="col-form-label">Date Create <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datecreate">
+										type="text" ng-model="form.datecreate | date : 'dd-MM-yyyy'" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
