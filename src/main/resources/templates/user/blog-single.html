@@ -53,33 +53,24 @@
 					</div>
 
 					<!-- check login -->
-					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
-					<div th:if="${users == null}" class="reg m-1"
-						style="display: block;">
+					<div class="reg m-1" ng-hide="true">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
 						</p>
 					</div>
-
-					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
-					<div th:if="${users != null}" class="dropdown m-1"
-						style="display: block;">
+					<div class="dropdown m-1" ng-hide="false">
 						<a class="dropdown-toggle" id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<img class="rounded-circle border border-white"
-							th:src="@{'/user/images/' + ${users.image}}" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser"
-							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
+							src="/user/images/person_1.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
 								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
-								xuất</a>
+								class="dropdown-item" href="#">Đăng xuất</a>
 						</div>
 					</div>
-
 					<!-- end check login -->
 				</div>
 
@@ -176,13 +167,13 @@
 				class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
-						<span class="mr-2"><a href="index.html">Home <i
+						<span class="mr-2"><a href="index.html">Trang Chủ <i
 								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="blog.html">Blog <i class="fa fa-chevron-right"></i></a></span> <span>Blog
-							Single <i class="fa fa-chevron-right"></i>
+							href="blog.html">Sự Kiện <i class="fa fa-chevron-right"></i></a></span> <span>Chi Tiết Sự Kiện
+							 <i class="fa fa-chevron-right"></i>
 						</span>
 					</p>
-					<h2 class="mb-0 bread">Event Detail</h2>
+					<h2 class="mb-0 bread">Chi Tiết Sự Kiện</h2>
 				</div>
 			</div>
 		</div>
@@ -196,75 +187,26 @@
 					<h2 class="mb-3" th:text="${eventdetail.nameevent}"></h2>
 					<div class="meta d-block col-12 row">
 						<div class="row col-6">
-							<span class="fa fa-calendar m-2"> </span>
-							<label class="m-1">Ngày bắt đầu: </label>
-							<p th:utext="${#dates.format(eventdetail.datestart, 'dd-MM-yyyy')}"
+							<span class="fa fa-calendar m-2"> </span> <label class="m-1">Ngày
+								bắt đầu: </label>
+							<p
+								th:utext="${#dates.format(eventdetail.datestart, 'dd-MM-yyyy')}"
 								class="m-1" style="color: blue;"></p>
 						</div>
-						<div  class="row col-6">
-							<span class="fa fa-calendar m-2"> </span>
-							<label class="m-1">Ngày kết thúc: </label>
+						<div class="row col-6">
+							<span class="fa fa-calendar m-2"> </span> <label class="m-1">Ngày
+								kết thúc: </label>
 							<p th:utext="${#dates.format(eventdetail.dateend, 'dd-MM-yyyy')}"
 								class="m-1 " style="color: red;"></p>
 						</div>
-							
+
 					</div>
 					<p>
 						<img th:src="@{'/user/images/' + ${eventdetail.image}}" alt=""
 							class="img-fluid">
 					</p>
-					<p th:text="${eventdetail.descriptions}"></p>
-					<div class="pt-5 mt-5">
-						<h3 class="mb-5">6 Comments</h3>
-						<ul class="comment-list">
-							<li class="comment">
-								<div class="vcard bio">
-									<img src="/user/images/person_1.jpg" alt="Image placeholder">
-								</div>
-								<div class="comment-body">
-									<h3>John Doe</h3>
-									<div class="meta">April 12, 2020 at 1:21am</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Pariatur quidem laborum necessitatibus, ipsam impedit
-										vitae autem, eum officia, fugiat saepe enim sapiente iste
-										iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-									<p>
-										<a href="#" class="reply">Reply</a>
-									</p>
-								</div>
-							</li>
-						</ul>
-						<!-- END comment-list -->
-
-						<div class="comment-form-wrap pt-5">
-							<h3 class="mb-5">Leave a comment</h3>
-							<form action="#" class="p-5 bg-light">
-								<div class="form-group">
-									<label for="name">Name *</label> <input type="text"
-										class="form-control" id="name">
-								</div>
-								<div class="form-group">
-									<label for="email">Email *</label> <input type="email"
-										class="form-control" id="email">
-								</div>
-								<div class="form-group">
-									<label for="website">Website</label> <input type="url"
-										class="form-control" id="website">
-								</div>
-
-								<div class="form-group">
-									<label for="message">Message</label>
-									<textarea name="" id="message" cols="30" rows="10"
-										class="form-control"></textarea>
-								</div>
-								<div class="form-group">
-									<input type="submit" value="Post Comment"
-										class="btn py-3 px-4 btn-primary">
-								</div>
-
-							</form>
-						</div>
-					</div>
+					<p th:text="${eventdetail.descriptions}" class="event-description"></p>
+					
 
 				</div>
 				<!-- .col-md-8 -->
@@ -274,26 +216,32 @@
 
 				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
 					<div class="sidebar-box ftco-animate">
-						<h3>Giải Đấu Liên Quan</h3>
-						<div class="block-21 mb-2 d-flex" th:each = "lq : ${eventLQ}" id ="">
-							<img class="blog-img mr-4" alt=""
-									th:src="@{'/user/images/' + ${lq[4]}}">
+						<h3 class="d-flex">Sự Kiện Trong Tháng</h3>
+						<div class="block-21 mb-4 d-flex" th:each="lq : ${eventLQ}" id="">
+							<img class="blog-img mr-4 img-event" alt="" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
+							
 							<div class="text">
 								<h3 class="heading">
-									<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}" th:text="${lq[1]}"></a>
+									<a
+										th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}"
+										th:text="${lq[1]}" class="limited-length"></a>
 								</h3>
 								<div class="meta">
-									<div>
-										<a href="#"><span class="fa fa-calendar"></span> Apr. 18,
-											2020</a>
+									<div class="meta d-flex">
+										<span class="fa fa-calendar m-2"> </span>
+										<p th:utext="${#dates.format(lq[2], 'dd-MM-yyyy')}" class="m-1 " style="color:blue;"></p>
 									</div>
-									<div>
-										<a href="#"><span class="fa fa-user"></span> Admin</a>
+									
+									<div class="meta d-flex">
+										<span class="fa fa-calendar m-2"> </span>
+										<p th:utext="${#dates.format(lq[3], 'dd-MM-yyyy')}" class="m-1 " style="color:red;"></p>
 									</div>
-									<div>
-										<a href="#"><span class="fa fa-comment"></span> 19</a>
-									</div>
+									
 								</div>
+								<div class="meta">
+									
+								</div>
+								
 							</div>
 						</div>
 					</div>
