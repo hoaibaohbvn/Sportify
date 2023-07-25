@@ -42,7 +42,11 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	    @Query("SELECT e FROM Eventweb e WHERE e.datestart = :eventDate")
 	    List<Eventweb> findByDate(Date eventDate);
 	    
-	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:keyword% OR e.datestart = :eventDate")
-	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
+//	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:keyword% OR e.datestart = :eventDate")
+//	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
+	    
+	    @Query(value = "SELECT * FROM Eventweb " +
+                "WHERE lower(nameevent) LIKE %:keyword% OR datestart LIKE %:keyword%", nativeQuery = true)
+	    List<Eventweb> searchEvents(@Param("keyword") String keyword);
 	
 }

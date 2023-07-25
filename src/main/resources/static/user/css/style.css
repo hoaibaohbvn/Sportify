@@ -10058,3 +10058,13 @@ a:hover span {
   text-overflow: ellipsis;
   max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
+
+
+.event-item {
+    display: none;
+}
+
+.event-item.active {
+    display: block;
+}
+

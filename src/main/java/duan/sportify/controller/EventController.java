@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,20 +45,11 @@ public class EventController {
 	}
 
 	
-	@GetMapping("/search")
-    public String searchEvent(@RequestParam(value = "keyword", required = false) String keyword,
-                              @RequestParam(value = "eventDate", required = false)
-                              @DateTimeFormat(pattern = "yyyy-MM-dd") Date eventDate,
-                              Model model) {
-        List<Eventweb> searchResults;
-
-        if (keyword != null && !keyword.isEmpty() || eventDate != null) {
-            searchResults = eventDAO.searchEvents(keyword, eventDate);
-        } else {
-            searchResults = eventDAO.findAll();
-        }
-
-        model.addAttribute("searchResults", searchResults);
-        return "user/blog"; // Trả về trang hiển thị kết quả tìm kiếm
+	@PostMapping("/search")
+    public String search(@RequestParam("keyword")String keyword, Model model) {
+        System.out.print(keyword);
+        List<Eventweb> searchevent = eventDAO.searchEvents(keyword);
+		model.addAttribute("eventList", searchevent);
+        return "user/blog";
     }
 }
