@@ -2,20 +2,22 @@
 <html lang="en">
 
 <head>
-	<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/user/css/animate.css">
-	<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="/user/css/magnific-popup.css">
-	<link rel="stylesheet" href="/user/css/flaticon.css">
-	<link rel="stylesheet" href="/user/css/style.css">
-	<link rel="stylesheet" href="/user/css/styleprofile.css">
+<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/user/css/animate.css">
+<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/user/css/magnific-popup.css">
+<link rel="stylesheet" href="/user/css/flaticon.css">
+<link rel="stylesheet" href="/user/css/style.css">
+<link rel="stylesheet" href="/user/css/styleprofile.css">
 </head>
 
 <body>
@@ -53,8 +55,8 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> <a
+								th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
 
@@ -164,75 +166,132 @@
 	<!-- END nav -->
 
 	<div class="container d-flex justify-content-center rounded mt-5 mb-5 ">
-		<div class="row col-md-9 bg-white d-flex justify-content-center rounded " id="profiles">
-			<div class="col-md-4 ">
-				<div class="d-flex flex-column align-items-center text-center p-3 py-5">
-					<img class="rounded-circle mt-5" width="200px"
-						src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-					<h5 class="font-weight-bold">Phạm Công Minh</h5>
-					<span class="text-black-50">Admin</span>
-					<span class="text-black-50">minhpcps19733@gmail.com</span>
+		<div th:each="prf : ${prodiles}"
+			class=" col-md-12 bg-white d-flex rounded " id="profiles">
+			<form th:action="@{/sportify/profile/save-profile}" method="post"
+				class="d-flex" enctype="multipart/form-data">
+				<div class="col-md-5">
+					<div
+						class="d-flex flex-column align-items-center text-center p-3 py-5">
+						<div style="position: relative;">
+							<img class="border border-dark rounded-circle mt-5" width="250px"
+								height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
+							<div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1;">
+								<label for="avatarFileInput"> <i style="font-size: 30px;color: white;"
+									class="fa fa-camera"></i> <!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
+								</label> <input id="avatarFileInput" type="file"
+									class="form-control-file" name="avatarFile"
+									style="display: none;">
+							</div>
+						</div>
+						<div class="d-flex mt-4">
+							<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
+							<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
+						</div>
+						<span class="text-black-50">Admin</span> <span
+							th:text="${prf.email}" class="text-black-50"></span>
 
+					</div>
 				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="p-3 py-5">
-					<div class="d-flex justify-content-between align-items-center mb-3">
-						<h4 class="text-right text-uppercase">Thông tin</h4>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<label class="labels">Họ</label>
-							<input type="text" class="form-control" placeholder="" value="">
+				<div class="col-md-6">
+					<div class="p-3 py-5">
+						<div
+							class="d-flex justify-content-between align-items-center mb-3">
+							<h4 class="text-right text-uppercase">Thông tin</h4>
 						</div>
-						<div class="col-md-6">
-							<label class="labels">Tên</label>
-							<input type="text" class="form-control" value="" placeholder="">
+						<div class="row">
+							<div class="col-md-6">
+								<label class="labels">Họ</label> <input
+									th:value="${prf.firstname}" type="text" class="form-control"
+									name="firstname">
+							</div>
+							<div class="col-md-6">
+								<label class="labels">Tên</label> <input
+									th:value="${prf.lastname}" type="text" class="form-control"
+									name="lastname">
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<label class="labels">Tài khoản</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Mật khẩu</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Số điện thoại</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Email</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Giới tính</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Địa chỉ</label>
-							<input type="text" class="form-control" placeholder="" value="">
-						</div>
-						<div class="col-md-12">
-							<label class="labels">Giới thiệu bản thân (Ghi chú)</label>
-							<textarea class="form-control" placeholder="" value="" rows="3"></textarea>
+						<div class="row">
+							<div class="col-md-12">
+								<label class="labels">Tài khoản</label> <input
+									th:value="${prf.username}" type="text" class="form-control"
+									readonly name="username">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Mật khẩu</label> <input
+									th:value="${prf.passwords}" type="password"
+									class="form-control" name="passwords">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Số điện thoại</label> <input
+									th:value="${prf.phone}" type="text" class="form-control"
+									name="phone">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Email</label> <input
+									th:value="${prf.email}" type="text" class="form-control"
+									name="email">
+							</div>
+							<div class="col-md-12">
+								<label class="labels">Giới tính</label>
+								<div class="d-flex">
+									<div class="radio-container mr-4">
+										<input type="radio" name="gender" id="male" value="true"
+											class="form-control mr-1" th:checked="${prf.gender}" /> <span>Nam</span>
+									</div>
+									<div class="radio-container">
+										<input type="radio" name="gender" id="female" value="false"
+											class="form-control mr-1" th:checked="${!prf.gender}" /> <span>Nữ</span>
+									</div>
+								</div>
 
+							</div>
+
+
+							<div class="col-md-12">
+								<label class="labels">Địa chỉ</label> <input
+									th:value="${prf.address}" type="text" class="form-control"
+									name="address">
+							</div>
 						</div>
+						<div class="mt-5 text-center">
+							<button class="btn btn-primary profile-button" type="submit">Save
+								Profile</button>
+						</div>
+
 					</div>
-					<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save
-							Profile</button></div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
+
+	<!-- Đoạn mã để hiển thị thông báo nếu có -->
+	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
+		style="display: none;">
+		<div class="col-3 alert alert-success"
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message}"></p>
+
+		</div>
+	</div>
+	<div class="col-12 fixed-top" id="messageDiv1" th:if="${message1}"
+		style="display: none;">
+		<div class="col-3 alert alert-danger "
+			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+			<p th:text="${message1}"></p>
+
+		</div>
+	</div>
+
 	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
+	</div>
 
 
 	<script src="/user/js/jquery.min.js"></script>
