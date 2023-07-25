@@ -20,10 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.SportTypeDAO;
-
+import duan.sportify.entities.Categories;
 import duan.sportify.entities.Sporttype;
 
 import duan.sportify.utils.ErrorResponse;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -50,15 +51,14 @@ public class CategorySportRestController {
 		return ResponseEntity.ok(sportTypeDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Sporttype> create(@RequestBody Sporttype sportType) {
-		if(!sportTypeDAO.existsById(sportType.getSporttypeid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		sportTypeDAO.save(sportType);
-		return ResponseEntity.ok(sportType);
+	public ResponseEntity<Sporttype> create(@RequestBody Sporttype sporttype) {
+	    if (sporttype.getSporttypeid() != null && sportTypeDAO.existsById(sporttype.getSporttypeid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    sportTypeDAO.save(sporttype);
+	    return ResponseEntity.ok(sporttype);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @RequestBody Sporttype sportType) {
 		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

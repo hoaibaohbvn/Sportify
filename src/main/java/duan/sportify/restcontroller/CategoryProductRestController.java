@@ -24,6 +24,7 @@ import duan.sportify.dao.CategoryDAO;
 import duan.sportify.entities.Categories;
 
 import duan.sportify.utils.ErrorResponse;
+import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/rest/categories/")
@@ -42,14 +43,14 @@ public class CategoryProductRestController {
 		return ResponseEntity.ok(categoryDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Categories> getOne(@PathVariable("id") Integer id) {
+	public ResponseEntity<Categories> getOne(@Valid @PathVariable("id") Integer id) {
 		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(categoryDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Categories> create(@RequestBody Categories category) {
+	public ResponseEntity<Categories> create(@Valid @RequestBody Categories category) {
 	    if (category.getCategoryid() != null && categoryDAO.existsById(category.getCategoryid())) {
 	        return ResponseEntity.badRequest().build();
 	    }

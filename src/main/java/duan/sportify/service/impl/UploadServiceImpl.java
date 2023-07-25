@@ -18,7 +18,7 @@ public class UploadServiceImpl implements UploadService{
 	public File save(MultipartFile file, String folder, String destinationDir) {
 		// TODO Auto-generated method stub
 		
-		File sourceDir = new File(app.getRealPath("/admin/" + folder));
+		File sourceDir = new File(app.getRealPath("/user/" + folder));
 	    if (!sourceDir.exists()) {
 	        sourceDir.mkdirs();
 	    }

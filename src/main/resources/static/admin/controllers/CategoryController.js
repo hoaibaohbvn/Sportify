@@ -166,4 +166,5 @@ app.controller('CategoryController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	
 })

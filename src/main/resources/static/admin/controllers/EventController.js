@@ -1,15 +1,12 @@
-app.controller('ProductController', function($scope, $http) {
+app.controller('EventController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
-		$http.get("/rest/categories/getAll").then(resp => {
-			$scope.categories = resp.data;
-		})
-		// lấy danh sách product
-		$http.get("/rest/products/getAll").then(resp => {
+		$http.get("/rest/events/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate)
+				item.datestart = new Date(item.datestart)
+				item.dateend = new Date(item.dateend)
 			})
 		});
 		$scope.reset();
@@ -17,7 +14,8 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			datecreate: new Date(),
+			dateStart: new Date(),
+			dateEnd: new Date(),
 			productstatus: true,
 			image: "loading.jpg"
 		}
@@ -29,11 +27,12 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products/create`, item).then(resp => {
+		$http.post(`/rest/events/create`, item).then(resp => {
 			
-			resp.data.datecreate = new Date(resp.data.datecreate)
+			resp.data.dateStart = new Date(resp.data.dateStart)
+			resp.data.dateEnd = new Date(resp.data.dateEnd)
 			$scope.items.push(resp.data);
-			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
+			showSuccessToast("Event mới tên " + item.nameevent + " đã được thêm vào cửa hàng")
             $scope.reset();
             $('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
@@ -45,10 +44,10 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/update/${item.productid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.put(`/rest/events/update/${item.eventid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sản phẩm thành công")
+			showSuccessToast("Cập nhập sự kiện thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -58,14 +57,14 @@ app.controller('ProductController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item){
-			$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-				var index = $scope.items.findIndex(p => p.productid == item.productid);
+			$http.delete(`/rest/events/delete/${item.eventid}`).then(resp => {
+				var index = $scope.items.findIndex(p => p.eventid == item.eventid);
             $scope.items.splice(index, 1);
             // Đặt lại trạng thái của form (nếu có)
             $scope.reset();
             $('#delete').modal('hide')
             // Hiển thị thông báo thành công
-            showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+            showSuccessToast("Sự kiện tên " + item.productname + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 			}).catch(error => {
 				alert("Lỗi xóa sản phẩm!");

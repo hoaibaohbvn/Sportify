@@ -22,7 +22,7 @@ import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.EventDAO;
 
 import duan.sportify.entities.Eventweb;
-
+import duan.sportify.entities.Products;
 import duan.sportify.utils.ErrorResponse;
 @CrossOrigin(origins = "*")
 @RestController
@@ -50,14 +50,13 @@ public class EventRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Eventweb> create(@RequestBody Eventweb event) {
-		if(!eventDAO.existsById(event.getEventid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		eventDAO.save(event);
-		return ResponseEntity.ok(event);
+	    if (event.getEventid() != null && eventDAO.existsById(event.getEventid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    eventDAO.save(event);
+	    return ResponseEntity.ok(event);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Eventweb> update(@PathVariable("id") Integer id, @RequestBody Eventweb event) {
 		if(!eventDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
