@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -65,12 +68,14 @@ public class Products implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryid", referencedColumnName="categoryid", insertable=false, updatable=false)
     private Categories categories ; 
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy="products")
-    private List<Orderdetails> listOfOrderdetails ; 
+    private List<Orderdetails> orderdetails ; 
 
 
     

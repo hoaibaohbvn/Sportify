@@ -1,23 +1,30 @@
 const app = angular.module("shopping-cart-app", []);
 
+/*app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}])*/
+
 app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 	$scope.cart = {
 		items: [],
 		//thêm SP
-		addProduct(productid) {
-			var item = this.items.find(item => item.productid == productid);
+		addProduct(id) {
+			//alert(id);
+			const testItem = {name: "Product1", img: "product1_img.png", price: "$100"};
+			//const testCart = JSON.stringify(angular.copy(testItem));
+			//localStorage.setItem("testCart", testCart);
+			var item = this.items.find(item => item.id == id);
 			if (item) {
 				item.quantity++;
 				this.saveToLocalStorage();
 			} else {
-				$http.get(`/sportify/rest/products/${productid}`).then(resp => {
-					resp.data.quantity = 1;
+				$http.get(`/sportify/rest/products/${id}`).then(resp => {
+					resp.data.qty = 1;
 					this.items.push(resp.data);
 					this.saveToLocalStorage();
-				})
+				});
 			}
-			alert(productid);
 		},
 		//xóa SP
 		removeProduct(productid) { },
