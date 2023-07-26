@@ -6,8 +6,11 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,15 +32,16 @@ public class Categories implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="categoryid", nullable=false)
     private Integer    categoryid ;
 
     //--- ENTITY DATA FIELDS 
+    @NotBlank(message = "{NotNull.categories.categoryname}")
     @Column(name="categoryname", nullable=false, length=50)
     private String     categoryname ;
 
-
+    @JsonIgnore
     //--- ENTITY LINKS ( RELATIONSHIP )
     @OneToMany(mappedBy="categories")
     private List<Products> listOfProducts ; 

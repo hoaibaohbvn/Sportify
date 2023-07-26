@@ -6,6 +6,9 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -65,16 +68,16 @@ public class Users implements Serializable {
 
     @OneToMany(mappedBy="users")
     private List<Orders> listOfOrders ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Authorized> listOfAuthorized ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Bookings> listOfBookings ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Favoritefield> listOfFavoritefield ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Teams> listOfTeams ; 
 

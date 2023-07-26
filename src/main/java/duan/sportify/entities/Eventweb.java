@@ -29,7 +29,7 @@ public class Eventweb implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="eventid", nullable=false)
     private Integer    eventid ;
 

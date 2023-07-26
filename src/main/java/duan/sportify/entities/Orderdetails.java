@@ -5,6 +5,9 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +31,7 @@ public class Orderdetails implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="orderdetailsid", nullable=false)
     private Integer    orderdetailsid ;
 
@@ -47,10 +50,12 @@ public class Orderdetails implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="orderid", referencedColumnName="orderid", insertable=false, updatable=false)
     private Orders     orders ; 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="productid", referencedColumnName="productid", insertable=false, updatable=false)
     private Products   products ; 
