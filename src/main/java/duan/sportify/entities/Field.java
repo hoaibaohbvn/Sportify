@@ -54,6 +54,8 @@ public class Field implements Serializable {
 
     @Column(name="address", nullable=false, length=200)
     private String     address ;
+    @Column(name="status")
+    private Boolean     status ;
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )

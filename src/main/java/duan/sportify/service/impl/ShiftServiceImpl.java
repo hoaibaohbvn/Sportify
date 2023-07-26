@@ -51,5 +51,17 @@ public class ShiftServiceImpl implements ShiftService{
 		return shiftDAO.findShiftById(id);
 	}
 
+	@Override
+	public List<Shifts> findShiftDate(Integer id, String date) {
+		// TODO Auto-generated method stub
+		return shiftDAO.findShiftDate(id, date);
+	}
+
+	@Override
+	public List<Shifts> findShiftByName(String name) {
+		// TODO Auto-generated method stub
+		return shiftDAO.findShiftByName(name);
+	}
+
 	
 }
