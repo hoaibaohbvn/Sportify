@@ -20,6 +20,7 @@ import duan.sportify.entities.Products;
 import duan.sportify.service.CategoryService;
 import duan.sportify.service.ProductService;
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/sportify")
 public class ProductController {

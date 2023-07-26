@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
  * @author Telosys
  *
  */
+@SuppressWarnings("unused")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

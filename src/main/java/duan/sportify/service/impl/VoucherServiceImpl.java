@@ -12,6 +12,7 @@ import duan.sportify.entities.Voucher;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.VoucherService;
 
+@SuppressWarnings("unused")
 @Service
 public class VoucherServiceImpl implements VoucherService{
 	@Autowired

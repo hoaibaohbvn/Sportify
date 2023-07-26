@@ -13,6 +13,7 @@ import duan.sportify.entities.Products;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.ProductService;
 
+@SuppressWarnings("unused")
 @Service
 public class ProductServiceImpl implements ProductService{
 	@Autowired

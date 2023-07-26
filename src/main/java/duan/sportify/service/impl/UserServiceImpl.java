@@ -12,6 +12,7 @@ import duan.sportify.entities.Users;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.UserService;
 
+@SuppressWarnings("unused")
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired

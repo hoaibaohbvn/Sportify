@@ -12,6 +12,7 @@ import duan.sportify.entities.Bookingdetails;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.BookingDetailService;
 
+@SuppressWarnings("unused")
 @Service
 public class BookingDetailServiceImpl implements BookingDetailService{
 	@Autowired

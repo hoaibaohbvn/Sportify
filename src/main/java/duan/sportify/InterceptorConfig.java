@@ -17,6 +17,7 @@ import duan.sportify.interceptor.GlobalInterceptor;
  * 
  */
 
+@SuppressWarnings("unused")
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer{
 

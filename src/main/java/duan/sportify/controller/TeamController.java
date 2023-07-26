@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.net.URLEncoder;
 
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/sportify")
 public class TeamController {

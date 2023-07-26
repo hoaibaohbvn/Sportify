@@ -12,6 +12,7 @@ import duan.sportify.entities.Teamdetails;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.TeamDetailService;
 
+@SuppressWarnings("unused")
 @Service
 public class TeamDetailServiceImpl implements TeamDetailService{
 	@Autowired

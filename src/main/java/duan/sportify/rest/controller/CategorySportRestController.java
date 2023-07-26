@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.SportTypeDAO;
-import duan.sportify.entities.Categories;
 import duan.sportify.entities.Sporttype;
 
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController

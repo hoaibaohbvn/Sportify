@@ -22,7 +22,6 @@ import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.EventDAO;
 
 import duan.sportify.entities.Eventweb;
-import duan.sportify.entities.Products;
 import duan.sportify.utils.ErrorResponse;
 @CrossOrigin(origins = "*")
 @RestController

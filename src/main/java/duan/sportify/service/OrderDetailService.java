@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Orderdetails;
 
 
-
+@SuppressWarnings("unused")
 public interface OrderDetailService {
 	List<Orderdetails> findAll();
 

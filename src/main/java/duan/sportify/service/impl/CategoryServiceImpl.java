@@ -16,6 +16,7 @@ import duan.sportify.entities.Categories;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.CategoryService;
 
+@SuppressWarnings("unused")
 @Service
 public class CategoryServiceImpl implements CategoryService{
 	

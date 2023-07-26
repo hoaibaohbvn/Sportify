@@ -1,6 +1,6 @@
 package duan.sportify.service.impl;
 
-import java.awt.Event;
+//import java.awt.Event;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import duan.sportify.entities.Eventweb;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.EventService;
 
+@SuppressWarnings("unused")
 @Service
 public class EventServiceImpl implements EventService{
 	@Autowired
