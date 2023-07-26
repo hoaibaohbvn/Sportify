@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -19,59 +19,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
+import duan.sportify.dao.CategoryDAO;
 
-import duan.sportify.dao.TeamDAO;
-import duan.sportify.entities.Teams;
+import duan.sportify.entities.Categories;
 
 import duan.sportify.utils.ErrorResponse;
+import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/teams/")
-public class TeamRestController {
+@RequestMapping("/rest/categories/")
+public class CategoryProductRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	TeamDAO teamDAO;
+	CategoryDAO categoryDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Teams>> getAll(Model model){
-		return ResponseEntity.ok(teamDAO.findAll());
+	public ResponseEntity<List<Categories>> getAll(Model model){
+		return ResponseEntity.ok(categoryDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Teams> getOne(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+	public ResponseEntity<Categories> getOne(@Valid @PathVariable("id") Integer id) {
+		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(teamDAO.findById(id).get());
+		return ResponseEntity.ok(categoryDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Teams> create(@RequestBody Teams team) {
-		if(!teamDAO.existsById(team.getTeamid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+	public ResponseEntity<Categories> create(@Valid @RequestBody Categories category) {
+	    if (category.getCategoryid() != null && categoryDAO.existsById(category.getCategoryid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    categoryDAO.save(category);
+	    return ResponseEntity.ok(category);
 	}
-	@PutMapping("update")
-	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @RequestBody Teams team) {
-		if(!teamDAO.existsById(id)) {
+	@PutMapping("update/{id}")
+	public ResponseEntity<Categories> update(@PathVariable("id") Integer id, @RequestBody Categories category) {
+		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+		categoryDAO.save(category);
+		return ResponseEntity.ok(category);
 	}
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.deleteById(id);
+		categoryDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

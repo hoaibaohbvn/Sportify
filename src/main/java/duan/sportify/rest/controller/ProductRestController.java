@@ -3,8 +3,14 @@ package duan.sportify.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,39 +19,63 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import duan.sportify.GlobalExceptionHandler;
+import duan.sportify.dao.ProductDAO;
+
 import duan.sportify.entities.Products;
-import duan.sportify.service.ProductService;
 
-@CrossOrigin("*")
+import duan.sportify.utils.ErrorResponse;
+
+
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/sportify/rest/products")
+@RequestMapping("/sportify/rest/products/")
 public class ProductRestController {
-
 	@Autowired
-	ProductService productService;
-
-	@GetMapping()
-	public List<Products> getAll() {
-		return productService.findAll();
+	MessageSource messagesource;
+	@Autowired
+	ProductDAO productDAO;
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+		return GlobalExceptionHandler.handleValidationException(ex);
+	}
+	@GetMapping("getAll")
+	public ResponseEntity<List<Products>> getAll(Model model){
+		return ResponseEntity.ok(productDAO.findAll());
+	}
+	@GetMapping("get/{id}")
+	public ResponseEntity<Products> getOne(@PathVariable("id") Integer id) {
+		if(!productDAO.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(productDAO.findById(id).get());
+	}
+	@PostMapping("create")
+	public ResponseEntity<Products> create(@RequestBody Products product) {
+	    if (product.getProductid() != null && productDAO.existsById(product.getProductid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    productDAO.save(product);
+	    return ResponseEntity.ok(product);
 	}
 
-	@GetMapping("{id}")
-	public Products getOne(@PathVariable("id") Integer id) {
-		return productService.findById(id);
+	@PutMapping("update/{id}")
+	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @RequestBody Products product) {
+		if(!productDAO.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		productDAO.save(product);
+		return ResponseEntity.ok(product);
 	}
-
-	@PostMapping
-	public Products create(@RequestBody Products product) {
-		return productService.create(product);
-	}
-
-	@PutMapping("{id}")
-	public Products update(@PathVariable("id") Integer id, @RequestBody Products product) {
-		return productService.update(product);
-	}
-
-	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") Integer id) {
-		productService.delete(id);
+	
+	@DeleteMapping("delete/{id}")
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+		if(!productDAO.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		productDAO.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 }
