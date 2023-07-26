@@ -38,4 +38,12 @@ public class AboutController {
 		model.addAttribute("productCount", productCount);
 		return"user/about";
 	}
+	@GetMapping("chinhsach")
+	public String viewchinhsach(Model model) {
+		return"user/chinhsach";
+	}
+	@GetMapping("quydinh")
+	public String viewdieukien(Model model) {
+		return "user/quydinh";
+	}
 }

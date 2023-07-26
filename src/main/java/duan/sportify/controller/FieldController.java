@@ -1,7 +1,9 @@
 package duan.sportify.controller;
 
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,17 +17,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import duan.sportify.entities.Field;
 import duan.sportify.entities.Shifts;
 import duan.sportify.entities.Sporttype;
+import duan.sportify.entities.Users;
+import duan.sportify.entities.Voucher;
 import duan.sportify.service.FieldService;
 import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
+import duan.sportify.service.UserService;
+import duan.sportify.service.VoucherService;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -38,9 +47,13 @@ public class FieldController {
 	FieldService fieldservice; // Service sân
 	@Autowired
 	SportTypeService sporttypeservice; // Service loại môn thể thao
-	
+	@Autowired
+	UserService userService;
+	@Autowired
+	VoucherService voucherService;
 	// Biến chứa ID kiểu sportype khi click vào chọn
 	private String selectedSportTypeId;
+	private String dateselect;
 	// Tìm sân trống theo input: date, sportype, giờ chơi
 	 @PostMapping("/field/search")
 	 public String SreachData(@RequestParam("dateInput") String dateInput,
@@ -52,7 +65,7 @@ public class FieldController {
 		    List<Shifts> shiftById = shiftservice.findShiftById(shiftSelect); // List này để lấy tên ca đổ lên thông báo
 		    List<Sporttype> sportypeById = sporttypeservice.findSporttypeById(categorySelect); // List này lấy tên môn thể thao đổ lên thông báo
 			@SuppressWarnings("unused")
-			List<Shifts> shift = shiftservice.findAll(); // Đổ tất cả ca lên dropdown tìm kiếm
+			List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
 			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
 			List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Đổ tất cả môn thể thao 
 			Sporttype tatca = new Sporttype(); // Tạo đối tượng loại môn thể thao
@@ -92,6 +105,7 @@ public class FieldController {
 			}
 			String message = "Kết quả tìm kiếm sân trống: ";
 			// Add các đối tượng vào model để qua giao diện hiển thị
+			model.addAttribute("dateInput",dateInput);
 			model.addAttribute("namesporttype",namesporttype);
 			model.addAttribute("nameshift",nameshift);
 			model.addAttribute("formattedDate",formattedDate);
@@ -108,6 +122,7 @@ public class FieldController {
 	@GetMapping("/field")
 	public String viewField(Model model) {
 		selectedSportTypeId = "tatca"; // Giá trị được chọn mặc định môn thể thao là tất cả
+		String sportTypeId = null;
 		@SuppressWarnings("unused")
 		List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
 		List<Field> fieldList = fieldservice.findAll(); // Gọi tất cả sân thể thao
@@ -117,6 +132,7 @@ public class FieldController {
 		tatca.setCategoryname("Tất cả");	// Thêm Tất Cả vào list loại môn thể thao
 		tatca.setSporttypeid("tatca");		// Ráng Id sporttype Tất cả = tatca
 		sporttypeList.add(tatca); // Add đối tượng tatca vô danh sách loại môn thể thao
+
 		// Sắp xếp danh sách loại môn thể thao theo: Tất cả đầu tiên => các môn khác
 		Collections.sort(sporttypeList, new Comparator<Sporttype>() {
 		    @Override
@@ -191,106 +207,116 @@ public class FieldController {
 			// Chuyển hướng trang giao diện sân
 			return "user/san";
 	}
-	// Sắp xếp sân theo min => max 
-	@GetMapping("/field/pricemin/{selectedValue}")
-	public String listFieldMin(Model model, @PathVariable("selectedValue") String selectedValue) {
-		   List<Field> fieldtList = new ArrayList<>(); // Tạo đối tượng sân
-		   @SuppressWarnings("unused")
-			List<Shifts> shift = shiftservice.findAll(); // Lấy tất cả ca
-		   
-		   if(selectedSportTypeId.equals("tatca")) { // Nếu chọn tất cả môn thể thao thì trả về toàn bộ sân theo price min => max
-			   fieldtList = fieldservice.listPriceMin();
-		   }
-		   else { // Ngược lại thì trả về sân theo loại môn thể thao có giá min => max
-			   fieldtList = fieldservice.listMinPriceOfSportype(selectedSportTypeId);
-		   }
-			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
-		    List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Lấy tất cả loại môn thể thao
-			Sporttype tatca = new Sporttype(); // Tạo đối tượng loại môn thể thao
-			tatca.setCategoryname("Tất cả"); // Thêm Tất Cả vào list loại môn thể thao
-			tatca.setSporttypeid("tatca"); // Ráng Id sporttype Tất cả = tatca
-			sporttypeList.add(tatca); // Add đối tượng tatca vô danh sách loại môn thể thao
-			// Sắp xếp danh sách loại môn thể thao theo: Tất cả đầu tiên => các môn khác
-			Collections.sort(sporttypeList, new Comparator<Sporttype>() {
-			    @Override
-			    public int compare(Sporttype s1, Sporttype s2) {
-			        // Xác định logic sắp xếp
-			        if (s1.getCategoryname().equals("Tất cả")) {
-			            return -1; // Đẩy "Tất cả" lên đầu
-			        } else if (s2.getCategoryname().equals("Tất cả")) {
-			            return 1; // Đẩy "Tất cả" lên đầu
-			        } else {
-			            return s1.getCategoryname().compareTo(s2.getCategoryname());
-			        }
-			    }
-			});
-			// Hiển thị danh sách đã sắp xếp
-			for (Sporttype sporttype : sporttypeList) {
-			    model.addAttribute("cates",sporttype);
-			}
-			// Add các đối tượng vào model để qua giao diện hiển thị
-			model.addAttribute("cateNotAll",sporttypeListNotAll); // môn thể thao không có tất cả
-			model.addAttribute("shift", shift);
-			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
-			model.addAttribute("cates",sporttypeList);
-		    model.addAttribute("fieldList",fieldtList);
-		    // Load lại trang sân
-		    return "user/san";
-	}
-	// Sắp xếp sân theo max => min
-	@GetMapping("/field/pricemax/{selectedValue1}")
-	public String listFieldMax(Model model, @PathVariable("selectedValue1") String selectedValue1) {
-		  List<Field> fieldList = new ArrayList<>(); // Tạo đối tượng sân
-		   @SuppressWarnings("unused")
-			List<Shifts> shift = shiftservice.findAll(); // Lấy tất cả ca
-		   if(selectedSportTypeId.equals("tatca")) { // Nếu chọn tất cả  môn thể thao thì trả về tất cả sân theo giá max => min
-			   fieldList = fieldservice.listPriceMax();
-		   }
-		   else { // Ngược lại trả về các sân theo môn thể thao có giá theo max => min
-			   fieldList = fieldservice.listMaxPriceOfSportype(selectedSportTypeId);
-		   }
-			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
-		    List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Lấy tất cả loại môn thể thao
-			Sporttype tatca = new Sporttype(); // Tạo đối tượng loại môn thể thao
-			tatca.setCategoryname("Tất cả"); // Thêm Tất Cả vào list loại môn thể thao
-			tatca.setSporttypeid("tatca"); // Ráng Id sporttype Tất cả = tatca
-			sporttypeList.add(tatca); // Add đối tượng tatca vô danh sách loại môn thể thao
-			// Sắp xếp danh sách loại môn thể thao theo: Tất cả đầu tiên => các môn khác
-			Collections.sort(sporttypeList, new Comparator<Sporttype>() {
-			    @Override
-			    public int compare(Sporttype s1, Sporttype s2) {
-			        // Xác định logic sắp xếp
-			        if (s1.getCategoryname().equals("Tất cả")) {
-			            return -1; // Đẩy "Tất cả" lên đầu
-			        } else if (s2.getCategoryname().equals("Tất cả")) {
-			            return 1; // Đẩy "Tất cả" lên đầu
-			        } else {
-			            return s1.getCategoryname().compareTo(s2.getCategoryname());
-			        }
-			    }
-			});
-			// Hiển thị danh sách đã sắp xếp
-			for (Sporttype sporttype : sporttypeList) {
-			    model.addAttribute("cates",sporttype);
-			}
-			// Add các đối tượng vào model để qua giao diện hiển thị
-			model.addAttribute("cateNotAll",sporttypeListNotAll); // môn thể thao không có tất cả
-			model.addAttribute("shift", shift);
-			model.addAttribute("selectedSportTypeId",selectedSportTypeId);
-			model.addAttribute("cates",sporttypeList);
-		    model.addAttribute("fieldList",fieldList);
-		    // Load lại trang sân
-		    return "user/san";
-	}
+	//Chuyển hướng trang detail
+
 	@GetMapping("/field/detail/{idField}")
-	public String viewDetail(Model model, @PathVariable Integer idField) {
-		List<Field> fieldListById = fieldservice.findFieldById(idField);
-		String nameSportype = fieldservice.findNameSporttypeById(idField);
-		String idSporttype = fieldservice.findIdSporttypeById(idField);
-		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Lấy sân theo Id môn thể thao
+	public String viewDetail(Model model, @PathVariable Integer idField) { // Lấy id sân về
+		List<Field> fieldListById = fieldservice.findFieldById(idField); // Đổ sân theo id lấy giao diện về.
+		String nameSportype = fieldservice.findNameSporttypeById(idField); // Tên môn thể thao để hiện thị trong các sân liên quan ở Detail
+		String idSporttype = fieldservice.findIdSporttypeById(idField); // Lấy id môn thể thao dựa vào sân đang chọn Detail
+		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Danh sách 3 sân liên quan đến môn thể thao đang xem.
+		// Dữ liệu hiển thị trong trang Detail
 		model.addAttribute("fieldListByIdSporttype",fieldListByIdSporttype);
 		model.addAttribute("nameSportype",nameSportype);
 		model.addAttribute("fieldListById",fieldListById);
 		return "user/san-single";
 	}
+	LocalTime time = null;
+
+	@GetMapping("/field/booking/{idField}")
+	public String Booking(Model model, @RequestParam(value = "nameshift", required = false) String nameShift, 
+			@PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes,
+			@RequestParam(value = "voucher", required = false) String voucher) {
+		System.out.println(voucher);
+		System.out.println(nameShift);
+		int discountpercent = 0;
+		double pricevoucher = 0;
+		double totalprice = 0 ;
+		double thanhtien = 0;
+		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
+		for(int i = 0 ; i < shift.size();i++) {
+				time = shift.get(i).getStarttime();
+		}
+		// Khởi tạo giờ 17:00
+        LocalTime timeToCompare = LocalTime.of(17, 0);
+        double phuthu = 0; // giá phụ thu
+		if (loggedInUser != null) {
+			List<Voucher> listvoucher = voucherService.findAll();
+			List<Field> fieldListById = fieldservice.findFieldById(idField);
+			double giasan = fieldListById.get(0).getPrice();
+			
+			String nameSportype = fieldservice.findNameSporttypeById(idField);
+			List<Voucher> magiamgia = voucherService.findAll();
+			if(time.isAfter(timeToCompare)) {
+				phuthu = fieldListById.get(0).getPrice() * 30 / 100;
+				totalprice = giasan + phuthu;
+				System.out.println(totalprice);
+				model.addAttribute("totalprice",totalprice);
+
+				model.addAttribute("phuthu",phuthu);
+			}else {
+				totalprice = giasan;
+				model.addAttribute("totalprice",totalprice);
+				model.addAttribute("phuthu",phuthu);
+			}
+			if(voucher == null) {
+				thanhtien = totalprice;
+				model.addAttribute("thanhtien",thanhtien);
+				model.addAttribute("pricevoucher",pricevoucher);
+			}
+			else {
+				model.addAttribute("voucher",voucher);
+				for(int i = 0 ; i < magiamgia.size();i++) {
+					if(magiamgia.get(i).getVoucherid().equals(voucher)) {
+						discountpercent = magiamgia.get(i).getDiscountpercent();
+						pricevoucher = totalprice * discountpercent / 100;
+						thanhtien = totalprice - pricevoucher;
+						model.addAttribute("thanhtien",thanhtien);
+						model.addAttribute("pricevoucher",pricevoucher);
+					}
+					else {
+//						thanhtien = totalprice;
+//						model.addAttribute("thanhtien",thanhtien);
+					}
+				}
+			}
+			model.addAttribute("listvoucher",listvoucher);
+			model.addAttribute("nameShift",nameShift);
+			model.addAttribute("dateselect",dateselect);
+			model.addAttribute("nameSportype",nameSportype);
+			model.addAttribute("InfoUser",loggedInUser);
+			model.addAttribute("fieldListById",fieldListById);
+		
+		}else {
+			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
+			return "redirect:/sportify/login";
+		}
+		
+		return "user/checkout-dat-san";
+	}
+	
+	@PostMapping("/field/detail/check")
+	public String searchShiftDefault(Model model ,@RequestParam("fieldid") int idField  ,@RequestParam("dateInput") String date) {
+		dateselect = date;
+		List<Field> fieldListById = fieldservice.findFieldById(idField); // Đổ sân theo id lấy giao diện về.
+		String nameSportype = fieldservice.findNameSporttypeById(idField); // Tên môn thể thao để hiện thị trong các sân liên quan ở Detail
+		String idSporttype = fieldservice.findIdSporttypeById(idField); // Lấy id môn thể thao dựa vào sân đang chọn Detail
+		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Danh sách 3 sân liên quan đến môn thể thao đang xem.
+		List<Shifts> shiftsNull = shiftservice.findShiftDate(idField, date);
+		// Format yyyy-mm-dd thành dd-mm-yyyy
+		LocalDate dateformat = LocalDate.parse(date);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formattedDate = dateformat.format(formatter);
+		// Dữ liệu hiển thị trong trang Detail
+		model.addAttribute("date",date);
+		model.addAttribute("formattedDate",formattedDate);
+		model.addAttribute("shiftsNull",shiftsNull);
+		model.addAttribute("fieldListByIdSporttype",fieldListByIdSporttype);
+		model.addAttribute("nameSportype",nameSportype);
+		model.addAttribute("fieldListById",fieldListById);
+		return "user/san-single";
+	}
+	
+
 }

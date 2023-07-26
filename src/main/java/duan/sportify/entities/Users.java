@@ -56,7 +56,8 @@ public class Users implements Serializable {
 
     @Column(name="gender")
     private Boolean    gender ;
-
+    @Column(name="status")
+    private Boolean    status ;
 
     //--- ENTITY LINKS ( RELATIONSHIP )
     @OneToMany(mappedBy="users")

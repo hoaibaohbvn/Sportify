@@ -2,31 +2,65 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Chi Tiết Sân</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chi Tiết Sân</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link
-		href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
-		rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" href="/user/css/animate.css">
+<link rel="stylesheet" href="/user/css/animate.css">
 
-	<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="/user/css/magnific-popup.css">
+<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/user/css/magnific-popup.css">
 
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
-	<link rel="stylesheet" href="/user/css/flaticon.css">
-	<link rel="stylesheet" href="/user/css/style.css">
-	
+<link rel="stylesheet" href="/user/css/flaticon.css">
+<link rel="stylesheet" href="/user/css/style.css">
+<style>
+.info-content {
+    display: none; /* Ẩn thông tin ban đầu */
+    background-color: #FBEAEB;
+    color: #2F3C7E;
+    font-weight:bold;
+    padding: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1;
+}
+
+/* Định dạng biểu tượng "i" */
+.info-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: graytext;
+    color: white;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+.info-container:hover .info-content {
+    display: block;
+}
+</style>
+
 </head>
 
-<body>
+<body onload="setMinMaxDates()" th:each="e : ${fieldListById}">
 
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
@@ -61,8 +95,8 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> <a
+								th:href="@{/sportify/login}">Log In</a>
 						</p>
 					</div>
 
@@ -97,54 +131,6 @@
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
-					</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-				</div>
-			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -171,15 +157,20 @@
 	</nav>
 	<!-- END nav -->
 
-	<section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/backgroundField.jpg');"
+	<section class="hero-wrap hero-wrap-2"
+		style="background-image: url('/user/images/backgroundField.jpg');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
-			<div class="row no-gutters slider-text align-items-end justify-content-center">
+			<div
+				class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
-					<p class="breadcrumbs mb-0"><span class="mr-2"><a th:href="@{/sportify}">Trang Chủ <i
-									class="fa fa-chevron-right"></i></a></span> <span><a th:href="@{/sportify/field}">Sân<i
-									class="fa fa-chevron-right"></i></a></span> <span>Chi tiết sân</span></p>
+					<p class="breadcrumbs mb-0">
+						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ
+								<i class="fa fa-chevron-right"></i>
+						</a></span> <span><a th:href="@{/sportify/field}">Sân<i
+								class="fa fa-chevron-right"></i></a></span> <span>Chi tiết sân</span>
+					</p>
 					<h2 class="mb-0 bread">Chi Tiết Sân</h2>
 				</div>
 			</div>
@@ -188,57 +179,125 @@
 
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row" th:each="e : ${fieldListById}">
+			<div class="row" >
 				<div class="col-lg-6 mb-5 ftco-animate">
 					<img class="block-20 block-19 img"
-									th:src="@{'/user/images/' + ${e.image}}" alt="Image">
+						th:src="@{'/user/images/' + ${e.image}}" alt="Image">
+
 				</div>
-				<div  class="col-lg-6  pl-md-5 ftco-animate">
-					<h3 th:text="${e.namefield}"></h3>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+				<div class="col-lg-6  pl-md-5 ftco-animate border border-success rounded"
+					style="height: auto">
+					<h3 th:text="${e.namefield}" class="mt-4"></h3>
+					<svg	 xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 						fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
   					<path
 							d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
 					</svg>
 					<b class="text-info font-weight-bold" th:text="${e.address}"></b>
-					<p><span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(e.price)}"></span> / <span class="font-weight-bold">Giờ</span>
-					<div class=" align-self-end mt-auto">
-						<button class="btn btn-success">Đặt sân ngay</button>
-					</div> <br>
-					<h5 class="font-weight-bold" style="font-family: Arial, sans-serif;">Mô tả chi tiết:</h5>
-					 <div  style="font-family: 14/18px Arial, sans-serif;text-align: justify; font-size: 16px; line-height: 1.5;" th:utext="${e.descriptionfield}"> </div>
-					
-					<div class="row mt-4">
-						<div class="input-group col-md-6 d-flex mb-3">
-						</div>
-						<div class="w-100"></div>
-						<div class="col-md-12">
+					<p></p>
+					<span class="text-danger font-weight-bold"
+						th:text="${#numbers.formatCurrency(e.price)}"></span> / <span
+						class="font-weight-bold">Giờ</span>
+				
+					<div class="border border-secondary rounded col-11 mb-4 mt-3">
+						<!-- Form tìm kiếm  -->
+						<span class="ml-3 mt-4 mb-1">Chọn ngày nhận sân
+						 <span class="info-container">
+                                        <span class="info-icon">i</span>
+										<span class="info-content">
+											<p>Tìm ngày để biết thông tin các giờ còn trống</p>
+										</span> </span>
+						</span>
+						<form  onsubmit="return validateDate()"
+							th:action="@{/sportify/field/detail/check}" method="post"
+							 class="mb-2 d-flex justify-content-center col-12 ">
+							
+							<input style="display: none;" th:value="${e.fieldid}" name="fieldid"></input>
+							<input style="border: 2px solid gray;font-weight: lighter;"
+								id="dateInput" name="dateInput" required
+								class="form-control mr-1 col-9" type="date"
+								placeholder="Search" aria-label="Search" th:value="${date}"/>
+
+							<button style="border: 2px solid #28a745;"
+								class=" btn btn-outline-success col-3 " type="submit">Tìm kiếm</button>
+						</form>
+
+						<!-- End tim kiếm -->
+						<!-- Ca -->
+						
+						<div  class="col-12" th:unless="${#strings.isEmpty(date)}">
+						<span class="ml-1 mt-3 mb-1 font-weight-bold">Các giờ trống bạn có thể đặt của ngày <b class="font-weight-bold text-primary" th:text="${formattedDate}"></b></span>
+							<select style="border: 3px solid gray; font-weight: lighter;"
+								name="nameshift"
+								class=" form-control custom-select mb-3 col-12"
+								 id="inputGroupSelect01">
+								<option th:each="shiftnull : ${shiftsNull}"  th:value="${shiftnull.nameshift}">[[${shiftnull.nameshift}]]
+								</option>
+							</select>							
+							<!-- End ca -->
 						</div>
 					</div>
+
+					<div class=" align-self-end mb-5" th:unless="${#strings.isEmpty(date)}">
+						<a class="booking-link" th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
+						<button class="col-4 pt-3 pb-3 btn btn-success" style="font-size: 17px; font-weight: bold;">Đặt sân ngay</button>
+						</a>
+					</div>
+		
 				</div>
-			</div>
-			<h4 class="mb-5">Các sân liên quan đến môn <span class="font-weight-bold text-info" th:text="${nameSportype}"></span> </h4>
-		</div>
-		<div  class="row m-2">
-			<div th:each="f : ${fieldListByIdSporttype}" class="col-lg-4 d-flex align-items-stretch ftco-animate">
-				<div class="blog-entry d-flex">
-					<img class="block-20 img" 
+
+				<div class="col-12 d-flex">
+					<div class="col-6">
+						<br>
+						<h5 class="font-weight-bold"
+							style="font-family: Arial, sans-serif;">Mô tả chi tiết:</h5>
+						<div class=""
+							style="white-space: pre-line; word-wrap: break-word; font-family: 14/ 18px Arial, sans-serif; text-align: justify; font-size: 16px; line-height: 1.5;"
+							th:utext="${e.descriptionfield}"></div>
+
+						<div class="row mt-4">
+							<div class="input-group col-md-6 d-flex mb-3"></div>
+							<div class="w-100"></div>
+							<div class="col-md-12"></div>
+						</div>
+					</div>
+
+					<!-- Các sân liên quan -->
+
+
+					<div class="ml-5 mt-5 col-6">
+						<h4 class="col-12 mb-5">
+							Các sân liên quan đến môn <span
+								class="font-weight-bold text-info" th:text="${nameSportype}"></span>
+						</h4>
+						<div th:each="f : ${fieldListByIdSporttype}"
+							class="col-12 d-flex align-items-stretch ftco-animate">
+							<div class="blog-entry d-flex">
+								<img class="block-20 img"
 									th:src="@{'/user/images/' + ${f.image}}" alt="Image">
 
-					<div class="text p-4 bg-light">
-						<h3 class="heading mb-3"><a href="#" th:text="${f.namefield}"></a>
-						</h3>
-						<p class="truncate-text" style="max-width: 200px;" th:utext="${#strings.length(f.descriptionfield) > 200 ? #strings.substring(f.descriptionfield, 0, 105) + '...' : f.descriptionfield}"></p>
-						<a th:href="@{/sportify/field/detail/{idField}(idField=${f.fieldid})}" class="btn-custom">xem chi tiết <span
-								class="fa fa-long-arrow-right"></span></a>
+								<div class="text p-4 bg-light">
+									<h3 class="heading mb-3">
+										<a href="#" th:text="${f.namefield}"></a>
+									</h3>
+									<p class="truncate-text" style="max-width: 200px;"
+										th:utext="${#strings.length(f.descriptionfield) > 200 ? #strings.substring(f.descriptionfield, 0, 105) + '...' : f.descriptionfield}"></p>
+									<a
+										th:href="@{/sportify/field/detail/{idField}(idField=${f.fieldid})}"
+										class="btn-custom">xem chi tiết <span
+										class="fa fa-long-arrow-right"></span></a>
 
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+
 			</div>
-		
-			
 		</div>
-		
+
+
+
 	</section>
 
 	<footer class="ftco-footer">
@@ -246,59 +305,58 @@
 			<div class="row mb-5">
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2 logo"><a href="#">Liquor <span>Store</span></a></h2>
-						<p>Far far away, behind the word mountains, far from the countries.</p>
+						<h2 class="ftco-heading-2 logo">
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
+						</h2>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
-							<li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="fa fa-instagram"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-twitter"></span></a></li>
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
+									class="fa fa-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term &amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
-								<li><span class="icon fa fa-map marker"></span><span class="text">203 Fake St. Mountain
-										View, San Francisco, California, USA</span></li>
-								<li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929
-											210</span></a></li>
-								<li><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span
-											class="text">info@yourdomain.com</span></a></li>
+								<li><span class="icon fa fa-map marker"></span><span
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+								<li><a href="#"><span class="icon fa fa-phone"></span><span
+										class="text">0123456789</span></a></li>
+								<li><a href="#"><span
+								
+											class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -310,12 +368,16 @@
 				<div class="row">
 					<div class="col-md-12">
 
-						<p class="mb-0" style="color: rgba(255,255,255,.5);">
+						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
-							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
-							template is made with <i class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bản quyền &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
@@ -327,11 +389,14 @@
 
 
 	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
+	</div>
 
 
 	<script src="/user/js/jquery.min.js"></script>
@@ -354,10 +419,45 @@
 	<script src="/user/jscode/favoriteHeart.js"></script>
 
 	<script>
-		$(document).ready(function () {
+	var dateInput = document.getElementById("dateInput");
+
+	dateInput.oninvalid = function(event) {
+		event.target
+				.setCustomValidity("Vui lòng chọn một ngày");
+	};
+
+	dateInput.oninput = function(event) {
+		event.target.setCustomValidity("");
+	};
+
+	 function setMinMaxDates() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+            var yyyy = today.getFullYear();
+
+            var minDate = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('dateInput').min = minDate;
+
+            var maxDate = (yyyy) + '-12-31'; //Cập nhật 'max' là ngày cuối cùng trong năm
+            document.getElementById('dateInput').max = maxDate;
+        }
+	 function validateDate() {
+		  var dateInput = document.getElementById("dateInput").value;
+		  var selectedDate = new Date(dateInput);
+		  var currentDate = new Date();
+
+		  if (selectedDate <= currentDate) {
+		    alert("Vui lòng chọn một ngày lớn hơn ngày hiện tại");
+		    return false; // Ngăn chặn gửi form
+		  }
+
+		  return true; // Cho phép gửi form
+		}
+		$(document).ready(function() {
 
 			var quantitiy = 0;
-			$('.quantity-right-plus').click(function (e) {
+			$('.quantity-right-plus').click(function(e) {
 
 				// Stop acting like a button
 				e.preventDefault();
@@ -368,12 +468,11 @@
 
 				$('#quantity').val(quantity + 1);
 
-
 				// Increment
 
 			});
 
-			$('.quantity-left-minus').click(function (e) {
+			$('.quantity-left-minus').click(function(e) {
 				// Stop acting like a button
 				e.preventDefault();
 				// Get the field name
@@ -388,8 +487,37 @@
 			});
 
 		});
+		
 	</script>
+	<script>
+	const selectElement = document.getElementById('inputGroupSelect01');
+	  const bookingLink = document.querySelector('.booking-link');
 
+	  // Lắng nghe sự kiện khi người dùng nhấn thẻ <a>
+	  bookingLink.addEventListener('click', function (event) {
+	    // Ngăn chặn hành động mặc định của thẻ <a> (chuyển hướng trang)
+	    event.preventDefault();
+
+	    // Lấy giá trị đang chọn từ danh sách <select>
+	    const selectedShift = selectElement.value;
+
+	    // Kiểm tra xem ca sân đã chọn có hợp lệ hay không (nếu cần)
+	    // Ví dụ: if (selectedShift === '0') { alert('Vui lòng chọn một ca sân hợp lệ!'); return; }
+
+	    // Lấy địa chỉ trang chuyển hướng mặc định từ thuộc tính 'href' của thẻ <a>
+	    const defaultHref = bookingLink.getAttribute('href');
+
+	    // Tạo địa chỉ trang chuyển hướng mới với thông tin ca sân đã chọn
+	    const newHref = `${defaultHref}?nameshift=${encodeURIComponent(selectedShift)}`;
+
+	    // Thay đổi địa chỉ chuyển hướng của thẻ <a>
+	    bookingLink.setAttribute('href', newHref);
+
+	    // Chuyển hướng đến trang mới (có dữ liệu nameshift được gửi lên server)
+	    window.location.href = newHref;
+	  });
+	
+	</script>
 </body>
 
 </html>
