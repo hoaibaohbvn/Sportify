@@ -9,20 +9,20 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	$scope.cart = {
 		items: [],
 		//thêm SP
-		addProduct(id) {
-			//alert(id);
+		addProduct(productid) {
+			//alert(productid);
 			const testItem = {name: "Product1", img: "product1_img.png", price: "$100"};
 			//const testCart = JSON.stringify(angular.copy(testItem));
 			//localStorage.setItem("testCart", testCart);
-			var item = this.items.find(item => item.id == id);
+			var item = this.items.find(item => item.productid == productid);
 			if (item) {
 				item.quantity++;
-				this.saveToLocalStorage();
+				this.saveToSessionStorage();
 			} else {
-				$http.get(`/sportify/rest/products/${id}`).then(resp => {
-					resp.data.qty = 1;
+				$http.get(`/sportify/rest/products/${productid}`).then(resp => {
+					resp.data.quantity = 1;
 					this.items.push(resp.data);
-					this.saveToLocalStorage();
+					this.saveToSessionStorage();
 				});
 			}
 		},
