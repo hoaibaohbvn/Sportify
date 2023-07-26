@@ -50,6 +50,7 @@ public class Eventweb implements Serializable {
 
     @Column(name="descriptions", length=1000)
     private String     descriptions ;
+    
     @Column(name="eventtype", length=50)
     private String     eventtype ;
 
