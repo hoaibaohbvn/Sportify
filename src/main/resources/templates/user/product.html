@@ -204,7 +204,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 d-flex" th:each="product : ${productList}">
+						<div class="d-flex col-xl-4 col-lg-4 col-md-6 col-sm-12" th:each="product : ${productList}">
 							<div class="product ftco-animate"
 								style="background-color: #EEEEEE">
 								<div class="d-flex align-items-center justify-content-center">
@@ -217,19 +217,19 @@
 								<div class="text text-center">
 									<!-- <span class="sale"
 										th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'">Sale</span> -->
-									<div class="row hoverIcons">
-										<p class="col-md-4">
+									<div class="row hoverIcons col-12">
+										<p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
 											<a href="" th:attr="ng-click=@{|cart.addProduct(${product.productid})|}"
 												class="d-flex align-items-center justify-content-center link shopping-bag"><span
 												class="flaticon-shopping-bag"></span></a>
 										</p>
 										
-										<p class="col-md-4">
+										<p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
 											<a href=""
 												class="d-flex align-items-center justify-content-center link heart"><span
 												class="flaticon-heart"></span></a>
 										</p>
-										<p class="col-md-4">
+										<p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
 											<a
 												th:href="@{'/sportify/product-single/' + ${product.productid}}"
 												class="d-flex align-items-center justify-content-center link visibility"><span

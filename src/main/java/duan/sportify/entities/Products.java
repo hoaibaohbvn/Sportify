@@ -73,7 +73,7 @@ public class Products implements Serializable {
     @JoinColumn(name="categoryid", referencedColumnName="categoryid", insertable=false, updatable=false)
     private Categories categories ; 
     
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy="products")
     private List<Orderdetails> orderdetails ; 
 
