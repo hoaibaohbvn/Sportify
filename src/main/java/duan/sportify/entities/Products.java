@@ -70,6 +70,7 @@ public class Products implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoryid", referencedColumnName="categoryid", insertable=false, updatable=false)
     private Categories categories ; 
