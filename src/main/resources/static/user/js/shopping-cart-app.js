@@ -27,15 +27,26 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			}
 		},
 		//xóa SP
-		removeProduct(productid) { },
+		removeProduct(productid) {
+			var index = this.items.findIndex(item => item.productid == productid);
+			this.items.splice(index, 1);
+			this.saveToSessionStorage();
+		 },
 		//clear giỏ hàng
-		clearCart() { },
+		clearCart() {
+			this.items = [];
+			this.saveToSessionStorage();
+		 },
 		//tính tiền 1 SP
 		priceOf(item) { },
 		//tính số lượng SP trong giỏ hàng
-		get cartCount() { },
+		get cartCount() {
+			return this.items.map(item => item.quantity).reduce((total, quantity) => total += quantity, 0);
+		 },
 		//tính tổng tiền của giỏ hàng
-		get totalPrice() { },
+		get totalPrice() {
+			return this.items.map(item => item.quantity * item.price).reduce((total, quantity) => total += quantity, 0);
+		 },
 		//lưu giỏ hàng vào session storage
 		saveToSessionStorage() {
 			var json = JSON.stringify(angular.copy(this.items));
@@ -46,6 +57,11 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			localStorage.setItem("cart", json);
 		},
 		//đọc giỏ hàng từ session storage
-		loadFromSessionStorage() { }
+		loadFromSessionStorage() {
+			var json = sessionStorage.getItem("cart");
+			this.items = json ? JSON.parse(json) : [];
+		 }
 	}
+	
+	$scope.cart.loadFromSessionStorage();
 });

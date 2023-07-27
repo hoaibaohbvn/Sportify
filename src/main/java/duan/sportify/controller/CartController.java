@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("sportify")
 public class CartController {
 	@GetMapping("cart")
-	public String view() {
+	public String viewCart() {
 		
 		return "user/cart";
+	}
+	
+	@GetMapping("checkout")
+	public String checkOutCart() {
+		
+		return "user/checkout";
 	}
 }
