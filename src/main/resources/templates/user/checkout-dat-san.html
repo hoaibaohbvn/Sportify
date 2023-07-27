@@ -193,21 +193,21 @@
 							<div class="row align-items-end" th:each="user : ${InfoUser}">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="lastname">Họ <span class="text-danger">*</span></label>
+										<label for="lastname" style="color:black;font-weight: bold;">Họ <span class="text-danger">*</span></label>
 										<input th:value="${user.firstname}" th:type="text"
 											class="form-control" readonly>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="firstname">Tên <span class="text-danger">*</span></label>
+										<label for="firstname" style="color:black;font-weight: bold;">Tên <span class="text-danger">*</span></label>
 										<input th:value="${user.lastname}" type="text"
 											class="form-control" readonly>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="phone">Số điện thoại <span
+										<label for="phone" style="color:black;font-weight: bold;">Số điện thoại <span
 											class="text-danger">*</span></label><span class="info-container">
 											<span class="info-icon">i</span> <span class="info-content">
 												<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
@@ -218,7 +218,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="Mail">Email</label> <span class="info-container"><span
+										<label for="Mail" style="color:black;font-weight: bold;">Email</label> <span class="info-container"><span
 											class="info-icon">i</span> <span class="info-content">
 												<p>Email để nhận thông báo thông tin dặt sân, được lấy
 													từ tài khoản của bạn.</p>
@@ -230,7 +230,7 @@
 								<div class="w-100"></div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="country">Môn Thể Thao <span
+										<label for="country" style="color:black;font-weight: bold;">Môn Thể Thao <span
 											class="text-danger">*</span></label> <span class="info-container">
 											<span class="info-icon">i</span> <span class="info-content">
 												<p>Đây là loại sân dành riêng cho môn thể thao này.</p>
@@ -241,7 +241,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="streetaddress">Tên Sân <span
+										<label for="streetaddress" style="color:black;font-weight: bold;">Tên Sân <span
 											class="text-danger">*</span></label> <span class="info-container"><span
 											class="info-icon">i</span> <span class="info-content">
 												<p>Sân quý khách đã chọn.</p>
@@ -253,17 +253,17 @@
 								<div class="w-100"></div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="streetaddress">Ngày Nhận Sân <span
+										<label for="streetaddress" style="color:black;font-weight: bold;">Ngày Nhận Sân <span
 											class="text-danger">*</span></label> <span class="info-container"><span
 											class="info-icon">i</span> <span class="info-content">
 												<p>Đây là ngày nhận sân của quý khách.</p>
 										</span> </span> <input th:value="${dateselect}" type="date"
-											class="form-control">
+											class="form-control" readonly>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="streetaddress">Giá Tiền <span
+										<label for="streetaddress" style="color:black;font-weight: bold;">Giá Tiền <span
 											class="text-danger">*</span></label> <span class="info-container"><span
 											class="info-icon">i</span> <span class="info-content">
 												<p>Giá này được tính trên 1 giờ & có phụ thu 30% khi
@@ -275,7 +275,7 @@
 								<div class="w-100"></div>
 								<div class="col-md-12 ">
 									<div class="form-group">
-										<label for="streetaddress">Giờ chơi <span
+										<label for="streetaddress" style="color:black;font-weight: bold;">Giờ chơi <span
 											class="text-danger">*</span></label> <input id="nameshift-input"
 											name="nameshift" th:value="${nameShift}" type="text"
 											class="form-control" readonly>
@@ -290,20 +290,20 @@
 
 
 
-						<div class="row mt-5 pt-3 d-flex">
-							<div class="col-md-6 d-flex">
-								<div class="cart-detail cart-total p-3 p-md-4">
-									<h3 class="billing-heading mb-4">Thành Tiền</h3>
+						<div class="row mt-5 pt-3 d-flex" >
+							<div class="col-md-6 d-flex" >
+								<div class="cart-detail cart-total p-3 p-md-4" style="background-color: #F1F6F9;">
+									<h3 class="billing-heading mb-4">Tóm tắt giá</h3>
 									<div class="">
 										<div class="form-group">
 
 											<div class="d-flex">
-												<label>Giá Tiền</label> <span th:value="${e.price}"
+												<label style="color:black;font-weight: bold;">Giá Tiền</label> <span th:value="${e.price}"
 													th:text="${#numbers.formatCurrency(e.price)}"
 													style="margin-left: 20px"></span>
 											</div>
 											<div class="d-flex">
-												<label>Phụ Thu &nbsp;</label> <span class="info-container"><span
+												<label style="color:black;font-weight: bold;">Phụ Thu &nbsp;</label> <span class="info-container"><span
 													class="info-icon">i</span> <span class="info-content">
 														<p>Phụ thu 30% giá sân theo quy định các ca sau 17h00.</p>
 												</span> </span> <span style="margin-left: 7px" th:value="${phuthu}"
@@ -311,38 +311,54 @@
 											</div>
 										</div>
 
-										<label>Mã giảm giá ( nếu có )</label>
+										<label style="color:black;font-weight: bold;">Mã giảm giá ( nếu có )</label>
 										<div class="d-flex">
-											<input th:value="${voucher}" name="voucher" style="width: 100%" type="text"></input>
+											<input placeholder="Nhập mã khuyến mãi vào đây" th:value="${voucher}" name="voucher" style="width: 100%; border-radius: 10px; background-color: snow;" type="text"></input>
 
 											<a id="booking-link" class="col-4"
 												th:href="@{/sportify/field/booking/{idField}(idField=${e.fieldid})}">
-												<button class=" btn btn-outline-danger"
+												<button class="btn btn-outline-danger"
 													style="font-size: 17px; font-weight: bold;">Áp
 													Dụng</button>
 											</a>
+										</div>
+										<div class="d-flex" >
+											<span class="text-warning font-weight-bold" th:text="${thongbaovoucher}"></span>
+										
 										</div>
 
 									</div>
 									<hr>
 									<div>
-										<span>Tạm tính :</span> 
+										<span style="color:black;font-weight: bold;">Tạm tính :</span> 
 										<span th:value="${totalprice}"
 											th:text="${#numbers.formatCurrency(totalprice)}"></span>
 									</div>
 									<div>
-										<span>Giảm giá :</span> <span th:value="${pricevoucher}"
+										<span style="color:black;font-weight: bold;">Giảm giá :</span> <span th:value="${pricevoucher}"
 											th:text="${#numbers.formatCurrency(pricevoucher)}"></span>
 									</div>
-									<div>
-										<span>Thành Tiền :</span> <span th:value="${thanhtien}"
+									<div style="color:black;font-size:large;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+										<span>Thành Tiền:</span> &nbsp;
+										<span th:value="${thanhtien}"
 											th:text="${#numbers.formatCurrency(thanhtien)}"></span>
 									</div>
-
+									<div style="color:black;font-size:medium;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+										<span style="color:black;font-weight: bold;">Cọc trước 30% <span class="info-container"><span
+													class="info-icon">i</span> <span class="info-content">
+														<p>Tiền quý khách thanh toán cọc giữ chổ theo quy định</p>
+												</span></span> &nbsp;</span> 
+												<span th:value="${tiencoc}" th:text="${#numbers.formatCurrency(tiencoc)}"></span>
+									</div>
+									<div style="color:black;font-size:large;background-color: #91C8E4; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+										<span>Thanh toán khi nhận sân:</span> &nbsp;
+										<span th:value="${conlai}"
+											th:text="${#numbers.formatCurrency(conlai)}"></span>
+									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="cart-detail p-3 p-md-4">
+							<div class="col-md-6" >
+								<div class="cart-detail p-3 p-md-4" style="background-color: #F1F6F9;">
 									<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
 									<div class="form-group">
 										<div class="col-md-12">
@@ -490,42 +506,10 @@
 	<script src="/user/js/main.js"></script>
 	<script src="/user/jscode/favoriteHeart.js"></script>
 
-	<script>
-		$(document).ready(function() {
 
-			var quantitiy = 0;
-			$('.quantity-right-plus').click(function(e) {
 
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
 
-				// If is not undefined
-
-				$('#quantity').val(quantity + 1);
-
-				// Increment
-
-			});
-
-			$('.quantity-left-minus').click(function(e) {
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				// Increment
-				if (quantity > 0) {
-					$('#quantity').val(quantity - 1);
-				}
-			});
-
-		});
-	</script>
-	<script>
+	 <script>
 		document.getElementById("booking-link").onclick = function(event) {
 			event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a> (chuyển đến URL)
 
