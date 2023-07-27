@@ -7,7 +7,7 @@
 <!-- /Sidebar -->
 
 <!-- Page Wrapper -->
-<div class="page-wrapper">
+<div class="page-wrapper" ng-controller="FieldController">
 
 	<!-- Page Content -->
 	<div class="content container-fluid">
@@ -23,8 +23,9 @@
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
-							class="fa fa-plus"></i> Add Field</a>
+					<a href="#" class="btn add-btn" data-toggle="modal"
+						data-target="#add"><i class="fa fa-plus" ng-click="reset()"></i>
+						Add Field</a>
 
 				</div>
 			</div>
@@ -36,20 +37,15 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Field Name</label>
+					<input type="text" class="form-control floating"> <label
+						class="focus-label">Field Name</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus select-focus">
-					<select class="select floating">
-						<option>Tất cả</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select>
-					<label class="focus-label">Category Field</label>
+					<select ng-model="caId" class="select floating">
+						<option ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
+					</select> <label class="focus-label">Loại sản phẩm</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
@@ -64,282 +60,41 @@
 					<table class="table table-striped custom-table datatable">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Employee ID</th>
-								<th>Email</th>
-								<th>Mobile</th>
-								<th class="text-nowrap">Join Date</th>
-								<th>Role</th>
-								<th class="text-right no-sort">Action</th>
+								<th>#</th>
+								<th>Sport type</th>
+								<th>Name Field</th>
+								<th>Image</th>
+								<th>Price</th>
+								<th>Address</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-02.jpg"></a>
-										<a href="profile.html">John Doe <span>Web Designer</span></a>
-									</h2>
-								</td>
-								<td>FT-0001</td>
-								<td>johndoe@example.com</td>
-								<td>9876543210</td>
-								<td>1 Jan 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
+							<tr ng-repeat="item in items">
+								<td>{{$index + 1}}</td>
+								<td>{{item.sporttype.categoryname}}</td>
+								<td>{{item.namefield}}</td>
+								<td><img src="/user/images/{{item.image}}" width="100px"
+									height="100px"></td>
+								<td>{{item.price}}</td>
+								<td>{{item.address}}</td>
 								<td class="text-right">
 									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<a href="#" class="action-icon dropdown-toggle"
+											data-toggle="dropdown" aria-expanded="false"><i
+											class="material-icons">more_vert</i></a>
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
+												data-target="#edit" ng-click="edit(item)"><i
+												class="fa fa-pencil m-r-5"></i> Edit</a> <a
+												class="dropdown-item" href="#" data-toggle="modal"
+												data-target="#delete" ng-click="edit(item)"><i
+												class="fa fa-trash-o m-r-5"></i> Delete</a>
 										</div>
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-09.jpg"></a>
-										<a href="profile.html">Richard Miles <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0002</td>
-								<td>richardmiles@example.com</td>
-								<td>9876543210</td>
-								<td>18 Mar 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-10.jpg"></a>
-										<a href="profile.html">John Smith <span>Android Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0003</td>
-								<td>johnsmith@example.com</td>
-								<td>9876543210</td>
-								<td>1 Apr 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-05.jpg"></a>
-										<a href="profile.html">Mike Litorus <span>IOS Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0004</td>
-								<td>mikelitorus@example.com</td>
-								<td>9876543210</td>
-								<td>1 Apr 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-11.jpg"></a>
-										<a href="profile.html">Wilmer Deluna <span>Team Leader</span></a>
-									</h2>
-								</td>
-								<td>FT-0005</td>
-								<td>wilmerdeluna@example.com</td>
-								<td>9876543210</td>
-								<td>22 May 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-12.jpg"></a>
-										<a href="profile.html">Jeffrey Warden <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0006</td>
-								<td>jeffreywarden@example.com</td>
-								<td>9876543210</td>
-								<td>16 Jun 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-13.jpg"></a>
-										<a href="profile.html">Bernardo Galaviz <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0007</td>
-								<td>bernardogalaviz@example.com</td>
-								<td>9876543210</td>
-								<td>1 Jan 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -349,56 +104,68 @@
 	<!-- /Page Content -->
 
 	<!-- Add Employee Modal -->
-	<div id="add_employee" class="modal custom-modal fade" role="dialog">
+	<div id="add" class="modal custom-modal fade" role="dialog">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">Add Field</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<form>
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Field Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+							<div class="col-sm-12">
+								<div class="form-group d-flex justify-content-center">
+									<label for="image" class="col-form-label"> <img
+										ng-src="{{'/user/images/'+form.image}}"
+										style="max-width: 100%; height: 200px">
+									</label>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image</label><span
-										class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Field Name <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.namefield">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Image<span
+										class="text-danger">*</span></label> <input type="file"
+										class="form-control" id="image" ng-value="form.image"
+										onchange="angular.element(this).scope().imageChanged(this.files)">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span class="text-danger">*</span></label>
-									<input class="form-control" type="email">
+									<label class="col-form-label">Price <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.price">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field </label>
-									<select class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
+									<label class="col-form-label">Address <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.address">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="col-form-label">Category Field</label> <select
+										 ng-model="form.sporttypeid" class="form-control">
+										<option  ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
-									<input class="form-control" type="password">
+									<textarea class="form-control" ng-model="form.descriptionfield"></textarea>
 								</div>
 							</div>
 
@@ -407,7 +174,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Add Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Add Field</button>
 						</div>
 					</form>
 				</div>
@@ -417,56 +184,69 @@
 	<!-- /Add Employee Modal -->
 
 	<!-- Edit Employee Modal -->
-	<div id="edit_employee" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	<div id="edit" class="modal custom-modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-lg"
+			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">Edit Field</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<form>
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Field Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+							<div class="col-sm-12">
+								<div class="form-group d-flex justify-content-center">
+									<label for="image" class="col-form-label"> <img
+										ng-src="{{'/user/images/'+form.image}}"
+										style="max-width: 100%; height: 200px">
+									</label>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image</label><span
-										class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Field Name <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.namefield">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Image<span
+										class="text-danger">*</span></label> <input type="file"
+										class="form-control" id="image" ng-value="form.image"
+										onchange="angular.element(this).scope().imageChanged(this.files)">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span class="text-danger">*</span></label>
-									<input class="form-control" type="email">
+									<label class="col-form-label">Price <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.price">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field </label>
-									<select class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
+									<label class="col-form-label">Address <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.address">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="col-form-label">Category Field</label> <select
+										 ng-model="form.sporttypeid">
+										<option ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
-									<input class="form-control" type="password">
+									<textarea class="form-control" ng-model="form.descriptionfield"></textarea>
 								</div>
 							</div>
 
@@ -475,7 +255,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Edit Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Field</button>
 						</div>
 					</form>
 				</div>
@@ -485,7 +265,7 @@
 	<!-- /Edit Employee Modal -->
 
 	<!-- Delete Employee Modal -->
-	<div class="modal custom-modal fade" id="delete_employee" role="dialog">
+	<div class="modal custom-modal fade" id="delete" role="dialog">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -496,7 +276,8 @@
 					<div class="modal-btn delete-action">
 						<div class="row">
 							<div class="col-6">
-								<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+								<a href="javascript:void(0);"
+									class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
 							</div>
 							<div class="col-6">
 								<a href="javascript:void(0);" data-dismiss="modal"
@@ -509,6 +290,6 @@
 		</div>
 	</div>
 	<!-- /Delete Employee Modal -->
-
+	<div id="toast"></div>
 </div>
 <!-- /Page Wrapper -->

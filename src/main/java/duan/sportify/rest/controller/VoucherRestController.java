@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import duan.sportify.GlobalExceptionHandler;
 
 import duan.sportify.dao.VoucherDAO;
+import duan.sportify.entities.Sporttype;
 import duan.sportify.entities.Voucher;
 
 import duan.sportify.utils.ErrorResponse;
@@ -51,14 +52,13 @@ public class VoucherRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Voucher> create(@RequestBody Voucher voucher) {
-		if(!voucherDAO.existsById(voucher.getVoucherid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		voucherDAO.save(voucher);
-		return ResponseEntity.ok(voucher);
+	    if (voucher.getVoucherid() != null && voucherDAO.existsById(voucher.getVoucherid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    voucherDAO.save(voucher);
+	    return ResponseEntity.ok(voucher);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @RequestBody Voucher voucher) {
 		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

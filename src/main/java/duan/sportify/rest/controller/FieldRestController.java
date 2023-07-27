@@ -22,7 +22,7 @@ import duan.sportify.GlobalExceptionHandler;
 import duan.sportify.dao.FieldDAO;
 
 import duan.sportify.entities.Field;
-
+import duan.sportify.entities.Products;
 import duan.sportify.utils.ErrorResponse;
 
 @CrossOrigin(origins = "*")
@@ -51,14 +51,13 @@ public class FieldRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Field> create(@RequestBody Field field) {
-		if(!fieldDAO.existsById(field.getFieldid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		fieldDAO.save(field);
-		return ResponseEntity.ok(field);
+	    if (field.getFieldid() != null && fieldDAO.existsById(field.getFieldid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    fieldDAO.save(field);
+	    return ResponseEntity.ok(field);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Field> update(@PathVariable("id") Integer id, @RequestBody Field field) {
 		if(!fieldDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

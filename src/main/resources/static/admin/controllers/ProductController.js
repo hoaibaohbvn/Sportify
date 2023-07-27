@@ -25,18 +25,18 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-		
+
 	}
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/products/create`, item).then(resp => {
-			
+
 			resp.data.datecreate = new Date(resp.data.datecreate)
 			$scope.items.push(resp.data);
 			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
-            $scope.reset();
-            $('#add').modal('hide')
+			$scope.reset();
+			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			alert("Lỗi thêm mới sản phẩm!");
@@ -58,20 +58,20 @@ app.controller('ProductController', function($scope, $http) {
 			});
 	}
 	// ham delete
-	$scope.delete = function(item){
-			$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-				var index = $scope.items.findIndex(p => p.productid == item.productid);
-            $scope.items.splice(index, 1);
-            // Đặt lại trạng thái của form (nếu có)
-            $scope.reset();
-            $('#delete').modal('hide')
-            // Hiển thị thông báo thành công
-            showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+	$scope.delete = function(item) {
+		$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.productid == item.productid);
+			$scope.items.splice(index, 1);
+			// Đặt lại trạng thái của form (nếu có)
+			$scope.reset();
+			$('#delete').modal('hide')
+			// Hiển thị thông báo thành công
+			showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
 			refreshPageAfterThreeSeconds();
-			}).catch(error => {
-				alert("Lỗi xóa sản phẩm!");
-				console.log("Error", error);
-			})
+		}).catch(error => {
+			alert("Lỗi xóa sản phẩm!");
+			console.log("Error", error);
+		})
 	}
 
 	$scope.imageChanged = function(files) {
@@ -169,4 +169,6 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	
+
 })

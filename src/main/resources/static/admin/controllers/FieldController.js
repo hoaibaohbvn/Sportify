@@ -1,59 +1,42 @@
-app.controller('EventController', function($scope, $http) {
-	// Dữ liệu cứng mẫu cho eventtype
-    $scope.tableData = [
-        { id: 1, name: "Bóng đá" },
-        { id: 2, name: "Bóng rổ" },
-        { id: 3, name: "Cầu lông" },
-        { id: 4, name: "Bảo trì" },
-        { id: 5, name: "Tennis" },
-        { id: 6, name: "Khác" },
-    ];
+app.controller('FieldController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
-		$http.get("/rest/events/getAll").then(resp => {
+		$http.get("/rest/sportTypes/getAll").then(resp => {
+			$scope.sporttype = resp.data;
+		})
+		// lấy danh sách product
+		$http.get("/rest/fields/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.datestart = new Date(item.datestart)
-				item.dateend = new Date(item.dateend)
+				item.createDate = new Date(item.createDate)
 			})
 		});
 		$scope.reset();
 	}
-	
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			dateStart: new Date(),
-			dateEnd: new Date(),
-			productstatus: true,
-			image: "loading.jpg",
-			
+			sporttypeid: "B01",
+			status: true,
+			image: "loading.jpg"
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-		
+
 	}
-	
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		if (item.datestart >= item.dateend) {
-			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
-			return; // Dừng việc thêm mới nếu ngày không hợp lệ
-		}
-		$http.post(`/rest/events/create`, item).then(resp => {
+		$http.post(`/rest/fields/create`, item).then(resp => {
 
-			resp.data.dateStart = new Date(resp.data.dateStart)
-			resp.data.dateEnd = new Date(resp.data.dateEnd)
 			$scope.items.push(resp.data);
-			showSuccessToast("Event mới tên " + item.nameevent + " đã được thêm vào cửa hàng")
+			showSuccessToast("Sân mới tên " + item.namefield + " đã được thêm vào cửa hàng")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
-
 		}).catch(error => {
 			alert("Lỗi thêm mới sản phẩm!");
 			console.log("Error", error);
@@ -62,10 +45,10 @@ app.controller('EventController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/events/update/${item.eventid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.put(`/rest/fields/update/${item.fieldid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sự kiện thành công")
+			showSuccessToast("Cập nhập sân thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -75,15 +58,14 @@ app.controller('EventController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/events/delete/${item.eventid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.delete(`/rest/fields/delete/${item.fieldid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
-			
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sự kiện tên " + item.nameevent + " đã được xóa")
+			showSuccessToast("Sân tên " + item.namefield + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			alert("Lỗi xóa sản phẩm!");
@@ -186,5 +168,6 @@ app.controller('EventController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	
 
 })

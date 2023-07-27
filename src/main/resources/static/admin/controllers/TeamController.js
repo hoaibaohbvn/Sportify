@@ -1,59 +1,44 @@
-app.controller('EventController', function($scope, $http) {
-	// Dữ liệu cứng mẫu cho eventtype
-    $scope.tableData = [
-        { id: 1, name: "Bóng đá" },
-        { id: 2, name: "Bóng rổ" },
-        { id: 3, name: "Cầu lông" },
-        { id: 4, name: "Bảo trì" },
-        { id: 5, name: "Tennis" },
-        { id: 6, name: "Khác" },
-    ];
+app.controller('TeamController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
-		$http.get("/rest/events/getAll").then(resp => {
+		$http.get("/rest/sportTypes/getAll").then(resp => {
+			$scope.sporttype = resp.data;
+		})
+		// lấy danh sách product
+		$http.get("/rest/teams/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.datestart = new Date(item.datestart)
-				item.dateend = new Date(item.dateend)
+				item.createdate = new Date(item.createdate)
 			})
 		});
 		$scope.reset();
 	}
-	
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			dateStart: new Date(),
-			dateEnd: new Date(),
-			productstatus: true,
-			image: "loading.jpg",
-			
+			createdate: new Date(),
+			sporttypeid: "B01",
+			avatar: "loading.jpg",
+			username: "staff"
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-		
+
 	}
-	
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		if (item.datestart >= item.dateend) {
-			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
-			return; // Dừng việc thêm mới nếu ngày không hợp lệ
-		}
-		$http.post(`/rest/events/create`, item).then(resp => {
+		$http.post(`/rest/teams/create`, item).then(resp => {
 
-			resp.data.dateStart = new Date(resp.data.dateStart)
-			resp.data.dateEnd = new Date(resp.data.dateEnd)
+			resp.data.createdate = new Date(resp.data.createdate)
 			$scope.items.push(resp.data);
-			showSuccessToast("Event mới tên " + item.nameevent + " đã được thêm vào cửa hàng")
+			showSuccessToast("Team mới tên " + item.nameteam + " đã được thêm thành công")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
-
 		}).catch(error => {
 			alert("Lỗi thêm mới sản phẩm!");
 			console.log("Error", error);
@@ -62,10 +47,10 @@ app.controller('EventController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/events/update/${item.eventid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.put(`/rest/teams/update/${item.teamid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sự kiện thành công")
+			showSuccessToast("Cập nhập team thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -75,15 +60,14 @@ app.controller('EventController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/events/delete/${item.eventid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.delete(`/rest/teams/delete/${item.teamid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
-			
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sự kiện tên " + item.nameevent + " đã được xóa")
+			showSuccessToast("Sản phảm tên " + item.nameteam + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			alert("Lỗi xóa sản phẩm!");
@@ -98,7 +82,7 @@ app.controller('EventController', function($scope, $http) {
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(resp => {
-			$scope.form.image = resp.data.name;
+			$scope.form.avatar = resp.data.name;
 		}).catch(error => {
 			alert("Lỗi upload hình ảnh");
 			console.log("Error", error);
@@ -186,5 +170,6 @@ app.controller('EventController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	
 
 })

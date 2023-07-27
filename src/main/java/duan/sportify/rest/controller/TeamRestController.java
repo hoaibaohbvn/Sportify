@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import duan.sportify.GlobalExceptionHandler;
 
 import duan.sportify.dao.TeamDAO;
+import duan.sportify.entities.Categories;
 import duan.sportify.entities.Teams;
 
 import duan.sportify.utils.ErrorResponse;
+import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/rest/teams/")
@@ -49,15 +51,14 @@ public class TeamRestController {
 		return ResponseEntity.ok(teamDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Teams> create(@RequestBody Teams team) {
-		if(!teamDAO.existsById(team.getTeamid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+	public ResponseEntity<Teams> create(@Valid @RequestBody Teams team) {
+	    if (team.getTeamid() != null && teamDAO.existsById(team.getTeamid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    teamDAO.save(team);
+	    return ResponseEntity.ok(team);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @RequestBody Teams team) {
 		if(!teamDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

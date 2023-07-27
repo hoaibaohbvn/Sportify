@@ -41,7 +41,7 @@
 						class="focus-label">Event Name</label>
 				</div>
 			</div>
-			
+
 			<div class="col-sm-6 col-md-3">
 				<a href="#" class="btn btn-success btn-block"> Search </a>
 			</div>
@@ -147,8 +147,17 @@
 							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Description</label> <textarea
-										class="form-control" type="text" ng-model="form.descriptions"></textarea>
+									<label class="col-form-label">Event type</label> <select
+										ng-model="form.eventtype" class="form-control">
+										<option ng-repeat="c in tableData" ng-value="c.name">{{c.name}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Description</label>
+									<textarea class="form-control" type="text"
+										ng-model="form.descriptions"></textarea>
 								</div>
 							</div>
 
@@ -157,7 +166,8 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add Event</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Add
+								Event</button>
 						</div>
 					</form>
 				</div>
@@ -172,7 +182,7 @@
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Field</h5>
+					<h5 class="modal-title">Edit Event</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -215,13 +225,22 @@
 								<div class="form-group">
 									<label class="col-form-label">Date End <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datestart">
+										type="date" ng-model="form.dateend">
 								</div>
 							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Description</label> <textarea
-										class="form-control" type="text" ng-model="form.descriptions"></textarea>
+									<label class="col-form-label">Event type</label> <select 
+										ng-model="form.eventtype" class="form-control">
+										<option ng-repeat="c in tableData" ng-value="c.name">{{c.name}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Description</label>
+									<textarea class="form-control" type="text"
+										ng-model="form.descriptions"></textarea>
 								</div>
 							</div>
 
@@ -230,7 +249,8 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Event</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Edit
+								Event</button>
 						</div>
 					</form>
 				</div>
