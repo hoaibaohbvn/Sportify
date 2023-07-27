@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 
 import duan.sportify.entities.Eventweb;
 
+@SuppressWarnings("unused")
 public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	@Query(value="SELECT COUNT(*) FROM eventweb;", nativeQuery = true)
 	List<Object> CountEvent();

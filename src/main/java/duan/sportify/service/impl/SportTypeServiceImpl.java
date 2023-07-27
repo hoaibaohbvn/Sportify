@@ -12,6 +12,7 @@ import duan.sportify.entities.Sporttype;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.SportTypeService;
 
+@SuppressWarnings("unused")
 @Service
 public class SportTypeServiceImpl implements SportTypeService{
 	@Autowired

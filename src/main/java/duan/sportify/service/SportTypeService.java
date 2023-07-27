@@ -7,7 +7,7 @@ import duan.sportify.entities.Field;
 import duan.sportify.entities.Sporttype;
 
 
-
+@SuppressWarnings("unused")
 public interface SportTypeService {
 	List<Sporttype> findAll();
 

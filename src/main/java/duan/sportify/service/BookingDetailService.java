@@ -11,7 +11,7 @@ import duan.sportify.entities.Bookingdetails;
 import duan.sportify.entities.Bookings;
 
 
-
+@SuppressWarnings("unused")
 public interface BookingDetailService {
 	
 	List<Bookingdetails> findAll();

@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -30,8 +30,8 @@ import duan.sportify.utils.ErrorResponse;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/products/")
-public class ProductRestController {
+@RequestMapping("/sportify/rest/products_copy/")
+public class ProductRestController_copy {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired

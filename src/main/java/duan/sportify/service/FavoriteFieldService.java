@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Favoritefield;
 
 
-
+@SuppressWarnings("unused")
 public interface FavoriteFieldService {
 	List<Favoritefield> findAll();
 

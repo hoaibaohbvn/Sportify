@@ -12,6 +12,7 @@ import duan.sportify.entities.Favoritefield;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.FavoriteFieldService;
 
+@SuppressWarnings("unused")
 @Service
 public class FavoriteServiceImpl implements FavoriteFieldService{
 	@Autowired

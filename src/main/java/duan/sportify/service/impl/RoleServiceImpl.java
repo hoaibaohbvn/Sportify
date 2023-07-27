@@ -12,6 +12,7 @@ import duan.sportify.entities.Roles;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.RoleService;
 
+@SuppressWarnings("unused")
 @Service
 public class RoleServiceImpl implements RoleService{
 	@Autowired

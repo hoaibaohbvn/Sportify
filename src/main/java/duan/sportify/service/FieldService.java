@@ -10,7 +10,7 @@ import duan.sportify.entities.Shifts;
 
 
 
-
+@SuppressWarnings("unused")
 public interface FieldService {
 	List<Field> findAll();
 

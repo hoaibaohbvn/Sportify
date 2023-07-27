@@ -1,4 +1,4 @@
-package duan.sportify.restcontroller;
+package duan.sportify.rest.controller;
 
 import java.util.List;
 
@@ -19,60 +19,60 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
-import duan.sportify.dao.FieldDAO;
 
-import duan.sportify.entities.Field;
+import duan.sportify.dao.VoucherDAO;
+import duan.sportify.entities.Voucher;
 
 import duan.sportify.utils.ErrorResponse;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/fields/")
-public class FieldRestController {
+@RequestMapping("/rest/vouchers/")
+public class VoucherRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	FieldDAO fieldDAO;
+	VoucherDAO voucherDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Field>> getAll(Model model){
-		return ResponseEntity.ok(fieldDAO.findAll());
+	public ResponseEntity<List<Voucher>> getAll(Model model){
+		return ResponseEntity.ok(voucherDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Field> getOne(@PathVariable("id") Integer id) {
-		if(!fieldDAO.existsById(id)) {
+	public ResponseEntity<Voucher> getOne(@PathVariable("id") String id) {
+		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(fieldDAO.findById(id).get());
+		return ResponseEntity.ok(voucherDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Field> create(@RequestBody Field field) {
-		if(!fieldDAO.existsById(field.getFieldid())) {
+	public ResponseEntity<Voucher> create(@RequestBody Voucher voucher) {
+		if(!voucherDAO.existsById(voucher.getVoucherid())) {
 			
 			return ResponseEntity.badRequest().build();
 		}
-		fieldDAO.save(field);
-		return ResponseEntity.ok(field);
+		voucherDAO.save(voucher);
+		return ResponseEntity.ok(voucher);
 	}
 	@PutMapping("update")
-	public ResponseEntity<Field> update(@PathVariable("id") Integer id, @RequestBody Field field) {
-		if(!fieldDAO.existsById(id)) {
+	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @RequestBody Voucher voucher) {
+		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		fieldDAO.save(field);
-		return ResponseEntity.ok(field);
+		voucherDAO.save(voucher);
+		return ResponseEntity.ok(voucher);
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!fieldDAO.existsById(id)) {
+	public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		fieldDAO.deleteById(id);
+		voucherDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
 }

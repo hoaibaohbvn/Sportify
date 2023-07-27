@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Voucher;
 
 
-
+@SuppressWarnings("unused")
 public interface VoucherService {
 	List<Voucher> findAll();
 

@@ -12,6 +12,7 @@ import duan.sportify.entities.Orderdetails;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.OrderDetailService;
 
+@SuppressWarnings("unused")
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService{
 	@Autowired

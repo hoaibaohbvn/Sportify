@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import duan.sportify.entities.Teamdetails;
 
-
+@SuppressWarnings("unused")
 public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "FROM teams\r\n"

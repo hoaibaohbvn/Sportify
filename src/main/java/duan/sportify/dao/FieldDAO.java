@@ -11,7 +11,7 @@ import duan.sportify.entities.Field;
 import duan.sportify.entities.Sporttype;
 
 
-
+@SuppressWarnings("unused")
 public interface FieldDAO extends JpaRepository<Field, Integer>{
 	
 	@Query(value="SELECT COUNT(*) FROM field;", nativeQuery = true)

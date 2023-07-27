@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+@SuppressWarnings("unused")
 public interface TeamDAO extends JpaRepository<Teams, Integer> {
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n" + "FROM teams\r\n"
