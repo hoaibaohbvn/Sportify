@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Chi Tiết Giải Đấu</title>
+<title>Tin Tức</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -169,11 +169,11 @@
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
 								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="blog.html">Sự Kiện <i class="fa fa-chevron-right"></i></a></span> <span>Chi Tiết Sự Kiện
+							href="blog.html">Sự Kiện <i class="fa fa-chevron-right"></i></a></span> <span>Chi Tiết tin Tức
 							 <i class="fa fa-chevron-right"></i>
 						</span>
 					</p>
-					<h2 class="mb-0 bread">Chi Tiết Sự Kiện</h2>
+					<h2 class="mb-0 bread">Chi Tiết Tin Tức</h2>
 				</div>
 			</div>
 		</div>
@@ -214,17 +214,20 @@
 				<!-- Sidebar -->
 
 
-				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
-					<div class="sidebar-box ftco-animate">
-						<h3 class="d-flex">Sự Kiện Trong Tháng</h3>
-						<div class="block-21 mb-4 d-flex" th:each="lq : ${eventLQ}" id="">
-							<img class="blog-img mr-4 img-event" alt="" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
+				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate" >
+					<h3 class="d-flex">Tin Tức Trong Tháng</h3>
+					<div class="sidebar-box ftco-animate" >
+						
+						<div class="block-21 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px;">
+							<div class="img-tintuc">
+								<img class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
+							</div>
 							
 							<div class="text">
-								<h3 class="heading">
+								<h3 class="heading limited-length3">
 									<a
 										th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}"
-										th:text="${lq[1]}" class="limited-length"></a>
+										th:text="${lq[1]}" ></a>
 								</h3>
 								<div class="meta">
 									<div class="meta d-flex">
