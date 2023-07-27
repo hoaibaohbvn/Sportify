@@ -35,7 +35,7 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	@Query("SELECT e FROM Eventweb e WHERE e.eventid = ?1")
     Eventweb findEventById(Integer eventId);
 	
-	// Hiển thị các sự kiện diễn ra cùng tháng
+	// Hiển thị các sự kiện diễn ra trong tháng
 	@Query("SELECT ee FROM Eventweb ee WHERE MONTH(ee.datestart) = ?1")
     List<Eventweb> findEventsInMonth(int month);
 	 
