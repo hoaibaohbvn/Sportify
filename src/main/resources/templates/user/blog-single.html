@@ -179,8 +179,8 @@
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-degree-bg">
-		<div class="container">
+	<section class="ftco-section ftco-degree-bg" style="  background-image: url('/user/images/bgAll.png');background-repeat: repeat; background-size: 100% 100%;">
+		<div class="container" >
 			<div class="row">
 
 				<div class="col-lg-8 ftco-animate">
@@ -205,7 +205,7 @@
 						<img th:src="@{'/user/images/' + ${eventdetail.image}}" alt=""
 							class="img-fluid">
 					</p>
-					<p th:text="${eventdetail.descriptions}" class="event-description"></p>
+					<p th:text="${eventdetail.descriptions}" class="event-description"   style="color: black; font-size: 18px;"></p>
 					
 
 				</div>
@@ -216,20 +216,22 @@
 
 				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate" >
 					<h3 class="d-flex">Tin Tức Trong Tháng</h3>
-					<div class="sidebar-box ftco-animate" >
+					
 						
-						<div class="block-21 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px;">
+						<div class="block-21 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);" >
 							<div class="img-tintuc">
-								<img class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
+								<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}">
+									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 105px">
+								</a>
 							</div>
 							
 							<div class="text">
-								<h3 class="heading limited-length3">
+								<h3 class="mt-1 heading limited-length3">
 									<a
 										th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}"
 										th:text="${lq[1]}" ></a>
 								</h3>
-								<div class="meta">
+								<div class="meta mb-1">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(lq[2], 'dd-MM-yyyy')}" class="m-1 " style="color:blue;"></p>
@@ -247,7 +249,7 @@
 								
 							</div>
 						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>

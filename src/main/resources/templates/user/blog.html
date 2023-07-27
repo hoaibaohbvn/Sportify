@@ -178,7 +178,7 @@
 		</div>
 	</section>
 
-	<section class="ftco-section">
+	<section class="ftco-section" style="  background-image: url('/user/images/bgAll.png');  background-repeat: repeat; background-size: 100% 100%;">
 		<div class="container">
 			<div class="row">
 				<form class="mb-5 d-flex justify-content-center col-12"
@@ -193,8 +193,8 @@
 
 					<div class="row d-flex">
 						<div class="col-lg-6 d-flex align-items-stretch ftco-animate "
-							th:each="eventList : ${eventList}">
-							<div class="blog-entry d-md-flex event-item">
+							th:each="eventList : ${eventList}" >
+							<div class="blog-entry d-md-flex event-item" style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
 								<img class="block-19 block-20 img " style="object-fit: cover;"
 									alt="" th:src="@{'/user/images/' + ${eventList.image}}">
 
@@ -214,9 +214,7 @@
 									</div>
 									
 									<div class="meta d-flex">
-										<p class="limited-length2" th:utext="${eventList.descriptions}">
-											
-										</p>
+										<p class="limited-length2" th:utext="${eventList.descriptions}"></p>
 									</div>
 
 									<a
