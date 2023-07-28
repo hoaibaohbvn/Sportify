@@ -1,6 +1,7 @@
 package duan.sportify.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
@@ -73,5 +75,13 @@ public class FieldRestController {
 		}
 		fieldDAO.deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+	// search team in admin
+	@GetMapping("search")
+	public ResponseEntity<List<Field>> search(
+			@RequestParam("namefield") Optional<String> namefield,
+			@RequestParam("sporttypeid") Optional<String> sporttypeid,
+			@RequestParam("status") Optional<Integer> status){
+		return ResponseEntity.ok(fieldDAO.searchFieldAdmin(namefield, sporttypeid, status));
 	}
 }

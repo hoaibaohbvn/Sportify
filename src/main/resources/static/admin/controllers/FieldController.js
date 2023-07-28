@@ -168,6 +168,26 @@ app.controller('FieldController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	
+	// search
+	 $scope.searchName = '';
+   	 $scope.searchSport = null;
+   	 $scope.searchStatus = 1;
+   	 $scope.search = function () {
+			
+      $http.get('/rest/fields/search', { params: 
+      		{ 	
+				namefield: $scope.searchName, 
+      			sporttypeid: $scope.searchSport,
+      			status: $scope.searchStatus
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 
 })

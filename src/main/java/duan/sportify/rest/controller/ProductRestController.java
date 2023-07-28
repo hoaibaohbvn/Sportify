@@ -1,7 +1,7 @@
 package duan.sportify.rest.controller;
 
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -81,9 +81,9 @@ public class ProductRestController {
 	}
 	@GetMapping("search")
 	public ResponseEntity<List<Products>> search(
-			@RequestParam("productname") String productname,
-			@RequestParam("categoryid") Integer categoryid,
-			@RequestParam("productstatus") Integer productstatus
+			@RequestParam("productname") Optional<String> productname,
+			@RequestParam("categoryid") Optional<Integer> categoryid,
+			@RequestParam("productstatus") Optional<Integer> productstatus
 		){
 		return ResponseEntity.ok(productDAO.searchProductAdmin(productname, categoryid, productstatus));
 	}

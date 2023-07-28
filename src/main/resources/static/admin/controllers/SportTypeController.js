@@ -160,5 +160,21 @@ app.controller('SportTypeController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	
+	// search
+	 $scope.searchName = '';
+   	 $scope.search = function () {
+			
+      $http.get('/rest/sportTypes/search', { params: 
+      		{ 	
+				categoryname: $scope.searchName
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+         
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })

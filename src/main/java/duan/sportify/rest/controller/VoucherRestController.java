@@ -40,8 +40,20 @@ public class VoucherRestController {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Voucher>> getAll(Model model){
+	public ResponseEntity<List<Voucher>> getAll(){
 		return ResponseEntity.ok(voucherDAO.findAll());
+	}
+	@GetMapping("fillActive")
+	public ResponseEntity<List<Voucher>> fillActive(){
+		return ResponseEntity.ok(voucherDAO.fillActive());
+	}
+	@GetMapping("fillInActive")
+	public ResponseEntity<List<Voucher>> fillInActive(){
+		return ResponseEntity.ok(voucherDAO.fillInActive());
+	}
+	@GetMapping("fillWillActive")
+	public ResponseEntity<List<Voucher>> fillWillActive(){
+		return ResponseEntity.ok(voucherDAO.fillWillActive());
 	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Voucher> getOne(@PathVariable("id") String id) {

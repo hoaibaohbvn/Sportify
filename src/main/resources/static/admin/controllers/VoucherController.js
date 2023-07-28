@@ -1,7 +1,9 @@
 app.controller('VoucherController', function($scope, $http) {
 	// hàm đổ tất cả
+	$scope.fillDate = null
 	$scope.getAll = function() {
-		// lấy danh sách 
+		if($scope.fillDate == null){
+			// lấy danh sách 
 		$http.get("/rest/vouchers/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
@@ -9,6 +11,37 @@ app.controller('VoucherController', function($scope, $http) {
 				item.enddate = new Date(item.enddate)
 			})
 		});
+		}
+		if($scope.fillDate == 1){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
+		if($scope.fillDate == 0){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillInActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
+		if($scope.fillDate == 2){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillWillActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
 		$scope.reset();
 	}
 	// hàm rest form

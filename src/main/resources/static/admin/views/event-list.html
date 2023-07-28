@@ -37,13 +37,29 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating"> <label
+					<input type="text" class="form-control floating" ng-model="searchName"> <label
 						class="focus-label">Event Name</label>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="form-group form-focus select-focus">
+					<select ng-model="searchStyte"
+						class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value="'Bóng đá'">Bóng đá</option>
+						<option ng-value="'Cầu lông'">Cầu lông</option>
+						<option ng-value="'Bóng rổ'">Bóng rổ</option>
+						<option ng-value="'Tennis'">Tennis</option>
+						<option ng-value="'Bảo trì'">Bảo trì</option>
+					</select> <label class="focus-label">Loại sự kiện</label>
 				</div>
 			</div>
 
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block"> Refresh </a>
 			</div>
 		</div>
 		<!-- Search Filter -->

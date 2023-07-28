@@ -169,6 +169,31 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	$scope.refresh =function refreshNow() {
+			location.reload();
+	}
 	
-
+	// search
+	 $scope.searchName = '';
+   	 $scope.searchCate = null;
+   	 $scope.searchStatus = 1;
+   	 $scope.search = function () {
+			
+      $http.get('/rest/products/search', { params: 
+      		{ 	
+				productname: $scope.searchName, 
+      			categoryid: $scope.searchCate,
+      			productstatus: $scope.searchStatus
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          $scope.items.forEach(item => {
+				item.datecreate = new Date(item.datecreate)
+			})
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })

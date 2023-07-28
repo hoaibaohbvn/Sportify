@@ -1,5 +1,5 @@
 package duan.sportify.dao;
-
+import java.util.Optional;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -10,9 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import duan.sportify.entities.Teams;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 
 public interface TeamDAO extends JpaRepository<Teams, Integer> {
 
@@ -38,4 +36,8 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "			GROUP BY teams.teamid;",
 			nativeQuery = true)
 	Page<Object[]> FilterTeam(String sporttypeid ,Pageable pageable);
+	
+	//search in admin 
+	@Query(value = "SELECT * FROM teams WHERE (:nameteam IS NULL OR nameteam LIKE %:nameteam%) AND (:sporttypeid IS NULL OR sporttypeid LIKE %:sporttypeid%)", nativeQuery = true)
+	List<Teams> searchTeamAdmin(@Param("nameteam") Optional<String> nameteam, @Param("sporttypeid") Optional<String> sporttypeid);
 }

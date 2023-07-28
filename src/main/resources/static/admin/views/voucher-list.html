@@ -34,26 +34,19 @@
 		<!-- Search Filter -->
 		<div class="row filter-row">
 
-			<div class="col-sm-6 col-md-3">
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Field Name</label>
-				</div>
-			</div>
+			
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus select-focus">
-					<select class="select floating">
-						<option>Tất cả</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select>
-					<label class="focus-label">Category Field</label>
+					<select ng-model="fillDate" class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value="1">Còn hạn</option>
+						<option ng-value="0">Hết hạn</option>
+						<option ng-value="2">Chưa áp dụng</option>
+					</select> <label class="focus-label" >Hạn sử dụng</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="getAll()"> Search </a>
 			</div>
 		</div>
 		<!-- Search Filter -->

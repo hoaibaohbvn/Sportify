@@ -12,6 +12,7 @@ app.controller('CategoryController', function($scope, $http) {
 		$scope.form = {
 
 		}
+		
 	}
 	// hàm edit
 	$scope.edit = function(item) {
@@ -33,7 +34,7 @@ app.controller('CategoryController', function($scope, $http) {
 				$scope.errors = error.data.errors;
 			}
 			if (error.data) {
-				showErrorToast(error.data.message);
+				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
       		console.log(error);
@@ -166,5 +167,23 @@ app.controller('CategoryController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	// search
+	 $scope.searchName = '';
 	
+   	 $scope.search = function () {
+			
+      $http.get('/rest/categories/search', { params: 
+      		{ 	
+				categoryname: $scope.searchName,
+      			
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })

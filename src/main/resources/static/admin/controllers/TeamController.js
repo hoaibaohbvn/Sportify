@@ -170,6 +170,27 @@ app.controller('TeamController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	
+	// search
+	 $scope.searchName = '';
+   	 $scope.searchSport = null;
+   	 
+   	 $scope.search = function () {
+			
+      $http.get('/rest/teams/search', { params: 
+      		{ 	
+				nameteam: $scope.searchName, 
+      			sporttypeid: $scope.searchSport
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          $scope.items.forEach(item => {
+				item.createdate = new Date(item.createdate)
+			})
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 
 })

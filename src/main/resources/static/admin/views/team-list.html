@@ -37,12 +37,24 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating"> <label
+					<input type="text" class="form-control floating" ng-model="searchName"> <label
 						class="focus-label">Team Name</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+				<div class="form-group form-focus select-focus">
+					<select ng-model="searchSport"
+						class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
+					</select> <label class="focus-label">Môn thể thao</label>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block"> Reset </a>
 			</div>
 		</div>
 		<!-- Search Filter -->

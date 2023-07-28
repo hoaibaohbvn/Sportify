@@ -186,5 +186,26 @@ app.controller('EventController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-
+	// search
+	 $scope.searchName = '';
+	 $scope.searchStyte = null;
+   	 $scope.search = function () {
+			
+      $http.get('/rest/events/search', { params: 
+      		{ 	
+				nameevent: $scope.searchName,
+      			eventtype: $scope.searchStyte
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          $scope.items.forEach(item => {
+				item.datestart = new Date(item.datestart)
+				item.dateend = new Date(item.dateend)
+			})
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })
