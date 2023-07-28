@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Chi Tiết Giải Đấu</title>
+<title>Tin Tức</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -145,7 +145,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -169,18 +169,18 @@
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
 								class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a
-							href="blog.html">Sự Kiện <i class="fa fa-chevron-right"></i></a></span> <span>Chi Tiết Sự Kiện
+							href="blog.html">Sự Kiện <i class="fa fa-chevron-right"></i></a></span> <span>Chi Tiết tin Tức
 							 <i class="fa fa-chevron-right"></i>
 						</span>
 					</p>
-					<h2 class="mb-0 bread">Chi Tiết Sự Kiện</h2>
+					<h2 class="mb-0 bread">Chi Tiết Tin Tức</h2>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-degree-bg">
-		<div class="container">
+	<section class="ftco-section ftco-degree-bg" style="  background-image: url('/user/images/bgAll.png');background-repeat: repeat; background-size: 100% 100%;">
+		<div class="container" >
 			<div class="row">
 
 				<div class="col-lg-8 ftco-animate">
@@ -205,7 +205,7 @@
 						<img th:src="@{'/user/images/' + ${eventdetail.image}}" alt=""
 							class="img-fluid">
 					</p>
-					<p th:text="${eventdetail.descriptions}" class="event-description"></p>
+					<p th:text="${eventdetail.descriptions}" class="event-description"   style="color: black; font-size: 18px;"></p>
 					
 
 				</div>
@@ -214,19 +214,24 @@
 				<!-- Sidebar -->
 
 
-				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
-					<div class="sidebar-box ftco-animate">
-						<h3 class="d-flex">Sự Kiện Trong Tháng</h3>
-						<div class="block-21 mb-4 d-flex" th:each="lq : ${eventLQ}" id="">
-							<img class="blog-img mr-4 img-event" alt="" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 100px">
+				<div class="col-lg-4 sidebar pl-lg-5 ftco-animate" >
+					<h3 class="d-flex">Tin Tức Trong Tháng</h3>
+					
+						
+						<div class="block-21 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);" >
+							<div class="img-tintuc">
+								<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}">
+									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 105px">
+								</a>
+							</div>
 							
 							<div class="text">
-								<h3 class="heading">
+								<h3 class="mt-1 heading limited-length3">
 									<a
 										th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}"
-										th:text="${lq[1]}" class="limited-length"></a>
+										th:text="${lq[1]}" ></a>
 								</h3>
-								<div class="meta">
+								<div class="meta mb-1">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(lq[2], 'dd-MM-yyyy')}" class="m-1 " style="color:blue;"></p>
@@ -244,7 +249,7 @@
 								
 							</div>
 						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>

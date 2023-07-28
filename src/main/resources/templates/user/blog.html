@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Giải Đấu</title>
+<title>Tin Tức</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -146,7 +146,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -169,32 +169,32 @@
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Sự Kiện <i
+								class="fa fa-chevron-right"></i></a></span> <span>Tin Tức <i
 							class="fa fa-chevron-right"></i></span>
 					</p>
-					<h2 class="mb-0 bread">Sự Kiện</h2>
+					<h2 class="mb-0 bread">Tin Tức</h2>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="ftco-section">
+	<section class="ftco-section" style="  background-image: url('/user/images/bgAll.png');  background-repeat: repeat; background-size: 100% 100%;">
 		<div class="container">
 			<div class="row">
 				<form class="mb-5 d-flex justify-content-center col-12"
 					th:action="@{/sportify/search}" method="post">
 					<input class="form-control me-2 col-6"
-						placeholder="Tìm kiếm theo tên..." aria-label="Search" type="text"
+						placeholder="Tìm kiếm theo tên..." aria-label="Search" type="search"
 						th:value="${keyword}" name="keyword">
-					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+					<button class="btn btn-success col-2" type="submit">Search</button>
 				</form>
 
 				<div class="col-md-12">
 
 					<div class="row d-flex">
 						<div class="col-lg-6 d-flex align-items-stretch ftco-animate "
-							th:each="eventList : ${eventList}">
-							<div class="blog-entry d-md-flex event-item">
+							th:each="eventList : ${eventList}" >
+							<div class="blog-entry d-md-flex event-item" style=" box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
 								<img class="block-19 block-20 img " style="object-fit: cover;"
 									alt="" th:src="@{'/user/images/' + ${eventList.image}}">
 
@@ -202,18 +202,24 @@
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(eventList.datestart, 'dd-MM-yyyy')}"
-											class="m-1 " style="color: blue;"></p>
+											class="m-1 " style="color: blue; font-size: 15px;"></p>
 
 									</div>
-									<h3 class="heading mb-3 m-1">
-										<a
-											th:href="@{/sportify/eventdetail/{eventid}(eventid=${eventList.eventid})}"
-											th:text="${eventList.nameevent}"></a>
-									</h3>
+									<div class="meta d-flex ">
+										<h3 class="heading mb-3 m-1 limited-length">
+											<a
+												th:href="@{/sportify/eventdetail/{eventid}(eventid=${eventList.eventid})}"
+												th:text="${eventList.nameevent}" ></a>
+										</h3>
+									</div>
+									
+									<div class="meta d-flex">
+										<p class="limited-length2" th:utext="${eventList.descriptions}"></p>
+									</div>
 
 									<a
 										th:href="@{/sportify/eventdetail/{eventid}(eventid=${eventList.eventid})}"
-										class="btn-custom">Chi Tiết <span
+										class="btn-custom">Xem Thêm <span
 										class="fa fa-long-arrow-right"></span>
 									</a>
 
@@ -257,74 +263,50 @@
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+				
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log
-									In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term
-									&amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New
-									User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help
-									Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report
-									Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
+										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -338,13 +320,13 @@
 
 						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							Bản quyền &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>

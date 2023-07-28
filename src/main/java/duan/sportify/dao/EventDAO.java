@@ -35,7 +35,7 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	@Query("SELECT e FROM Eventweb e WHERE e.eventid = ?1")
     Eventweb findEventById(Integer eventId);
 	
-	// Hiển thị các sự kiện diễn ra cùng tháng
+	// Hiển thị các sự kiện diễn ra trong tháng
 	@Query("SELECT ee FROM Eventweb ee WHERE MONTH(ee.datestart) = ?1")
     List<Eventweb> findEventsInMonth(int month);
 	 
@@ -51,7 +51,7 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 //	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
 	    
 	    @Query(value = "SELECT * FROM Eventweb " +
-                "WHERE lower(nameevent) LIKE %:keyword% OR datestart LIKE %:keyword%", nativeQuery = true)
+                "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
 	    Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
 	
 }
