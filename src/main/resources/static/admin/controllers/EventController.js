@@ -55,8 +55,15 @@ app.controller('EventController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 
 		}).catch(error => {
-			alert("Lỗi thêm mới sản phẩm!");
-			console.log("Error", error);
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -69,9 +76,16 @@ app.controller('EventController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật sản phẩm!");
-				console.log("Error", error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -86,8 +100,7 @@ app.controller('EventController', function($scope, $http) {
 			showSuccessToast("Sự kiện tên " + item.nameevent + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi xóa sản phẩm!");
-			console.log("Error", error);
+			showErrorToast("Xóa sự kiện " + item.nameevent + " thất bại")
 		})
 	}
 
@@ -100,7 +113,7 @@ app.controller('EventController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
+			showErrorToast("Lỗi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}

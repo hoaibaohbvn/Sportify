@@ -73,8 +73,14 @@ app.controller('VoucherController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
-			
-			
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -89,9 +95,16 @@ app.controller('VoucherController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật sản phẩm!");
-				console.log("Error", error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -105,7 +118,7 @@ app.controller('VoucherController', function($scope, $http) {
 			showSuccessToast("Đã xóa thành công voucher tên " + item.voucherid)
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi xóa sản phẩm!");
+			showErrorToast("Xóa voucher thất bại")
 			console.log("Error", error);
 		})
 	}

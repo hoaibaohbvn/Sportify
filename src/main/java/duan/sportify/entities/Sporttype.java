@@ -10,7 +10,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,12 +31,16 @@ public class Sporttype implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    //--- ENTITY PRIMARY KEY 
+    //--- ENTITY PRIMARY KEY
+    @NotBlank(message = "{NotNull.categories.sporttypeid}")
+    @Pattern(regexp =  "[A-Z][0-9][0-9]", message = "Mã loại thể thao phải đúng định dạng [A-Z]+[##]")
     @Id
     @Column(name="sporttypeid", nullable=false, length=6)
     private String     sporttypeid ;
-
+    
     //--- ENTITY DATA FIELDS 
+    @NotBlank(message = "{NotNull.sporttype.categoryname}")
+    @Pattern(regexp =  "^[\\p{L} ]+$", message = "Tên loại thể thao không được nhập ký tự đặc biệt")
     @Column(name="categoryname", nullable=false, length=30)
     private String     categoryname ;
 

@@ -38,8 +38,15 @@ app.controller('FieldController', function($scope, $http) {
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi thêm mới sản phẩm!");
-			console.log("Error", error);
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -52,9 +59,16 @@ app.controller('FieldController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật sản phẩm!");
-				console.log("Error", error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -68,7 +82,7 @@ app.controller('FieldController', function($scope, $http) {
 			showSuccessToast("Sân tên " + item.namefield + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi xóa sản phẩm!");
+			showErrorToast("Xóa sân tên " + item.namefield + " thất bại")
 			console.log("Error", error);
 		})
 	}
@@ -82,7 +96,7 @@ app.controller('FieldController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
+			showErrorToast("Lổi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}
