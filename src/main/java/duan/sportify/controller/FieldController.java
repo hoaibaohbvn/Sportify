@@ -1,7 +1,7 @@
 package duan.sportify.controller;
 
 
-import java.sql.Time;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,13 +124,19 @@ public class FieldController {
 		String sportTypeId = null;
 		List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
 		List<Field> fieldList = fieldservice.findAll(); // Gọi tất cả sân thể thao
+		List<Field> activeFields = new ArrayList<>();
 		List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
 		List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Gọi tất cả loại môn thể thao có trong hệ thống
 		Sporttype tatca = new Sporttype(); // Tạo đối tượng loại môn thể thao
 		tatca.setCategoryname("Tất cả");	// Thêm Tất Cả vào list loại môn thể thao
 		tatca.setSporttypeid("tatca");		// Ráng Id sporttype Tất cả = tatca
 		sporttypeList.add(tatca); // Add đối tượng tatca vô danh sách loại môn thể thao
-
+		//Đổ dữ liệu sân trạng thái đang hoạt động
+		for (int i = 0; i < fieldList.size(); i++) {
+		    if (fieldList.get(i).getStatus()) { // Kiểm tra nếu status == true
+		        activeFields.add(fieldList.get(i)); // Thêm sân có status == true vào danh sách activeFields
+		    }
+		}
 		// Sắp xếp danh sách loại môn thể thao theo: Tất cả đầu tiên => các môn khác
 		Collections.sort(sporttypeList, new Comparator<Sporttype>() {
 		    @Override
@@ -153,9 +158,9 @@ public class FieldController {
 		// Add các đối tượng vào model để qua giao diện hiển thị
 		model.addAttribute("cateNotAll",sporttypeListNotAll); // môn thể thao không có tất cả
 		model.addAttribute("shift", shift);
+		model.addAttribute("fieldList",activeFields);
 		model.addAttribute("selectedSportTypeId",selectedSportTypeId);
 		model.addAttribute("cates",sporttypeList);
-		model.addAttribute("fieldList", fieldList);
 		// Chuyển hướng đến trang sân
 		return "user/san";
 	}
@@ -165,6 +170,7 @@ public class FieldController {
 			selectedSportTypeId = cid; // Giá trị id sporttype khi người dùng chọn
 			List<Shifts> shift = shiftservice.findAll(); // Lấy tất cả ca
 			List<Field> fieldList = fieldservice.findAll(); // Lấy tất cả sân
+			List<Field> activeFields = new ArrayList<>();
 			List<Field> fieldListById = fieldservice.findBySporttypeId(cid); // Lấy sân theo Id môn thể thao
 			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
 			List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Lấy tất cả môn thể thao
@@ -172,6 +178,12 @@ public class FieldController {
 			tatca.setCategoryname("Tất cả"); // Thêm Tất Cả vào list loại môn thể thao
 			sporttypeList.add(tatca);  // Add đối tượng tatca vô danh sách loại môn thể thao
 			tatca.setSporttypeid("tatca"); // Ráng Id sporttype Tất cả = tatca
+			//Đổ dữ liệu sân trạng thái đang hoạt động
+			for (int i = 0; i < fieldList.size(); i++) {
+			    if (fieldList.get(i).getStatus()) { // Kiểm tra nếu status == true
+			        activeFields.add(fieldList.get(i)); // Thêm sân có status == true vào danh sách activeFields
+			    }
+			}
 			// Sắp xếp danh sách loại môn thể thao theo: Tất cả đầu tiên => các môn khác
 			Collections.sort(sporttypeList, new Comparator<Sporttype>() {
 			    @Override
@@ -192,7 +204,7 @@ public class FieldController {
 			}
 			// Nếu id sportype được chọn là tatca thì trả về tất cả sân
 			if(cid.equalsIgnoreCase("tatca")) {
-				model.addAttribute("fieldList", fieldList);
+				model.addAttribute("fieldList", activeFields);
 			}else { // Còn lại thì trả về các sân theo môn thể thao
 			
 				model.addAttribute("fieldList",fieldListById);
@@ -220,17 +232,18 @@ public class FieldController {
 		return "user/san-single";
 	}
 	LocalTime time = null;
-
+	 
+	
 	@GetMapping("/field/booking/{idField}")
 	public String Booking(Model model, @RequestParam(value = "nameshift", required = false) String nameShift, 
 			@PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes,
 			@RequestParam(value = "voucher", required = false) String voucher) {
-		System.out.println(voucher);
-		System.out.println(nameShift);
 		int discountpercent = 0;
 		double pricevoucher = 0;
 		double totalprice = 0 ;
 		double thanhtien = 0;
+		double tiencoc = 0;
+		double conlai = 0;
 		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
 		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
 		for(int i = 0 ; i < shift.size();i++) {
@@ -238,47 +251,75 @@ public class FieldController {
 		}
 		// Khởi tạo giờ 17:00
         LocalTime timeToCompare = LocalTime.of(17, 0);
+        LocalDate currentDate = LocalDate.now();
+        
+       
+        
         double phuthu = 0; // giá phụ thu
 		if (loggedInUser != null) {
 			List<Voucher> listvoucher = voucherService.findAll();
 			List<Field> fieldListById = fieldservice.findFieldById(idField);
 			double giasan = fieldListById.get(0).getPrice();
-			
 			String nameSportype = fieldservice.findNameSporttypeById(idField);
 			List<Voucher> magiamgia = voucherService.findAll();
-			if(time.isAfter(timeToCompare)) {
+			if (time.isAfter(timeToCompare)) {
 				phuthu = fieldListById.get(0).getPrice() * 30 / 100;
 				totalprice = giasan + phuthu;
-				System.out.println(totalprice);
-				model.addAttribute("totalprice",totalprice);
+				model.addAttribute("totalprice", totalprice);
 
-				model.addAttribute("phuthu",phuthu);
-			}else {
+				model.addAttribute("phuthu", phuthu);
+			} else {
 				totalprice = giasan;
-				model.addAttribute("totalprice",totalprice);
-				model.addAttribute("phuthu",phuthu);
+				model.addAttribute("totalprice", totalprice);
+				model.addAttribute("phuthu", phuthu);
 			}
-			if(voucher == null) {
+			if (voucher == null) {
 				thanhtien = totalprice;
-				model.addAttribute("thanhtien",thanhtien);
-				model.addAttribute("pricevoucher",pricevoucher);
-			}
-			else {
-				model.addAttribute("voucher",voucher);
-				for(int i = 0 ; i < magiamgia.size();i++) {
-					if(magiamgia.get(i).getVoucherid().equals(voucher)) {
+				tiencoc = thanhtien * 30 / 100;
+				conlai = thanhtien - tiencoc;
+				
+			} else {
+				model.addAttribute("voucher", voucher);
+				
+
+				for (int i = 0; i < magiamgia.size(); i++) {
+					// Trong đoạn mã của bạn
+					Date startDateSql = (Date) magiamgia.get(i).getStartdate();
+					LocalDate startDate = startDateSql.toLocalDate();
+					Date endDateSql = (Date) magiamgia.get(i).getEnddate();
+					LocalDate endDate = endDateSql.toLocalDate();		
+					if(voucher.equals(magiamgia.get(i).getVoucherid()) && startDate.isBefore(currentDate) && endDate.isAfter(currentDate)) {
 						discountpercent = magiamgia.get(i).getDiscountpercent();
 						pricevoucher = totalprice * discountpercent / 100;
 						thanhtien = totalprice - pricevoucher;
-						model.addAttribute("thanhtien",thanhtien);
-						model.addAttribute("pricevoucher",pricevoucher);
+						tiencoc = thanhtien * 30 / 100;
+						conlai = thanhtien - tiencoc;
+						model.addAttribute("thongbaovoucher","Mã "+ voucher +" đã được áp dụng giảm " +discountpercent+"%");
+						break;
 					}
-					else {
-//						thanhtien = totalprice;
-//						model.addAttribute("thanhtien",thanhtien);
+					else if(!voucher.equals(magiamgia.get(i).getVoucherid())) {
+						thanhtien = totalprice - pricevoucher;
+						tiencoc = thanhtien * 30 / 100;
+						conlai = thanhtien - tiencoc;
+						model.addAttribute("thongbaovoucher","Mã "+voucher+ " không hợp lệ");
+					
+					}else if(startDate.isAfter(currentDate) || endDate.isBefore(currentDate) && voucher.equals(magiamgia.get(i).getVoucherid())) {
+						thanhtien = totalprice - pricevoucher;
+						tiencoc = thanhtien * 30 / 100;
+						conlai = thanhtien - tiencoc;
+						model.addAttribute("thongbaovoucher","Mã "+voucher+ " không áp dụng hôm nay");
+						
+						break;
 					}
+					
 				}
+			
+				
 			}
+			model.addAttribute("pricevoucher", pricevoucher);
+			model.addAttribute("conlai", conlai);
+			model.addAttribute("tiencoc", tiencoc);
+			model.addAttribute("thanhtien", thanhtien);
 			model.addAttribute("listvoucher",listvoucher);
 			model.addAttribute("nameShift",nameShift);
 			model.addAttribute("dateselect",dateselect);

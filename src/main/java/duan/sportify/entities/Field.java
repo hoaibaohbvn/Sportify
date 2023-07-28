@@ -32,7 +32,7 @@ public class Field implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="fieldid", nullable=false)
     private Integer    fieldid ;
 
