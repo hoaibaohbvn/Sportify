@@ -31,7 +31,7 @@ import duan.sportify.utils.ErrorResponse;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/sportify/rest/products_copy/")
-public class ProductRestController_copy {
+public class Admin_ProductRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired

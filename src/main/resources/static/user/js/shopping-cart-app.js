@@ -19,7 +19,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				item.quantity++;
 				this.saveToSessionStorage();
 			} else {
-				$http.get(`/sportify/rest/products/${productid}`).then(resp => {
+				$http.get(`/sportify/rest/products_user/${productid}`).then(resp => {
 					resp.data.quantity = 1;
 					this.items.push(resp.data);
 					this.saveToSessionStorage();

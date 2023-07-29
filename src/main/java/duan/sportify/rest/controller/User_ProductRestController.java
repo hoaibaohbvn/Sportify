@@ -18,8 +18,8 @@ import duan.sportify.service.ProductService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/sportify/rest/products")
-public class ProductRestController {
+@RequestMapping("/sportify/rest/products_user")
+public class User_ProductRestController {
 
 	@Autowired
 	ProductService productService;

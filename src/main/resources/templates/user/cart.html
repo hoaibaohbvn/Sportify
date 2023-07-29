@@ -107,43 +107,28 @@
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="flaticon-shopping-bag"></span>
 					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
+						<small>{{cart.cartCount}}</small>
 					</div>
 				</a>
+				<!-- giỏ hàng ảo -->
 				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
+					<!-- <div class="dropdown-item d-flex align-items-start" href="#">
 						<div class="img"
 							style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
 							<h4>Bacardi 151</h4>
 							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
+								<span class="quantity">Số lượng: 01</span>
+								<a href="#" class="price ml-3">$25.99</a>
 							</p>
 						</div>
+					</div> -->
+					<div class="dropdown-item d-flex align-items-start" href="#">						
+						<p class="mb-0">
+								<p class="quantity" style="color: black">Tổng số lượng: {{cart.cartCount}}</p>
+								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number : 0}} VNĐ</a></p>							
 					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
+					
 					<a class="dropdown-item text-center btn-link d-block w-100"
 						th:href="@{/sportify/cart}"> View All <span
 						class="ion-ios-arrow-round-forward"></span>
