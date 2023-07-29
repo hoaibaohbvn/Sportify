@@ -43,7 +43,7 @@ public class SecurityController {
 	@RequestMapping("/sportify/logoff/success")
 	public String logoffSuccess(Model model) {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
-		return "security/login";
+		return "redirect:/sportify";
 	}
 
 	@CrossOrigin("*")
