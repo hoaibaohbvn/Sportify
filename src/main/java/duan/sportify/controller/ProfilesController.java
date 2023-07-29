@@ -31,14 +31,13 @@ public class ProfilesController {
 	@GetMapping("/profile")
 	public String view(Model model, HttpSession session) {
 		// Kiểm tra đăng nhập
-		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-		if (loggedInUser != null) {
-			String userName = loggedInUser.getUsername();
-			Users profiles = userService.findById(userName);
+		String username = (String) session.getAttribute("username");
+		if (username != null) {
+			Users profiles = userService.findById(username);
 			model.addAttribute("prodiles", profiles);
 			return "/user/profiles";
 		} else {
-			return "redirect:/sportify/login";
+			return "redirect:/sportify/login/form";
 		}
 	}
 
@@ -48,9 +47,9 @@ public class ProfilesController {
 			@RequestParam String lastname, @RequestParam String passwords, @RequestParam String phone,
 			@RequestParam String email, @RequestParam Boolean gender, @RequestParam String address) throws IOException {
 
-		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-		String userName = loggedInUser.getUsername();
-		Users updateUser = userService.findById(userName);
+		// Kiểm tra đăng nhập
+				String username = (String) session.getAttribute("username");
+		Users updateUser = userService.findById(username);
 		// Xử lý tải lên ảnh
 		if (!avatarFile.isEmpty()) {
 			try {
