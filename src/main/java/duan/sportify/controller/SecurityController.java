@@ -1,52 +1,55 @@
 package duan.sportify.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import duan.sportify.dao.UserDAO;
-import duan.sportify.entities.Users;
-import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/sportify")
 public class SecurityController {
 
-	@Autowired
-	UserDAO userDAO;
-	
-    @GetMapping("/login")
-    public String Login() {
-        return "security/login";
-    }
-    
-    @PostMapping("/login/check")
-    public String checkLogin(Model model,@RequestParam("usernameLogin") String usernameLogin, 
-                              @RequestParam("passwordLogin") String passwordLogin,  HttpSession session) {
-        // Xử lý đăng nhập với username và password ở đây
-        Users users = userDAO.findAcc(usernameLogin,passwordLogin);
-        if (users != null) {
-            // Thực hiện các thao tác tiếp theo
-    		model.addAttribute("username", usernameLogin);
-            session.setAttribute("loggedInUser", users);
-            return "redirect:/sportify";
-        } else {
-            // Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-            return "redirect:/sportify/login";
-        }
+	@RequestMapping("/sportify/login/form")
+	public String loginForm(Model model) {
+		model.addAttribute("message", "Vui lòng đăng nhập!");
+		return "security/login";
+	}
 
-    }
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        // Xóa thông tin đăng nhập khỏi session
-        session.removeAttribute("loggedInUser");
-        
-        // Điều hướng người dùng đến trang chủ hoặc trang đăng nhập (tuỳ chọn)
-        return "redirect:/sportify";
-    }
+	@RequestMapping("/sportify/login/success")
+	public String loginSuccess(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication.getName());
+		return "redirect:/sportify";
+	}
+
+	@RequestMapping("/sportify/login/error")
+	public String loginError(Model model) {
+		model.addAttribute("message", "Sai thông tin đăng nhập!");
+		return "security/login";
+	}
+
+	@RequestMapping("/sportify/unauthoried")
+	public String unauthoried(Model model) {
+		model.addAttribute("message", "Không có quyền truy xuất!");
+		return "security/login";
+	}
+
+	@RequestMapping("/sportify/logoff/success")
+	public String logoffSuccess(Model model) {
+		model.addAttribute("message", "Bạn đã đăng xuất!");
+		return "redirect:/sportify";
+	}
+
+	@CrossOrigin("*")
+	@ResponseBody
+	@RequestMapping("/rest/security/authentication")
+	public Object getAuthentication(HttpSession session) {
+		return session.getAttribute("authentication");
+	}
 }

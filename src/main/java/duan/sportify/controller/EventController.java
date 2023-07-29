@@ -24,7 +24,7 @@ import duan.sportify.dao.EventDAO;
 import duan.sportify.entities.Eventweb;
 import duan.sportify.service.EventService;
 import duan.sportify.service.impl.EventServiceImpl;
-import io.micrometer.observation.Observation.Event;
+
 
 @SuppressWarnings("unused")
 @Controller
