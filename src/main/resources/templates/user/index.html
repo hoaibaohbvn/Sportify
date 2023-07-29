@@ -66,7 +66,7 @@ body {
 						<a th:href="@{/sportify/login/form}"
 							class="flex-c-m trans-04 p-lr-25"> Đăng nhập </a>
 					</th:block>
-					<th:block th:if="${#request.remoteUser}">
+					<th:block th:if="${#request.remoteUser}" style="color: white">
 						<div class="dropdown show">
 							<a class="flex-c-m trans-04 p-lr-25 dropdown-toggle" href="#"
 								role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -78,7 +78,7 @@ body {
 								<a class="dropdown-item" th:href="@{/user/info}">Thông tin tài khoản</a> <a
 									class="dropdown-item" th:href="@{/user/list-order}">Lịch sử hóa đơn</a> <a
 									class="dropdown-item" th:href="@{/user/change-password}">Đổi mật khẩu</a> <a
-									class="dropdown-item" th:href="@{/account/logoff}">Đăng xuất</a>
+									class="dropdown-item" th:href="@{/sportify/logoff}">Đăng xuất</a>
 							</div>
 						</div>
 					</th:block>
