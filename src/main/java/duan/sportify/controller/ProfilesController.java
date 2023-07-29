@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
 import duan.sportify.service.UserService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("sportify")

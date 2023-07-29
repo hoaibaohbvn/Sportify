@@ -27,7 +27,7 @@ import duan.sportify.entities.Categories;
 import duan.sportify.entities.Teams;
 
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/rest/teams/")

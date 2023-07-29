@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import duan.sportify.service.UploadService;
-import jakarta.servlet.ServletContext;
+import javax.servlet.ServletContext;
 @Service
 public class UploadServiceImpl implements UploadService{
 	@Autowired

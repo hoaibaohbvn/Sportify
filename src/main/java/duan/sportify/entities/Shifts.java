@@ -8,21 +8,28 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 
-/**
- * JPA entity class for "Shifts"
- *
- * @author Telosys
- *
- */
+
+
+
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,11 +49,11 @@ public class Shifts implements Serializable {
     @Column(name="nameshift", nullable=false, length=100)
     private String     nameshift ;
 
-    @Temporal(TemporalType.TIME)
+    
     @Column(name="starttime", nullable=false)
     private LocalTime       starttime ;
 
-    @Temporal(TemporalType.TIME)
+
     @Column(name="endtime", nullable=false)
     private LocalTime       endtime ;
 

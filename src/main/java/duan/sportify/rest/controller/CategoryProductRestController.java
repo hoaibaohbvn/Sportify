@@ -26,7 +26,7 @@ import duan.sportify.dao.CategoryDAO;
 import duan.sportify.entities.Categories;
 
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/rest/categories/")
