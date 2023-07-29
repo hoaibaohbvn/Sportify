@@ -27,6 +27,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
         return true;
     }
+    //tạo thêm 1 lớp như trên
 
 }
 

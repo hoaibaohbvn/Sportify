@@ -8926,7 +8926,7 @@ h1, h2, h3, h4, h5,
         width: 32%; }
 
 .table-wrap {
-  overflow-x: scroll; }
+  /*overflow-x: scroll;*/ }
 
 .table {
   min-width: 1000px !important;
@@ -8953,7 +8953,7 @@ h1, h2, h3, h4, h5,
     border-bottom: 4px solid #f8f9fd;
     vertical-align: middle; }
   .table tbody td.quantity {
-    width: 10%; }
+    width: 13%; }
   .table tbody td .img {
     width: 70px;
     height: 80px; }
@@ -8968,6 +8968,11 @@ h1, h2, h3, h4, h5,
   .table tbody td .close span {
     font-size: 12px;
     color: #dc3545; }
+    .table tbody .price-tag {
+    	font-weight: 350;
+      font-size: 20px;
+      color: #000000;
+    }
 
 .checkbox-wrap {
   display: block;
