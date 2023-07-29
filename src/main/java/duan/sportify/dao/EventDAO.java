@@ -40,18 +40,18 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
     List<Eventweb> findEventsInMonth(int month);
 	 
 	// Tìm kiếm sự kiện theo tên chứa (tìm kiếm không phân biệt chữ hoa/thường)
-	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:eventName%")
-	    List<Eventweb> findByNameContainingIgnoreCase(String eventName);
+    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:eventName%")
+    List<Eventweb> findByNameContainingIgnoreCase(String eventName);
 
-	    // Tìm kiếm sự kiện theo ngày diễn ra
-	    @Query("SELECT e FROM Eventweb e WHERE e.datestart = :eventDate")
-	    List<Eventweb> findByDate(Date eventDate);
-	    
+    // Tìm kiếm sự kiện theo ngày diễn ra
+    @Query("SELECT e FROM Eventweb e WHERE e.datestart = :eventDate")
+    List<Eventweb> findByDate(Date eventDate);
+
 //	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:keyword% OR e.datestart = :eventDate")
 //	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
-	    
-	    @Query(value = "SELECT * FROM Eventweb " +
-                "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
-	    Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
+    Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
 	
 }
