@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>SPORTIFY - About</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<head>
+<title>SPORTIFY - About</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
+	rel="stylesheet">
 
-    <link rel="stylesheet" href="/user/css/animate.css">
-    
-    <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/user/css/magnific-popup.css">
-    
-    <link rel="stylesheet" href="/user/css/flaticon.css">
-    <link rel="stylesheet" href="/user/css/style.css">
-  </head>
-  <body>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  	<div class="wrap" style="z-index: 9; position: relative">
+<link rel="stylesheet" href="/user/css/animate.css">
+
+<link rel="stylesheet" href="/user/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/user/css/magnific-popup.css">
+
+<link rel="stylesheet" href="/user/css/flaticon.css">
+<link rel="stylesheet" href="/user/css/style.css">
+</head>
+<body>
+
+		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
-					<p class="mb-0 phone pl-md-2">
-						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
-							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
-							youremail@email.com</a>
-					</p>
-				</div>
-				<div class="col-md-6 d-flex justify-content-md-end">
 					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
@@ -47,31 +44,51 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
+					<p class="mb-0 phone pl-md-2">
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							youremail@email.com</a>
+					</p>
 
+				</div>
+
+				<div class="col-md-6 d-flex justify-content-md-end">
 					<!-- check login -->
 					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login/form}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
+								kí</a>
 						</p>
 					</div>
 
 					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<span th:if="${users != null}" class="m-1 mr-2"
+						style="color: white;">Xin chào !</span>
 					<div th:if="${users != null}" class="dropdown m-1"
 						style="display: block;">
-						<a class="dropdown-toggle" id="dropdownMenuAccount"
+						<a class="dropdown-toggle " id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="rounded-circle border border-white"
+							<img th:if=${users.image!=null}
+							class="rounded-circle border border-white"
 							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <img
+							th:if=${users.image==null}
+							class="rounded-circle border border-white"
+							src="/user/images/noavatar.jpg" alt=""
 							style="width: 30px; height: 30px;"> <span id="nameuser"
 							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
-								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+						<div class="ml-3 mt-2 dropdown-menu"
+							aria-labelledby="dropdownMenuButton">
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -162,20 +179,27 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-    
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/about.jpg');" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-end justify-content-center">
-          <div class="col-md-9 ftco-animate mb-5 text-center">
-          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Trang Chủ <i class="fa fa-chevron-right"></i></a></span> <span>Về Chúng Tôi <i class="fa fa-chevron-right"></i></span></p>
-            <h2 class="mb-0 bread">Về Chúng Tôi</h2>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="ftco-intro">
+	<section class="hero-wrap hero-wrap-2"
+		style="background-image: url('/user/images/about.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div
+				class="row no-gutters slider-text align-items-end justify-content-center">
+				<div class="col-md-9 ftco-animate mb-5 text-center">
+					<p class="breadcrumbs mb-0">
+						<span class="mr-2"><a href="index.html">Trang Chủ <i
+								class="fa fa-chevron-right"></i></a></span> <span>Về Chúng Tôi <i
+							class="fa fa-chevron-right"></i></span>
+					</p>
+					<h2 class="mb-0 bread">Về Chúng Tôi</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="ftco-intro">
 		<div class="container">
 			<div class="row no-gutters">
 				<div class="col-md-4 d-flex">
@@ -185,7 +209,8 @@
 						</div>
 						<div class="text">
 							<h2>Hỗ trợ 24/7</h2>
-							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn, ngay cả vào cuối tuần và ngày lễ.</p>
+							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn,
+								ngay cả vào cuối tuần và ngày lễ.</p>
 						</div>
 					</div>
 				</div>
@@ -196,7 +221,9 @@
 						</div>
 						<div class="text">
 							<h2>Thanh toán nhiều hình thức</h2>
-							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh toán phù hợp với bạn.</p>
+							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh
+								hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh
+								toán phù hợp với bạn.</p>
 						</div>
 					</div>
 				</div>
@@ -207,7 +234,9 @@
 						</div>
 						<div class="text">
 							<h2>Miễn phí giao hàng &amp; Hoàn trả</h2>
-							<p>Chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng và miễn phí cho mọi đơn hàng của bạn. Chúng tôi cũng nhận đổi hoặc hoàn trả một cách dễ dàng và không mất phí.</p>
+							<p>Chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng
+								và miễn phí cho mọi đơn hàng của bạn. Chúng tôi cũng nhận đổi
+								hoặc hoàn trả một cách dễ dàng và không mất phí.</p>
 						</div>
 					</div>
 				</div>
@@ -215,76 +244,109 @@
 		</div>
 	</section>
 
-    <section class="ftco-section ftco-no-pb">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 img img-3  justify-content-center align-items-center" style="background-image: url(/user/images/Logo3.png);">
+	<section class="ftco-section ftco-no-pb">
+		<div class="container">
+			<div class="row">
+				<div
+					class="col-md-12 img img-3  justify-content-center align-items-center"
+					style="background-image: url(/user/images/Logo3.png);"></div>
+				<div class="col-md-12 wrap-about pl-md-5 ftco-animate py-5">
+					<div class="heading-section">
+
+						<h2 class="mb-4">Sportify - Nền tảng đa năng cho đặt sân, tạo
+							đội và mua sắm sản phẩm thể thao</h2>
+
+						<p>Chào mừng bạn đến với Sportify, nơi bạn có thể tận hưởng
+							trọn vẹn trải nghiệm thể thao thông qua việc đặt sân, tạo đội và
+							mua sắm các sản phẩm thể thao chất lượng. Chúng tôi mang đến cho
+							bạn một trung tâm toàn diện để thỏa mãn đam mê và nhu cầu về thể
+							thao của bạn.</p>
+						<p>1. Đặt Sân Thể thao Dễ dàng: Với Sportify, việc đặt sân trở
+							nên dễ dàng và thuận tiện. Chúng tôi cung cấp một nền tảng trực
+							tuyến để bạn có thể tìm kiếm và đặt sân thể thao một cách nhanh
+							chóng. Bạn có thể lựa chọn từ một loạt các sân như bóng đá,
+							tennis, cầu lông, bóng rổ và nhiều môn thể thao khác. Lịch trống,
+							thông tin chi tiết về sân và giá cả sẽ giúp bạn đưa ra quyết định
+							thông minh và linh hoạt.</p>
+						<p>2. Tạo Đội và Tổ Chức Trận Đấu: Sportify cung cấp tính năng
+							tạo đội và tổ chức trận đấu giữa các đội thể thao. Bạn có thể tạo
+							đội riêng của mình hoặc tham gia vào các đội hiện có, tạo ra các
+							trận đấu hấp dẫn và tham gia vào các giải đấu.</p>
+						<p>3. Mua Sắm Sản phẩm Thể thao Chất lượng: Sportify không chỉ
+							giúp bạn tận hưởng hoạt động thể thao mà còn cung cấp một cửa
+							hàng trực tuyến với các sản phẩm thể thao chất lượng. Bạn có thể
+							tìm thấy quần áo, giày, phụ kiện và dụng cụ thể thao từ các
+							thương hiệu nổi tiếng. Chúng tôi cam kết mang đến cho bạn những
+							sản phẩm chất lượng, đảm bảo sự thoải mái và hiệu suất tối đa
+							trong mỗi hoạt động thể thao của bạn.</p>
+						<p>4. Ưu đãi và Khuyến mãi: Sportify thường xuyên cung cấp các
+							chương trình ưu đãi và khuyến mãi hấp dẫn cho người dùng. Bạn có
+							thể tận hưởng những ưu đãi đặc biệt, giảm giá và các gói combo để
+							tiết kiệm chi phí và nâng cao trải nghiệm thể thao của mình.</p>
+						<p>Với tầm nhìn tạo ra một cộng đồng thể thao mạnh mẽ và đồng
+							hành cùng người dùng trên hành trình thể thao, Sportify đang nỗ
+							lực không ngừng để trở thành một nguồn tài nguyên hàng đầu cho
+							người hâm mộ thể thao trên toàn quốc.</p>
+
 					</div>
-					<div class="col-md-12 wrap-about pl-md-5 ftco-animate py-5">
-	          <div class="heading-section">
-	          	
-	            <h2 class="mb-4">Sportify - Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</h2>
 
-	            <p>Chào mừng bạn đến với Sportify, nơi bạn có thể tận hưởng trọn vẹn trải nghiệm thể thao thông qua việc đặt sân, tạo đội và mua sắm các sản phẩm thể thao chất lượng. Chúng tôi mang đến cho bạn một trung tâm toàn diện để thỏa mãn đam mê và nhu cầu về thể thao của bạn.</p>
-	            <p>1. Đặt Sân Thể thao Dễ dàng: Với Sportify, việc đặt sân trở nên dễ dàng và thuận tiện. Chúng tôi cung cấp một nền tảng trực tuyến để bạn có thể tìm kiếm và đặt sân thể thao một cách nhanh chóng. Bạn có thể lựa chọn từ một loạt các sân như bóng đá, tennis, cầu lông, bóng rổ và nhiều môn thể thao khác. Lịch trống, thông tin chi tiết về sân và giá cả sẽ giúp bạn đưa ra quyết định thông minh và linh hoạt.</p>
-	            <p>2. Tạo Đội và Tổ Chức Trận Đấu: Sportify cung cấp tính năng tạo đội và tổ chức trận đấu giữa các đội thể thao. Bạn có thể tạo đội riêng của mình hoặc tham gia vào các đội hiện có, tạo ra các trận đấu hấp dẫn và tham gia vào các giải đấu.</p>
-	            <p>3. Mua Sắm Sản phẩm Thể thao Chất lượng: Sportify không chỉ giúp bạn tận hưởng hoạt động thể thao mà còn cung cấp một cửa hàng trực tuyến với các sản phẩm thể thao chất lượng. Bạn có thể tìm thấy quần áo, giày, phụ kiện và dụng cụ thể thao từ các thương hiệu nổi tiếng. Chúng tôi cam kết mang đến cho bạn những sản phẩm chất lượng, đảm bảo sự thoải mái và hiệu suất tối đa trong mỗi hoạt động thể thao của bạn.</p>
-	            <p>4. Ưu đãi và Khuyến mãi: Sportify thường xuyên cung cấp các chương trình ưu đãi và khuyến mãi hấp dẫn cho người dùng. Bạn có thể tận hưởng những ưu đãi đặc biệt, giảm giá và các gói combo để tiết kiệm chi phí và nâng cao trải nghiệm thể thao của mình.</p>
-	            <p>Với tầm nhìn tạo ra một cộng đồng thể thao mạnh mẽ và đồng hành cùng người dùng trên hành trình thể thao, Sportify đang nỗ lực không ngừng để trở thành một nguồn tài nguyên hàng đầu cho người hâm mộ thể thao trên toàn quốc.</p>
-	            
-	          </div>
+				</div>
+			</div>
+		</div>
+	</section>
 
+
+
+
+
+
+
+	<section
+		class="ftco-counter ftco-section ftco-no-pt ftco-no-pb img bg-light"
+		id="section-counter">
+		<div class="container">
+			<div class="row">
+				<div
+					class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+					<div class="block-18 py-4 mb-4">
+						<div class="text align-items-center">
+							<strong class="number" th:text="${userCount[0]}"></strong> <span>Người
+								dùng tham gia</span>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+					<div class="block-18 py-4 mb-4">
+						<div class="text align-items-center">
+							<strong class="number" th:text="${eventCount[0]}">0</strong> <span>Sự
+								kiện trong năm</span>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+					<div class="block-18 py-4 mb-4">
+						<div class="text align-items-center">
+							<strong class="number" th:text="${fieldCount[0]}">0</strong> <span>Sân
+								thể thao</span>
+						</div>
+					</div>
+				</div>
+				<div
+					class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
+					<div class="block-18 py-4 mb-4">
+						<div class="text align-items-center">
+							<strong class="number" th:text="${userCount[0]}">0</strong> <span>Sản
+								phẩm thể thao</span>
+						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		
-
-  
-    
-
-
-		<section class="ftco-counter ftco-section ftco-no-pt ftco-no-pb img bg-light" id="section-counter">
-    	<div class="container">
-    		<div class="row">
-          <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 py-4 mb-4">
-              <div class="text align-items-center">
-                <strong class="number" th:text="${userCount[0]}"  ></strong>
-                <span>Người dùng tham gia</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 py-4 mb-4">
-              <div class="text align-items-center">
-                <strong class="number" th:text="${eventCount[0]}">0</strong>
-                <span>Sự kiện trong năm</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 py-4 mb-4">
-              <div class="text align-items-center">
-                <strong class="number" th:text="${fieldCount[0]}">0</strong>
-                <span>Sân thể thao</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
-            <div class="block-18 py-4 mb-4">
-              <div class="text align-items-center">
-                <strong class="number" th:text="${userCount[0]}">0</strong>
-                <span>Sản phẩm thể thao</span>
-              </div>
-            </div>
-          </div>
-        </div>
-    	</div>
-    </section>
-
-    <footer class="ftco-footer">
+	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">
 				<div class="col-sm-12 col-md">
@@ -292,7 +354,8 @@
 						<h2 class="ftco-heading-2 logo">
 							<a href="#">Sportify</a>
 						</h2>
-						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
@@ -351,7 +414,8 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
 										class="text">+2 392 3929 210</span></a></li>
 								<li><a href="#"><span
@@ -383,27 +447,34 @@
 			</div>
 		</div>
 	</footer>
-    
-  
-
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
-  <script src="/user/js/jquery.min.js"></script>
-  <script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/user/js/popper.min.js"></script>
-  <script src="/user/js/bootstrap.min.js"></script>
-  <script src="/user/js/jquery.easing.1.3.js"></script>
-  <script src="/user/js/jquery.waypoints.min.js"></script>
-  <script src="/user/js/jquery.stellar.min.js"></script>
-  <script src="/user/js/owl.carousel.min.js"></script>
-  <script src="/user/js/jquery.magnific-popup.min.js"></script>
-  <script src="/user/js/jquery.animateNumber.min.js"></script>
-  <script src="/user/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/user/js/google-map.js"></script>
-  <script src="/user/js/main.js"></script>
-    
-  </body>
+
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+	</div>
+
+
+	<script src="/user/js/jquery.min.js"></script>
+	<script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/user/js/popper.min.js"></script>
+	<script src="/user/js/bootstrap.min.js"></script>
+	<script src="/user/js/jquery.easing.1.3.js"></script>
+	<script src="/user/js/jquery.waypoints.min.js"></script>
+	<script src="/user/js/jquery.stellar.min.js"></script>
+	<script src="/user/js/owl.carousel.min.js"></script>
+	<script src="/user/js/jquery.magnific-popup.min.js"></script>
+	<script src="/user/js/jquery.animateNumber.min.js"></script>
+	<script src="/user/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="/user/js/google-map.js"></script>
+	<script src="/user/js/main.js"></script>
+
+</body>
 </html>

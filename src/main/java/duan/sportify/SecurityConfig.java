@@ -42,19 +42,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				try {
 					Users user = userDAO.findById(username).get();
 					String password = pe.encode(user.getPasswords());
-					System.out.println(user.getUsername());
-					System.out.println(password);
+//					System.out.println(user.getUsername());
+//					System.out.println(User.withUsername(username));
 					String[] roles = user.getListOfAuthorized().stream()
 							.map(er -> er.getRoles().getRoleid())
 							.collect(Collectors.toList())
 							.toArray(new String[0]);
-					
 					Map<String, Object> authentication = new HashMap<>();
 					authentication.put("user", user);
 					byte[] token = (username + ":" + user.getPasswords()).getBytes();
 					authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
 					session.setAttribute("authentication", authentication);
-					
 					return User.withUsername(username).password(password).roles(roles).build();
 				} catch (NoSuchElementException e) {
 					throw new UsernameNotFoundException(username + " not found!");
@@ -62,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			});
 			
 		}
+		
 		
 		// Phân quyền sử dụng
 		@Override
