@@ -3,6 +3,8 @@ package duan.sportify.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -53,5 +55,9 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	    @Query(value = "SELECT * FROM Eventweb " +
                 "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
 	    Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
-	
+	// search event in admin
+	    @Query(value = "select * FROM eventweb\r\n"
+	    		+ "WHERE (nameevent LIKE %:nameevent% OR :nameevent IS NULL) "
+	    		+ "AND (eventtype like %:eventtype% OR :eventtype IS NULL)", nativeQuery = true)
+	    List<Eventweb> searchEventAdmin(@Param("nameevent") Optional<String> nameevent, @Param("eventtype") Optional<String> eventtype);
 }

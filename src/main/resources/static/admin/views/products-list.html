@@ -36,22 +36,38 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating"> <label
+					<input type="text" class="form-control floating" ng-model="searchName"> <label
 						class="focus-label">Product Name</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus select-focus">
-					<select ng-model="form.categories.categoryid"
+					<select ng-model="searchCate"
 						class="select floating">
-						<option ng-value="">Tất cả</option>
+						<option ng-value=null>Tất cả</option>
 						<option ng-repeat="c in categories" ng-value="c.categoryid">{{c.categoryname}}</option>
 					</select> <label class="focus-label">Loại sản phẩm</label>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+			<div class="col-sm-6 col-md-2">
+				<div class="form-group form-focus select-focus">
+					<select ng-model="searchStatus"
+						class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value="1">Đang bán</option>
+						<option ng-value="0">Ngưng bán</option>
+					</select> <label class="focus-label">Trạng thái</label>
+				</div>
 			</div>
+			<div class="col-sm-6 col-md-2">
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+				
+			</div>
+			<div class="col-sm-6 col-md-2">
+				<a href="#" class="btn btn-success btn-block" ng-click="refresh()"> Refresh </a>
+				
+			</div>
+			
 		</div>
 		<!-- Search Filter -->
 
@@ -159,7 +175,7 @@
 								<div class="form-group">
 									<label class="col-form-label">Date Create <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datecreate">
+										type="date" ng-model="form.datecreate" disabled>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -264,13 +280,14 @@
 								<div class="form-group">
 									<label class="col-form-label">Date Create <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datecreate">
+										type="date" ng-model="form.datecreate" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Status</label> <select
 										class="select" ng-model="form.productstatus">
+										
 										<option ng-value="true">Đang bán</option>
 										<option ng-value="false">Ngừng bán</option>
 									</select>

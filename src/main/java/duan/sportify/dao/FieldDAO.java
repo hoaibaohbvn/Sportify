@@ -3,9 +3,11 @@ package duan.sportify.dao;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import duan.sportify.entities.Field;
 import duan.sportify.entities.Sporttype;
@@ -38,5 +40,12 @@ public interface FieldDAO extends JpaRepository<Field, Integer>{
 	
 	@Query(value="select * from field where sporttypeid = :cid LIMIT 3", nativeQuery = true)
 	List<Field> findBySporttypeIdlimit3(String cid);
+	
+	// search team in admin
+	@Query(value = "select * FROM field\r\n"
+			+ "WHERE (namefield LIKE %:namefield% OR :namefield IS NULL)\r\n"
+			+ "AND (sporttypeid like %:sporttypeid% OR :sporttypeid IS NULL)\r\n"
+			+ "and (status = :status OR :status IS NULL);", nativeQuery = true)
+	List<Field> searchFieldAdmin(@Param("namefield") Optional<String> namefield, @Param("sporttypeid") Optional<String> sporttypeid, @Param("status") Optional<Integer> status);
 
 }

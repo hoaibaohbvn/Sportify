@@ -1,42 +1,75 @@
-app.controller('ProductController', function($scope, $http) {
+app.controller('VoucherController', function($scope, $http) {
 	// hàm đổ tất cả
+	$scope.fillDate = null
 	$scope.getAll = function() {
-		// lấy danh sách category
-		$http.get("/rest/categories/getAll").then(resp => {
-			$scope.categories = resp.data;
-		})
-		// lấy danh sách product
-		$http.get("/rest/products/getAll").then(resp => {
+		if($scope.fillDate == null){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate)
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
 			})
 		});
+		}
+		if($scope.fillDate == 1){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
+		if($scope.fillDate == 0){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillInActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
+		if($scope.fillDate == 2){
+			// lấy danh sách 
+		$http.get("/rest/vouchers/fillWillActive").then(resp => {
+			$scope.items = resp.data;
+			$scope.items.forEach(item => {
+				item.startdate = new Date(item.startdate)
+				item.enddate = new Date(item.enddate)
+			})
+		});
+		}
 		$scope.reset();
 	}
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			datecreate: new Date(),
-			productstatus: true,
-			image: "loading.jpg"
+			startdate: new Date(),
+			enddate: new Date(),
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-
 	}
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products/create`, item).then(resp => {
-
-			resp.data.datecreate = new Date(resp.data.datecreate)
+		if (item.startdate >= item.enddate) {
+			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
+			return; // Dừng việc thêm mới nếu ngày không hợp lệ
+		}
+		$http.post(`/rest/vouchers/create`, item).then(resp => {
+			resp.data.startdate = new Date(resp.data.startdate)
+			resp.data.enddate = new Date(resp.data.enddate)
 			$scope.items.push(resp.data);
-			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
-			$scope.reset();
+			showSuccessToast("Đã thêm thành công voucher giảm giá " + item.discountpercent + " %")
 			$('#add').modal('hide')
+			$scope.reset();
+			$scope.getAll();
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
@@ -53,10 +86,12 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/update/${item.productid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.put(`/rest/vouchers/update/${item.voucherid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sản phẩm thành công")
+			showSuccessToast("Đã cập nhập thành công voucher")
+			$('#edit').modal('hide')
+			$scope.getAll();
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -73,34 +108,22 @@ app.controller('ProductController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.delete(`/rest/vouchers/delete/${item.voucherid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+			showSuccessToast("Đã xóa thành công voucher tên " + item.voucherid)
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			showErrorToast("Xóa sản phảm tên " + item.productname + " thất bại")
+			showErrorToast("Xóa voucher thất bại")
 			console.log("Error", error);
 		})
 	}
 
-	$scope.imageChanged = function(files) {
-		var data = new FormData();
-		data.append('file', files[0]);
-		$http.post('/rest/upload/images', data, {
-			transformRequest: angular.identity,
-			headers: { 'Content-Type': undefined }
-		}).then(resp => {
-			$scope.form.image = resp.data.name;
-		}).catch(error => {
-			showErrorToast("Lỗi tải hình ảnh")
-			console.log("Error", error);
-		})
-	}
+	
 
 	$scope.getAll();
 
@@ -129,7 +152,7 @@ app.controller('ProductController', function($scope, $http) {
 				success: "fas fa-check-circle",
 				info: "fas fa-info-circle",
 				warning: "fas fa-exclamation-circle",
-				error: "fas fa-exclamation-circle"
+				error: "fas fa-exclamation-circle",
 			};
 			const icon = icons[type];
 			const delay = (duration / 1000).toFixed(2);
@@ -138,30 +161,29 @@ app.controller('ProductController', function($scope, $http) {
 			toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
 
 			toast.innerHTML = `
-                <div class="toast__icon">
-                    <i class="${icon}"></i>
-                </div>
-                <div class="toast__body">
-                    <h3 class="toast__title">${title}</h3>
-                    <p class="toast__msg">${message}</p>
-                </div>
-                <div class="toast__close">
-                    <i class="fas fa-times"></i>
-                </div>
-            `;
+									<div class="toast__icon">
+											<i class="${icon}"></i>
+									</div>
+									<div class="toast__body">
+											<h3 class="toast__title">${title}</h3>
+											<p class="toast__msg">${message}</p>
+									</div>
+									<div class="toast__close">
+											<i class="fas fa-times"></i>
+									</div>
+							`;
 			main.appendChild(toast);
 		}
-	};
-
+	}
 
 	// Thông báo Toast Success
 	function showSuccessToast(message) {
-		var toastMessage = message || "Đã thêm nhân viên thành công.";
+		var toastMessage = message || "Đã thêm phòng ban thành công.";
 		toast({
 			title: "Thành công!",
 			message: toastMessage,
 			type: "success",
-			duration: 5000
+			duration: 5000,
 		});
 	}
 
@@ -170,7 +192,7 @@ app.controller('ProductController', function($scope, $http) {
 			title: "Thất bại!",
 			message: error,
 			type: "error",
-			duration: 5000
+			duration: 5000,
 		});
 	}
 
@@ -183,31 +205,5 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	$scope.refresh =function refreshNow() {
-			location.reload();
-	}
 	
-	// search
-	 $scope.searchName = '';
-   	 $scope.searchCate = null;
-   	 $scope.searchStatus = 1;
-   	 $scope.search = function () {
-			
-      $http.get('/rest/products/search', { params: 
-      		{ 	
-				productname: $scope.searchName, 
-      			categoryid: $scope.searchCate,
-      			productstatus: $scope.searchStatus
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          $scope.items.forEach(item => {
-				item.datecreate = new Date(item.datecreate)
-			})
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
 })

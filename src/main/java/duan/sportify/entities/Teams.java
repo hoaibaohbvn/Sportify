@@ -33,7 +33,7 @@ public class Teams implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="teamid", nullable=false)
     private Integer    teamid ;
 

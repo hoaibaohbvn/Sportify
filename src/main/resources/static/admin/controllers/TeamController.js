@@ -1,15 +1,15 @@
-app.controller('ProductController', function($scope, $http) {
+app.controller('TeamController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
-		$http.get("/rest/categories/getAll").then(resp => {
-			$scope.categories = resp.data;
+		$http.get("/rest/sportTypes/getAll").then(resp => {
+			$scope.sporttype = resp.data;
 		})
 		// lấy danh sách product
-		$http.get("/rest/products/getAll").then(resp => {
+		$http.get("/rest/teams/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate)
+				item.createdate = new Date(item.createdate)
 			})
 		});
 		$scope.reset();
@@ -17,9 +17,10 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			datecreate: new Date(),
-			productstatus: true,
-			image: "loading.jpg"
+			createdate: new Date(),
+			sporttypeid: "B01",
+			avatar: "loading.jpg",
+			username: "staff"
 		}
 	}
 	// hàm edit
@@ -30,11 +31,11 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products/create`, item).then(resp => {
+		$http.post(`/rest/teams/create`, item).then(resp => {
 
-			resp.data.datecreate = new Date(resp.data.datecreate)
+			resp.data.createdate = new Date(resp.data.createdate)
 			$scope.items.push(resp.data);
-			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
+			showSuccessToast("Team mới tên " + item.nameteam + " đã được thêm thành công")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
@@ -53,10 +54,10 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/update/${item.productid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.put(`/rest/teams/update/${item.teamid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sản phẩm thành công")
+			showSuccessToast("Cập nhập team thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -73,17 +74,17 @@ app.controller('ProductController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.delete(`/rest/teams/delete/${item.teamid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+			showSuccessToast("Team tên " + item.nameteam + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			showErrorToast("Xóa sản phảm tên " + item.productname + " thất bại")
+			showErrorToast("Xóa team tên " + item.nameteam + " thất bại")
 			console.log("Error", error);
 		})
 	}
@@ -95,7 +96,7 @@ app.controller('ProductController', function($scope, $http) {
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(resp => {
-			$scope.form.image = resp.data.name;
+			$scope.form.avatar = resp.data.name;
 		}).catch(error => {
 			showErrorToast("Lỗi tải hình ảnh")
 			console.log("Error", error);
@@ -183,26 +184,21 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	$scope.refresh =function refreshNow() {
-			location.reload();
-	}
-	
 	// search
 	 $scope.searchName = '';
-   	 $scope.searchCate = null;
-   	 $scope.searchStatus = 1;
+   	 $scope.searchSport = null;
+   	 
    	 $scope.search = function () {
 			
-      $http.get('/rest/products/search', { params: 
+      $http.get('/rest/teams/search', { params: 
       		{ 	
-				productname: $scope.searchName, 
-      			categoryid: $scope.searchCate,
-      			productstatus: $scope.searchStatus
+				nameteam: $scope.searchName, 
+      			sporttypeid: $scope.searchSport
       		} 
       		}).then(function (response) {
           $scope.items = response.data;
           $scope.items.forEach(item => {
-				item.datecreate = new Date(item.datecreate)
+				item.createdate = new Date(item.createdate)
 			})
 			 console.log($scope.items);
         })
@@ -210,4 +206,5 @@ app.controller('ProductController', function($scope, $http) {
           console.log('Lỗi khi gửi yêu cầu:', error);
         });
     };
+
 })

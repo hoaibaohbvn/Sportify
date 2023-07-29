@@ -1,12 +1,12 @@
-app.controller('ProductController', function($scope, $http) {
+app.controller('FieldController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
-		$http.get("/rest/categories/getAll").then(resp => {
-			$scope.categories = resp.data;
+		$http.get("/rest/sportTypes/getAll").then(resp => {
+			$scope.sporttype = resp.data;
 		})
 		// lấy danh sách product
-		$http.get("/rest/products/getAll").then(resp => {
+		$http.get("/rest/fields/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate)
@@ -17,8 +17,8 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			datecreate: new Date(),
-			productstatus: true,
+			sporttypeid: "B01",
+			status: true,
 			image: "loading.jpg"
 		}
 	}
@@ -30,11 +30,10 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products/create`, item).then(resp => {
+		$http.post(`/rest/fields/create`, item).then(resp => {
 
-			resp.data.datecreate = new Date(resp.data.datecreate)
 			$scope.items.push(resp.data);
-			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
+			showSuccessToast("Sân mới tên " + item.namefield + " đã được thêm vào cửa hàng")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
@@ -53,10 +52,10 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/products/update/${item.productid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.put(`/rest/fields/update/${item.fieldid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sản phẩm thành công")
+			showSuccessToast("Cập nhập sân thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -73,17 +72,17 @@ app.controller('ProductController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.productid == item.productid);
+		$http.delete(`/rest/fields/delete/${item.fieldid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+			showSuccessToast("Sân tên " + item.namefield + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			showErrorToast("Xóa sản phảm tên " + item.productname + " thất bại")
+			showErrorToast("Xóa sân tên " + item.namefield + " thất bại")
 			console.log("Error", error);
 		})
 	}
@@ -97,7 +96,7 @@ app.controller('ProductController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			showErrorToast("Lỗi tải hình ảnh")
+			showErrorToast("Lổi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}
@@ -183,31 +182,26 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	$scope.refresh =function refreshNow() {
-			location.reload();
-	}
-	
 	// search
 	 $scope.searchName = '';
-   	 $scope.searchCate = null;
+   	 $scope.searchSport = null;
    	 $scope.searchStatus = 1;
    	 $scope.search = function () {
 			
-      $http.get('/rest/products/search', { params: 
+      $http.get('/rest/fields/search', { params: 
       		{ 	
-				productname: $scope.searchName, 
-      			categoryid: $scope.searchCate,
-      			productstatus: $scope.searchStatus
+				namefield: $scope.searchName, 
+      			sporttypeid: $scope.searchSport,
+      			status: $scope.searchStatus
       		} 
       		}).then(function (response) {
           $scope.items = response.data;
-          $scope.items.forEach(item => {
-				item.datecreate = new Date(item.datecreate)
-			})
+          
 			 console.log($scope.items);
         })
         .catch(function (error) {
           console.log('Lỗi khi gửi yêu cầu:', error);
         });
     };
+
 })
