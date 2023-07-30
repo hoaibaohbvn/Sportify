@@ -33,10 +33,11 @@ import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
 import duan.sportify.service.UserService;
 import duan.sportify.service.VoucherService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("sportify")
 public class FieldController {
@@ -63,7 +64,6 @@ public class FieldController {
 		    List<Field> listsearch = fieldservice.findSearch(dateInput, categorySelect, shiftSelect);
 		    List<Shifts> shiftById = shiftservice.findShiftById(shiftSelect); // List này để lấy tên ca đổ lên thông báo
 		    List<Sporttype> sportypeById = sporttypeservice.findSporttypeById(categorySelect); // List này lấy tên môn thể thao đổ lên thông báo
-			@SuppressWarnings("unused")
 			List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
 			List<Sporttype> sporttypeListNotAll = sporttypeservice.findAll(); // Đổ môn thể thao không có Tất cả
 			List<Sporttype> sporttypeList = sporttypeservice.findAll(); // Đổ tất cả môn thể thao 
@@ -122,7 +122,6 @@ public class FieldController {
 	public String viewField(Model model) {
 		selectedSportTypeId = "tatca"; // Giá trị được chọn mặc định môn thể thao là tất cả
 		String sportTypeId = null;
-		@SuppressWarnings("unused")
 		List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
 		List<Field> fieldList = fieldservice.findAll(); // Gọi tất cả sân thể thao
 		List<Field> activeFields = new ArrayList<>();
@@ -169,7 +168,6 @@ public class FieldController {
 	@GetMapping("/field/{cid}")
 	public String list(Model model, @PathVariable("cid") String cid) {
 			selectedSportTypeId = cid; // Giá trị id sporttype khi người dùng chọn
-			@SuppressWarnings("unused")
 			List<Shifts> shift = shiftservice.findAll(); // Lấy tất cả ca
 			List<Field> fieldList = fieldservice.findAll(); // Lấy tất cả sân
 			List<Field> activeFields = new ArrayList<>();

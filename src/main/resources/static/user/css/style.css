@@ -8926,7 +8926,7 @@ h1, h2, h3, h4, h5,
         width: 32%; }
 
 .table-wrap {
-  overflow-x: scroll; }
+  /*overflow-x: scroll;*/ }
 
 .table {
   min-width: 1000px !important;
@@ -8953,7 +8953,7 @@ h1, h2, h3, h4, h5,
     border-bottom: 4px solid #f8f9fd;
     vertical-align: middle; }
   .table tbody td.quantity {
-    width: 10%; }
+    width: 13%; }
   .table tbody td .img {
     width: 70px;
     height: 80px; }
@@ -8968,6 +8968,11 @@ h1, h2, h3, h4, h5,
   .table tbody td .close span {
     font-size: 12px;
     color: #dc3545; }
+    .table tbody .price-tag {
+    	font-weight: 350;
+      font-size: 20px;
+      color: #000000;
+    }
 
 .checkbox-wrap {
   display: block;
@@ -10052,6 +10057,20 @@ a:hover span {
   max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
 
+.limited-length3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
+}
+
+.limited-length2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .infouser{
 	display: flex;
         justify-content: center;
@@ -10064,3 +10083,61 @@ a:hover span {
         background-color: rgba(0, 0, 0, 0.5); /* Tùy chỉnh màu nền (có thể thay đổi độ mờ) */
         z-index: 9;
 }
+
+  /* Định dạng radio button nhỏ */
+  .form-control[type="radio"] {
+    width: 16px; /* Độ rộng */
+    height: 16px; /* Chiều cao */
+  }
+  .radio-container {
+    display: flex;
+    align-items: center;
+    /* Khoảng cách giữa các radio button */
+  }
+  
+/* Sự kiện liên quan*/
+
+/* Đổi độ trong suốt khi hover */
+.img-tintuc:hover img {
+  opacity: 0.8;
+}
+
+/* Hiển thị chú thích khi hover */
+.img-tintuc {
+  position: relative;
+}
+
+.img-tintuc:hover::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px;
+}
+
+/* Áp dụng hiệu ứng chuyển đổi khi hover */
+.img-tintuc img {
+  transition: transform 0.3s ease;
+}
+
+.img-tintuc:hover img {
+  transform: scale(1.1);
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 0.5 */
+}
+
+.event-description {
+    white-space: pre-line; /* Hiển thị dòng mới dựa trên các ký tự xuống dòng (\n) trong văn bản */
+    word-wrap: break-word; /* Tự động ngắt từ khi vượt quá chiều rộng của div */
+}
+
+
+

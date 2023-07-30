@@ -6,7 +6,15 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +46,7 @@ public class Roles implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="roles")
     private List<Authorized> listOfAuthorized ; 
 

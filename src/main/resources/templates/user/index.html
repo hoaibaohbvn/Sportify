@@ -19,27 +19,19 @@
 <link rel="stylesheet" href="/user/css/style.css">
 <style>
 body {
-  background-image: url('/user/images/bgAll.png');
-  background-repeat: repeat;
-  background-size: 100% 100%;
-  
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
 }
 </style>
 </head>
 
 <body ng-app="">
 
-	<div class="wrap" style="z-index: 9; position: relative">
+		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
-					<p class="mb-0 phone pl-md-2">
-						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
-							+84123456789</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
-							sportify@gmail.com</a>
-					</p>
-				</div>
-				<div class="col-md-6 d-flex justify-content-md-end">
 					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
@@ -56,31 +48,51 @@ body {
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
+					<p class="mb-0 phone pl-md-2">
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							youremail@email.com</a>
+					</p>
 
+				</div>
+
+				<div class="col-md-6 d-flex justify-content-md-end">
 					<!-- check login -->
 					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login/form}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
+								kí</a>
 						</p>
 					</div>
 
 					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<span th:if="${users != null}" class="m-1 mr-2"
+						style="color: white;">Xin chào !</span>
 					<div th:if="${users != null}" class="dropdown m-1"
 						style="display: block;">
-						<a class="dropdown-toggle" id="dropdownMenuAccount"
+						<a class="dropdown-toggle " id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="rounded-circle border border-white"
+							<img th:if=${users.image!=null}
+							class="rounded-circle border border-white"
 							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <img
+							th:if=${users.image==null}
+							class="rounded-circle border border-white"
+							src="/user/images/noavatar.jpg" alt=""
 							style="width: 30px; height: 30px;"> <span id="nameuser"
 							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
-								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+						<div class="ml-3 mt-2 dropdown-menu"
+							aria-labelledby="dropdownMenuButton">
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -181,9 +193,10 @@ body {
 				class="row no-gutters slider-text align-items-center justify-content-center">
 				<div class="col-md-8 ftco-animate d-flex align-items-end">
 					<div class="text w-100 text-center">
-					
+
 						<h1 class="mb-2" style="font-size: 100px">
-							 <span>Good Sport <br> For  Good Health</span>
+							<span>Good Sport <br> For Good Health
+							</span>
 						</h1>
 						<p>
 							<a href="#" class="btn btn-primary py-2 px-4">Tham gia</a> <a
@@ -205,8 +218,10 @@ body {
 							<span class="flaticon-support"></span>
 						</div>
 						<div class="text">
-							<h2>Hỗ trợ 24/7</h2> <br>
-							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn, ngay cả vào cuối tuần và ngày lễ.</p>
+							<h2>Hỗ trợ 24/7</h2>
+							<br>
+							<p>Bạn có thể yên tâm, chúng tôi luôn đồng hành cùng bạn,
+								ngay cả vào cuối tuần và ngày lễ.</p>
 						</div>
 					</div>
 				</div>
@@ -217,7 +232,9 @@ body {
 						</div>
 						<div class="text">
 							<h2>Thanh toán với nhiều hình thức</h2>
-							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh toán phù hợp với bạn.</p>
+							<p>Chúng tôi đáp ứng nhu cầu thanh toán của bạn với sự linh
+								hoạt và tiện lợi. Bạn có thể chọn từ nhiều phương thức thanh
+								toán phù hợp với bạn.</p>
 						</div>
 					</div>
 				</div>
@@ -228,7 +245,9 @@ body {
 						</div>
 						<div class="text">
 							<h2>Miễn phí giao hàng &amp; Hoàn trả</h2>
-							<p>Chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng và miễn phí cho mọi đơn hàng của bạn. Chúng tôi cũng nhận đổi hoặc hoàn trả một cách dễ dàng và không mất phí.</p>
+							<p>Chúng tôi cam kết cung cấp dịch vụ giao hàng nhanh chóng
+								và miễn phí cho mọi đơn hàng của bạn. Chúng tôi cũng nhận đổi
+								hoặc hoàn trả một cách dễ dàng và không mất phí.</p>
 						</div>
 					</div>
 				</div>
@@ -322,7 +341,7 @@ body {
 		<div class="container">
 			<div class="row justify-content-center pb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					
+
 					<h2>Sân Thể Thao</h2>
 					<span class="subheading">Sân được đặt nhiều nhất</span>
 				</div>
@@ -336,15 +355,16 @@ body {
 							th:src="@{'/user/images/' + ${f[5]}}">
 						<div class="text p-4 bg-light">
 							<h3 class="heading mb-3">
-							 <a href="#" th:text="${f[2]}"></a>
+								<a href="#" th:text="${f[2]}"></a>
 							</h3>
 							<p>
-								<span class="text-success font-weight-bold">Giá tiền</span>: <span class="text-danger font-weight-bold"
+								<span class="text-success font-weight-bold">Giá tiền</span>: <span
+									class="text-danger font-weight-bold"
 									th:text="${#numbers.formatCurrency(f[4])}"></span>
 							</p>
 							<p>
-								<span class="text-success font-weight-bold">Địa chỉ</span>: <span class="text-dark font-weight"
-									th:text="${f[6]}"></span>
+								<span class="text-success font-weight-bold">Địa chỉ</span>: <span
+									class="text-dark font-weight" th:text="${f[6]}"></span>
 							</p>
 							<a href="#" class="btn-custom">Continue <span
 								class="fa fa-long-arrow-right"></span></a>
@@ -356,7 +376,8 @@ body {
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-4">
-					<a href="product.html" class="btn btn-primary d-block">Xem tất cả sân    <span class="fa fa-long-arrow-right"></span>
+					<a href="product.html" class="btn btn-primary d-block">Xem tất
+						cả sân <span class="fa fa-long-arrow-right"></span>
 					</a>
 				</div>
 			</div>
@@ -386,7 +407,8 @@ body {
 									<p class="mb-4">“Thành công không phải là bất ngờ. Đó là
 										công việc khó khăn, kiên trì, học hỏi, học tập, hy sinh và hơn
 										hết, tình yêu của những gì bạn đang làm hoặc học tập để làm”.
-									</p><br><br>
+									</p>
+									<br> <br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/pele.png)"></div>
@@ -408,7 +430,8 @@ body {
 									<p class="mb-4">“Mỗi năm tôi đều cố gắng phấn đấu với tư
 										cách là một cầu thủ. Và tôi không muốn sự nghiệp của mình đi
 										theo một lối mòn. Tôi luôn cố gắng trong mỗi trận đấu theo mọi
-										cách có thể.”</p> <br><br>
+										cách có thể.”</p>
+									<br> <br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/messi.png)"></div>
@@ -427,7 +450,11 @@ body {
 									<span class="fa fa-quote-left">
 								</div>
 								<div class="text">
-									<p class="mb-4">"Đã chọn thể thao thì bắt buộc phải nỗ lực và hy sinh, bởi tôi muốn vươn lên đỉnh cao trong sự nghiệp, bởi kỷ lục không bao giờ có giới hạn, nên với tôi ngày hôm nay phải tốt hơn ngày hôm qua."</p><br> 
+									<p class="mb-4">"Đã chọn thể thao thì bắt buộc phải nỗ lực
+										và hy sinh, bởi tôi muốn vươn lên đỉnh cao trong sự nghiệp,
+										bởi kỷ lục không bao giờ có giới hạn, nên với tôi ngày hôm nay
+										phải tốt hơn ngày hôm qua."</p>
+									<br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/anhvien.jpg)"></div>
@@ -446,13 +473,18 @@ body {
 									<span class="fa fa-quote-left">
 								</div>
 								<div class="text">
-									<p class="mb-4">"Tôi đã trượt hơn 9000 cú ném trong sự nghiệp của mình. Tôi đã thua gần 300 trận đấu. 26 lần tôi được tin tưởng giao cho cú ném quyết định trận đấu và bỏ lỡ chúng. Tôi đã thất bại hết lần này đến lần khác trong đời mình. Và đó là lý do tôi thành công."</p>
+									<p class="mb-4">"Tôi đã trượt hơn 9000 cú ném trong sự
+										nghiệp của mình. Tôi đã thua gần 300 trận đấu. 26 lần tôi được
+										tin tưởng giao cho cú ném quyết định trận đấu và bỏ lỡ chúng.
+										Tôi đã thất bại hết lần này đến lần khác trong đời mình. Và đó
+										là lý do tôi thành công."</p>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/ro.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">Michael Jordan</p>
-											<span class="position">Cựu cầu thủ bóng rổ nhà nghề nổi tiếng thế giới</span>
+											<span class="position">Cựu cầu thủ bóng rổ nhà nghề
+												nổi tiếng thế giới</span>
 										</div>
 									</div>
 								</div>
@@ -465,13 +497,16 @@ body {
 									<span class="fa fa-quote-left">
 								</div>
 								<div class="text">
-									<p class="mb-4">"Đừng ngại thất bại, đó là con đường dẫn đến thành công."</p><br><br><br><br>
+									<p class="mb-4">"Đừng ngại thất bại, đó là con đường dẫn
+										đến thành công."</p>
+									<br> <br> <br> <br>
 									<div class="d-flex align-items-center">
 										<div class="user-img"
 											style="background-image: url(/user/images/LeBron_James.jpg)"></div>
 										<div class="pl-3">
 											<p class="name">LeBron James</p>
-											<span class="position">Vận động viên bóng rổ chuyên nghiệp Hoa Kỳ</span>
+											<span class="position">Vận động viên bóng rổ chuyên
+												nghiệp Hoa Kỳ</span>
 										</div>
 									</div>
 								</div>
@@ -512,7 +547,7 @@ body {
 							<h3 th:text="${e[1]}" class="heading mb-3">
 								<a href="#"></a>
 							</h3>
-							<p th:text="${e[5]}"></p>
+							<p th:text="${e[5]}" class="limited-length"></p>
 							<a href="#" class="btn-custom">Continue <span
 								class="fa fa-long-arrow-right"></span></a>
 
@@ -532,25 +567,29 @@ body {
 						<h2 class="ftco-heading-2 logo">
 							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
-				
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
 						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
-							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
-						
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
@@ -558,8 +597,9 @@ body {
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
-							
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
@@ -569,7 +609,8 @@ body {
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
 										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
@@ -591,9 +632,10 @@ body {
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
 								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
-								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>

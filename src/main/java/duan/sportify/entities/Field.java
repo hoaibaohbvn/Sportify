@@ -7,9 +7,19 @@ package duan.sportify.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,14 +69,14 @@ public class Field implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="field")
     private List<Favoritefield> listOfFavoritefield ; 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name="sporttypeid", referencedColumnName="sporttypeid", insertable=false, updatable=false)
      Sporttype  sporttype ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="field")
     private List<Bookingdetails> listOfBookingdetails ; 
 

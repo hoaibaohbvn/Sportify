@@ -12,8 +12,9 @@ import duan.sportify.dao.EventDAO;
 import duan.sportify.dao.FieldDAO;
 import duan.sportify.dao.ProductDAO;
 import duan.sportify.dao.UserDAO;
-import io.micrometer.observation.Observation.Event;
+//import io.micrometer.observation.Observation.Event;
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("sportify")
 public class AboutController {

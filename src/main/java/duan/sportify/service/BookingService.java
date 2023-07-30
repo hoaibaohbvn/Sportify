@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Bookings;
 
 
-
+@SuppressWarnings("unused")
 public interface BookingService {
 	List<Bookings> findAll();
 

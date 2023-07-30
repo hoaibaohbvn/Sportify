@@ -6,18 +6,20 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * JPA entity class for "Users"
- *
- * @author Telosys
- *
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,18 +67,19 @@ public class Users implements Serializable {
 
     @OneToMany(mappedBy="users")
     private List<Orders> listOfOrders ; 
-
-    @OneToMany(mappedBy="users")
+    @JsonIgnore
+    @OneToMany(mappedBy="users", fetch = FetchType.EAGER)
     private List<Authorized> listOfAuthorized ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Bookings> listOfBookings ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Favoritefield> listOfFavoritefield ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="users")
-    private List<Teams> listOfTeams ; 
+    private List<Teams> listOfTeams ;
+ 
 
 
    

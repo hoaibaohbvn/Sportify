@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Giải Đấu</title>
+<title>Tin Tức</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,17 +25,10 @@
 </head>
 <body>
 
-	<div class="wrap" style="z-index: 9; position: relative">
+		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
-					<p class="mb-0 phone pl-md-2">
-						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
-							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
-							youremail@email.com</a>
-					</p>
-				</div>
-				<div class="col-md-6 d-flex justify-content-md-end">
 					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
@@ -52,31 +45,51 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
+					<p class="mb-0 phone pl-md-2">
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							youremail@email.com</a>
+					</p>
 
+				</div>
+
+				<div class="col-md-6 d-flex justify-content-md-end">
 					<!-- check login -->
 					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2">Sign Up</a> 
-							<a th:href="@{/sportify/login}">Log In</a>
+							<a th:href="@{/sportify/login/form}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
+								kí</a>
 						</p>
 					</div>
 
 					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<span th:if="${users != null}" class="m-1 mr-2"
+						style="color: white;">Xin chào !</span>
 					<div th:if="${users != null}" class="dropdown m-1"
 						style="display: block;">
-						<a class="dropdown-toggle" id="dropdownMenuAccount"
+						<a class="dropdown-toggle " id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="rounded-circle border border-white"
+							<img th:if=${users.image!=null}
+							class="rounded-circle border border-white"
 							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <img
+							th:if=${users.image==null}
+							class="rounded-circle border border-white"
+							src="/user/images/noavatar.jpg" alt=""
 							style="width: 30px; height: 30px;"> <span id="nameuser"
 							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
-								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" th:href="@{/sportify/logout}">Đăng
+						<div class="ml-3 mt-2 dropdown-menu"
+							aria-labelledby="dropdownMenuButton">
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -155,7 +168,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -178,65 +191,133 @@
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Giải Đấu <i
+								class="fa fa-chevron-right"></i></a></span> <span>Tin Tức <i
 							class="fa fa-chevron-right"></i></span>
 					</p>
-					<h2 class="mb-0 bread">Giải Đấu</h2>
+					<h2 class="mb-0 bread">Tin Tức</h2>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row">
-				<form class="mb-5 d-flex justify-content-center col-12">
-					<input class="form-control me-2 col-6" type="search"
-						placeholder="Tìm kiếm theo tên" aria-label="Search">
-					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+	<section class=" col-12  ftco-section testimony-section img"
+		style="background-image: url(/user/images/bgcaunoi.jpg);">
+		<div class="col-12 d-flex">
+			<div class="col-4 bg-dark">Nút nè</div>
+			<div id="carouselExampleIndicators" class="carousel slide col-8"
+				data-ride="carousel" style="width: 100%; height: 500px;">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators" data-slide-to="0"
+						class="active"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img class="d-block w-100" src="/user/images/event3.png"
+							alt="First slide" style="height: 500px; object-fit: cover;">
+					</div>
+					<div class="carousel-item">
+						<img class="d-block w-100" src="/user/images/event4.png"
+							alt="Second slide" style="height: 500px; object-fit: cover;">
+					</div>
+					<div class="carousel-item">
+						<img class="d-block w-100" src="/user/images/event5.png"
+							alt="Third slide" style="height: 500px; object-fit: cover;">
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators"
+					role="button" data-slide="prev"> <span
+					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+					class="sr-only">Previous</span>
+				</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
+					role="button" data-slide="next"> <span
+					class="carousel-control-next-icon" aria-hidden="true"></span> <span
+					class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+		<div class="col-12 row mt-5 justify-content-center">
+			<form class=" d-flex  col-5"
+					th:action="@{/sportify/search}" method="post">
+					<input class="form-control rounded-0 me-2 col-9"
+						placeholder="Tìm kiếm theo tên..." aria-label="Search"
+						type="search" th:value="${keyword}" name="keyword">
+					<button class="btn btn-success col-3 rounded-0" type="submit">Search</button>
 				</form>
+		</div>
+
+
+	</section>
+
+	<section class="ftco-section"
+		style="background-image: url('/user/images/bgAll.png'); background-repeat: repeat; background-size: 100% 100%;">
+		<div class="container">
+
+			<div class="row">
+				
 
 				<div class="col-md-12">
-					
+
 					<div class="row d-flex">
-						<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
-							th:each="e : ${eventList}">
-							<div class="blog-entry d-md-flex">
-								<img class="block-19 block-20 img" alt=""
-									th:src="@{'/user/images/' + ${e.image}}">
+						<div class="col-lg-6 d-flex align-items-stretch ftco-animate "
+							th:each="eventList : ${eventList}">
+							<div class="blog-entry d-md-flex event-item"
+								style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+								<img class="block-19 block-20 img " style="object-fit: cover;"
+									alt="" th:src="@{'/user/images/' + ${eventList.image}}">
 
 								<div class="text p-4 bg-light">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
-										<p th:utext="${#dates.format(e.datestart, 'dd-MM-yyyy')}"
-											class="m-1 "></p>
-										<p class="m-1">-</p>
-										<p th:utext="${#dates.format(e.dateend, 'dd-MM-yyyy')}"
-											class="m-1 "></p>
-									</div>
-									<h3 class="heading mb-3 m-1">
-										<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${e.eventid})}" th:text="${e.nameevent}"></a>
-									</h3>
+										<p
+											th:utext="${#dates.format(eventList.datestart, 'dd-MM-yyyy')}"
+											class="m-1 " style="color: blue; font-size: 15px;"></p>
 
-									<a th:href="@{/user/blog-single}" class="btn-custom">Continue
-										<span class="fa fa-long-arrow-right"></span>
+									</div>
+									<div class="meta d-flex ">
+										<h3 class="heading mb-3 m-1 ">
+											<a
+												th:href="@{/sportify/eventdetail/{eventid}(eventid=${eventList.eventid})}"
+												th:text="${eventList.nameevent}"></a>
+										</h3>
+									</div>
+
+									<div class="meta d-flex">
+										<p class="limited-length2"
+											th:utext="${eventList.descriptions}"></p>
+									</div>
+
+									<a
+										th:href="@{/sportify/eventdetail/{eventid}(eventid=${eventList.eventid})}"
+										class="btn-custom">Xem Thêm <span
+										class="fa fa-long-arrow-right"></span>
 									</a>
 
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row mt-5">
+
+					<div class="row col-md-12 mt-5">
 						<div class="col text-center">
-							<div class="block-27">
-								<ul>
-									<li><a href="#">&lt;</a></li>
-									<li class="active"><span>1</span></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&gt;</a></li>
+							<div class="block-27 ml-5">
+								<!-- Các nút điều hướng của trang -->
+								<ul class="pagination d-flex justify-content-center ml-5">
+									<!-- Nút lùi lại 1 -->
+									<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
+										th:href="@{/sportify/event(page=${page.number - 1}, keyword=${keyword})}">&laquo;</a>
+									</li>
+									<!-- Các nút số Trang -->
+									<li class="ml-1 mr-1 mb-5"
+										th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
+										th:unless="${page.totalPages <= 1}"><a
+										th:class="${page.number == pageNumber-1} ? 'bg-success text-white' : ''"
+										th:href="@{/sportify/event(page=${pageNumber-1}, keyword=${keyword})}"
+										th:text="${pageNumber}"></a></li>
+									<!-- Nút tiếng lên 1 -->
+									<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
+										th:href="@{/sportify/event(page=${page.number + 1}, keyword=${keyword})}">&raquo;</a>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -252,74 +333,56 @@
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log
-									In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term
-									&amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New
-									User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help
-									Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report
-									Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
+										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -333,13 +396,14 @@
 
 						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							Bản quyền &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
@@ -358,6 +422,8 @@
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
+
+
 
 
 	<script src="/user/js/jquery.min.js"></script>

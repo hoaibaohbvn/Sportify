@@ -7,7 +7,22 @@ package duan.sportify.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +45,7 @@ public class Bookings implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="bookingid", nullable=false)
     private Integer    bookingid ;
 
@@ -56,6 +71,7 @@ public class Bookings implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="bookings")
     private List<Bookingdetails> listOfBookingdetails ; 
 

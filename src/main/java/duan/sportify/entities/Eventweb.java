@@ -6,7 +6,15 @@ package duan.sportify.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,7 +37,7 @@ public class Eventweb implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="eventid", nullable=false)
     private Integer    eventid ;
 
@@ -50,6 +58,7 @@ public class Eventweb implements Serializable {
 
     @Column(name="descriptions", length=1000)
     private String     descriptions ;
+    
     @Column(name="eventtype", length=50)
     private String     eventtype ;
 

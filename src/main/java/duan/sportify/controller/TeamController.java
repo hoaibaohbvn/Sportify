@@ -1,6 +1,7 @@
 package duan.sportify.controller;
 
 import java.awt.SystemColor;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -25,9 +26,12 @@ import duan.sportify.entities.Teamdetails;
 import duan.sportify.entities.Teams;
 import duan.sportify.service.SportTypeService;
 import duan.sportify.service.TeamService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.net.URLEncoder;
 
+
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/sportify")
 public class TeamController {
@@ -60,7 +64,6 @@ public class TeamController {
 			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid,
 			Pageable pageable) {
 		
-		// Thực hiện show Team
 		Page<Object[]> teamPage;
 
 		int searchTextLength = searchText.length();// Kiểm tra xem ng dùng có nhập vào ô tìm kiếm không
@@ -103,11 +106,19 @@ public class TeamController {
 
 	@PostMapping("/team/search")
 	public String search(Model model, @RequestParam("searchText") String searchText, Pageable pageable) {
-		// Xử lý tìm kiếm và chuyển hướng đến trang /team với query parameter searchText
-		if (searchText == "") {
-			return "redirect:/sportify/team";
-		}
-		return "redirect:/sportify/team?searchText="+searchText;
+		 try {
+		        // Mã hóa searchText trước khi chuyển hướng
+		        String encodedSearchText = URLEncoder.encode(searchText, "UTF-8");
+		        if (encodedSearchText.isEmpty()) {
+		            return "redirect:/sportify/team";
+		        }
+		        return "redirect:/sportify/team?searchText=" + encodedSearchText;
+		    } catch (UnsupportedEncodingException e) {
+		        // Xử lý ngoại lệ nếu encoding không được hỗ trợ
+		        e.printStackTrace();
+		        // Hoặc xử lý bằng cách trả về một trang lỗi
+		        return "error"; // Ví dụ: "error.html"
+		    }
 	}
 
 	@GetMapping("/team/{sporttypeid}")

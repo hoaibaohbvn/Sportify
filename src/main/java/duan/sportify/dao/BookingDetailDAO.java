@@ -9,6 +9,7 @@ import duan.sportify.entities.Bookingdetails;
 import duan.sportify.entities.Field;
 
 
+@SuppressWarnings("unused")
 public interface BookingDetailDAO extends JpaRepository<Bookingdetails, Integer>{
 	@Query(value = "SELECT  s.* FROM bookingdetails bd\r\n"
 			+ "JOIN field s ON bd.fieldid = s.fieldid\r\n"

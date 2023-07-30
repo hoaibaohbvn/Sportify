@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import duan.sportify.dao.AuthorizedDAO;
 import duan.sportify.dao.ProductDAO;
+
 import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Products;
 import duan.sportify.service.AuthorizedService;
 import duan.sportify.service.ProductService;
 
+@SuppressWarnings("unused")
 @Service
 public class ProductServiceImpl implements ProductService{
 	@Autowired
@@ -57,4 +59,6 @@ public class ProductServiceImpl implements ProductService{
 	public List<Products> findByCategoryId(String categoryid) {
 		return productDAO.findByCategoryId(categoryid);
 	}
+
+	
 }

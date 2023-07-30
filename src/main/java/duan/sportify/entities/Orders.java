@@ -7,7 +7,22 @@ package duan.sportify.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import jakarta.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +45,7 @@ public class Orders implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="orderid", nullable=false)
     private Integer    orderid ;
 
@@ -50,14 +65,15 @@ public class Orders implements Serializable {
 
     @Column(name="orderstatus", nullable=false, length=12)
     private String     orderstatus ;
-    @Column(name="paymentstatus")
-    private Boolean    paymentstatus ;
+    @Column(name="paymentstatus", nullable=false)
+    private Boolean     paymentstatus ;
+
 
     //--- ENTITY LINKS ( RELATIONSHIP )
     @ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 
-
+    @JsonIgnore
     @OneToMany(mappedBy="orders")
     private List<Orderdetails> listOfOrderdetails ; 
 

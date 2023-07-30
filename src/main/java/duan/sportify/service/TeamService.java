@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Teams;
 
 
-
+@SuppressWarnings("unused")
 public interface TeamService {
 	List<Teams> findAll();
 

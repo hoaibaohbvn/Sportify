@@ -13,6 +13,7 @@ import duan.sportify.entities.Shifts;
 import duan.sportify.service.FieldService;
 
 
+@SuppressWarnings("unused")
 @Service
 public class FieldServiceImpl implements FieldService{
 	@Autowired

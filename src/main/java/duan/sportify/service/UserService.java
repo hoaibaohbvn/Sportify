@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Users;
 
 
-
+@SuppressWarnings("unused")
 public interface UserService {
 	List<Users> findAll();
 
@@ -17,4 +17,6 @@ public interface UserService {
 	void delete(String id);
 	
 	Users findById(String id);
+	
+	
 }

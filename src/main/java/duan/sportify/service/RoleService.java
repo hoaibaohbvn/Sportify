@@ -6,7 +6,7 @@ import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Roles;
 
 
-
+@SuppressWarnings("unused")
 public interface RoleService {
 	List<Roles> findAll();
 
