@@ -42,8 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				try {
 					Users user = userDAO.findById(username).get();
 					String password = pe.encode(user.getPasswords());
-//					System.out.println(user.getUsername());
-//					System.out.println(User.withUsername(username));
 					String[] roles = user.getListOfAuthorized().stream()
 							.map(er -> er.getRoles().getRoleid())
 							.collect(Collectors.toList())

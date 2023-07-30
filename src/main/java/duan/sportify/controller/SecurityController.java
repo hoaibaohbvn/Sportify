@@ -24,7 +24,7 @@ public class SecurityController {
 	
 	@RequestMapping("/sportify/login/form")
 	public String loginForm(Model model) {
-		model.addAttribute("message", "Vui lòng đăng nhập!");
+		model.addAttribute("message", "Vui lòng đăng nhập để sử dụng tính năng!");
 		return "security/login";
 	}
 
@@ -45,7 +45,7 @@ public class SecurityController {
 	@RequestMapping("/sportify/unauthoried")
 	public String unauthoried(Model model) {
 		model.addAttribute("message", "Không có quyền truy xuất!");
-		return "security/login";
+		return "user/error";
 	}
 
 	@RequestMapping("/sportify/logoff/success")

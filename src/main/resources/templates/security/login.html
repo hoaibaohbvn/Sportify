@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Title</title>
+<title>Đăng Nhập</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -45,10 +45,12 @@
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
 									</div>
 									<div class="custom-control custom-checkbox mb-3">
-										<input name=remember-me type="checkbox" checked
+										<label for="customCheck1" class="custom-control-label text-danger" th:text="${message}"></label>
+									</div>
+									<div class="custom-control custom-checkbox mb-3">
+										<input name=remember-me type="checkbox" 
 											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Remember
-											password</label>
+											for="customCheck1" class="custom-control-label">Nhớ mật khẩu ?</label>
 									</div>
 
 									<div class="d-grid gap-2 mb-3">
