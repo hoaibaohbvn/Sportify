@@ -50,7 +50,8 @@ public class Orders implements Serializable {
 
     @Column(name="orderstatus", nullable=false, length=12)
     private String     orderstatus ;
-
+    @Column(name="paymentstatus")
+    private Boolean    paymentstatus ;
 
     //--- ENTITY LINKS ( RELATIONSHIP )
     @ManyToOne
