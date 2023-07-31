@@ -218,10 +218,10 @@
 					<h3 class="d-flex">Tin Tức Trong Tháng</h3>
 					
 						
-						<div class="block-21 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);" >
+						<div class="block-25 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px;width: 380px;height:75px ;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);" >
 							<div class="img-tintuc">
 								<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}">
-									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:100px; height: 105px">
+									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:150px; height: auto; image-rendering: crisp-edges;">
 								</a>
 							</div>
 							
@@ -231,21 +231,20 @@
 										th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}"
 										th:text="${lq[1]}" ></a>
 								</h3>
-								<div class="meta mb-1">
+								<div class="meta">
 									<div class="meta d-flex">
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(lq[2], 'dd-MM-yyyy')}" class="m-1 " style="color:blue;"></p>
-									</div>
-									
-									<div class="meta d-flex">
+										<p class="mt-1"> | </p>
+										<!--
 										<span class="fa fa-calendar m-2"> </span>
 										<p th:utext="${#dates.format(lq[3], 'dd-MM-yyyy')}" class="m-1 " style="color:red;"></p>
+										  -->
+										<p th:text="${lq[6]}" class="m-1"></p>
 									</div>
 									
 								</div>
-								<div class="meta">
-									
-								</div>
+								
 								
 							</div>
 						</div>
