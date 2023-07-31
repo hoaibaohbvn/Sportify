@@ -1,6 +1,7 @@
 package duan.sportify.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
@@ -24,7 +26,7 @@ import duan.sportify.dao.CategoryDAO;
 import duan.sportify.entities.Categories;
 
 import duan.sportify.utils.ErrorResponse;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/rest/categories/")
@@ -73,5 +75,10 @@ public class CategoryProductRestController {
 		}
 		categoryDAO.deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+	// search
+	@GetMapping("search")
+	public ResponseEntity<List<Categories>> search(@RequestParam("categoryname") Optional<String> categoryname){
+		return ResponseEntity.ok(categoryDAO.searchCategoryAdmin(categoryname));
 	}
 }

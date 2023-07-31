@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import duan.sportify.GlobalExceptionHandler;
 
 import duan.sportify.dao.VoucherDAO;
+import duan.sportify.entities.Sporttype;
 import duan.sportify.entities.Voucher;
 
 import duan.sportify.utils.ErrorResponse;
@@ -39,8 +40,20 @@ public class VoucherRestController {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Voucher>> getAll(Model model){
+	public ResponseEntity<List<Voucher>> getAll(){
 		return ResponseEntity.ok(voucherDAO.findAll());
+	}
+	@GetMapping("fillActive")
+	public ResponseEntity<List<Voucher>> fillActive(){
+		return ResponseEntity.ok(voucherDAO.fillActive());
+	}
+	@GetMapping("fillInActive")
+	public ResponseEntity<List<Voucher>> fillInActive(){
+		return ResponseEntity.ok(voucherDAO.fillInActive());
+	}
+	@GetMapping("fillWillActive")
+	public ResponseEntity<List<Voucher>> fillWillActive(){
+		return ResponseEntity.ok(voucherDAO.fillWillActive());
 	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Voucher> getOne(@PathVariable("id") String id) {
@@ -51,14 +64,13 @@ public class VoucherRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Voucher> create(@RequestBody Voucher voucher) {
-		if(!voucherDAO.existsById(voucher.getVoucherid())) {
-			
-			return ResponseEntity.badRequest().build();
-		}
-		voucherDAO.save(voucher);
-		return ResponseEntity.ok(voucher);
+	    if (voucher.getVoucherid() != null && voucherDAO.existsById(voucher.getVoucherid())) {
+	        return ResponseEntity.badRequest().build();
+	    }
+	    voucherDAO.save(voucher);
+	    return ResponseEntity.ok(voucher);
 	}
-	@PutMapping("update")
+	@PutMapping("update/{id}")
 	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @RequestBody Voucher voucher) {
 		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import duan.sportify.service.UploadService;
-import jakarta.websocket.server.PathParam;
+import javax.websocket.server.PathParam;
 
 @CrossOrigin(origins = "*")
 @RestController

@@ -7,18 +7,23 @@ package duan.sportify.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * JPA entity class for "Teamdetails"
- *
- * @author Telosys
- *
- */
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,7 +46,6 @@ public class Teamdetails implements Serializable {
     @Column(name="username", nullable=false, length=16)
     private String     username ;
     
-    @Temporal(TemporalType.DATE)
     @Column(name="joindate", nullable=false)
     private LocalDate joindate ;
     

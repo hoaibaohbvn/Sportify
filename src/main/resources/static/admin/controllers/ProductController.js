@@ -25,21 +25,29 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+
 	}
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/products/create`, item).then(resp => {
-			
+
 			resp.data.datecreate = new Date(resp.data.datecreate)
 			$scope.items.push(resp.data);
 			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")
-            $scope.reset();
-            $('#add').modal('hide')
+			$scope.reset();
+			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi thêm mới sản phẩm!");
-			console.log("Error", error);
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -52,25 +60,32 @@ app.controller('ProductController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật sản phẩm!");
-				console.log("Error", error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
-	$scope.delete = function(item){
-			$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
-				var index = $scope.items.findIndex(p => p.productid == item.productid);
-            $scope.items.splice(index, 1);
-            // Đặt lại trạng thái của form (nếu có)
-            $scope.reset();
-            $('#delete').modal('hide')
-            // Hiển thị thông báo thành công
-            showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
+	$scope.delete = function(item) {
+		$http.delete(`/rest/products/delete/${item.productid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.productid == item.productid);
+			$scope.items.splice(index, 1);
+			// Đặt lại trạng thái của form (nếu có)
+			$scope.reset();
+			$('#delete').modal('hide')
+			// Hiển thị thông báo thành công
+			showSuccessToast("Sản phảm tên " + item.productname + " đã được xóa")
 			refreshPageAfterThreeSeconds();
-			}).catch(error => {
-				alert("Lỗi xóa sản phẩm!");
-				console.log("Error", error);
-			})
+		}).catch(error => {
+			showErrorToast("Xóa sản phảm tên " + item.productname + " thất bại")
+			console.log("Error", error);
+		})
 	}
 
 	$scope.imageChanged = function(files) {
@@ -82,7 +97,7 @@ app.controller('ProductController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
+			showErrorToast("Lỗi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}
@@ -168,4 +183,31 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	$scope.refresh =function refreshNow() {
+			location.reload();
+	}
+	
+	// search
+	 $scope.searchName = '';
+   	 $scope.searchCate = null;
+   	 $scope.searchStatus = 1;
+   	 $scope.search = function () {
+			
+      $http.get('/rest/products/search', { params: 
+      		{ 	
+				productname: $scope.searchName, 
+      			categoryid: $scope.searchCate,
+      			productstatus: $scope.searchStatus
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          $scope.items.forEach(item => {
+				item.datecreate = new Date(item.datecreate)
+			})
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })

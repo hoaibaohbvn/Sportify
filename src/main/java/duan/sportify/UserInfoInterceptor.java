@@ -2,10 +2,15 @@ package duan.sportify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import duan.sportify.service.UserService;
 import duan.sportify.entities.Users;
 
@@ -17,17 +22,19 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // Kiểm tra thông tin người dùng
-        Users loggedInUser = (Users) request.getSession().getAttribute("loggedInUser");
-        if (loggedInUser != null) {
+        // Lấy username từ session
+        String username = (String) request.getSession().getAttribute("username");
+
+        if (username != null) {
             // Lấy thông tin người dùng từ service
-            Users users = userService.findById(loggedInUser.getUsername());
+            Users users = userService.findById(username);
+            // Đưa thông tin người dùng vào model
             request.setAttribute("users", users);
         }
 
         return true;
     }
-
 }
+
 
 

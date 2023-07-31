@@ -1,7 +1,7 @@
 package duan.sportify.rest.controller;
 
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -30,8 +31,8 @@ import duan.sportify.utils.ErrorResponse;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/sportify/rest/products_copy/")
-public class ProductRestController_copy {
+@RequestMapping("/rest/products/")
+public class Admin_ProductRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
@@ -43,7 +44,7 @@ public class ProductRestController_copy {
 	}
 	@GetMapping("getAll")
 	public ResponseEntity<List<Products>> getAll(Model model){
-		return ResponseEntity.ok(productDAO.findAll());
+		return ResponseEntity.ok(productDAO.findProductActive());
 	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Products> getOne(@PathVariable("id") Integer id) {
@@ -77,5 +78,13 @@ public class ProductRestController_copy {
 		}
 		productDAO.deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+	@GetMapping("search")
+	public ResponseEntity<List<Products>> search(
+			@RequestParam("productname") Optional<String> productname,
+			@RequestParam("categoryid") Optional<Integer> categoryid,
+			@RequestParam("productstatus") Optional<Integer> productstatus
+		){
+		return ResponseEntity.ok(productDAO.searchProductAdmin(productname, categoryid, productstatus));
 	}
 }

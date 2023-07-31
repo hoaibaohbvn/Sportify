@@ -36,13 +36,13 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
+					<input type="text" class="form-control floating" ng-model="searchName">
 					<label class="focus-label">Category Product Name</label>
 				</div>
 			</div>
 			
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -101,8 +101,8 @@
 								<div class="form-group">
 									<label class="col-form-label">Category Product Name <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="error in errors"
-										ng-if="error.field === 'categoryname' ">{{
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'categoryname' && index === 0">{{
 										error.message }}</errors>
 								</div>
 							</div>
@@ -135,6 +135,9 @@
 								<div class="form-group">
 									<label class="col-form-label">Category Sport Name <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.categoryname">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'categoryname' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							

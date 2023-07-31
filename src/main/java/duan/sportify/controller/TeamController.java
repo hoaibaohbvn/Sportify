@@ -26,7 +26,7 @@ import duan.sportify.entities.Teamdetails;
 import duan.sportify.entities.Teams;
 import duan.sportify.service.SportTypeService;
 import duan.sportify.service.TeamService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.net.URLEncoder;
 

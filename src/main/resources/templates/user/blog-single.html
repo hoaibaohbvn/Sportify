@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Tin Tức</title>
+<title>SPORTIFY - Tin Tức</title>
+<link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,17 +25,10 @@
 </head>
 <body>
 
-	<div class="wrap" style="z-index: 9; position: relative">
+		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
-					<p class="mb-0 phone pl-md-2">
-						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
-							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
-							youremail@email.com</a>
-					</p>
-				</div>
-				<div class="col-md-6 d-flex justify-content-md-end">
 					<div class="social-media mr-4 m-1">
 						<p class="mb-0 d-flex">
 							<a href="#"
@@ -51,26 +45,55 @@
 								class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 						</p>
 					</div>
+					<p class="mb-0 phone pl-md-2">
+						<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>
+							+00 1234 567</a> <a href="#"><span class="fa fa-paper-plane mr-1"></span>
+							youremail@email.com</a>
+					</p>
 
+				</div>
+
+				<div class="col-md-6 d-flex justify-content-md-end">
 					<!-- check login -->
-					<div class="reg m-1" ng-hide="true">
+					<!-- Thẻ div để hiển thị khi chưa đăng nhập -->
+					<div th:if="${users == null}" class="reg m-1"
+						style="display: block;">
 						<p class="mb-0">
-							<a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a>
+							<a th:href="@{/sportify/login/form}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
+								kí</a>
 						</p>
 					</div>
-					<div class="dropdown m-1" ng-hide="false">
-						<a class="dropdown-toggle" id="dropdownMenuAccount"
+
+					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
+					<span th:if="${users != null}" class="m-1 mr-2"
+						style="color: white;">Xin chào !</span>
+					<div th:if="${users != null}" class="dropdown m-1"
+						style="display: block;">
+						<a class="dropdown-toggle " id="dropdownMenuAccount"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="rounded-circle border border-white"
-							src="/user/images/person_1.jpg" alt=""
-							style="width: 30px; height: 30px;"> <span id="nameuser">User</span>
+							<img th:if=${users.image!=null}
+							class="rounded-circle border border-white"
+							th:src="@{'/user/images/' + ${users.image}}" alt=""
+							style="width: 30px; height: 30px;"> <img
+							th:if=${users.image==null}
+							class="rounded-circle border border-white"
+							src="/user/images/noavatar.jpg" alt=""
+							style="width: 30px; height: 30px;"> <span id="nameuser"
+							th:text="${users.firstname} + ' ' + ${users.lastname}"></span>
 						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" th:href="@{/sportify/profile}">Thông
-								tin</a> <a class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								class="dropdown-item" href="#">Đăng xuất</a>
+						<div class="ml-3 mt-2 dropdown-menu"
+							aria-labelledby="dropdownMenuButton">
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+								xuất</a>
 						</div>
 					</div>
+
 					<!-- end check login -->
 				</div>
 

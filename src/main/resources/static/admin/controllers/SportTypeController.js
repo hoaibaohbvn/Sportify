@@ -29,8 +29,14 @@ app.controller('SportTypeController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
-			
-			
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -45,9 +51,16 @@ app.controller('SportTypeController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				alert("Lỗi cập nhật sản phẩm!");
-				console.log("Error", error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -61,7 +74,7 @@ app.controller('SportTypeController', function($scope, $http) {
 			showSuccessToast("Đã xóa thành công loại hàng tên " + item.categoryname)
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			alert("Lỗi xóa sản phẩm!");
+			showErrorToast("Xóa loại hàng tên " + item.categoryname + " thất bại")
 			console.log("Error", error);
 		})
 	}
@@ -75,7 +88,7 @@ app.controller('SportTypeController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình ảnh");
+			showErrorToast("Lổi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}
@@ -160,5 +173,21 @@ app.controller('SportTypeController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	
+	// search
+	 $scope.searchName = '';
+   	 $scope.search = function () {
+			
+      $http.get('/rest/sportTypes/search', { params: 
+      		{ 	
+				categoryname: $scope.searchName
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+         
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
 })
