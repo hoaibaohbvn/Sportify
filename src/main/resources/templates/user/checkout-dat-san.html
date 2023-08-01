@@ -202,53 +202,46 @@
 				<div class="row justify-content-center">
 					<div class="col-xl-10 ftco-animate">
 						
-							<h1 class="mb-4 d-flex justify-content-center">PHIẾU BOOKING SÂN THỂ THAO</h1>
-							
-							<div class="row align-items-end" >
-							
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="lastname" style="color:black;font-weight: bold;">Họ <span class="text-danger">*</span></label>
-										<input th:value="${users.firstname}" th:type="text"
-											class="form-control" readonly>
-									</div>
+							<h1 style="font-weight: bold; color: #241468" class="mb-4 d-flex justify-content-center">PHIẾU ĐẶT SÂN THỂ THAO</h1>
+
+						<div class="row mt-5 pt-3 d-flex" >
+							<div class="col-md-6 d-flex" >
+								<div class="cart-detail cart-total p-3 p-md-4" style="background-color: white; border-radius: 15px">			
+										<div class="form-group">
+												<div>
+													<label>Tên khách hàng:</label>
+													<span style="color:#1D5D9B; font-weight: bold; font-size: larger;" th:value="${users.firstname}"
+														th:text="${users.firstname}"></span>
+													<span style="color:#1D5D9B; font-weight: bold; font-size: larger;" th:value="${users.lastname}"
+														th:text="${users.lastname}"></span>
+												</div>
+												<div>
+													<label >Số
+														điện thoại <span class="text-danger">*</span>
+													</label><span class="info-container"> <span
+														class="info-icon">i</span> <span class="info-content">
+															<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
+													</span>
+													</span> <input id="phoneNumberInput" onchange="validatePhoneNumber()" th:value="${users.phone}" type="number" size="10"
+														class="form-control" >
+												</div>
+												<div>
+													<label for="Mail" >Email</label> <span class="info-container"><span
+														class="info-icon">i</span> <span class="info-content">
+															<p>Email để nhận thông báo thông tin dặt sân, được
+																lấy từ tài khoản của bạn.</p>
+													</span> </span> <input readonly
+														th:value="${users.email != null ? users.email : ''}"
+														type="email" class="form-control" placeholder="">
+												</div>
+												<div>
+													<label>Ghi chú thông tin ( nếu cần )</label>
+													<textarea type="text" class="form-control" placeholder=""> </textarea>
+												</div>
+								</div>
 							</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="firstname" style="color:black;font-weight: bold;">Tên <span class="text-danger">*</span></label>
-										<input th:value="${users.lastname}" type="text"
-											class="form-control" readonly>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="phone" style="color:black;font-weight: bold;">Số điện thoại <span
-											class="text-danger">*</span></label><span class="info-container">
-											<span class="info-icon">i</span> <span class="info-content">
-												<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
-										</span>
-										</span> <input th:value="${users.phone}" type="text"
-											class="form-control" readonly>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="Mail" style="color:black;font-weight: bold;">Email</label> <span class="info-container"><span
-											class="info-icon">i</span> <span class="info-content">
-												<p>Email để nhận thông báo thông tin dặt sân, được lấy
-													từ tài khoản của bạn.</p>
-										</span> </span> <input readonly
-											th:value="${users.email != null ? users.email : ''}"
-											type="email" class="form-control" placeholder="">
-									</div>
-								</div>
-								</span>
-								<div class="w-100"></div>
-								
-							</div>
-						
-						<!-- END -->
-						<div class="col-md-6 d-flex" >
+						</div>
+							<div class="col-md-6 d-flex" >
 								<div class="cart-detail cart-total p-3 p-md-4" style="background-color: white; border-radius: 15px">
 									
 									<div class="">
@@ -266,7 +259,7 @@
 										</div>
 										<div style="padding-left:10px">
 											<span>Giờ chơi:</span> &nbsp;
-											<span style="color:black; font-weight: bold;" th:value="${nameShift}"
+											<span id="nameshift-input" style="color:black; font-weight: bold;" th:value="${nameShift}"
 												th:text="${nameShift}"></span>
 										</div>
 									</div>
@@ -276,7 +269,8 @@
 												
 												<span style="font-size: large;">Sân</span> &nbsp; 
 												<span style="font-size: larger; font-weight: bold; color:green;" 
-												th:value="${nameSportype}" th:text="${nameSportype}"></span> 
+												th:value="${nameSportype}" th:text="${nameSportype}"></span>
+												
 												<span style="display: none;" 
 													th:value="${e.price}" th:text="${#numbers.formatCurrency(e.price)}"></span> 
 												<br>
@@ -302,7 +296,7 @@
 							</div>
 							</div>
 						</div>
-							
+						</div>
 
 
 						<div class="row mt-5 pt-3 d-flex" >
@@ -313,20 +307,18 @@
 										<div class="form-group">
 
 											<div class="d-flex">
-												<label style="color:black;font-weight: bold;">Giá Tiền</label> <span th:value="${e.price}"
+												<label>Giá Tiền</label> <span th:value="${e.price}"
 													th:text="${#numbers.formatCurrency(e.price)}"
-													style="margin-left: 20px"></span>
+													style="color:black;font-weight: bold; margin-left: 30px"></span>
 											</div>
 											<div class="d-flex">
-												<label style="color:black;font-weight: bold;">Phụ Thu &nbsp;</label> <span class="info-container"><span
+												<label >Phụ Thu &nbsp;</label> <span class="info-container"><span
 													class="info-icon">i</span> <span class="info-content">
 														<p>Phụ thu 30% giá sân theo quy định các ca sau 17h00.</p>
-												</span> </span> <span style="margin-left: 7px" th:value="${phuthu}"
+												</span> </span> <span style="color:black;font-weight: bold; margin-left: 7px" th:value="${phuthu}"
 													th:text="${#numbers.formatCurrency(phuthu)}"></span>
 											</div>
-										</div>
-
-										<label style="color:black;font-weight: bold;">Mã giảm giá ( nếu có )</label>
+											<label >Mã giảm giá ( nếu có )</label>
 										<div class="d-flex">
 											<input placeholder="Nhập mã khuyến mãi vào đây" th:value="${voucher}" name="voucher" style="width: 100%; border-radius: 10px; background-color: snow;" type="text"></input>
 
@@ -338,36 +330,37 @@
 											</a>
 										</div>
 										<div class="d-flex" >
-											<span class="text-warning font-weight-bold" th:text="${thongbaovoucher}"></span>
+											<span class="text-info font-weight-bold" th:text="${thongbaovoucher}"></span>
 										
 										</div>
-
+										</div>
 									</div>
 									<hr>
 									<div>
-										<span style="color:black;font-weight: bold;">Tạm tính :</span> 
-										<span th:value="${totalprice}"
+										<span >Tạm tính :</span> 
+										<span style="color:black;font-weight: bold;" th:value="${totalprice}"
 											th:text="${#numbers.formatCurrency(totalprice)}"></span>
 									</div>
 									<div>
-										<span style="color:black;font-weight: bold;">Giảm giá :</span> <span th:value="${pricevoucher}"
+										<span>Giảm giá :</span> 
+										<span style="color:black;font-weight: bold;" th:value="${pricevoucher}"
 											th:text="${#numbers.formatCurrency(pricevoucher)}"></span>
 									</div>
-									<div style="color:black;font-size:large;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+									<div style="font-size:large;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center;">
 										<span>Thành Tiền:</span> &nbsp;
-										<span th:value="${thanhtien}"
+										<span style="color:black;font-weight: bold;" th:value="${thanhtien}"
 											th:text="${#numbers.formatCurrency(thanhtien)}"></span>
 									</div>
-									<div style="color:black;font-size:medium;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
-										<span style="color:black;font-weight: bold;">Cọc trước 30% <span class="info-container"><span
+									<div style="font-size:medium;background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center;">
+										<span>Cọc trước 30% <span class="info-container"><span
 													class="info-icon">i</span> <span class="info-content">
 														<p>Tiền quý khách thanh toán cọc giữ chổ theo quy định</p>
 												</span></span> &nbsp;</span> 
-												<span th:value="${tiencoc}" th:text="${#numbers.formatCurrency(tiencoc)}"></span>
+												<span style="color:black;font-weight: bold;" th:value="${tiencoc}" th:text="${#numbers.formatCurrency(tiencoc)}"></span>
 									</div>
-									<div style="color:black;font-size:large;background-color: #91C8E4; height: 40px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+									<div style="font-size:large;background-color: #91C8E4; height: 40px; display: flex; justify-content: center; align-items: center;">
 										<span>Thanh toán khi nhận sân:</span> &nbsp;
-										<span th:value="${conlai}"
+										<span style="color:black;font-weight: bold;" th:value="${conlai}"
 											th:text="${#numbers.formatCurrency(conlai)}"></span>
 									</div>
 								</div>
@@ -562,6 +555,21 @@ công nhận mình đã đọc và đồng ý với các <a th:href="@{/sportify
 			window.location.href = updatedUrl;
 		};
 	</script>
+	<script>
+			function validatePhoneNumber() {
+			    const phoneNumberInput = document.getElementById('phoneNumberInput');
+			    const phoneNumber = phoneNumberInput.value;
+			
+			    // Biểu thức chính quy để kiểm tra định dạng số điện thoại
+			    const phoneNumberRegex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+			
+			    if (phoneNumberRegex.test(phoneNumber)) {
+			        
+			    } else {
+			        alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại 10 chữ số & đúng mã vùng Việt Nam.');
+			    }
+			}
+</script>
 
 
 </body>

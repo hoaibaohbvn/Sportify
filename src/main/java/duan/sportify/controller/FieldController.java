@@ -267,7 +267,7 @@ public class FieldController {
         
         double phuthu = 0; // giá phụ thu
 		if (userlogin != null) {
-			List<Voucher> listvoucher = voucherService.findAll();
+//			List<Voucher> listvoucher = voucherService.findAll();
 			List<Field> fieldListById = fieldservice.findFieldById(idField);
 			double giasan = fieldListById.get(0).getPrice();
 			String nameSportype = fieldservice.findNameSporttypeById(idField);
@@ -330,7 +330,7 @@ public class FieldController {
 			model.addAttribute("conlai", conlai);
 			model.addAttribute("tiencoc", tiencoc);
 			model.addAttribute("thanhtien", thanhtien);
-			model.addAttribute("listvoucher",listvoucher);
+			model.addAttribute("listvoucher",magiamgia);
 			model.addAttribute("nameShift",nameShift);
 			model.addAttribute("dateselect",dateselect);
 			model.addAttribute("nameSportype",nameSportype);
