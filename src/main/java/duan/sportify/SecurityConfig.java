@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
 
@@ -34,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	UserDAO userDAO;
 	@Autowired
 	HttpSession session;
-	
+	 
+    
 	// Cung cấp nguồn dữ liệu đăng nhập
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -73,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.formLogin()
 				.loginPage("/sportify/login/form")		
 				.loginProcessingUrl("/sportify/login")
-				.defaultSuccessUrl("/sportify/login/success", false)
+				.defaultSuccessUrl("/sportify/login/success")
 				.failureUrl("/sportify/login/error")
 				.usernameParameter("username").passwordParameter("password");
 				
