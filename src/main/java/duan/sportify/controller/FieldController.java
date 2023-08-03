@@ -23,11 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import duan.sportify.entities.Bookings;
 import duan.sportify.entities.Field;
 import duan.sportify.entities.Shifts;
 import duan.sportify.entities.Sporttype;
 import duan.sportify.entities.Users;
 import duan.sportify.entities.Voucher;
+import duan.sportify.service.BookingDetailService;
+import duan.sportify.service.BookingService;
 import duan.sportify.service.FieldService;
 import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
@@ -52,10 +56,17 @@ public class FieldController {
 	@Autowired
 	UserService userService;
 	@Autowired
+	BookingService bookingservice;
+	@Autowired
+	BookingDetailService bookingdetailservice;
+	@Autowired
 	VoucherService voucherService;
 	// Biến chứa ID kiểu sportype khi click vào chọn
 	private String selectedSportTypeId;
 	private String dateselect;
+	
+	String userlogin = null;
+
 	// Tìm sân trống theo input: date, sportype, giờ chơi
 	 @PostMapping("/field/search")
 	 public String SreachData(@RequestParam("dateInput") String dateInput,
@@ -121,7 +132,8 @@ public class FieldController {
 	    }
 	// View giao diện lên theo url http://localhost:8080/sportify/field
 	@GetMapping("/field")
-	public String viewField(Model model) {
+	public String viewField(Model model , HttpServletRequest request) {
+		userlogin = (String) request.getSession().getAttribute("username");
 		selectedSportTypeId = "tatca"; // Giá trị được chọn mặc định môn thể thao là tất cả
 		String sportTypeId = null;
 		List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
@@ -246,7 +258,7 @@ public class FieldController {
 		double thanhtien = 0;
 		double tiencoc = 0;
 		double conlai = 0;
-		String userlogin = (String) request.getSession().getAttribute("username");;
+		
 //		Users loggedInUser = userService.findById(userlogin);
 		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
 		for(int i = 0 ; i < shift.size();i++) {
@@ -367,6 +379,56 @@ public class FieldController {
 		model.addAttribute("fieldListById",fieldListById);
 		return "user/san-single";
 	}
-	
-
+	@GetMapping("/field/profile/historybooking")
+	public String viewHistoryField(Model model) {
+		List<Object[]> listbooking = bookingservice.getBookingInfoByUsername(userlogin);
+		
+		model.addAttribute("listbooking",listbooking);
+		return "user/lichsudatsan";
+	}
+	@GetMapping("/field/profile/historybooking/detail")
+	public String viewDetail(Model model,@RequestParam("bookingId") String bookingId,
+            @RequestParam("bookingPrice") double bookingPrice) {
+		double giamgia = 0.0;
+		double phuthu = 0.0;
+		double tongtien = 0.0;
+		double tiencoc = 0.0;
+		double tamtinh = 0.0;
+		double conlai = 0.0;
+		Object[] listbookingdetail = bookingservice.getBookingInfoByBookingDetail(bookingId);
+		
+		for (Object object : listbookingdetail) {
+		    if (object instanceof Object[]) {
+		        Object[] arrayObject = (Object[]) object;
+		        if (arrayObject.length >= 9) {
+		            int shiftid = (int) arrayObject[3];
+		            double price = (double) arrayObject[5];
+		            if(shiftid > 10) {
+		            	phuthu = price * 30 / 100;
+		            	tamtinh = phuthu+price;
+		            	giamgia = bookingPrice - tamtinh;
+		            	tongtien = tamtinh - giamgia;
+		            	tiencoc = tongtien * 30 / 100;
+		            	conlai = bookingPrice - tiencoc;
+		            }else {
+		            	
+		            	tamtinh = price;
+		            	giamgia = bookingPrice - tamtinh;
+		            	tongtien = tamtinh - giamgia;
+		            	tiencoc = tongtien * 30 / 100;
+		            	conlai = bookingPrice - tiencoc;
+		            }
+		        } 
+		    }
+		}
+		model.addAttribute("conlai",conlai);
+		model.addAttribute("thanhtien",bookingPrice);
+		model.addAttribute("phuthu",phuthu);
+		model.addAttribute("giamgia",giamgia);
+		model.addAttribute("tongtien",tongtien);
+		model.addAttribute("tamtinh",tamtinh);
+		model.addAttribute("tiencoc",tiencoc);
+		model.addAttribute("listbooking",listbookingdetail);
+		return "user/lichsudatsandetail";
+	}
 }
