@@ -2,6 +2,7 @@ package duan.sportify.service;
 
 import java.util.List;
 
+
 import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Bookings;
 
@@ -17,4 +18,7 @@ public interface BookingService {
 	void delete(Integer id);
 	
 	Bookings findById(Integer id);
+
+	List<Object[]> getBookingInfoByUsername(String username);
+	Object[] getBookingInfoByBookingDetail(String bookingid);
 }
