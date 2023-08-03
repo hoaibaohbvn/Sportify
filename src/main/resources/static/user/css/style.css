@@ -10333,6 +10333,26 @@ a:hover span {
     font-size: 12px;
     margin-right: 5px; }
     .block-25 .text .meta > div a {
-      color: #b3b3b3; }
+      color: #b3b3b3; 
+   }
 
+.video-container {
+  display: flex;
+  gap: 20px;
+}
+
+.main-video {
+  flex: 1;
+}
+
+.related-videos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.related-video iframe {
+  width: 100%;
+}
 

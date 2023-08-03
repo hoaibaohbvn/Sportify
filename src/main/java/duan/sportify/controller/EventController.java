@@ -33,14 +33,21 @@ public class EventController {
 	@Autowired
 	EventDAO eventDAO;
 	@GetMapping("/event")
-	public String view(Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+	public String view(Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+														@RequestParam(value = "eventtype", required = false, defaultValue = "") String eventtype) {
 		
 		Page<Eventweb> eventwebList;
-		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không		
-		if(keywordLength > 0 ) {
+		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không
+		int eventtypeLength = eventtype.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
+		if(keywordLength > 0 && eventtypeLength == 0) {
 			eventwebList = eventDAO.searchEvents(keyword, pageable);
 			
-		}else {
+		}else if (keywordLength == 0 && eventtypeLength > 0) {
+	        eventwebList = eventDAO.findEventsByEventType(eventtype, pageable);
+	    }
+		
+		
+		else {
 			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
 		}
 		
@@ -51,6 +58,7 @@ public class EventController {
 		model.addAttribute("eventList", events);
 		model.addAttribute("page", eventwebList);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("eventtype", eventtype);
 		return "user/blog";
 	}
 	
@@ -78,4 +86,9 @@ public class EventController {
 	        return "error"; // Ví dụ: "error.html"
 	    }
     }
+	
+	@GetMapping("/events/{eventtype}")
+	public String handleSportifyEvent(Model model, @PathVariable("eventtype") String eventtype) {
+		return "redirect:/sportify/events?eventtype=" + eventtype;
+	}
 }

@@ -26,7 +26,7 @@
 </head>
 <body>
 
-		<div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -67,6 +67,7 @@
 						</p>
 					</div>
 
+					
 					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
 					<span th:if="${users != null}" class="m-1 mr-2"
 						style="color: white;">Xin chào !</span>
@@ -87,13 +88,13 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
-								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a> <a th:href="@{/user/change-password}"
-								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a>  <a
 								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
+					<!-- end check login -->
 
 					<!-- end check login -->
 				</div>
@@ -207,9 +208,18 @@
 			<div class="col-10 d-flex ">
 				<div class="col-4 bg-dark  justify-content-center d-flex">
 					<div class="col-8">
-						<button class="col-12 btn-thethao bg-light mt-5 rounded gradient-element"> Thể thao</button>
-						<button class="col-12 btn-khuyenmai bg-light mt-5 rounded"> Khuyến mãi</button>
-						<button class="col-12 btn-baotri bg-light mt-5  rounded"> Bảo trì</button>
+						<form th:action="@{/events}" method="get">
+							<button
+								class="col-12 btn-thethao bg-light mt-5 rounded gradient-element"
+								type="submit" name="eventtype" value="Bóng đá">Thể
+								thao</button>
+							<button class="col-12 btn-khuyenmai bg-light mt-5 rounded"
+								type="submit" name="eventtype"
+								th:value="Khuyen-mai">Khuyến mãi</button>
+							<button class="col-12 btn-baotri bg-light mt-5  rounded"
+								type="submit" name="eventtype"
+								th:value="Bao-tri">Bảo trì</button>
+						</form>
 					</div>
 				</div>
 				<div id="carouselExampleIndicators" class="carousel slide col-8"
@@ -269,7 +279,8 @@
 
 				<div class="col-md-12">
 					<div class="row ">
-						<h2 class="col-12" style="text-align: center;">Các sự kiện mới nhất</h2>
+						<h2 class="col-12" style="text-align: center;">Các sự kiện
+							mới nhất</h2>
 						<hr class="col-2 mb-5 hr1">
 					</div>
 
@@ -337,6 +348,23 @@
 							</div>
 						</div>
 					</div>
+
+					<div>
+						<h2>Video Nổi Bật</h2>
+						<div class="video-container">
+							<div class="main-video">
+								<iframe width="560" height="315"
+									src="https://www.youtube.com/embed/c-wLsZJ145o"
+									title="Main Video" frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; 
+         								encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen> </iframe>
+							</div>
+
+						</div>
+
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -438,7 +466,21 @@
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
 
+	<script th:inline="javascript">
+		// Lấy ra tham số eventType từ URL (nếu có) và gán giá trị cho biến eventType
+		var eventType = /*[[${eventtype}]]*/'';
 
+		// JavaScript function để cập nhật giá trị của eventtype vào form khi người dùng nhấn nút lọc
+		function setEventType(eventType) {
+			this.eventType = eventType;
+			document.getElementsByName('eventtype')[0].value = eventType;
+		}
+
+		// Nếu có eventType từ URL thì gọi hàm setEventType để cập nhật giá trị vào form
+		if (eventType) {
+			setEventType(eventType);
+		}
+	</script>
 
 
 	<script src="/user/js/jquery.min.js"></script>

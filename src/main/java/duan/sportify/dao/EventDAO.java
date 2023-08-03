@@ -59,5 +59,9 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
     		+ "WHERE (nameevent LIKE %:nameevent% OR :nameevent IS NULL) "
     		+ "AND (eventtype like %:eventtype% OR :eventtype IS NULL)", nativeQuery = true)
     List<Eventweb> searchEventAdmin(@Param("nameevent") Optional<String> nameevent, @Param("eventtype") Optional<String> eventtype);
+    
+    // tìm loại sự kiện
+    @Query("SELECT e FROM Eventweb e WHERE e.eventtype = :eventtype")
+    Page<Eventweb> findEventsByEventType(String eventtype, Pageable pageable);
 	
 }
