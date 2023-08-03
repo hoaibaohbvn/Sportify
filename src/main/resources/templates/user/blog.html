@@ -67,7 +67,6 @@
 						</p>
 					</div>
 
-					
 					<!-- Thẻ div để hiển thị khi đã đăng nhập -->
 					<span th:if="${users != null}" class="m-1 mr-2"
 						style="color: white;">Xin chào !</span>
@@ -87,14 +86,14 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
-								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a>  <a
-								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
+								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
+								href="#">Lịch sử đặt sân</a> <a
+								th:href="@{/user/change-password}" class="dropdown-item">Đổi
+								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
-					<!-- end check login -->
 
 					<!-- end check login -->
 				</div>
@@ -208,18 +207,14 @@
 			<div class="col-10 d-flex ">
 				<div class="col-4 bg-dark  justify-content-center d-flex">
 					<div class="col-8">
-						<form th:action="@{/events}" method="get">
-							<button
+							<a th:href="@{/sportify/event/thethao}"
 								class="col-12 btn-thethao bg-light mt-5 rounded gradient-element"
-								type="submit" name="eventtype" value="Bóng đá">Thể
-								thao</button>
-							<button class="col-12 btn-khuyenmai bg-light mt-5 rounded"
-								type="submit" name="eventtype"
-								th:value="Khuyen-mai">Khuyến mãi</button>
-							<button class="col-12 btn-baotri bg-light mt-5  rounded"
-								type="submit" name="eventtype"
-								th:value="Bao-tri">Bảo trì</button>
-						</form>
+								type="submit">Thể
+								thao</a>
+							<a th:href="@{/sportify/event/khuyenmai}" class="col-12 btn-khuyenmai bg-light mt-5 rounded"
+								type="submit">Khuyến mãi</a>
+							<a th:href="@{/sportify/event/baotri}" class="col-12 btn-baotri bg-light mt-5  rounded"
+								type="submit" >Bảo trì</a>
 					</div>
 				</div>
 				<div id="carouselExampleIndicators" class="carousel slide col-8"
@@ -331,18 +326,18 @@
 								<ul class="pagination d-flex justify-content-center ml-5">
 									<!-- Nút lùi lại 1 -->
 									<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
-										th:href="@{/sportify/event(page=${page.number - 1}, keyword=${keyword})}">&laquo;</a>
+										th:href="@{/sportify/event(page=${page.number - 1}, eventName=${eventName} ,keyword=${keyword})}">&laquo;</a>
 									</li>
 									<!-- Các nút số Trang -->
 									<li class="ml-1 mr-1 mb-5"
 										th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
 										th:unless="${page.totalPages <= 1}"><a
 										th:class="${page.number == pageNumber-1} ? 'bg-success text-white' : ''"
-										th:href="@{/sportify/event(page=${pageNumber-1}, keyword=${keyword})}"
+										th:href="@{/sportify/event(page=${pageNumber-1},eventName=${eventName}, keyword=${keyword})}"
 										th:text="${pageNumber}"></a></li>
 									<!-- Nút tiếng lên 1 -->
 									<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
-										th:href="@{/sportify/event(page=${page.number + 1}, keyword=${keyword})}">&raquo;</a>
+										th:href="@{/sportify/event(page=${page.number + 1},eventName=${eventName}, keyword=${keyword})}">&raquo;</a>
 									</li>
 								</ul>
 							</div>

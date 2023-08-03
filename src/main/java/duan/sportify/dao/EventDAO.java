@@ -64,4 +64,17 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
     @Query("SELECT e FROM Eventweb e WHERE e.eventtype = :eventtype")
     Page<Eventweb> findEventsByEventType(String eventtype, Pageable pageable);
 	
+   
+
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) not LIKE 'Bảo trì' or lower(eventtype) not LIKE 'Khuyến mãi' ", nativeQuery = true)
+    Page<Eventweb> searchbtnTheThao(Pageable pageable);
+    
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) LIKE 'Khuyến mãi' ", nativeQuery = true)
+    Page<Eventweb> searchbtnKhuyenMai(Pageable pageable);
+    
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) LIKE 'Bảo trì' ", nativeQuery = true)
+    Page<Eventweb> searchbtnBaoTri(Pageable pageable);
 }
