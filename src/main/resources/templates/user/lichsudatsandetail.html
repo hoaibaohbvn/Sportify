@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:java="java.util" xmlns:temporals="java.time.temporal">
 
 <head>
-<title>SPORTIFY - Thông Tin Của Bạn</title>
+<title>SPORTIFY - Chi Tiết Booking</title>
 <link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
@@ -20,7 +21,33 @@
 <link rel="stylesheet" href="/user/css/style.css">
 <link rel="stylesheet" href="/user/css/styleprofile.css">
 </head>
+<style>
+#nz-div-3 h3.tde span {
+    background: #EA3A3C;
+    padding: 10px 20px 8px 20px;
+    color: white;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    border-radius: 23px 23px 0px 0px;
+}
 
+#nz-div-3 h3.tde {
+    margin: 15px 0;
+    border-bottom: 2px solid #ea3a3c;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+
+
+.nz-div-7 {    position: relative;    margin: 20px 0; text-align: center;}
+.nz-div-7 .box-title-name {    font-size: 24px;    font-weight: 900;    text-transform: uppercase;    color: #333;    display: inline-block;    vertical-align: top;    position: relative;    z-index: 1;    padding-bottom: 28px;}
+.nz-div-7 .box-title-name:before {    content: "";    position: absolute;    border-top: 10px solid #00aa46;    border-left: 15px solid transparent;    border-bottom: 7px solid transparent;    border-right: 15px solid transparent;  left: calc(50% - 40px);
+    bottom: -7px;
+    width: 50px;}
+.nz-div-7 .box-title-name:after {    content: "";    position: absolute;    z-index: 2;    bottom: 0;    height: 9px;    width: 200px;    left: calc(50% - 100px);    border-top: 2px solid #00aa46;}
+</style>
 <body>
 
 		<div class="wrap" style="z-index: 9; position: relative">
@@ -84,9 +111,8 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
-								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a> <a th:href="@{/user/change-password}"
-								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a>  <a
 								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
@@ -130,125 +156,73 @@
 			</div>
 		</div>
 	</nav>
+	<section class="hero-wrap hero-wrap-2"
+		style="background-image: url('/user/images/backgroundField.gif');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		
+	</section>
 	<!-- END nav -->
+<div class="nz-div-7">
+               <div class="box-title-name"><span class="null">Lịch Sử</span> Đặt Sân Của Bạn</div>
+			</div>
+	<div class="container d-flex justify-content-center rounded mb-5" >
+		<div class=" col-md-12 rounded row" id="profiles" style="margin-top:50px;background-color:rgb(247 249 250);">
 
-	<div class="container d-flex justify-content-center rounded mt-5 mb-5 ">
-		<div th:each="prf : ${prodiles}"
-			class=" col-md-12 bg-white d-flex rounded " id="profiles">
-			<form th:action="@{/sportify/profile/save-profile}" method="post"
-				class="d-flex" enctype="multipart/form-data">
-				<div class="col-md-5">
-					<div
-						class="d-flex flex-column align-items-center text-center p-3 py-5">
-						<div style="position: relative;">
-							<img class="border border-dark rounded-circle mt-5" width="250px"
-								height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
-							<div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1;">
-								<label for="avatarFileInput"> <i style="font-size: 30px;color: white;"
-									class="fa fa-camera"></i> <!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
-								</label> <input id="avatarFileInput" type="file"
-									class="form-control-file" name="avatarFile"
-									style="display: none;">
-							</div>
-						</div>
-						<div class="d-flex mt-4">
-							<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
-							<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
-						</div>
-						<span class="text-black-50">Admin</span> <span
-							th:text="${prf.email}" class="text-black-50"></span>
 
+			<div id='nz-div-3'>
+  <h3 class="tde">         
+            <span>Hiển thị 20 phiếu đặt gần nhất</span>         
+  </h3>
+</div>
+
+			<div th:each="bookingInfo : ${listbooking}" class="card col-12 mb-3" style="border-radius:10px">
+				<h6 class="card-header">Mã phiếu #<span th:text="${bookingInfo[0]}" ></span> 
+				<span style= "color:#1F8A70; font-weight: bold;">Đặt lúc</span>
+				<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[1], 'dd/MM/yyyy HH:mm:ss')}"></span>
+				<span th:with="statusColor=${bookingInfo[2] == 'Hoàn Thành' ? '#39AEA9' : (bookingInfo[2] == 'Đã Cọc' ? '#FFA41B' : (bookingInfo[2] == 'Hủy Đặt' ? 'red' : 'white'))}" 
+				      th:style="'font-size:medium;color:snow; font-weight:bold;margin-left: 3%;margin-right: 3%; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}" 
+				      th:text="${bookingInfo[2]}">
+				</span>
+				<span class="text-dark font-weight-bold">Thành Tiền:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(thanhtien)}"></span> 
+				<span>
+				<a  style="padding-left: 2%" th:href="@{/sportify/field/profile/historybooking}">
+							<button type="button" class="btn btn-outline-dark font-weight-bold">VỀ TRANG DANH SÁCH ĐẶT SÂN</button>
+					</a></span>
+				</h6>
+				<div class="card-body">
+					<h5 class="card-title text-success font-weight-bold" th:text="${bookingInfo[6]}"></h5>
+					<img style="width:20%; height:50%" th:src="@{'/user/images/' + ${bookingInfo[7]}}" alt="Image">
+					<div>
+					<span style= "color:black;">Ngày nhận sân:</span>
+					<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[4], 'dd/MM/yyyy')}"></span>
+					</div>
+					<div>
+					<span style= "color:black;">Giờ chơi:</span>
+					<span style= "color:#1F8A70; font-weight: bold;" th:text="${bookingInfo[8]}"></span>
+					</div>
+					<div>
+					<span>Giá sân gốc / 1h:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(bookingInfo[5])}"></span>
+					</div>
+					 <hr>
+					 <div>
+					<p>
+					<span>Phụ Thu:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(phuthu)}"></span>
+					<span>Tạm Tính:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(tamtinh)}"></span> 
+					<span>Giảm giá:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(giamgia)}"></span> ||
+					<span class="font-weight-bold">Tiền đã cọc:</span> <span class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(tiencoc)}"></span> ||
+					<span class="text-dark font-weight-bold">Khi nhận sân thanh toán:</span> <span class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(conlai)}"></span> 
+					
+
+					</p>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="p-3 py-5">
-						<div
-							class="d-flex justify-content-between align-items-center mb-3">
-							<h4 class="text-right text-uppercase">Thông tin</h4>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label class="labels">Họ</label> <input
-									th:value="${prf.firstname}" type="text" class="form-control"
-									name="firstname">
-							</div>
-							<div class="col-md-6">
-								<label class="labels">Tên</label> <input
-									th:value="${prf.lastname}" type="text" class="form-control"
-									name="lastname">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label class="labels">Tài khoản</label> <input
-									th:value="${prf.username}" type="text" class="form-control"
-									readonly name="username">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Mật khẩu</label> <input
-									th:value="${prf.passwords}" type="password"
-									class="form-control" name="passwords">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Số điện thoại</label> <input
-									th:value="${prf.phone}" type="text" class="form-control"
-									name="phone">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Email</label> <input
-									th:value="${prf.email}" type="text" class="form-control"
-									name="email">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Giới tính</label>
-								<div class="d-flex">
-									<div class="radio-container mr-4">
-										<input type="radio" name="gender" id="male" value="true"
-											class="form-control mr-1" th:checked="${prf.gender}" /> <span>Nam</span>
-									</div>
-									<div class="radio-container">
-										<input type="radio" name="gender" id="female" value="false"
-											class="form-control mr-1" th:checked="${!prf.gender}" /> <span>Nữ</span>
-									</div>
-								</div>
-
-							</div>
-
-
-							<div class="col-md-12">
-								<label class="labels">Địa chỉ</label> <input
-									th:value="${prf.address}" type="text" class="form-control"
-									name="address">
-							</div>
-						</div>
-						<div class="mt-5 text-center">
-							<button class="btn btn-primary profile-button" type="submit">Save
-								Profile</button>
-						</div>
-
-					</div>
-				</div>
-			</form>
+			</div>
+			
 		</div>
 	</div>
 
-	<!-- Đoạn mã để hiển thị thông báo nếu có -->
-	<div class="col-12 fixed-top" id="messageDiv" th:if="${message}"
-		style="display: none;">
-		<div class="col-3 alert alert-success"
-			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
-			<p th:text="${message}"></p>
-
-		</div>
-	</div>
-	<div class="col-12 fixed-top" id="messageDiv1" th:if="${message1}"
-		style="display: none;">
-		<div class="col-3 alert alert-danger "
-			style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
-			<p th:text="${message1}"></p>
-
-		</div>
-	</div>
+	
 
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen">

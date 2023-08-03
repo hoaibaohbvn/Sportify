@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Mini Shop</title>
+<title>SPORTIFY - MiniShop</title>
+<link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -127,7 +128,7 @@
 				</a>
 				<!-- giỏ hàng ảo -->
 				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
+					<!-- <div class="dropdown-item d-flex align-items-start" href="#">
 						<div class="img"
 							style="background-image: url(/user/images/prod-1.jpg);"></div>
 						<div class="text pl-3">
@@ -137,12 +138,11 @@
 								<a href="#" class="price ml-3">$25.99</a>
 							</p>
 						</div>
-					</div>
+					</div> -->
 					<div class="dropdown-item d-flex align-items-start" href="#">						
 						<p class="mb-0">
 								<p class="quantity" style="color: black">Tổng số lượng: {{cart.cartCount}}</p>
-								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number: 0}} VNĐ</a></p>
-							</p>
+								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number: 0}} VNĐ</a></p>							
 					</div>
 					
 					<a class="dropdown-item text-center btn-link d-block w-100"

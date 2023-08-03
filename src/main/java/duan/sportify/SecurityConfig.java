@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
 
@@ -34,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	UserDAO userDAO;
 	@Autowired
 	HttpSession session;
-	
+	 
+    
 	// Cung cấp nguồn dữ liệu đăng nhập
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,8 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				try {
 					Users user = userDAO.findById(username).get();
 					String password = pe.encode(user.getPasswords());
-//					System.out.println(user.getUsername());
-//					System.out.println(User.withUsername(username));
 					String[] roles = user.getListOfAuthorized().stream()
 							.map(er -> er.getRoles().getRoleid())
 							.collect(Collectors.toList())
@@ -67,7 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {	
 			http.csrf().disable().cors().disable();
 			http.authorizeRequests()
-				.antMatchers("/sportify/field/booking/**").authenticated()
+				.antMatchers("/sportify/field/booking/**","/sportify/profile/**","/sportify/field/profile/**","/sportify/team/teamdetail/**").authenticated()
+				
+				
 				.antMatchers("/admin/**").hasAnyRole("R01", "R02")
 				.antMatchers("/rest/authorities").hasRole("R01")
 				.anyRequest().permitAll();
@@ -75,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			http.formLogin()
 				.loginPage("/sportify/login/form")		
 				.loginProcessingUrl("/sportify/login")
-				.defaultSuccessUrl("/sportify/login/success", false)
+				.defaultSuccessUrl("/sportify/login/success")
 				.failureUrl("/sportify/login/error")
 				.usernameParameter("username").passwordParameter("password");
 				
