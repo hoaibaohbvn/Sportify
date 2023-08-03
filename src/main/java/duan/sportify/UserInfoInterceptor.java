@@ -1,6 +1,7 @@
 package duan.sportify;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +20,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserService userService;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

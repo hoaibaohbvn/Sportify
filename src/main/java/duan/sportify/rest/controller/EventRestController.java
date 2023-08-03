@@ -3,6 +3,8 @@ package duan.sportify.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +52,7 @@ public class EventRestController {
 		return ResponseEntity.ok(eventDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Eventweb> create(@RequestBody Eventweb event) {
+	public ResponseEntity<Eventweb> create(@Valid @RequestBody Eventweb event) {
 	    if (event.getEventid() != null && eventDAO.existsById(event.getEventid())) {
 	        return ResponseEntity.badRequest().build();
 	    }
@@ -58,7 +60,7 @@ public class EventRestController {
 	    return ResponseEntity.ok(event);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Eventweb> update(@PathVariable("id") Integer id, @RequestBody Eventweb event) {
+	public ResponseEntity<Eventweb> update(@PathVariable("id") Integer id, @Valid @RequestBody Eventweb event) {
 		if(!eventDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

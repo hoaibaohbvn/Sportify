@@ -2,6 +2,8 @@ package duan.sportify.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -63,15 +65,19 @@ public class VoucherRestController {
 		return ResponseEntity.ok(voucherDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Voucher> create(@RequestBody Voucher voucher) {
+	public ResponseEntity<Voucher> create(@Valid @RequestBody Voucher voucher) {
 	    if (voucher.getVoucherid() != null && voucherDAO.existsById(voucher.getVoucherid())) {
-	        return ResponseEntity.badRequest().build();
+	        return ResponseEntity.status(1000).build();
+	    }else if(voucher.getVoucherid() == null && !voucherDAO.existsById(voucher.getVoucherid())) {
+	    	return ResponseEntity.badRequest().build();
+	    }else {
+	    	voucherDAO.save(voucher);
+		    return ResponseEntity.ok(voucher);
 	    }
-	    voucherDAO.save(voucher);
-	    return ResponseEntity.ok(voucher);
+	    
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @RequestBody Voucher voucher) {
+	public ResponseEntity<Voucher> update(@PathVariable("id") String id, @Valid @RequestBody Voucher voucher) {
 		if(!voucherDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

@@ -49,7 +49,7 @@ public class SecurityController {
 	}
 
 	@RequestMapping("/sportify/logoff/success")
-	public String logoffSuccess(Model model) {
+	public String logoffSuccess(Model model, HttpSession session) {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
 		return "redirect:/sportify";
 	}
@@ -58,6 +58,7 @@ public class SecurityController {
 	@ResponseBody
 	@RequestMapping("/rest/security/authentication")
 	public Object getAuthentication(HttpSession session) {
+		System.out.println(session);
 		return session.getAttribute("authentication");
 	}
 }

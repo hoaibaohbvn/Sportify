@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import duan.sportify.entities.Teamdetails;
 import duan.sportify.entities.Teams;
 
 
@@ -21,6 +22,7 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "GROUP BY teams.teamid;", 
 			nativeQuery = true)
 	Page<Object[]> findAllTeam(Pageable pageable);
+	
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "			FROM teams\r\n" + "			LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
@@ -41,4 +43,7 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 	//search in admin 
 	@Query(value = "SELECT * FROM teams WHERE (:nameteam IS NULL OR nameteam LIKE %:nameteam%) AND (:sporttypeid IS NULL OR sporttypeid LIKE %:sporttypeid%)", nativeQuery = true)
 	List<Teams> searchTeamAdmin(@Param("nameteam") Optional<String> nameteam, @Param("sporttypeid") Optional<String> sporttypeid);
+	
+	//team detail in admin
+	
 }

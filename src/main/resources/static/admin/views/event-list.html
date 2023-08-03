@@ -75,6 +75,7 @@
 								<th>Image</th>
 								<th>Date Start</th>
 								<th>Date End</th>
+								<th>Event type</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -86,6 +87,7 @@
 									height="100px"></td>
 								<td>{{item.datestart | date : 'dd-MM-yyyy'}}</td>
 								<td>{{item.dateend | date : 'dd-MM-yyyy'}}</td>
+								<td>{{item.eventtype}}</td>
 								<td class="text-right">
 									<div class="dropdown dropdown-action">
 										<a href="#" class="action-icon dropdown-toggle"
@@ -136,7 +138,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Event Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameevent">
+										type="text" ng-model="form.nameevent" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameevent' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -173,7 +178,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
-										ng-model="form.descriptions"></textarea>
+										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -219,7 +227,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Event Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameevent">
+										type="text" ng-model="form.nameevent" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameevent' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -256,7 +267,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
-										ng-model="form.descriptions"></textarea>
+										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 

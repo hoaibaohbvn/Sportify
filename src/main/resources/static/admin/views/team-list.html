@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal"
-						data-target="#add"><i class="fa fa-plus" ng-click="reset"></i>
+						data-target="#add"><i class="fa fa-plus" ng-click="reset()"></i>
 						Add Team</a>
 
 				</div>
@@ -78,7 +78,7 @@
 						<tbody>
 							<tr ng-repeat="item in items">
 								<td>{{$index + 1 }}</td>
-								<td>{{item.nameteam}}</td>
+								<td><a href="#" ng-click="viewTeamMembers(item.teamid)">{{item.nameteam}}</a></td>
 								<td>{{item.sporttype.categoryname}}</td>
 								<td>{{item.quantity}}</td>
 								<td><img src="/user/images/{{item.avatar}}" width="100px"
@@ -179,9 +179,8 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Create BY <span
-										class="text-danger">*</span></label> <input type="text" value="staff"
+										class="text-danger">*</span></label> <input type="text" value="{{username}}"
 										readonly class="form-control floating" ng-model="form.username">
-										<p>{{}}</p>
 								</div>
 							</div>
 							<div class="col-sm-12">

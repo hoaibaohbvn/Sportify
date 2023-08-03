@@ -10,13 +10,15 @@ app.controller('CategoryController', function($scope, $http) {
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-
+			
 		}
 		
 	}
 	// hàm edit
 	$scope.edit = function(item) {
+		$scope.errors = [];
 		$scope.form = angular.copy(item);
+		
 	}
 	// hàm tạo
 	$scope.create = function() {
@@ -50,8 +52,7 @@ app.controller('CategoryController', function($scope, $http) {
 			$('#edit').modal('hide')
 			$scope.getAll();
 			refreshPageAfterThreeSeconds();
-		})
-			.catch(error => {
+		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
 			if (error.data && error.data.errors) {
 				$scope.errors = error.data.errors;

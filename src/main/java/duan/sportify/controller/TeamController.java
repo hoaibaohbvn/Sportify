@@ -64,42 +64,9 @@ public class TeamController {
 			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid,
 			Pageable pageable) {
 		
-		Page<Object[]> teamPage;
-
-		int searchTextLength = searchText.length();// Kiểm tra xem ng dùng có nhập vào ô tìm kiếm không
-		int sporttypeidLength = sporttypeid.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
-
-		if (searchTextLength > 0 && sporttypeidLength == 0) {// Kiểm tra nếu ng dùng có nhập vào ô tìm kiếm thì sẽ dỗ dữ
-			
-			// liệu theo SearchTeam
-			teamPage = teamdao.SearchTeam(searchText, pageable);
-			
-		} else if (searchTextLength == 0 && sporttypeidLength > 0) {// Kiểm tra nếu ng dùng chọn vào lọc thì sẽ dỗ dữ
-																	// liệu theo FilterTeam
-			teamPage = teamdao.FilterTeam(sporttypeid, pageable);
-		} else {
-			teamPage = teamdao.findAllTeam(pageable);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
-		}
-		
 		
 
-		List<Object[]> teams = teamPage.getContent();
 		
-		model.addAttribute("team", teams);
-		model.addAttribute("page", teamPage);
-		model.addAttribute("searchText", searchText);
-		model.addAttribute("sporttypeid", sporttypeid);
-//		model.addAttribute("username", username);
-
-		// Kiểm tra để hiển thị thông báo
-		if (!searchText.isEmpty() && teamPage.getTotalElements() > 0) {
-			model.addAttribute("FoundMessage",
-					"Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
-		}
-		if (teamPage.getTotalElements() == 0) {
-			model.addAttribute("notFoundMessage",
-					"Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
-		}
 
 		return "user/doi";
 	}

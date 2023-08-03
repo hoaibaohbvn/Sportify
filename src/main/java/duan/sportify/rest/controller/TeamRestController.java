@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import duan.sportify.GlobalExceptionHandler;
 
 import duan.sportify.dao.TeamDAO;
-import duan.sportify.entities.Categories;
 import duan.sportify.entities.Teams;
 
 import duan.sportify.utils.ErrorResponse;
@@ -61,7 +60,7 @@ public class TeamRestController {
 	    return ResponseEntity.ok(team);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @RequestBody Teams team) {
+	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @Valid @RequestBody Teams team) {
 		if(!teamDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -81,5 +80,13 @@ public class TeamRestController {
 	@GetMapping("/search")
 	public ResponseEntity<List<Teams>> search(@RequestParam("nameteam") Optional<String> nameteam, @RequestParam("sporttypeid") Optional<String> sporttypeid){
 		return ResponseEntity.ok(teamDAO.searchTeamAdmin(nameteam, sporttypeid));
+	}
+	// detail
+	@GetMapping("detail/{id}")
+	public ResponseEntity<Teams> getDetail(@PathVariable("id") Integer id) {
+		if(!teamDAO.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(teamDAO.findById(id).get());
 	}
 }

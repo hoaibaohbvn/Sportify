@@ -25,7 +25,7 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-
+		$scope.errors = [];
 	}
 	// hàm tạo
 	$scope.create = function() {

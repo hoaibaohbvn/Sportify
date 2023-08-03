@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +42,7 @@ public class Eventweb implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="eventid", nullable=false)
     private Integer    eventid ;
-
+    @NotBlank(message = "{NotBlank.eventweb.nameevent}")
     //--- ENTITY DATA FIELDS 
     @Column(name="nameevent", nullable=false, length=50)
     private String     nameevent ;
@@ -55,7 +57,7 @@ public class Eventweb implements Serializable {
 
     @Column(name="image", length=100)
     private String     image ;
-
+    @NotBlank(message = "{NotBlank.eventweb.descriptions}")
     @Column(name="descriptions", length=1000)
     private String     descriptions ;
     

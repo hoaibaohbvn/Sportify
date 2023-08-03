@@ -3,6 +3,8 @@ package duan.sportify.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class FieldRestController {
 		return ResponseEntity.ok(fieldDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Field> create(@RequestBody Field field) {
+	public ResponseEntity<Field> create(@Valid @RequestBody Field field) {
 	    if (field.getFieldid() != null && fieldDAO.existsById(field.getFieldid())) {
 	        return ResponseEntity.badRequest().build();
 	    }
@@ -60,7 +62,7 @@ public class FieldRestController {
 	    return ResponseEntity.ok(field);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Field> update(@PathVariable("id") Integer id, @RequestBody Field field) {
+	public ResponseEntity<Field> update(@PathVariable("id") Integer id, @Valid @RequestBody Field field) {
 		if(!fieldDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

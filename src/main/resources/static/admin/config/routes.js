@@ -19,6 +19,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: '/admin/views/booking.html',
             pageTitle: 'Booking'
         })
+        .when('/admin/teams/:teamid', {
+            templateUrl: '/admin/views/team-detail.html',
+            pageTitle: 'Team Detail'
+        })
         .when('/admin/events', {
             templateUrl: '/admin/views/event-list.html',
             pageTitle: 'Event'

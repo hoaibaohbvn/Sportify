@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import duan.sportify.entities.Teamdetails;
 
-@SuppressWarnings("unused")
+
 public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "FROM teams\r\n"
@@ -37,10 +37,14 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 	
 	@Query(value = "SELECT COUNT(*) FROM teamdetails WHERE teamid like :teamId", nativeQuery = true)
 	Integer countUser(Integer teamId);
-
+	// team detail in admin
+		@Query(value = "SELECT * FROM teamdetails WHERE teamid = :teamid", nativeQuery = true)
+	    List<Teamdetails> findByTeamIdAdmin(@Param("teamid") Integer teamid);
 	@Modifying
 	@Query(value ="DELETE FROM teamdetails WHERE username like :username AND teamid like :teamId", nativeQuery = true)
 	@Transactional
 	int deleteByUsernameAndTeamId(String username, Integer teamId);
+	
+	
 
 }

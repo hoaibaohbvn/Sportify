@@ -45,7 +45,7 @@ public class CategoryProductRestController {
 		return ResponseEntity.ok(categoryDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Categories> getOne(@Valid @PathVariable("id") Integer id) {
+	public ResponseEntity<Categories> getOne(@PathVariable("id") Integer id) {
 		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -60,7 +60,7 @@ public class CategoryProductRestController {
 	    return ResponseEntity.ok(category);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Categories> update(@PathVariable("id") Integer id, @RequestBody Categories category) {
+	public ResponseEntity<Categories> update(@PathVariable("id") Integer id,@Valid @RequestBody Categories category) {
 		if(!categoryDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

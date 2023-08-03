@@ -1,4 +1,7 @@
 app.controller('TeamController', function($scope, $http) {
+
+
+
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
@@ -13,20 +16,39 @@ app.controller('TeamController', function($scope, $http) {
 			})
 		});
 		$scope.reset();
+
 	}
 	// hàm rest form
 	$scope.reset = function() {
-		$scope.form = {
-			createdate: new Date(),
-			sporttypeid: "B01",
-			avatar: "loading.jpg",
-			username: "staff"
-		}
+		$scope.username = '';
+
+		$scope.getUsername = function() {
+			$http.get('http://localhost:8080/sportify/user/get-username', {
+				withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+			}).then(function(response) {
+				if (response.data.username) {
+					$scope.username = response.data.username;
+					$scope.form = {
+						createdate: new Date(),
+						sporttypeid: "B01",
+						avatar: "loading.jpg",
+						username: $scope.username
+					}
+				} else {
+					console.log('Error fetching username:', response.data.error);
+				}
+			}).catch(function(error) {
+				console.log('Error fetching username:', error);
+			});
+		};
+
+		$scope.getUsername(); // Gọi hàm này khi controller được tải
+
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-
+		$scope.errors = [];
 	}
 	// hàm tạo
 	$scope.create = function() {
@@ -48,7 +70,7 @@ app.controller('TeamController', function($scope, $http) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
-      		console.log(error);
+			console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -61,16 +83,16 @@ app.controller('TeamController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-			// Xử lý lỗi phản hồi từ máy chủ
-			if (error.data && error.data.errors) {
-				$scope.errors = error.data.errors;
-			}
-			if (error.data) {
-				showErrorToast("Vui lòng kiểm tra lại form");
-			}
-			console.log($scope.errors);
-      		console.log(error);
-		});
+				// Xử lý lỗi phản hồi từ máy chủ
+				if (error.data && error.data.errors) {
+					$scope.errors = error.data.errors;
+				}
+				if (error.data) {
+					showErrorToast("Vui lòng kiểm tra lại form");
+				}
+				console.log($scope.errors);
+				console.log(error);
+			});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -185,26 +207,35 @@ app.controller('TeamController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.searchName = '';
-   	 $scope.searchSport = null;
-   	 
-   	 $scope.search = function () {
-			
-      $http.get('/rest/teams/search', { params: 
-      		{ 	
-				nameteam: $scope.searchName, 
-      			sporttypeid: $scope.searchSport
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          $scope.items.forEach(item => {
+	$scope.searchName = '';
+	$scope.searchSport = null;
+
+	$scope.search = function() {
+
+		$http.get('/rest/teams/search', {
+			params:
+			{
+				nameteam: $scope.searchName,
+				sporttypeid: $scope.searchSport
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.items.forEach(item => {
 				item.createdate = new Date(item.createdate)
 			})
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
+			console.log($scope.items);
+		})
+			.catch(function(error) {
+				console.log('Lỗi khi gửi yêu cầu:', error);
+			});
+	};
 
+	
+	// Hàm xem thành viên của một đội
+        $scope.viewTeamMembers = function (teamid) {
+            $http.get('/rest/teams/' + teamid).then(function (response) {
+                $scope.teamMembers = response.data;
+                $scope.selectedTeam = $scope.items.find(team => team.teamid === teamid);
+            });
+        };
 })
