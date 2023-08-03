@@ -86,14 +86,11 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> 
-							<a
-								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a>
-							<a th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
-								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a> 
-							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -323,10 +320,10 @@
 							</div>
 							<div>
 								<p class="fa fa-calendar"></p>
-								<span th:text="${#dates.format(u[12], 'dd-MM-yyyy')}"></span>
+								<span th:text="${#dates.format(u[13], 'dd-MM-yyyy')}"></span>
 							</div>
 							<div>
-								<p th:text="${u[13]}"></p>
+								<p th:text="${u[14]}"></p>
 							</div>
 
 							<div class="meta metaDiv" style="display: none">

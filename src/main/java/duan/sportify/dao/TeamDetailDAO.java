@@ -24,7 +24,7 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 //			+ "where teamdetails.teamid like :teamId",nativeQuery = true)
 //	List<Object[]> findUserByIdTeam(String teamId);
 	
-	@Query(value = "SELECT users.*,teamdetails.teamdetailid,teamdetails.teamid,teamdetails.joindate,teamdetails.infouser\r\n"
+	@Query(value = "SELECT users.*,teamdetails.*\r\n"
 			+ "FROM users\r\n"
 			+ "INNER JOIN teamdetails ON users.username = teamdetails.username\r\n"
 			+ "INNER JOIN teams ON teamdetails.teamid = teams.teamid\r\n"

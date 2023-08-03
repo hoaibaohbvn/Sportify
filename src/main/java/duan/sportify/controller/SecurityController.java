@@ -3,7 +3,7 @@ package duan.sportify.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import duan.sportify.service.UserService;
+import duan.sportify.entities.Users;
 
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -26,17 +24,15 @@ public class SecurityController {
 	
 	@RequestMapping("/sportify/login/form")
 	public String loginForm(Model model) {
-		
+		model.addAttribute("message", "Vui lòng đăng nhập để sử dụng tính năng!");
 		return "security/login";
 	}
 
 	@RequestMapping("/sportify/login/success")
-	public String loginSuccess(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String loginSuccess(Model model,HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
         session.setAttribute("username", username);
-        
-        
 		return "redirect:/sportify";
 	}
 

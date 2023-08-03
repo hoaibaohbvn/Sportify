@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import duan.sportify.dao.AuthorizedDAO;
 import duan.sportify.dao.BookingDAO;
-
 import duan.sportify.entities.Authorized;
 import duan.sportify.entities.Bookings;
 import duan.sportify.service.AuthorizedService;
@@ -19,7 +17,6 @@ import duan.sportify.service.BookingService;
 public class BookingServiceImpl implements BookingService{
 	@Autowired
 	BookingDAO bookingDAO;
-	@Autowired
 
 	@Override
 	public List<Bookings> findAll() {
@@ -50,20 +47,4 @@ public class BookingServiceImpl implements BookingService{
 		// TODO Auto-generated method stub
 		return bookingDAO.findById(id).get();
 	}
-
-	
-
-	@Override
-	public List<Object[]> getBookingInfoByUsername(String username) {
-		// TODO Auto-generated method stub
-		return bookingDAO.getBookingInfoByUsername(username);
-	}
-
-	@Override
-	public Object[] getBookingInfoByBookingDetail(String bookingid) {
-		// TODO Auto-generated method stub
-		return bookingDAO.getBookingInfoByBookingDetail(bookingid);
-	}
-
-	
 }
