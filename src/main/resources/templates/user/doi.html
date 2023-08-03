@@ -25,7 +25,7 @@
 </head>
 <body>
 
-		<div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -85,11 +85,14 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
-								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a> <a th:href="@{/user/change-password}"
-								class="dropdown-item">Đổi mật khẩu</a> <a
-								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
+								tin</a> 
+							<a
+								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a>
+							<a th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
+								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a> 
+							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -190,9 +193,10 @@
 				class="row no-gutters slider-text align-items-end justify-content-center">
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
-						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span> <a th:href="@{/sportify/team}">Đội/Nhóm <i
-							class="fa fa-chevron-right"></i></a></span>
+						<span class="mr-2"><a th:href="@{/sportify}">Trang Chủ
+								<i class="fa fa-chevron-right"></i>
+						</a></span> <span> <a th:href="@{/sportify/team}">Đội/Nhóm <i
+								class="fa fa-chevron-right"></i></a></span>
 					</p>
 					<h2 class="mb-0 bread">Đội/Nhóm</h2>
 				</div>
@@ -267,44 +271,44 @@
 
 
 					<div class="col-md-12 row d-flex">
-						<div th:each="team: ${team}"
+						<div th:each="teamItem: ${team}"
 							class="col-lg-6 d-flex align-items-stretch ftco-animate">
 							<div class="blog-entry d-md-flex">
 								<img class="block-20 img bg-dark block-19"
-									th:src="@{'/user/images/' + ${team[4]}}" alt="" src="">
+									th:src="@{'/user/images/' + ${teamItem[4]}}" alt="" src="">
 								<div class="text p-4 bg-light d-flex flex-column">
 
-									<h3 th:text="${team[2]}" class="heading mb-3"
+									<h3 th:text="${teamItem[2]}" class="heading mb-3"
 										style="color: #2E7D32; font-weight: bold;">
 										<a href="#"></a>
 									</h3>
 									<div class="meta">
 										<p class="fa fa-calendar"></p>
-										<span th:text="${#dates.format(team[8], 'dd-MM-yyyy')}"></span>
+										<span th:text="${#dates.format(teamItem[8], 'dd-MM-yyyy')}"></span>
 									</div>
 									<div class="d-flex ">
 										<p class="lable_team">Thành viên:</p>
-										<p th:text="${team[10]}" style="margin-right: 5px"></p>
+										<p th:text="${teamItem[10]}" style="margin-right: 5px"></p>
 										<p style="margin-right: 5px">/</p>
-										<p th:text="${team[3]}" style="margin-right: 5px"></p>
+										<p th:text="${teamItem[3]}" style="margin-right: 5px"></p>
 									</div>
 									<div class="d-flex">
 										<p class="lable_team">Môn thể thao :</p>
-										<p th:text="${team[9]}"></p>
+										<p th:text="${teamItem[9]}"></p>
 									</div>
 
 									<div class="d-flex">
 										<p class="lable_team">Liên hệ :</p>
-										<p th:text="${team[5]}"></p>
+										<p th:text="${teamItem[5]}"></p>
 									</div>
 
 									<div class="d-flex">
-										<p th:text="${team[6]}" class="limited-length"
+										<p th:text="${teamItem[6]}" class="limited-length"
 											style="font-style: italic;"></p>
 									</div>
 									<div class="submit-section align-self-end mt-auto">
 										<a
-											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${team[0]})}"
+											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
 											class="btn btn-success">Xem thêm</a>
 
 									</div>
@@ -318,27 +322,24 @@
 				<div class="row col-md-12 mt-5">
 					<div class="col text-center">
 						<div class="block-27 ml-5">
-							<!-- Các nút điều hướng của trang -->
 							<ul class="pagination d-flex justify-content-center ml-5">
-								<!-- Nút lùi lại 1 -->
-								<li class="ml-1 mr-1 mb-5" th:unless="${page.first}"><a
-									th:href="@{/sportify/team(page=${page.number - 1}, searchText=${searchText}, sporttypeid=${sporttypeid})}">&laquo;</a>
+								<li class="ml-1 mr-1 mb-5" th:unless="${team.first}"><a
+									th:href="@{/sportify/team(page=${team.number - 1}}">&laquo;</a>
 								</li>
-								<!-- Các nút số Trang -->
 								<li class="ml-1 mr-1 mb-5"
-									th:each="pageNumber : ${#numbers.sequence(1, page.totalPages)}"
-									th:unless="${page.totalPages <= 1}"><a
-									th:class="${page.number == pageNumber-1} ? 'bg-success text-white' : ''"
-									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${searchText}, sporttypeid=${sporttypeid})}"
+									th:each="pageNumber : ${#numbers.sequence(1, team.totalPages)}"
+									th:unless="${team.totalPages <= 1}"><a
+									th:class="${team.number == pageNumber-1} ? 'bg-success text-white' : ''"
+									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid})}"
 									th:text="${pageNumber}"></a></li>
-								<!-- Nút tiếng lên 1 -->
-								<li class="ml-1 mr-1 mb-5" th:unless="${page.last}"><a
-									th:href="@{/sportify/team(page=${page.number + 1}, searchText=${searchText} , sporttypeid=${sporttypeid})}">&raquo;</a>
+								<li class="ml-1 mr-1 mb-5" th:unless="${team.last}"><a
+									th:href="@{/sportify/team(page=${team.number + 1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid})}">&raquo;</a>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</section>

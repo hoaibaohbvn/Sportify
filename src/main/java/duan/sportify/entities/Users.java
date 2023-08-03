@@ -64,7 +64,7 @@ public class Users implements Serializable {
     //--- ENTITY LINKS ( RELATIONSHIP )
     @OneToMany(mappedBy="users")
     private List<Teamdetails> listOfTeamdetails ; 
-    @JsonIgnore
+
     @OneToMany(mappedBy="users")
     private List<Orders> listOfOrders ; 
     @JsonIgnore
@@ -78,6 +78,10 @@ public class Users implements Serializable {
     private List<Favoritefield> listOfFavoritefield ; 
     @JsonIgnore
     @OneToMany(mappedBy="users")
-    private List<Teams> listOfTeams ;  
+    private List<Teams> listOfTeams ;
+ 
+    
+
+   
 
 }
