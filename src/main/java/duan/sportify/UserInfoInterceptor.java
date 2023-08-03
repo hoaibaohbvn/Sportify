@@ -2,14 +2,14 @@ package duan.sportify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import duan.sportify.service.UserService;
 import duan.sportify.entities.Users;

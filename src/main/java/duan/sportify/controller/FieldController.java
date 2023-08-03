@@ -33,6 +33,8 @@ import duan.sportify.service.ShiftService;
 import duan.sportify.service.SportTypeService;
 import duan.sportify.service.UserService;
 import duan.sportify.service.VoucherService;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -237,14 +239,15 @@ public class FieldController {
 	@GetMapping("/field/booking/{idField}")
 	public String Booking(Model model, @RequestParam(value = "nameshift", required = false) String nameShift, 
 			@PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes,
-			@RequestParam(value = "voucher", required = false) String voucher) {
+			@RequestParam(value = "voucher", required = false) String voucher, HttpServletRequest request) {
 		int discountpercent = 0;
 		double pricevoucher = 0;
 		double totalprice = 0 ;
 		double thanhtien = 0;
 		double tiencoc = 0;
 		double conlai = 0;
-		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		String userlogin = (String) request.getSession().getAttribute("username");;
+//		Users loggedInUser = userService.findById(userlogin);
 		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
 		for(int i = 0 ; i < shift.size();i++) {
 				time = shift.get(i).getStarttime();
@@ -253,11 +256,18 @@ public class FieldController {
         LocalTime timeToCompare = LocalTime.of(17, 0);
         LocalDate currentDate = LocalDate.now();
         
-       
+        // Chuyển đổi chuỗi ngày thành đối tượng LocalDate
+        LocalDate localDate = LocalDate.parse(dateselect);
+
+        // Định dạng thành chuỗi "dd/MM/yyyy"
+        String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        
+
         
         double phuthu = 0; // giá phụ thu
-		if (loggedInUser != null) {
-			List<Voucher> listvoucher = voucherService.findAll();
+		if (userlogin != null) {
+//			List<Voucher> listvoucher = voucherService.findAll();
 			List<Field> fieldListById = fieldservice.findFieldById(idField);
 			double giasan = fieldListById.get(0).getPrice();
 			String nameSportype = fieldservice.findNameSporttypeById(idField);
@@ -320,16 +330,17 @@ public class FieldController {
 			model.addAttribute("conlai", conlai);
 			model.addAttribute("tiencoc", tiencoc);
 			model.addAttribute("thanhtien", thanhtien);
-			model.addAttribute("listvoucher",listvoucher);
+			model.addAttribute("listvoucher",magiamgia);
 			model.addAttribute("nameShift",nameShift);
 			model.addAttribute("dateselect",dateselect);
 			model.addAttribute("nameSportype",nameSportype);
-			model.addAttribute("InfoUser",loggedInUser);
+			model.addAttribute("formattedDate",formattedDate);
+
 			model.addAttribute("fieldListById",fieldListById);
 		
 		}else {
 			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login";
+			return "redirect:/sportify/login/form";
 		}
 		
 		return "user/checkout-dat-san";

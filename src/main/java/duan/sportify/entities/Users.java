@@ -80,7 +80,7 @@ public class Users implements Serializable {
     @OneToMany(mappedBy="users")
     private List<Teams> listOfTeams ;
  
-
+    
 
    
 

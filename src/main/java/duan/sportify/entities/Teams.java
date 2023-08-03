@@ -76,6 +76,7 @@ public class Teams implements Serializable {
     @ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 
+    
     @JsonIgnore
     @OneToMany(mappedBy="teams")
     private List<Teamdetails> listOfTeamdetails ; 
