@@ -71,8 +71,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public List<Orders> findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderDAO.findByUsername (username);
 	}
 
 	

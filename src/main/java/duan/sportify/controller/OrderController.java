@@ -33,7 +33,7 @@ public class OrderController {
 	
 	@GetMapping("/order/historyList")
 	public String list(Model model, HttpServletRequest request) {
-		String username = request.getRemoteUser();
+		String username = (String) request.getSession().getAttribute("username");
 		model.addAttribute("orders", orderService.findByUsername(username));
 		return "user/orderList";
 	}

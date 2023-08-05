@@ -97,13 +97,11 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> 
-							<a
-								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a>
-							<a th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
-								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a> 
-							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
+								href="#">Lịch sử đặt sân</a> <a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
+								th:href="@{/user/change-password}" class="dropdown-item">Đổi
+								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -221,7 +219,7 @@
 					<div class="row mb-4">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
-							<h4 class="product-select">Sắp xếp theo giá</h4>
+							<h4 class="product-select">Sắp xếp</h4>
 							<div class="dropdown filter">
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"

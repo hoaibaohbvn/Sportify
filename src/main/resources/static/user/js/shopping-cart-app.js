@@ -70,7 +70,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		createdate: new Date(),
 		address: "",
 		note: "",
-		orderstatus: 3,
+		orderstatus: 1,
 		paymentstatus: 0,
 		get orderDetails() {
 			return $scope.cart.items.map(item => {
