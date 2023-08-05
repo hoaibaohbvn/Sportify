@@ -47,5 +47,5 @@ public interface FieldDAO extends JpaRepository<Field, Integer>{
 			+ "AND (sporttypeid like %:sporttypeid% OR :sporttypeid IS NULL)\r\n"
 			+ "and (status = :status OR :status IS NULL);", nativeQuery = true)
 	List<Field> searchFieldAdmin(@Param("namefield") Optional<String> namefield, @Param("sporttypeid") Optional<String> sporttypeid, @Param("status") Optional<Integer> status);
-
+	
 }

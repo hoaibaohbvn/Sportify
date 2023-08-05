@@ -26,7 +26,7 @@ public class SecurityController {
 	
 	@RequestMapping("/sportify/login/form")
 	public String loginForm(Model model) {
-		model.addAttribute("message", "Vui lòng đăng nhập để sử dụng tính năng!");
+		
 		return "security/login";
 	}
 
