@@ -91,14 +91,11 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
-								href="#">Lịch sử đặt sân</a> 
-								<a th:href="@{/user/list-order}" class="dropdown-item"
-								href="#">Lịch sử mua hàng</a>
-								<a
-								th:href="@{/user/change-password}" class="dropdown-item">Đổi
-								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -210,7 +207,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="firstname">Họ: </label> <input type="text"
-										class="form-control" id="username" value="[[(#request.remoteUser)]]">
+										class="form-control" ng-model="order.username" value="">
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -231,7 +228,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="streetaddress">Ngày đặt hàng: </label> <input
-										type="text" class="form-control" placeholder="" value="{{order.createDate | date: 'dd-MM-yyyy'}}">
+										type="text" class="form-control" placeholder="" value="{{order.createdate | date: 'dd-MM-yyyy'}}">
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -304,7 +301,7 @@
 									</div>
 								</div>
 								<p>
-									<button ng-click="order.purchase" class="btn btn-primary py-3 px-4">Thanh toán</button>
+									<button ng-click="order.purchase()" class="btn btn-primary py-3 px-4">Thanh toán</button>
 								</p>
 							</div>
 						</div>

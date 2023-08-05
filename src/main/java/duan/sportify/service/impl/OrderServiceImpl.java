@@ -46,7 +46,8 @@ public class OrderServiceImpl implements OrderService{
 		TypeReference<List<Orderdetails>> type = new TypeReference<List<Orderdetails>>() {};
 		List<Orderdetails> details = mapper.convertValue(orderData.get("orderDetails"), type).stream()
 				.peek(d -> d.setOrders(order)).collect(Collectors.toList());
-		orderDetailDAO.saveAll(details);		
+		orderDetailDAO.saveAll(details);
+		
 		return order;
 	}
 
@@ -71,6 +72,8 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public List<Orders> findByUsername(String username) {
 		// TODO Auto-generated method stub
-		return orderDAO.findByUsername(username);
+		return null;
 	}
+
+	
 }
