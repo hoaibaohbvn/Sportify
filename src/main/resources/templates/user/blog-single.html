@@ -247,7 +247,7 @@
 						<div class="block-25 mb-4 d-flex bg-light" th:each="lq : ${eventLQ}" id="" style="border-radius: 5px;width: 380px;height:75px ;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);" >
 							<div class="img-tintuc">
 								<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${lq[0]})}">
-									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width:150px; height: auto; image-rendering: crisp-edges;">
+									<img  class="blog-img mr-4 " alt="Image" th:src="@{'/user/images/' + ${lq[4]}}" style="width: 150px;height: 75px;object-fit: cover;">
 								</a>
 							</div>
 							
