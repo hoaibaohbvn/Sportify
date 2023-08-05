@@ -28,43 +28,69 @@
 			<div class="col-md-6 bg-light">
 				<div class="login d-flex align-items-center py-5">
 
-					<!-- Đăng nhập-->
-					<div id="loginForm" class="container" style="display: block;">
+
+					<!-- Đăng kí-->
+					<div id="signupForm" class="container" style="display: block;">
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
-								<h3 class="display-4">Đăng nhập</h3>
-								<form th:action="@{/sportify/login}" method="post">
-									<div class="form-group mb-3">
-										<input name="username" type="text" placeholder="username"
+								<h3 class="display-4 mb-5">Đăng kí</h3>
+								<form class="col-12" th:action="@{/sportify/signup/process}"
+									method="post">
+									<div class="row">
+										<div class="col-6 form-group mb-3">
+											<input type="text" name="firstnameSignUp" placeholder="Họ"
+												class="form-control rounded-pill border-0 shadow-sm px-4">
+										</div>
+										<div class="col-6 form-group mb-3">
+											<input type="text" name="lastnameSignUp" placeholder="Tên"
+												class="form-control rounded-pill border-0 shadow-sm px-4">
+										</div>
+									</div>
+									<div class="col-12 form-group mb-3">
+										<input type="text" name="usernameSignUp"
+											placeholder="Tài khoản"
 											class="form-control rounded-pill border-0 shadow-sm px-4">
 									</div>
+
 									<div class="form-group mb-3">
-										<input name="password" type="password" placeholder="password"
+										<input type="password" name="passwordSignUp"
+											placeholder="Mật khẩu"
+											class="form-control rounded-pill border-0 shadow-sm px-4">
+									</div>
+
+									<div class="row">
+										<!-- giới tính -->
+										<div class="col-4 form-group mb-3">
+											<select name="genderSignUp" id="genderSignUp"
+												placeholder="Tên"
+												class="form-control rounded-pill border-0 shadow-sm px-4">
+												<option value="male">Nam</option>
+												<option value="female">Nữ</option>
+											</select>
+										</div>
+										<!-- End giới tính -->
+
+										<div class=" col-8 form-group mb-3">
+											<input type="text" name="phoneSignUp"
+												placeholder="Số điện thoại"
+												class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+										</div>
+
+									</div>
+									<div class="form-group mb-3">
+										<input type="text" name="emailSignUp" placeholder="Email"
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
 									</div>
-									<div th:if="${message!=null}" class="custom-control custom-checkbox mb-3">
+									<div th:if="${message!=null}"
+										class="custom-control custom-checkbox mb-3">
 										<label for="customCheck1"
 											class="custom-control-label text-danger" th:text="${message}"></label>
 									</div>
-									<div class="custom-control custom-checkbox mb-3">
-										<input name=remember-me type="checkbox"
-											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Nhớ
-											mật khẩu ?</label>
-									</div>
-
-									<div class="d-grid gap-2 mb-3">
-										<a th:href="@{/sportify/login/form}"><button
-												class="btn btn-primary d-grid w-100">Đăng nhập</button></a>
-									</div>
-
-									<a style="font-size: 15px" id="forgotPassword" href=""> <u>Quên
-											mật khẩu?</u></a>
-									<hr>
-
+									<button type="submit" class="btn btn-primary">Đăng kí</button>
 									<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Bạn chưa có tài khoản <a th:href="@{/sportify/signups}">Đăng kí</a>
+											Đã có tài khoản <a th:href="@{/sportify/login}"
+												class="mr-2">Đăng nhập</a>
 										</p>
 									</div>
 
@@ -73,6 +99,7 @@
 						</div>
 					</div>
 					<!-- End -->
+
 					<!-- Quên mật khẩu-->
 					<div id="forgotPasswordForm" class="container"
 						style="display: none;">
@@ -134,20 +161,6 @@
 		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
 		crossorigin="anonymous">
 		
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var forgotPassword = document.getElementById("forgotPassword");
-			var loginForm = document.getElementById("loginForm");
-			var forgotPasswordForm = document
-					.getElementById("forgotPasswordForm");
-
-			forgotPassword.addEventListener("click", function(event) {
-				event.preventDefault();
-				loginForm.style.display = "none";
-				forgotPasswordForm.style.display = "block";
-			});
-		});
 	</script>
 
 </body>
