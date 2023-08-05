@@ -205,12 +205,11 @@
 		<div class="overlay1"></div>
 		<div class="col-12 justify-content-center d-flex">
 			<div class="col-10 d-flex ">
-				<div class="col-4 bg-dark  justify-content-center d-flex">
+				<div class="col-4 bg-dark justify-content-center d-flex">
 					<div class="col-8">
 							<a th:href="@{/sportify/event/thethao}"
-								class="col-12 btn-thethao bg-light mt-5 rounded gradient-element"
-								type="submit">Thể
-								thao</a>
+								class="col-12 btn-thethao bg-light mt-5 rounded justify-content-center"
+								type="submit">Thể thao</a>
 							<a th:href="@{/sportify/event/khuyenmai}" class="col-12 btn-khuyenmai bg-light mt-5 rounded"
 								type="submit">Khuyến mãi</a>
 							<a th:href="@{/sportify/event/baotri}" class="col-12 btn-baotri bg-light mt-5  rounded"
@@ -344,7 +343,7 @@
 						</div>
 					</div>
 
-					<div>
+			<!--  		<div>
 						<h2>Video Nổi Bật</h2>
 						<div class="video-container">
 							<div class="main-video">
@@ -358,7 +357,7 @@
 
 						</div>
 
-					</div>
+					</div> -->
 
 				</div>
 			</div>
@@ -461,21 +460,6 @@
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
 
-	<script th:inline="javascript">
-		// Lấy ra tham số eventType từ URL (nếu có) và gán giá trị cho biến eventType
-		var eventType = /*[[${eventtype}]]*/'';
-
-		// JavaScript function để cập nhật giá trị của eventtype vào form khi người dùng nhấn nút lọc
-		function setEventType(eventType) {
-			this.eventType = eventType;
-			document.getElementsByName('eventtype')[0].value = eventType;
-		}
-
-		// Nếu có eventType từ URL thì gọi hàm setEventType để cập nhật giá trị vào form
-		if (eventType) {
-			setEventType(eventType);
-		}
-	</script>
 
 
 	<script src="/user/js/jquery.min.js"></script>

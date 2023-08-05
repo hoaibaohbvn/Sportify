@@ -10167,6 +10167,7 @@ a:hover span {
 	 z-index: 1;
 	 font-weight: 300;
 	 font-size: 12px;
+	 text-align: center;
 	 text-transform: uppercase;
 	 color: var(--color);
 }
@@ -10222,6 +10223,7 @@ a:hover span {
 	 cursor: pointer;
 	 transition: .5s;
 	 font-weight: 400;
+	 text-align: center;
 	 font-size: 12px;
 	 border: 1px solid;
 	 font-family: inherit;
