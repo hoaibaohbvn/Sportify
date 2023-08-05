@@ -17,8 +17,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,43 +31,53 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="orderdetails", catalog="sportify" )
+@Table(name = "orderdetails", catalog = "sportify")
 public class Orderdetails implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    //--- ENTITY PRIMARY KEY 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="orderdetailsid", nullable=false)
-    private Integer    orderdetailsid ;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	Integer orderdetailsid;
+	Double price;
+	Integer quantity;
 
-    //--- ENTITY DATA FIELDS 
-    @Column(name="orderid", nullable=false)
-    private Integer    orderid ;
-
-    @Column(name="productid", nullable=false)
-    private Integer    productid ;
-
-    @Column(name="price", nullable=false)
-    private Double     price ;
-
-    @Column(name="quantity", nullable=false)
-    private Integer    quantity ;
-
-
-    //--- ENTITY LINKS ( RELATIONSHIP )
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="orderid", referencedColumnName="orderid", insertable=false, updatable=false)
-    private Orders     orders ; 
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="productid", referencedColumnName="productid", insertable=false, updatable=false)
-    private Products   products ; 
-
-
-    
+	@ManyToOne
+	@JoinColumn(name = "productid")
+	Products products;
+	@ManyToOne
+	@JoinColumn(name = "orderid")
+	Orders orders;
+	
+//    //--- ENTITY PRIMARY KEY 
+//    @Id
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
+//    @Column(name="orderdetailsid", nullable=false)
+//    private Integer    orderdetailsid ;
+//
+//    //--- ENTITY DATA FIELDS 
+//    @Column(name="orderid", nullable=false)
+//    private Integer    orderid ;
+//
+//    @Column(name="productid", nullable=false)
+//    private Integer    productid ;
+//
+//    @Column(name="price", nullable=false)
+//    private Double     price ;
+//
+//    @Column(name="quantity", nullable=false)
+//    private Integer    quantity ;
+//
+//
+//    //--- ENTITY LINKS ( RELATIONSHIP )
+//    
+//    @ManyToOne
+//    @JoinColumn(name="orderid", referencedColumnName="orderid", insertable=false, updatable=false)
+//     Orders     orders ; 
+//
+//    
+//    @ManyToOne
+//    @JoinColumn(name="productid", referencedColumnName="productid", insertable=false, updatable=false)
+//     Products   products ; 
 
 }

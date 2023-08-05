@@ -21,8 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,49 +34,71 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="orders", catalog="sportify" )
+@Table(name = "orders", catalog = "sportify")
 public class Orders implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    //--- ENTITY PRIMARY KEY 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="orderid", nullable=false)
-    private Integer    orderid ;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Integer orderid;
 
-    //--- ENTITY DATA FIELDS 
-    @Column(name="username", nullable=false, length=16)
-    private String     username ;
+	String username;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="createdate", nullable=false)
-    private Date       createdate ;
-
-    @Column(name="address", nullable=false, length=100)
-    private String     address ;
-
-    @Column(name="note", length=1000)
-    private String     note ;
-
-    @Column(name="orderstatus", nullable=false, length=12)
-    private String     orderstatus ;
-    @Column(name="paymentstatus", nullable=false)
-    private Boolean     paymentstatus ;
-
-
-    //--- ENTITY LINKS ( RELATIONSHIP )
-    @ManyToOne
-    @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
-    private Users      users ; 
-    @JsonIgnore
-    @OneToMany(mappedBy="orders")
-    private List<Orderdetails> listOfOrderdetails ; 
-
-
-     
+	@Temporal(TemporalType.TIMESTAMP)
+	Date createdate;
+	
+	String address;
+	String note;
+	String orderstatus;
+	Boolean paymentstatus;
+	
+	@ManyToOne
+	@JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
+	Users users;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "orders")
+	List<Orderdetails> orderDetails;
+	
+//    //--- ENTITY PRIMARY KEY 
+//    @Id
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
+//    @Column(name="orderid", nullable=false)
+//    private Integer    orderid ;
+//
+//    //--- ENTITY DATA FIELDS 
+//    @Column(name="username", nullable=false, length=16)
+//    private String     username ;
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name="createdate", nullable=false)
+//    private Date       createdate ;
+//
+//    @Column(name="address", nullable=false, length=100)
+//    private String     address ;
+//
+//    @Column(name="note", length=1000)
+//    private String     note ;
+//
+//    @Column(name="orderstatus", nullable=false, length=12)
+//    private String     orderstatus ;
+//    @Column(name="paymentstatus", nullable=false)
+//    private Boolean     paymentstatus ;
+//
+//
+//    //--- ENTITY LINKS ( RELATIONSHIP )
+//    
+//    @ManyToOne
+//    @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
+//    private Users      users ;
+//    
+//    
+//    @OneToMany(mappedBy="orders")
+//    private List<Orderdetails> orderDetails ; 
 
 }

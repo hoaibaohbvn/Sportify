@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>SPORTIFY - Thanh Toán Shop</title>
-<link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 
+<head>
+<title>SPORTIFY - Chi tiết đơn hàng</title>
+<link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,18 +20,23 @@
 <link rel="stylesheet" href="/user/css/owl.carousel.min.css">
 <link rel="stylesheet" href="/user/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
+<link rel="stylesheet" href="/user/css/customCSS.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
-<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 
-	<div class="wrap" style="z-index: 9; position: relative">
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -91,14 +96,11 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> 
-							<a
-								th:href="@{/sportify/field/profile/historybooking}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a>
-							<a th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
-								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a> 
-							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
+								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
+								sử đặt sân</a> <a th:href="@{/user/change-password}"
+								class="dropdown-item">Đổi mật khẩu</a> <a
+								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -124,31 +126,26 @@
 						<small>{{cart.cartCount}}</small>
 					</div>
 				</a>
+				
 				<!-- giỏ hàng ảo -->
-				<div class="dropdown-menu dropdown-menu-right">
+				<div class="dropdown-menu dropdown-menu-right" >
 					<a class="dropdown-item text-center btn-link d-block w-100"
 						th:href="@{/sportify/order/cart}"> View All <span
 						class="ion-ios-arrow-round-forward"></span>
 					</a>
-					<div class="dropdown-item d-flex align-items-start" href="#">
+					<div class="dropdown-item d-flex align-items-start" href="#">						
 						<p class="mb-0">
-						<p class="quantity" style="color: black">Tổng số lượng:
-							{{cart.cartCount}}</p>
-						<p>
-							<a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice |
-								number: 0}} VNĐ</a>
-						</p>
+								<p class="quantity" style="color: black">Tổng số lượng: {{cart.cartCount}}</p>
+								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number: 0}} VNĐ</a></p>							
 					</div>
-					<div class="dropdown-item d-flex align-items-start"
-						ng-repeat="item in cart.items">
+					<div class="dropdown-item d-flex align-items-start" ng-repeat="item in cart.items">
 						<div class="img"
 							style="background-image: url(/user/images/{{item.image}});"></div>
 						<div class="text pl-3">
 							<h4>{{item.productname}}</h4>
 							<p class="mb-0">
-								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
-									href="#" class="price ml-3">{{item.quantity * item.price |
-									number: 0}} VNĐ</a>
+								<span class="quantity">Số lượng: {{item.quantity}}</span>
+								<a href="#" class="price ml-3">{{item.quantity * item.price | number: 0}} VNĐ</a>
 							</p>
 						</div>
 					</div>
@@ -179,7 +176,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-
+	<!-- background -->
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('/user/images/bg_product.png');"
 		data-stellar-background-ratio="0.5">
@@ -190,131 +187,38 @@
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Thanh Toán<i
+								class="fa fa-chevron-right"></i></a></span> <span>Sản Phẩm <i
 							class="fa fa-chevron-right"></i></span>
 					</p>
-					<h2 class="mb-0 bread">Thanh Toán</h2>
+					<h2 class="mb-0 bread">Chi tiết đơn hàng</h2>
 				</div>
 			</div>
 		</div>
 	</section>
-
+	<!-- container sản phẩm -->
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row justify-content-center">
-				<!-- Form điền thông tin để thanh toán -->
-				<div class="col-xl-10 ftco-animate">
-					<form action="#" class="billing-form">
-						<h3 class="mb-4 billing-heading">Chi tiết thanh toán đơn hàng</h3>
-						<div class="row align-items-end">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="firstname">Họ: </label> <input type="text"
-										class="form-control" ng-model="order.username" value="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="lastname">Tên: </label> <input type="text"
-										class="form-control" placeholder="" value="">
-								</div>
-							</div>
-							<div class="w-100"></div>
-							<div class="w-100"></div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="streetaddress">Địa chỉ nhận hàng: </label> <input
-										type="text" class="form-control"
-										placeholder="Địa chỉ nhà, quận, huyện, ..." ng-model="order.address">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="streetaddress">Ngày đặt hàng: </label> <input
-										type="text" class="form-control" placeholder="" value="{{order.createdate | date: 'dd-MM-yyyy'}}">
-								</div>
-							</div>
-							<div class="w-100"></div>
-							<div class="w-100"></div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="phone">Số điện thoại: </label> <input type="text"
-										class="form-control" placeholder="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="emailaddress">Email: </label> <input type="text"
-										class="form-control" placeholder="">
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- END -->
-
-
-					<!-- khu hình thức thanh toán -->
-					<hr>
-					<div class="row mt-5 pt-3 d-flex">
-						<div class="col-md-6 d-flex">
-							<div class="cart-detail cart-total p-3 p-md-4">
-								<h3>Chi tiết giỏ hàng</h3>
-								<p class="d-flex">
-									<span>Thành tiền</span> <span>{{cart.totalPrice |
-										number: 0}} VNĐ</span>
-								</p>
-								<p class="d-flex">
-									<span>Phí vận chuyển</span> <span>0 VNĐ</span>
-								</p>
-								<p class="d-flex">
-									<span>Giảm giá</span> <span>0 VNĐ</span>
-								</p>
-								<hr>
-								<p class="d-flex total-price">
-									<span>Tổng tiền</span> <span>{{cart.totalPrice | number:
-										0}} VNĐ</span>
-								</p>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="cart-detail p-3 p-md-4">
-								<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="radio">
-											<label><input type="radio" name="optradio"
-												class="mr-2"> Thanh toán trực tiếp</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="radio">
-											<label><input type="radio" name="optradio"
-												class="mr-2">Ví điện tử Paypal</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="checkbox">
-											<label><input type="checkbox" value="" class="mr-2">
-												Tôi đã đọc và đồng ý với các điều khoản giao dịch</label>
-										</div>
-									</div>
-								</div>
-								<p>
-									<button ng-click="order.purchase()" class="btn btn-primary py-3 px-4">Thanh toán</button>
-								</p>
-							</div>
-						</div>
-					</div>
+			<div class="row">
+				<!-- Lấy giá trị searchText trả về trang /sportify/team/search với method="post" -->
+				<form th:action="@{/sportify/product/search}" method="post"
+					class="mb-0 d-flex justify-content-center col-md-12">
+					<input th:value="${searchText}" value="" name="searchText"
+						class="form-control me-2 col-6" type="search"
+						placeholder="Tìm kiếm theo tên" aria-label="Search">
+					<button class="btn btn-outline-success col-2" type="submit">Search</button>
+				</form>
+				<!-- Hiển thị thông báo kết quả tìm kiếm( KQ > 0 ) -->
+				<div class="d-flex justify-content-center col-md-12 mt-1">
+					<div class="mr-4 col-md-8" th:if="${FoundMessage}"
+						th:text="${FoundMessage}"></div>
 				</div>
-				<!-- .col-md-8 -->
+				<!-- show sản phẩm -->
+				<h1>Chi tiết đơn hàng</h1>
 			</div>
 		</div>
 	</section>
 
+	<!-- footer -->
 	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">
@@ -417,15 +321,14 @@
 		</div>
 	</footer>
 
-
-
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen">
 		<svg class="circular" width="48px" height="48px">
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke="#eeeeee" />
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
 	</div>
 
 
@@ -447,6 +350,6 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
 	<script src="/user/js/shopping-cart-app.js"></script>
-
 </body>
+
 </html>
