@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.anyRequest().permitAll();
 			
 			http.formLogin()
-				.loginPage("/sportify/login/form")		
+				.loginPage("/sportify/login")		
 				.loginProcessingUrl("/sportify/login")
 				.defaultSuccessUrl("/sportify/login/success")
 				.failureUrl("/sportify/login/error")

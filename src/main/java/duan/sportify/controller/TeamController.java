@@ -96,14 +96,14 @@ public class TeamController {
 		model.addAttribute("sporttypeid", sporttypeid);
 		
 		// Kiểm tra để hiển thị thông báo
-//		if (!searchText.isEmpty() && teamPage.getTotalElements() > 0) {
-//			model.addAttribute("FoundMessage",
-//					"Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
-//		}
-//		if (teamPage.getTotalElements() == 0) {
-//			model.addAttribute("notFoundMessage",
-//					"Tìm thấy " + teamPage.getTotalElements() + " kết quả tìm kiếm của '" + searchText + "'.");
-//		}
+		if (!searchText.isEmpty() && teamPage.size() > 0) {
+			model.addAttribute("FoundMessage",
+					"Tìm thấy " + teamPage.size() + " kết quả tìm kiếm của '" + searchText + "'.");
+		}
+		if (teamPage.size() == 0) {
+			model.addAttribute("notFoundMessage",
+					"Tìm thấy " + teamPage.size() + " kết quả tìm kiếm của '" + searchText + "'.");
+		}
 
 		return "user/doi";
 	}
@@ -146,7 +146,6 @@ public class TeamController {
         String username = (String) request.getSession().getAttribute("username");
 	    model.addAttribute("teamId", teamId);
 		// Người dùng đã đăng nhập
-		if (username != null) {
 
 			// Người dùng tồn tại và thông tin đăng nhập chính xác
 			// Kiểm tra user đã tồn tại trong team
@@ -197,10 +196,6 @@ public class TeamController {
 			}
 
 			// Chưa đăng nhập trả về login
-		} else {
-			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login/form";
-		}
 	}
 
 	@PostMapping("/team/teamdetail/updateinfoUser")
