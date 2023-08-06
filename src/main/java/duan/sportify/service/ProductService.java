@@ -21,7 +21,7 @@ public interface ProductService {
 
 	Products findById(Integer productid);
 
-	List<Products> findByCategoryId(String string);
+	List<Products> findByCategoryId(Integer integer);
 
 
 

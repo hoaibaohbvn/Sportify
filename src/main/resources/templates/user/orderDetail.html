@@ -206,7 +206,8 @@
 	<!-- container sản phẩm -->
 	<section class="ftco-section" th:object="${order}">
 		<div class="container">
-			<a th:href="@{/sportify/order/historyList}">Quay lại Lịch sử đặt hàng</a>
+			<a th:href="@{/sportify/order/historyList}">Quay lại Lịch sử đặt
+				hàng</a>
 			<div class="row">
 				<!-- show sản phẩm -->
 				<h1 class="d-flex justify-content-center col-md-12 mt-1">
@@ -237,6 +238,10 @@
 						</tr>
 					</tbody>
 				</table>
+				<div>
+					<button ng-click="" th:if="${order.orderstatus} == 'Chờ Xác Nhận'" class="btn btn-danger" style="float: right;">Hủy
+						đơn hàng</button>
+				</div>
 			</div>
 		</div>
 	</section>

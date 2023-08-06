@@ -171,7 +171,7 @@
 	</nav>
 	<!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/user/images/bg_product.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -228,7 +228,7 @@
 	          		<p style="color: #000;" th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'"></p>
 	          	</div>
           	</div>
-          	<p><a href="cart.html" class="btn btn-product py-3 px-5 mr-2 ">Add to Cart</a><a href="cart.html" class="btn btn-product py-3 px-5">Buy now</a></p>
+          	<p><a th:attr="ng-click=@{|cart.addProduct(${product.productid})|}" class="btn btn-product py-3 px-5 mr-2 ">Add to Cart</a></p>
     			</div>
     		</div>
 

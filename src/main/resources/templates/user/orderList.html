@@ -97,8 +97,9 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item">Lịch sử đặt sân</a> <a
-								th:href="@{/sportify/order/historyList}" class="dropdown-item">Lịch sử đặt hàng</a> <a
+								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item">Lịch
+								sử đặt sân</a> <a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item">Lịch sử đặt hàng</a> <a
 								th:href="@{/user/change-password}" class="dropdown-item">Đổi
 								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
@@ -208,28 +209,18 @@
 				<div class="container d-flex justify-content-center rounded mb-5">
 					<div class=" col-md-12 rounded row" id="profiles"
 						style="margin-top: 50px; background-color: rgb(247, 249, 250);">
-
-
-						<div id='nz-div-3'>
-							<h3 class="tde">
-								<span>Hiển thị 20 đơn hàng đặt gần nhất</span>
-							</h3>
-						</div>
-
 						<div th:each="order, stare : ${orders}" class="card col-12 mb-3"
 							style="border-radius: 10px">
-							<h6 class="card-header">
-								<div class="col-6"> Đơn hàng #
-									<span th:text="${order.orderid}"></span>
-									<p style="color: #1F8A70; font-weight: bold;">
-										Đặt lúc: <span style="color: #1F8A70; font-weight: bold;"
-											th:text="${order.createdate}"></span>
-									</p>
-									<span
-										th:with="statusColor=${order.orderstatus == 'Hoàn Thành' ? 'green' : (order.orderstatus == 'Chờ Xác Nhận' ? '#F86F03' : (order.orderstatus == 'Đang Giao' ? '#FFA41B' : (order.orderstatus == 'Hủy Đặt' ? 'red' : 'crimson')))}"
-										th:style="'font-size:medium;color:snow; font-weight:bold; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}"
-										th:text="${order.orderstatus}"> </span>
-								</div>
+							<h6 class="card-header row">
+								<span class="col-4">Đơn hàng # <span
+									th:text="${order.orderid}"></span></span> <span class="col-6"
+									style="color: #1F8A70; font-weight: bold;"> Đặt lúc: <span
+									style="color: #1F8A70; font-weight: bold;"
+									th:text="${order.createdate}"></span>
+								</span> <span class="col-2"
+									th:with="statusColor=${order.orderstatus == 'Hoàn Thành' ? 'green' : (order.orderstatus == 'Chờ Xác Nhận' ? '#F86F03' : (order.orderstatus == 'Đang Giao' ? '#FFA41B' : (order.orderstatus == 'Hủy Đặt' ? 'red' : 'crimson')))}"
+									th:style="'font-size:medium;color:snow; font-weight:bold; text-align: center; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}"
+									th:text="${order.orderstatus}"> </span>
 								<!-- <div class="col-6" style="position: right;">
 									<a th:href="@{'/sportify/order/detail/' + ${order.orderid}}">
 										<button type="button" class="btn btn-outline-info">Xem
@@ -239,22 +230,12 @@
 							</h6>
 
 							<div class="card-body">
-								<!-- <h5 class="card-title text-success font-weight-bold"
-									th:text="${}"></h5>
-								<img style="width: 20%; height: 50%"
-									th:src="@{'/user/images/' + ${}}" alt="Image">
-								<p class="card-text limited-length2" th:text="${}"></p>
-								<hr> -->
-								<p>
-									<!-- Tổng tiền: <span class="text-danger font-weight-bold"
+								<!-- Tổng tiền: <span class="text-danger font-weight-bold"
 										th:text="${order.}"></span> -->
-									<a th:href="@{'/sportify/order/detail/' + ${order.orderid}}">
-										<button type="button" class="btn btn-outline-info">Xem
-											Chi Tiết</button>
-									</a>
-
-								</p>
-
+								<a th:href="@{'/sportify/order/detail/' + ${order.orderid}}">
+									<button type="button" class="btn btn-outline-info">Xem
+										Chi Tiết</button>
+								</a>
 							</div>
 						</div>
 
