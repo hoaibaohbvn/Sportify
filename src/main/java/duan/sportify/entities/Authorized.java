@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,10 +54,11 @@ public class Authorized implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="roleid", referencedColumnName="roleid", insertable=false, updatable=false)
     private Roles      roles ; 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 

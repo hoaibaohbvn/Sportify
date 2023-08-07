@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,12 +40,14 @@ public class Categories implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //--- ENTITY PRIMARY KEY 
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="categoryid", nullable=false)
     private Integer    categoryid ;
 
     //--- ENTITY DATA FIELDS 
+    @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.categories.categoryname}")
     @NotBlank(message = "{NotNull.categories.categoryname}")
     @Column(name="categoryname", nullable=false, length=50)
     private String     categoryname ;

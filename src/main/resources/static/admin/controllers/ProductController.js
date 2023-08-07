@@ -19,13 +19,17 @@ app.controller('ProductController', function($scope, $http) {
 		$scope.form = {
 			datecreate: new Date(),
 			productstatus: true,
-			image: "loading.jpg"
+			image: "loading.jpg",
+			quantity: 0,
+			categoryid: 1,
+			discountprice: 0,
+			price: 0
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-
+		$scope.errors = [];
 	}
 	// hàm tạo
 	$scope.create = function() {
@@ -47,7 +51,7 @@ app.controller('ProductController', function($scope, $http) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
-      		console.log(error);
+			console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -60,16 +64,16 @@ app.controller('ProductController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-			// Xử lý lỗi phản hồi từ máy chủ
-			if (error.data && error.data.errors) {
-				$scope.errors = error.data.errors;
-			}
-			if (error.data) {
-				showErrorToast("Vui lòng kiểm tra lại form");
-			}
-			console.log($scope.errors);
-      		console.log(error);
-		});
+				// Xử lý lỗi phản hồi từ máy chủ
+				if (error.data && error.data.errors) {
+					$scope.errors = error.data.errors;
+				}
+				if (error.data) {
+					showErrorToast("Vui lòng kiểm tra lại form");
+				}
+				console.log($scope.errors);
+				console.log(error);
+			});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -183,31 +187,38 @@ app.controller('ProductController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
-	$scope.refresh =function refreshNow() {
-			location.reload();
+	$scope.refresh = function refreshNow() {
+		location.reload();
 	}
-	
+
 	// search
-	 $scope.searchName = '';
-   	 $scope.searchCate = null;
-   	 $scope.searchStatus = 1;
-   	 $scope.search = function () {
-			
-      $http.get('/rest/products/search', { params: 
-      		{ 	
-				productname: $scope.searchName, 
-      			categoryid: $scope.searchCate,
-      			productstatus: $scope.searchStatus
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          $scope.items.forEach(item => {
+	$scope.searchName = '';
+	$scope.searchCate = null;
+	$scope.searchStatus = 1;
+	$scope.search = function() {
+
+		$http.get('/rest/products/search', {
+			params:
+			{
+				productname: $scope.searchName,
+				categoryid: $scope.searchCate,
+				productstatus: $scope.searchStatus
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.items.forEach(item => {
 				item.datecreate = new Date(item.datecreate)
 			})
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
+			console.log($scope.items);
+		})
+			.catch(function(error) {
+				console.log('Lỗi khi gửi yêu cầu:', error);
+			});
+	};
+	// định dạng tiền tệ VND
+	$scope.formatCurrency = function(value) {
+		// Sử dụng filter number để định dạng thành 100,000
+		var formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+		return formattedValue + ' VND';
+	};
 })

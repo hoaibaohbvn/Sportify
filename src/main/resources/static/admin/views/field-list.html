@@ -90,7 +90,7 @@
 								<td>{{item.namefield}}</td>
 								<td><img src="/user/images/{{item.image}}" width="100px"
 									height="100px"></td>
-								<td>{{item.price}}</td>
+								<td>{{formatCurrency(item.price)}}</td>
 								<td>{{item.address}}</td>
 								<td class="text-right">
 									<div class="dropdown dropdown-action">
@@ -143,7 +143,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Field Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.namefield">
+										type="text" ng-model="form.namefield" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'namefield' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -158,17 +161,23 @@
 								<div class="form-group">
 									<label class="col-form-label">Price <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.price">
+										type="number" ng-model="form.price" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'price' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Address <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.address">
+										type="text" ng-model="form.address" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'address' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Category Field</label> <select
 										 ng-model="form.sporttypeid" class="form-control">
@@ -176,10 +185,13 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
-									<textarea class="form-control" ng-model="form.descriptionfield"></textarea>
+									<textarea class="form-control" ng-model="form.descriptionfield" ng-change="clearErrors()"></textarea>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptionfield' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -224,7 +236,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Field Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.namefield">
+										type="text" ng-model="form.namefield" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'namefield' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -239,28 +254,37 @@
 								<div class="form-group">
 									<label class="col-form-label">Price <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.price">
+										type="number" ng-model="form.price" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'price' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Address <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.address">
+										type="text" ng-model="form.address" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'address' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Category Field</label> <select
-										 ng-model="form.sporttypeid">
-										<option ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
+										 ng-model="form.sporttypeid" class="form-control">
+										<option  ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
-									<textarea class="form-control" ng-model="form.descriptionfield"></textarea>
+									<textarea class="form-control" ng-model="form.descriptionfield" ng-change="clearErrors()"></textarea>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptionfiled' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 

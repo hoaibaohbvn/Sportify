@@ -15,8 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +31,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 @Table(name="teamdetails", catalog="sportify" )
+
 public class Teamdetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,10 +59,11 @@ public class Teamdetails implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="teamid", referencedColumnName="teamid", insertable=false, updatable=false)
     private Teams      teams ; 

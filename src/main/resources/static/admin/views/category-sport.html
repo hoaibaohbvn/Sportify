@@ -102,7 +102,10 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Sport Type ID <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.sporttypeid">
+									<input class="form-control" type="text" ng-model="form.sporttypeid" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'sporttypeid' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>
@@ -110,7 +113,10 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Category Sport Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.categoryname">
+									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'categoryname' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>
@@ -142,6 +148,9 @@
 								<div class="form-group">
 									<label class="col-form-label">Sport Type ID <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.sporttypeid" readonly>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'sporttypeid' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>
@@ -149,7 +158,10 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Category Sport Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.categoryname">
+									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'categoryname' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>

@@ -3,6 +3,8 @@ package duan.sportify.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +53,7 @@ public class CategorySportRestController {
 		return ResponseEntity.ok(sportTypeDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Sporttype> create(@RequestBody Sporttype sporttype) {
+	public ResponseEntity<Sporttype> create(@Valid @RequestBody Sporttype sporttype) {
 	    if (sporttype.getSporttypeid() != null && sportTypeDAO.existsById(sporttype.getSporttypeid())) {
 	        return ResponseEntity.badRequest().build();
 	    }
@@ -59,7 +61,7 @@ public class CategorySportRestController {
 	    return ResponseEntity.ok(sporttype);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @RequestBody Sporttype sportType) {
+	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @Valid @RequestBody Sporttype sportType) {
 		if(!sportTypeDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

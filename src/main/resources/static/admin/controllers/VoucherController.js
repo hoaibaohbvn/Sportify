@@ -54,6 +54,7 @@ app.controller('VoucherController', function($scope, $http) {
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+		$scope.errors = [];
 	}
 	// hàm tạo
 	$scope.create = function() {
@@ -73,19 +74,25 @@ app.controller('VoucherController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
-			if (error.data && error.data.errors) {
+			if(error.status === 1000){
+				showErrorToast("Voucher ID đã tồn tại. Vui lòng chọn một Voucher ID khác.");
+			}
+			 else if (error.data && error.data.errors) {
 				$scope.errors = error.data.errors;
 			}
-			if (error.data) {
+			 else if(error.data) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
-			console.log($scope.errors);
-      		console.log(error);
+			
 		});
 	}
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+		if (item.startdate >= item.enddate) {
+			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
+			return; // Dừng việc thêm mới nếu ngày không hợp lệ
+		}
 		$http.put(`/rest/vouchers/update/${item.voucherid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
 			$scope.items[index] = item;

@@ -9033,6 +9033,7 @@ h1, h2, h3, h4, h5,
 .cart-total {
   width: 100%;
   display: block;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 20px; }
   .cart-total h3 {
     font-size: 24px;
@@ -9116,7 +9117,7 @@ h1, h2, h3, h4, h5,
 .cart-detail {
   width: 100%;
   display: block;
- }
+  border: 1px solid rgba(0, 0, 0, 0.05); }
   .cart-detail .btn-primary {
     display: block;
     width: 100%; }

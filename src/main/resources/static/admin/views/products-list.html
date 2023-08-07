@@ -24,8 +24,8 @@
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal"
-						data-target="#add" ng-click="reset()"><i
-						class="fa fa-plus"></i> Add Product</a>
+						data-target="#add" ng-click="reset()"><i class="fa fa-plus"></i>
+						Add Product</a>
 				</div>
 			</div>
 		</div>
@@ -36,14 +36,14 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating" ng-model="searchName"> <label
-						class="focus-label">Product Name</label>
+					<input type="text" class="form-control floating"
+						ng-model="searchName"> <label class="focus-label">Product
+						Name</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus select-focus">
-					<select ng-model="searchCate"
-						class="select floating">
+					<select ng-model="searchCate" class="select floating">
 						<option ng-value=null>Tất cả</option>
 						<option ng-repeat="c in categories" ng-value="c.categoryid">{{c.categoryname}}</option>
 					</select> <label class="focus-label">Loại sản phẩm</label>
@@ -51,8 +51,7 @@
 			</div>
 			<div class="col-sm-6 col-md-2">
 				<div class="form-group form-focus select-focus">
-					<select ng-model="searchStatus"
-						class="select floating">
+					<select ng-model="searchStatus" class="select floating">
 						<option ng-value=null>Tất cả</option>
 						<option ng-value="1">Đang bán</option>
 						<option ng-value="0">Ngưng bán</option>
@@ -60,14 +59,16 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
-				
+				<a href="#" class="btn btn-success btn-block" ng-click="search()">
+					Search </a>
+
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<a href="#" class="btn btn-success btn-block" ng-click="refresh()"> Refresh </a>
-				
+				<a href="#" class="btn btn-success btn-block" ng-click="refresh()">
+					Refresh </a>
+
 			</div>
-			
+
 		</div>
 		<!-- Search Filter -->
 
@@ -98,7 +99,7 @@
 									height="100px"></td>
 								<td>{{item.discountprice}}</td>
 								<td>{{item.datecreate | date : 'dd-MM-yyyy'}}</td>
-								<td>{{item.price}}</td>
+								<td>{{formatCurrency(item.price)}}</td>
 								<td>{{item.productstatus?'Đang bán':'Ngưng Bán'}}</td>
 								<td>{{item.quantity}}</td>
 								<td class="text-right">
@@ -124,7 +125,7 @@
 		</div>
 	</div>
 	<!-- /Page Content -->
-	
+
 	<!-- Add Employee Modal -->
 	<div id="add" class="modal custom-modal fade" role="dialog">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
@@ -151,7 +152,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Product Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.productname">
+										type="text" ng-model="form.productname" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'productname' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -160,7 +164,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Discount <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="number" ng-model="form.discountprice">
+										type="number" ng-model="form.discountprice" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'discountprice' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -180,29 +187,29 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Status</label> <select
+									<label class="col-form-label">Status <span
+										class="text-danger">*</span></label> <select
 										class="select" ng-model="form.productstatus">
 										<option ng-value="true">Đang bán</option>
 										<option ng-value="false">Ngừng bán</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Description</label>
-									<textarea class="form-control" ng-model="form.descriptions"></textarea>
-								</div>
-							</div>
+
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Quantity <span
 										class="text-danger">*</span></label> <input type="number"
-										ng-model="form.quantity" class="form-control">
+										ng-model="form.quantity" class="form-control" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'quantity' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Name</label> <select
+									<label class="col-form-label">Category Name <span
+										class="text-danger">*</span></label> <select
 										class="select" ng-model="form.categoryid">
 										<option ng-repeat="c in categories" ng-value="c.categoryid">{{c.categoryname}}</option>
 									</select>
@@ -212,10 +219,22 @@
 								<div class="form-group">
 									<label class="col-form-label">Price <span
 										class="text-danger">*</span></label> <input type="number"
-										ng-model="form.price" class="form-control">
+										ng-model="form.price" class="form-control" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'price' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
-
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Description <span
+										class="text-danger">*</span></label>
+									<textarea class="form-control" ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
+								</div>
+							</div>
 						</div>
 
 						<div class="submit-section">
@@ -256,7 +275,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Product Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.productname">
+										type="text" ng-model="form.productname" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'productname' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -265,14 +287,17 @@
 								<div class="form-group">
 									<label class="col-form-label">Discount <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="number" ng-model="form.discountprice">
+										type="number" ng-model="form.discountprice" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'discountprice' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Image<span
 										class="text-danger">*</span></label> <input type="file"
-										class="form-control" id="image"
+										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
 								</div>
 							</div>
@@ -280,35 +305,34 @@
 								<div class="form-group">
 									<label class="col-form-label">Date Create <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.datecreate" readonly>
+										type="date" ng-model="form.datecreate" disabled>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Status</label> <select
+									<label class="col-form-label">Status <span
+										class="text-danger">*</span></label> <select
 										class="select" ng-model="form.productstatus">
-										
 										<option ng-value="true">Đang bán</option>
 										<option ng-value="false">Ngừng bán</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Description</label>
-									<textarea class="form-control" ng-model="form.descriptions"></textarea>
-								</div>
-							</div>
+
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Quantity <span
 										class="text-danger">*</span></label> <input type="number"
-										ng-model="form.quantity" class="form-control">
+										ng-model="form.quantity" class="form-control" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'quantity' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Name</label> <select
+									<label class="col-form-label">Category Name <span
+										class="text-danger">*</span></label> <select
 										class="select" ng-model="form.categoryid">
 										<option ng-repeat="c in categories" ng-value="c.categoryid">{{c.categoryname}}</option>
 									</select>
@@ -318,10 +342,22 @@
 								<div class="form-group">
 									<label class="col-form-label">Price <span
 										class="text-danger">*</span></label> <input type="number"
-										ng-model="form.price" class="form-control">
+										ng-model="form.price" class="form-control" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'price' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
-
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Description <span
+										class="text-danger">*</span></label>
+									<textarea class="form-control" ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
+								</div>
+							</div>
 						</div>
 
 						<div class="submit-section">

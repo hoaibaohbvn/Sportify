@@ -2,6 +2,9 @@ package duan.sportify.rest.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -54,7 +57,7 @@ public class Admin_ProductRestController {
 		return ResponseEntity.ok(productDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Products> create(@RequestBody Products product) {
+	public ResponseEntity<Products> create(@Valid @RequestBody Products product) {
 	    if (product.getProductid() != null && productDAO.existsById(product.getProductid())) {
 	        return ResponseEntity.badRequest().build();
 	    }
@@ -63,7 +66,7 @@ public class Admin_ProductRestController {
 	}
 
 	@PutMapping("update/{id}")
-	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @RequestBody Products product) {
+	public ResponseEntity<Products> update(@PathVariable("id") Integer id, @Valid @RequestBody Products product) {
 		if(!productDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}

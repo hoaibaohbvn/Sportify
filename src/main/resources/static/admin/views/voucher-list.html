@@ -114,26 +114,38 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Voucher ID <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.voucherid">
+									<input class="form-control" type="text" ng-model="form.voucherid" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field == 'voucherid' && index == 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Discount Percent</label><span
 										class="text-danger">*</span></label>
-									<input class="form-control" type="number" ng-model="form.discountpercent">
+									<input class="form-control" type="number" ng-model="form.discountpercent" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field == 'discountpercent' && index == 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Date start <span class="text-danger">*</span></label>
-									<input class="form-control" type="date" ng-model="form.startdate">
+									<input class="form-control" type="date" ng-model="form.startdate" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field == 'startdate' && index == 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">End date <span class="text-danger">*</span></label>
-									<input class="form-control" type="date" ng-model="form.enddate">
+									<input class="form-control" type="date" ng-model="form.enddate" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'enddate' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>
@@ -164,26 +176,36 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Voucher ID <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.voucherid">
+									<input class="form-control" type="text" ng-model="form.voucherid" readonly>
+									
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Discount Percent</label><span
 										class="text-danger">*</span></label>
-									<input class="form-control" type="number" ng-model="form.discountpercent">
+									<input class="form-control" type="number" ng-model="form.discountpercent" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'discountpercent' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Date start <span class="text-danger">*</span></label>
-									<input class="form-control" type="date" ng-model="form.startdate">
+									<input class="form-control" type="date" ng-model="form.startdate" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'startdate' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">End Date <span class="text-danger">*</span></label>
-									<input class="form-control" type="date" ng-model="form.enddate">
+									<input class="form-control" type="date" ng-model="form.enddate" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'enddate' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 						</div>

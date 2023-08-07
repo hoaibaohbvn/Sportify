@@ -177,6 +177,19 @@ h5, .h5 {
 h6, .h6 {
 	font-size: 0.75rem;
 }
+/* đổi mắt*/
+.password-icon {
+	position: relative;
+}
+
+.password-icon .fa {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+
 a:hover,
 a:active,
 a:focus {
@@ -8606,3 +8619,4 @@ ul.comment-list li ul.children {
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+

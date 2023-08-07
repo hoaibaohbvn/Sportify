@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,10 +37,15 @@ public class Sporttype implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //--- ENTITY PRIMARY KEY 
+    
+    
+    @Pattern(regexp = "[A-Z][0-9]{2}", message = "{Pattern.categories.sporttypeid}")
+    @NotBlank(message = "{NotNull.sporttype.sporttypeid}")
     @Id
     @Column(name="sporttypeid", nullable=false, length=6)
     private String     sporttypeid ;
-
+    @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.categories.categoryname}")
+    @NotBlank(message = "{NotNull.sporttype.categoryname}")
     //--- ENTITY DATA FIELDS 
     @Column(name="categoryname", nullable=false, length=30)
     private String     categoryname ;

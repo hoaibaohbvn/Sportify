@@ -24,17 +24,18 @@ app.controller('EventController', function($scope, $http) {
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			dateStart: new Date(),
-			dateEnd: new Date(),
+			datestart: new Date(),
+			dateend: new Date(),
 			productstatus: true,
 			image: "loading.jpg",
+			eventtype: $scope.tableData.name = "Bóng đá"
 			
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
-		
+		$scope.errors = [];
 	}
 	
 	// hàm tạo
@@ -69,6 +70,10 @@ app.controller('EventController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+		if (item.datestart >= item.dateend) {
+			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
+			return; // Dừng việc thêm mới nếu ngày không hợp lệ
+		}
 		$http.put(`/rest/events/update/${item.eventid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
 			$scope.items[index] = item;
