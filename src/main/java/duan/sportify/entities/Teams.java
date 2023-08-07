@@ -19,6 +19,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,19 +49,22 @@ public class Teams implements Serializable {
     //--- ENTITY DATA FIELDS 
     @Column(name="sporttypeid", nullable=false, length=6)
     private String     sporttypeid ;
-
+    @NotBlank(message = "{NotBlank.teams.nameteam}")
     @Column(name="nameteam", nullable=false, length=50)
     private String     nameteam ;
-
+    @NotNull(message = "{NotNull.teams.quantity}")
+    @Max(value = 120, message = "{Max.teams.quantity}")
+    @Min(value = 0, message = "{Min.teams.quantity}")
     @Column(name="quantity", nullable=false)
     private Integer    quantity ;
 
     @Column(name="avatar", length=100)
     private String     avatar ;
-
+    @Pattern(regexp = "^(0|\\+84)\\d{9,10}$", message = "{Pattern.teams.contact}")
+    @NotBlank(message = "{NotBlank.teams.contact}")
     @Column(name="contact", nullable=false, length=10)
     private String     contact ;
-
+    @NotBlank(message = "{NotBlank.teams.descriptions}")
     @Column(name="descriptions", length=1000)
     private String     descriptions ;
 

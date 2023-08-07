@@ -15,7 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,29 +52,32 @@ public class Products implements Serializable {
     //--- ENTITY DATA FIELDS 
     @Column(name="categoryid", nullable=false)
     private Integer    categoryid ;
-
+    @NotBlank(message = "{NotBlank.products.nameproduct}")
     @Column(name="productname", nullable=false, length=50)
     private String     productname ;
-
+    
     @Column(name="image", length=50)
     private String     image ;
-
+    @Min(value = 0, message = "{Min.products.discountprice}")
+    @NotNull(message = "{NotNull.products.discountprice}")
     @Column(name="discountprice")
     private Double     discountprice ;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="datecreate", nullable=false)
     private Date       datecreate ;
-
+    @Min(value = 0, message = "{Min.products.price}")
+    @NotNull(message = "{NotNull.products.price}")
     @Column(name="price", nullable=false)
     private Double     price ;
 
     @Column(name="productstatus", nullable=false)
     private Boolean    productstatus ;
-
+    @NotBlank(message = "{NotBlank.products.descriptions}")
     @Column(name="descriptions", length=200)
     private String     descriptions ;
-
+    @Min(value = 0, message = "{Min.products.quantity}")
+    @NotNull(message = "{NotNull.products.quantity}")
     @Column(name="quantity", nullable=false)
     private Integer    quantity ;
 

@@ -203,5 +203,10 @@ app.controller('FieldController', function($scope, $http) {
           console.log('Lỗi khi gửi yêu cầu:', error);
         });
     };
-
+	// định dạng tiền tệ VND
+	$scope.formatCurrency = function(value) {
+		// Sử dụng filter number để định dạng thành 100,000
+		var formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+		return formattedValue + ' VND';
+	};
 })

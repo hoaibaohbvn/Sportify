@@ -533,7 +533,8 @@ body {
 			</div>
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
-					th:each="e: ${eventList}">
+					th:each="e, iterStat : ${eventList}"
+					th:if="${iterStat.index} &lt; 4">
 					<div class="blog-entry d-flex">
 
 						<img class="block-19 block-20 img" alt=""

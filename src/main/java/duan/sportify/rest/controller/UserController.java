@@ -16,7 +16,7 @@ import duan.sportify.entities.Users;
 @RestController
 @RequestMapping("/sportify/user")
 public class UserController {
-	 @Autowired
+	 	@Autowired
 	    private HttpSession session;
 
 	    @GetMapping("/get-username")
@@ -33,4 +33,5 @@ public class UserController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
 	    }
+	    
 }

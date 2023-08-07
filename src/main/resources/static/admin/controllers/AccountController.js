@@ -1,49 +1,21 @@
-app.controller('TeamController', function($scope, $http) {
-
-
-
+app.controller('AccountController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
-		// lấy danh sách category
-		$http.get("/rest/sportTypes/getAll").then(resp => {
-			$scope.sporttype = resp.data;
-		})
 		// lấy danh sách product
-		$http.get("/rest/teams/getAll").then(resp => {
+		$http.get("/rest/accounts/getAll").then(resp => {
 			$scope.items = resp.data;
-			$scope.items.forEach(item => {
-				item.createdate = new Date(item.createdate)
-			})
 		});
 		$scope.reset();
-
 	}
 	// hàm rest form
 	$scope.reset = function() {
-		$scope.username = '';
-
-		$scope.getUsername = function() {
-			$http.get('http://localhost:8080/sportify/user/get-username', {
-				withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
-			}).then(function(response) {
-				if (response.data.username) {
-					$scope.username = response.data.username;
-					$scope.form = {
-						createdate: new Date(),
-						sporttypeid: "B01",
-						avatar: "loading.jpg",
-						username: $scope.username
-					}
-				} else {
-					console.log('Error fetching username:', response.data.error);
-				}
-			}).catch(function(error) {
-				console.log('Error fetching username:', error);
-			});
-		};
-
-		$scope.getUsername(); // Gọi hàm này khi controller được tải
-
+		$scope.form = {
+			datecreate: new Date(),
+			status: true,
+			gender: true,
+			image: "loading.jpg"
+		}
+		$scope.form.roleid = 'R03'
 	}
 	// hàm edit
 	$scope.edit = function(item) {
@@ -51,13 +23,16 @@ app.controller('TeamController', function($scope, $http) {
 		$scope.errors = [];
 	}
 	// hàm tạo
+
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/teams/create`, item).then(resp => {
 
-			resp.data.createdate = new Date(resp.data.createdate)
+		$http.post(`/rest/accounts/create`, item).then(resp => {
 			$scope.items.push(resp.data);
-			showSuccessToast("Team mới tên " + item.nameteam + " đã được thêm thành công")
+			$http.post(`/rest/authorized/create`, item).then(rp => {
+				$scope.items.push(rp.data);
+			})
+			showSuccessToast("Tài khoản mới tên " + item.username + " đã thành công")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
@@ -72,14 +47,16 @@ app.controller('TeamController', function($scope, $http) {
 			console.log($scope.errors);
 			console.log(error);
 		});
+
+
 	}
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/teams/update/${item.teamid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
+		$http.put(`/rest/accounts/update/${item.username}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.username == item.username);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập team thành công")
+			showSuccessToast("Cập nhập tài khoản thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
@@ -96,17 +73,17 @@ app.controller('TeamController', function($scope, $http) {
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/teams/delete/${item.teamid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.teamid == item.teamid);
+		$http.delete(`/rest/accounts/delete/${item.username}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.username == item.username);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Team tên " + item.nameteam + " đã được xóa")
+			showSuccessToast("Account tên " + item.username + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			showErrorToast("Xóa team tên " + item.nameteam + " thất bại")
+			showErrorToast("Xóa sản phảm tên " + item.username + " thất bại")
 			console.log("Error", error);
 		})
 	}
@@ -118,7 +95,7 @@ app.controller('TeamController', function($scope, $http) {
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(resp => {
-			$scope.form.avatar = resp.data.name;
+			$scope.form.image = resp.data.name;
 		}).catch(error => {
 			showErrorToast("Lỗi tải hình ảnh")
 			console.log("Error", error);
@@ -206,28 +183,44 @@ app.controller('TeamController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
+
 	// search
 	$scope.searchName = '';
-	$scope.searchSport = null;
-
+	$scope.searchUser = '';
+	$scope.searchRole = null;
+	$scope.searchStatus = 1;
 	$scope.search = function() {
 
-		$http.get('/rest/teams/search', {
+		$http.get('/rest/products/search', {
 			params:
 			{
-				nameteam: $scope.searchName,
-				sporttypeid: $scope.searchSport
+				productname: $scope.searchName,
+				categoryid: $scope.searchCate,
+				productstatus: $scope.searchStatus
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
 			$scope.items.forEach(item => {
-				item.createdate = new Date(item.createdate)
+				item.datecreate = new Date(item.datecreate)
 			})
 			console.log($scope.items);
 		})
 			.catch(function(error) {
 				console.log('Lỗi khi gửi yêu cầu:', error);
 			});
+	};
+	// ẩn hiện password
+	$scope.passwordFieldType = 'password'; // Mặc định là password (ẩn mật khẩu)
+
+	$scope.togglePasswordVisibility = function() {
+		if ($scope.passwordFieldType === 'password') {
+			$scope.passwordFieldType = 'text'; // Hiện mật khẩu
+		} else {
+			$scope.passwordFieldType = 'password'; // Ẩn mật khẩu
+		}
 	};
 
 })

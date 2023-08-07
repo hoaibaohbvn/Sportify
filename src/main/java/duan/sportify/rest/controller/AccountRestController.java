@@ -3,6 +3,8 @@ package duan.sportify.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -17,69 +19,76 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
 
-import duan.sportify.dao.TeamDAO;
-import duan.sportify.entities.Teams;
+import duan.sportify.dao.UserDAO;
 
+import duan.sportify.entities.Users;
 import duan.sportify.utils.ErrorResponse;
-import javax.validation.Valid;
+
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/rest/teams/")
-public class TeamRestController {
+@RequestMapping("/rest/accounts/")
+public class AccountRestController {
 	@Autowired
 	MessageSource messagesource;
 	@Autowired
-	TeamDAO teamDAO;
+	UserDAO userDAO;
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
 	@GetMapping("getAll")
-	public ResponseEntity<List<Teams>> getAll(Model model){
-		return ResponseEntity.ok(teamDAO.findAll());
+	public ResponseEntity<List<Users>> getAll(Model model){
+		return ResponseEntity.ok(userDAO.findAll());
 	}
 	@GetMapping("get/{id}")
-	public ResponseEntity<Teams> getOne(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+	public ResponseEntity<Users> getOne(@PathVariable("id") String id) {
+		if(!userDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(teamDAO.findById(id).get());
+		return ResponseEntity.ok(userDAO.findById(id).get());
 	}
 	@PostMapping("create")
-	public ResponseEntity<Teams> create(@Valid @RequestBody Teams team) {
-	    if (team.getTeamid() != null && teamDAO.existsById(team.getTeamid())) {
+	public ResponseEntity<Users> create(@Valid @RequestBody Users user) {
+	    if (user.getUsername() != null && userDAO.existsById(user.getUsername())) {
 	        return ResponseEntity.badRequest().build();
 	    }
-	    teamDAO.save(team);
-	    return ResponseEntity.ok(team);
+	    userDAO.save(user);
+	    return ResponseEntity.ok(user);
 	}
 	@PutMapping("update/{id}")
-	public ResponseEntity<Teams> update(@PathVariable("id") Integer id, @Valid @RequestBody Teams team) {
-		if(!teamDAO.existsById(id)) {
+	public ResponseEntity<Users> update(@PathVariable("id") String id, @Valid @RequestBody Users user) {
+		if(!userDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.save(team);
-		return ResponseEntity.ok(team);
+		userDAO.save(user);
+		return ResponseEntity.ok(user);
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-		if(!teamDAO.existsById(id)) {
+	public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+		if(!userDAO.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		teamDAO.deleteById(id);
+		userDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
-	// search
-	@GetMapping("/search")
-	public ResponseEntity<List<Teams>> search(@RequestParam("nameteam") Optional<String> nameteam, @RequestParam("sporttypeid") Optional<String> sporttypeid){
-		return ResponseEntity.ok(teamDAO.searchTeamAdmin(nameteam, sporttypeid));
-	}
-	
+//	// search
+//	@GetMapping("/search")
+//	public ResponseEntity<List<Teams>> search(@RequestParam("nameteam") Optional<String> nameteam, @RequestParam("sporttypeid") Optional<String> sporttypeid){
+//		return ResponseEntity.ok(teamDAO.searchTeamAdmin(nameteam, sporttypeid));
+//	}
+//	// detail
+//	@GetMapping("detail/{id}")
+//	public ResponseEntity<Teams> getDetail(@PathVariable("id") Integer id) {
+//		if(!teamDAO.existsById(id)) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		return ResponseEntity.ok(teamDAO.findById(id).get());
+//	}
 }

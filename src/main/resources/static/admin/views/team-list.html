@@ -78,7 +78,7 @@
 						<tbody>
 							<tr ng-repeat="item in items">
 								<td>{{$index + 1 }}</td>
-								<td><a href="#" ng-click="viewTeamMembers(item.teamid)">{{item.nameteam}}</a></td>
+								<td>{{item.nameteam}}</td>
 								<td>{{item.sporttype.categoryname}}</td>
 								<td>{{item.quantity}}</td>
 								<td><img src="/user/images/{{item.avatar}}" width="100px"
@@ -97,6 +97,9 @@
 												class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#delete" ng-click="edit(item)"><i
 												class="fa fa-trash-o m-r-5"></i> Delete</a>
+												<a
+												class="dropdown-item" href="#"  ng-click="view()"><i
+												class="fa fa-trash-o m-r-5"></i> View</a>
 										</div>
 									</div>
 								</td>
@@ -136,7 +139,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Team Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameteam">
+										type="text" ng-model="form.nameteam" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameteam' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -151,14 +157,20 @@
 								<div class="form-group">
 									<label class="col-form-label">Quantity <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="number" ng-model="form.quantity">
+										type="number" ng-model="form.quantity" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'quantity' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Contact <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.contact">
+										type="text" ng-model="form.contact" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'contact' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -171,9 +183,10 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date Start <span
+									<label class="col-form-label">Create Date <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.createdate">
+										type="date" ng-model="form.createdate" readonly>
+										
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -187,7 +200,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
-										ng-model="form.descriptions"></textarea>
+										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -231,7 +247,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Team Name <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameteam">
+										type="text" ng-model="form.nameteam" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameteam' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -246,35 +265,42 @@
 								<div class="form-group">
 									<label class="col-form-label">Quantity <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="number" ng-model="form.quantity">
+										type="number" ng-model="form.quantity" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'quantity' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Contact <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.contact">
+										type="text" ng-model="form.contact" ng-change="clearErrors()">
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'contact' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Sport Name</label> <select
-										 class="form-control" ng-model="form.sporttypeid">
+									<label class="col-form-label">Category Name</label> <select
+										class="select" ng-model="form.sporttypeid">
 										<option ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date Start <span
+									<label class="col-form-label">Create Date <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="date" ng-model="form.createdate">
+										type="date" ng-model="form.createdate" readonly>
+										
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Create BY <span
-										class="text-danger">*</span></label> <input type="text"
+										class="text-danger">*</span></label> <input type="text" value="{{username}}"
 										readonly class="form-control floating" ng-model="form.username">
 								</div>
 							</div>
@@ -282,7 +308,10 @@
 								<div class="form-group">
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
-										ng-model="form.descriptions"></textarea>
+										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'descriptions' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 
@@ -290,7 +319,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Team</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Add Team</button>
 						</div>
 					</form>
 				</div>
