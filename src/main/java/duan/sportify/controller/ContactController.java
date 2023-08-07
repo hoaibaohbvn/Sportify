@@ -12,4 +12,5 @@ public class ContactController {
 		
 		return "user/contact"; 
 	}
+	
 }
