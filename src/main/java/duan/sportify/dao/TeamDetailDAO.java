@@ -12,7 +12,7 @@ import duan.sportify.entities.Teamdetails;
 
 @SuppressWarnings("unused")
 public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
-	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
+	@Query(value = "SELECT teams.*, categoryname, COUNT(CASE WHEN teamdetails.status = 1 THEN teamdetails.teamid ELSE NULL END) AS member_count \r\n"
 			+ "FROM teams\r\n"
 			+ "LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
 			+ "LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid \r\n"
@@ -28,15 +28,28 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 			+ "FROM users\r\n"
 			+ "INNER JOIN teamdetails ON users.username = teamdetails.username\r\n"
 			+ "INNER JOIN teams ON teamdetails.teamid = teams.teamid\r\n"
-			+ "WHERE teams.teamid like :teamId",nativeQuery = true)
+			+ "WHERE teams.teamid like :teamId and teamdetails.status=1",nativeQuery = true)
 	List<Object[]> findUserByIdTeam(Integer teamId);
+	
+	@Query(value = "SELECT users.*,teamdetails.teamdetailid,teamdetails.teamid,teamdetails.joindate,teamdetails.infouser\r\n"
+			+ "FROM users\r\n"
+			+ "INNER JOIN teamdetails ON users.username = teamdetails.username\r\n"
+			+ "INNER JOIN teams ON teamdetails.teamid = teams.teamid\r\n"
+			+ "WHERE teams.teamid like :teamId and teamdetails.status=0",nativeQuery = true)
+	List<Object[]> findUserCheckByIdTeam(Integer teamId);
+	// fix status 
+	
+	@Query(value = "SELECT * FROM sportify.teamdetails\r\n"
+			+ "where teamid like :teamId And username like :username and status=1",nativeQuery = true)
+	Teamdetails checkTeamUser(String username, Integer teamId);
 	
 	@Query(value = "SELECT * FROM sportify.teamdetails\r\n"
 			+ "where teamid like :teamId And username like :username",nativeQuery = true)
-	Teamdetails checkTeamUser(String username, Integer teamId);
+	Teamdetails checkAllTeamUser(String username, Integer teamId);
 	
-	@Query(value = "SELECT COUNT(*) FROM teamdetails WHERE teamid like :teamId", nativeQuery = true)
+	@Query(value = "SELECT COUNT(*) FROM teamdetails WHERE teamid like :teamId and status=1", nativeQuery = true)
 	Integer countUser(Integer teamId);
+	
 
 	@Modifying
 	@Query(value ="DELETE FROM teamdetails WHERE username like :username AND teamid like :teamId", nativeQuery = true)

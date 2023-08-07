@@ -33,7 +33,6 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.net.URLEncoder;
 
-
 @SuppressWarnings("unused")
 @Controller
 @RequestMapping("/sportify")
@@ -44,13 +43,13 @@ public class TeamController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	TeamDetailDAO detailDAO;
-	
+
 	@Autowired
 	TeamService teamService;
-	
+
 	@Autowired
 	SportTypeService sportTypeService;
 
@@ -62,10 +61,9 @@ public class TeamController {
 
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
-	public String viewTeam(Model model, HttpSession session,@RequestParam(name = "page", defaultValue = "0") int page,
+	public String viewTeam(Model model, HttpSession session, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText,
-			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid
-			) {
+			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid) {
 		int size = 4; // Đặt kích thước trang bạn muốn (số phần tử trên mỗi trang)
 
 		List<Object[]> teamPage;
@@ -74,17 +72,16 @@ public class TeamController {
 		int sporttypeidLength = sporttypeid.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
 
 		if (searchTextLength > 0 && sporttypeidLength == 0) {// Kiểm tra nếu ng dùng có nhập vào ô tìm kiếm thì sẽ dỗ dữ
-			
+
 			// liệu theo SearchTeam
 			teamPage = teamdao.SearchTeam(searchText);
-			
+
 		} else if (searchTextLength == 0 && sporttypeidLength > 0) {// Kiểm tra nếu ng dùng chọn vào lọc thì sẽ dỗ dữ
 																	// liệu theo FilterTeam
 			teamPage = teamdao.FilterTeam(sporttypeid);
 		} else {
 			teamPage = teamdao.findAllTeam();// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 		}
-		
 
 		// Tạo một sublist dựa trên số trang và kích thước trang
 		int startIndex = page * size;
@@ -94,7 +91,7 @@ public class TeamController {
 		model.addAttribute("team", teamPageObj);
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("sporttypeid", sporttypeid);
-		
+
 		// Kiểm tra để hiển thị thông báo
 		if (!searchText.isEmpty() && teamPage.size() > 0) {
 			model.addAttribute("FoundMessage",
@@ -110,19 +107,19 @@ public class TeamController {
 
 	@PostMapping("/team/search")
 	public String search(Model model, @RequestParam("searchText") String searchText) {
-		 try {
-		        // Mã hóa searchText trước khi chuyển hướng
-		        String encodedSearchText = URLEncoder.encode(searchText, "UTF-8");
-		        if (encodedSearchText.isEmpty()) {
-		            return "redirect:/sportify/team";
-		        }
-		        return "redirect:/sportify/team?searchText=" + encodedSearchText;
-		    } catch (UnsupportedEncodingException e) {
-		        // Xử lý ngoại lệ nếu encoding không được hỗ trợ
-		        e.printStackTrace();
-		        // Hoặc xử lý bằng cách trả về một trang lỗi
-		        return "error"; // Ví dụ: "error.html"
-		    }
+		try {
+			// Mã hóa searchText trước khi chuyển hướng
+			String encodedSearchText = URLEncoder.encode(searchText, "UTF-8");
+			if (encodedSearchText.isEmpty()) {
+				return "redirect:/sportify/team";
+			}
+			return "redirect:/sportify/team?searchText=" + encodedSearchText;
+		} catch (UnsupportedEncodingException e) {
+			// Xử lý ngoại lệ nếu encoding không được hỗ trợ
+			e.printStackTrace();
+			// Hoặc xử lý bằng cách trả về một trang lỗi
+			return "error"; // Ví dụ: "error.html"
+		}
 	}
 
 	@GetMapping("/team/{sporttypeid}")
@@ -131,20 +128,22 @@ public class TeamController {
 	}
 
 	@GetMapping("team/teamdetail/{teamId}/exit")
-	public String exitteam(Model model,HttpServletRequest request, @PathVariable("teamId") Integer teamId,HttpSession session, RedirectAttributes redirectAttributes) {
+	public String exitteam(Model model, HttpServletRequest request, @PathVariable("teamId") Integer teamId,
+			HttpSession session, RedirectAttributes redirectAttributes) {
 		// Lấy username từ session
-        String username = (String) request.getSession().getAttribute("username");
-		detailDAO.deleteByUsernameAndTeamId(username,teamId);
-        redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
+		String username = (String) request.getSession().getAttribute("username");
+		detailDAO.deleteByUsernameAndTeamId(username, teamId);
+		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
 		return "redirect:/sportify/team";
 	}
-	
+
 	// Điều hướng đến trang chi tiết
 	@GetMapping("team/teamdetail/{teamId}")
-	public String teamdetail(HttpServletRequest request,Model model, @PathVariable("teamId") Integer teamId, RedirectAttributes redirectAttributes) {
+	public String teamdetail(HttpServletRequest request, Model model, @PathVariable("teamId") Integer teamId,
+			RedirectAttributes redirectAttributes) {
 		// Lấy username từ session
-        String username = (String) request.getSession().getAttribute("username");
-	    model.addAttribute("teamId", teamId);
+		String username = (String) request.getSession().getAttribute("username");
+		model.addAttribute("teamId", teamId);
 		// Người dùng đã đăng nhập
 		if (username != null) {
 
@@ -157,46 +156,41 @@ public class TeamController {
 			Teams team = teamService.findById(teamId);
 			int quantity = team.getQuantity();
 			Integer countMembers = detailDAO.countUser(teamId);
-
+			System.out.print(countMembers);
 			// username đã có trong team
 			if (checkTeamUser != null) {
 				// Show thông tin + thành viên trong team
 				List<Object[]> listall = detailDAO.findByIdTeam(teamId);
 				List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
+				List<Object[]> userCheckTeam = detailDAO.findUserCheckByIdTeam(teamId);
 				model.addAttribute("team", listall);
+				model.addAttribute("userCheckTeam", userCheckTeam);
 				model.addAttribute("user", userTeam);
 				String infouser = checkTeamUser.getInfouser();
 				model.addAttribute("infouser", infouser);
 				return "user/team-single";
 
-
 				// Người dùng chưa có trong team
-			} else 
-				// kiểm tra trong team con chỗ trống không
-				if (countMembers < quantity) {
+			} else if (countMembers < quantity) {
+				Teamdetails checkAllTeamUser = detailDAO.checkAllTeamUser(username, teamId);
+				model.addAttribute("checkAllTeamUser", checkAllTeamUser);
+				if(checkAllTeamUser!=null) {
+					redirectAttributes.addFlashAttribute("message1", "Đợi đội trưởng xác nhận !");
+					return "redirect:/sportify/team";
+				}
 				// gửi Thông báo về cho đội trưởng
-				// Add vô team
 				Teamdetails newUser = new Teamdetails();
 				newUser.setJoindate(LocalDate.now());
 				newUser.setTeamid(teamId);
 				newUser.setUsername(username);
+				newUser.setStatus(false);
 				detailDAO.save(newUser);
-
-				// show team chuyển hướng đến detail
-				// Show thông tin + thành viên trong team
-				List<Object[]> listall = detailDAO.findByIdTeam(teamId);
-				List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
-				model.addAttribute("team", listall);
-				model.addAttribute("user", userTeam);
-				// Thêm thông báo
-				redirectAttributes.addFlashAttribute("message", "Bạn đã tham gia thành công!");
-	            return "redirect:/sportify/team/teamdetail/" + teamId; // Chuyển hướng đến trang team-single
-			
+				redirectAttributes.addFlashAttribute("message", "Bạn đã gửi yêu cầu tham gia thành công!");
+				return "redirect:/sportify/team";
 			} else {
-	            redirectAttributes.addFlashAttribute("message1", "Team đã đủ thành viên !");
+				redirectAttributes.addFlashAttribute("message1", "Team đã đủ thành viên !");
 				return "redirect:/sportify/team";
 			}
-
 			// Chưa đăng nhập trả về login
 		} else {
 			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
@@ -205,22 +199,22 @@ public class TeamController {
 	}
 
 	@PostMapping("/team/teamdetail/updateinfoUser")
-	public String updateUser(Model model,HttpServletRequest request,@RequestParam("description") String description,@ModelAttribute("teamId") Integer teamId,HttpSession session,RedirectAttributes redirectAttributes) {
+	public String updateUser(Model model, HttpServletRequest request, @RequestParam("description") String description,
+			@ModelAttribute("teamId") Integer teamId, HttpSession session, RedirectAttributes redirectAttributes) {
 		// Lấy username từ session
-        String username = (String) request.getSession().getAttribute("username");
+		String username = (String) request.getSession().getAttribute("username");
 		// Kiểm tra user đã tồn tại trong team
 		Teamdetails checkTeamUser = detailDAO.checkTeamUser(username, teamId);
 		checkTeamUser.setInfouser(description);
 		detailDAO.save(checkTeamUser);
-		if(description == null || description=="") {
+		if (description == null || description == "") {
 			redirectAttributes.addFlashAttribute("message1", "Thêm giới thiệu thất bại !");
 
-		}else {
+		} else {
 			redirectAttributes.addFlashAttribute("message", "Thêm giới thiệu thành công !");
 
 		}
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
-	
+
 }
