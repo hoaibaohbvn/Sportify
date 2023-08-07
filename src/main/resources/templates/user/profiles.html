@@ -57,10 +57,9 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login/form}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> <a
-								th:href="@{/sportify/login/form}" style="color: white;">Đăng
-								kí</a>
+							<a th:href="@{/sportify/login}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> 
+							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -188,14 +187,14 @@
 					<div
 						class="d-flex flex-column align-items-center text-center p-3 py-5">
 						<div style="position: relative;">
-							<img class="border border-dark rounded-circle mt-5" width="250px"
+							<img id="previewAvatar" class="border border-dark rounded-circle mt-5" width="250px"
 								height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
 							<div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1;">
 								<label for="avatarFileInput"> <i style="font-size: 30px;color: white;"
 									class="fa fa-camera"></i> <!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
 								</label> <input id="avatarFileInput" type="file"
 									class="form-control-file" name="avatarFile"
-									style="display: none;">
+									style="display: none;" accept="image/*">
 							</div>
 						</div>
 						<div class="d-flex mt-4">
@@ -324,6 +323,29 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="/user/js/google-map.js"></script>
 	<script src="/user/js/main.js"></script>
+	<script>
+    const avatarInput = document.getElementById('avatarInput');
+    const previewAvatar = document.getElementById('previewAvatar');
+
+    avatarInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+            previewAvatar.style.display = 'block';
+            const reader = new FileReader();
+            
+            reader.onload = function (e) {
+                previewAvatar.setAttribute('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(file);
+        } else {
+            previewAvatar.style.display = 'none';
+            previewAvatar.removeAttribute('src');
+        }
+    });
+</script>
+	
 </body>
 
 </html>

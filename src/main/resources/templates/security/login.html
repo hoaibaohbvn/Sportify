@@ -35,97 +35,44 @@
 								<h3 class="display-4">Đăng nhập</h3>
 								<form th:action="@{/sportify/login}" method="post">
 									<div class="form-group mb-3">
-										<input name="username"
-										 type="text" placeholder="username"
+										<input name="username" type="text" placeholder="username"
 											class="form-control rounded-pill border-0 shadow-sm px-4">
 									</div>
 									<div class="form-group mb-3">
-										<input name="password" type="password"
-											placeholder="password"
+										<input name="password" type="password" placeholder="password"
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
 									</div>
-									<div class="custom-control custom-checkbox mb-3">
-										<label for="customCheck1" class="custom-control-label text-danger" th:text="${message}"></label>
+									<div th:if="${message!=null}" class="custom-control custom-checkbox mb-3">
+										<label for="customCheck1"
+											class="custom-control-label text-danger" th:text="${message}"></label>
 									</div>
 									<div class="custom-control custom-checkbox mb-3">
-										<input name=remember-me type="checkbox" 
+										<input name=remember-me type="checkbox"
 											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Nhớ mật khẩu ?</label>
+											for="customCheck1" class="custom-control-label">Nhớ
+											mật khẩu ?</label>
 									</div>
 
 									<div class="d-grid gap-2 mb-3">
-										<a th:href="@{/sportify/login/form}"><button class="btn btn-primary d-grid w-100" >Đăng nhập</button></a>
+										<a th:href="@{/sportify/login/form}"><button
+												class="btn btn-primary d-grid w-100">Đăng nhập</button></a>
 									</div>
 
-									<a style="font-size: 15px" id="forgotPassword" href=""> <u>Quên mật khẩu?</u></a>
+									<a style="font-size: 15px" id="forgotPassword" href=""> <u>Quên
+											mật khẩu?</u></a>
 									<hr>
 
-									<div id="signupButton"
-										class="text-center d-flex justify-content-between mt-4">
-										<p>
-											Bạn chưa có tài khoản <a href=""> <u>Đăng ký ngay?</u></a>
-										</p>
-									</div>
-
-								</form>
-							</div>
-						</div>
-					</div>
-					<!-- End -->
-
-					<!-- Đăng kí-->
-					<div id="signupForm" class="container" style="display: none;">
-						<div class="row">
-							<div class="col-lg-10 col-xl-7 mx-auto">
-								<h3 class="display-4">Đăng kí</h3>
-								<p class="text-muted mb-4">Create a login split page using
-									Bootstrap 4.</p>
-								<form>
-									<div class="form-group mb-3">
-										<input id="inputEmail" type="email"
-											placeholder="Email address" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
-									</div>
-									<div class="form-group mb-3">
-										<input id="inputEmail" type="email"
-											placeholder="Email address" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
-									</div>
-									<div class="form-group mb-3">
-										<input id="inputEmail" type="email"
-											placeholder="Email address" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
-									</div>
-									<div class="form-group mb-3">
-										<input id="inputEmail" type="email"
-											placeholder="Email address" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
-									</div>
-									<div class="form-group mb-3">
-										<input id="inputPassword" type="password"
-											placeholder="Password" required=""
-											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-									</div>
-									<div class="custom-control custom-checkbox mb-3">
-										<input id="customCheck1" type="checkbox" checked
-											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Remember
-											password</label>
-									</div>
-									<button type="submit"
-										class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Đăng
-										kí</button>
 									<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Đã có tài khoản <a href=""> <u>Đăng nhập</u></a>
+											Bạn chưa có tài khoản <a th:href="@{/sportify/signups}">Đăng kí</a>
 										</p>
 									</div>
+
 								</form>
 							</div>
 						</div>
 					</div>
 					<!-- End -->
-
 					<!-- Quên mật khẩu-->
 					<div id="forgotPasswordForm" class="container"
 						style="display: none;">
@@ -191,17 +138,9 @@
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var forgotPassword = document.getElementById("forgotPassword");
-			var signupButton = document.getElementById("signupButton");
 			var loginForm = document.getElementById("loginForm");
-			var signupForm = document.getElementById("signupForm");
 			var forgotPasswordForm = document
 					.getElementById("forgotPasswordForm");
-
-			signupButton.addEventListener("click", function(event) {
-				event.preventDefault();
-				loginForm.style.display = "none";
-				signupForm.style.display = "block";
-			});
 
 			forgotPassword.addEventListener("click", function(event) {
 				event.preventDefault();

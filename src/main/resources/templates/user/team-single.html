@@ -26,7 +26,7 @@
 </head>
 
 <body>
-		<div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -60,10 +60,9 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login/form}" class="mr-2"
+							<a th:href="@{/sportify/login}" class="mr-2"
 								style="color: white;">Đăng nhập |</a> <a
-								th:href="@{/sportify/login/form}" style="color: white;">Đăng
-								kí</a>
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -86,11 +85,12 @@
 						</a>
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
-							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông tin</a> <a
-								th:href="@{/user/list-order}" class="dropdown-item" href="#">Lịch
-								sử đặt sân</a> <a th:href="@{/user/change-password}"
-								class="dropdown-item">Đổi mật khẩu</a> <a
-								th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
+								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
+								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
+							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -185,7 +185,7 @@
 
 
 	<section class="hero-wrap hero-wrap-2"
-		style="background-image: url('/user/images/bg_2.jpg');"
+		style="background-image: url('/user/images/team_img/bg-team.png');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -228,7 +228,8 @@
 		<div class="col-4" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Giới thiệu về bản thân hoặc sở trường của bạn để mọi người hiểu hơn về bạn.</h5>
+					<h5 class="modal-title">Giới thiệu về bản thân hoặc sở trường
+						của bạn để mọi người hiểu hơn về bạn.</h5>
 					<button type="button" class="close" id="closeButton">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -260,7 +261,7 @@
 					<div class="col-lg-12 d-flex align-items-stretch ftco-animate">
 						<div class="blog-entry col-md-12 d-md-flex">
 							<img class="block-20 img bg-dark block-19 rounded"
-								th:src="@{'/user/images/' + ${s[4]}}" alt="" src="">
+								th:src="@{'/user/images/team_img/' + ${s[4]}}" alt="" src="">
 							<div class="ml-5 text p-4 bg-light d-flex flex-column">
 
 								<h3 th:text="${s[2]}" class="heading"
@@ -311,7 +312,12 @@
 					<ul th:each="u:${user}" class="comment-list col-12">
 						<li class="comment col-12">
 							<div class="vcard bio">
-								<img src="/user/images/person_1.jpg" alt="Image placeholder">
+								<img th:if=${u[7]!=null} class="" th:src="@{'/user/images/' + ${u[7]}}" alt=""
+									src="" style="width: 60px; height: 60px;"> 
+								<img
+									th:if=${u[7]==null} class="rounded-circle border border-white"
+									src="/user/images/noavatar.jpg" alt=""
+									style="width: 60px; height: 60px;">
 							</div>
 							<div class="comment-body d-flex">
 								<h3 th:text="${u[2]}"></h3>
@@ -320,10 +326,10 @@
 							</div>
 							<div>
 								<p class="fa fa-calendar"></p>
-								<span th:text="${#dates.format(u[13], 'dd-MM-yyyy')}"></span>
+								<span th:text="${#dates.format(u[12], 'dd-MM-yyyy')}"></span>
 							</div>
 							<div>
-								<p th:text="${u[14]}"></p>
+								<p th:text="${u[13]}"></p>
 							</div>
 
 							<div class="meta metaDiv" style="display: none">
