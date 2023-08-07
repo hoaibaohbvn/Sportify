@@ -70,9 +70,9 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2"
+							<a th:href="@{/sportify/login/form}" class="mr-2"
 								style="color: white;">Đăng nhập |</a> <a
-								th:href="@{/sportify/signup}" style="color: white;">Đăng
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
 								kí</a>
 						</p>
 					</div>
@@ -97,11 +97,11 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
-								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
-							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
+								href="#">Lịch sử đặt sân</a> <a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
+								th:href="@{/user/change-password}" class="dropdown-item">Đổi
+								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -127,29 +127,29 @@
 						<small>{{cart.cartCount}}</small>
 					</div>
 				</a>
+				
 				<!-- giỏ hàng ảo -->
-				<div class="dropdown-menu dropdown-menu-right">
-					<!-- <div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<span class="quantity">Số lượng: 01</span>
-								<a href="#" class="price ml-3">$25.99</a>
-							</p>
-						</div>
-					</div> -->
+				<div class="dropdown-menu dropdown-menu-right" >
+					<a class="dropdown-item text-center btn-link d-block w-100"
+						th:href="@{/sportify/order/cart}"> View All <span
+						class="ion-ios-arrow-round-forward"></span>
+					</a>
 					<div class="dropdown-item d-flex align-items-start" href="#">						
 						<p class="mb-0">
 								<p class="quantity" style="color: black">Tổng số lượng: {{cart.cartCount}}</p>
 								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number: 0}} VNĐ</a></p>							
 					</div>
-					
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
+					<div class="dropdown-item d-flex align-items-start" ng-repeat="item in cart.items">
+						<div class="img"
+							style="background-image: url(/user/images/{{item.image}});"></div>
+						<div class="text pl-3">
+							<h4>{{item.productname}}</h4>
+							<p class="mb-0">
+								<span class="quantity">Số lượng: {{item.quantity}}</span>
+								<a href="#" class="price ml-3">{{item.quantity * item.price | number: 0}} VNĐ</a>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -179,7 +179,7 @@
 	<!-- END nav -->
 	<!-- background -->
 	<section class="hero-wrap hero-wrap-2"
-		style="background-image: url('/user/images/bg_2.jpg');"
+		style="background-image: url('/user/images/bg_product.png');"
 		data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
 		<div class="container">
@@ -212,14 +212,14 @@
 				<div class="d-flex justify-content-center col-md-12 mt-1">
 					<div class="mr-4 col-md-8" th:if="${FoundMessage}"
 						th:text="${FoundMessage}"></div>
-				</div>
+				</div> <br>
 				<!-- show sản phẩm -->
 				<div class="col-md-9">
 					<!-- sắp xếp -->
 					<div class="row mb-4">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
-							<h4 class="product-select">Sắp xếp theo giá</h4>
+							<h4 class="product-select">Sắp xếp</h4>
 							<div class="dropdown filter">
 								<button class="btn btn-success dropdown-toggle" type="button"
 									id="dropdownMenuButton" data-toggle="dropdown"

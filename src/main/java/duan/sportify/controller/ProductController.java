@@ -35,7 +35,7 @@ public class ProductController {
 	CategoryService categoryService;
 
 	@GetMapping("product")
-	public String list(Model model, Model model2, @RequestParam("categoryid") Optional<String> categoryid) {
+	public String list(Model model, Model model2, @RequestParam("categoryid") Optional<Integer> categoryid) {
 		if (categoryid.isPresent()) {
 			List<Products> productList = productService.findByCategoryId(categoryid.get());
 			model.addAttribute("productList", productList);

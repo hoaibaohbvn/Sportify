@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>SPORTIFY - Giỏ Hàng</title>
+<title>SPORTIFY - Chi tiết đơn hàng</title>
 <link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
@@ -33,8 +34,8 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
-<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
@@ -69,9 +70,10 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> 
-							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
+							<a th:href="@{/sportify/login/form}" class="mr-2"
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/login/form}" style="color: white;">Đăng
+								kí</a>
 						</p>
 					</div>
 
@@ -95,11 +97,12 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
-								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
-								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
-							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
+								href="#">Lịch sử đặt sân</a> <a
+								th:href="@{/sportify/order/historyList}" class="dropdown-item"
+								href="#">Lịch sử đặt hàng</a> <a
+								th:href="@{/user/change-password}" class="dropdown-item">Đổi
+								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -125,6 +128,7 @@
 						<small>{{cart.cartCount}}</small>
 					</div>
 				</a>
+
 				<!-- giỏ hàng ảo -->
 				<div class="dropdown-menu dropdown-menu-right">
 					<a class="dropdown-item text-center btn-link d-block w-100"
@@ -180,7 +184,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-
+	<!-- background -->
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('/user/images/bg_product.png');"
 		data-stellar-background-ratio="0.5">
@@ -191,101 +195,58 @@
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Giỏ Hàng <i
+								class="fa fa-chevron-right"></i></a></span> <span>Sản Phẩm <i
 							class="fa fa-chevron-right"></i></span>
 					</p>
-					<h2 class="mb-0 bread">Giỏ Hàng</h2>
+					<h2 class="mb-0 bread">Chi tiết đơn hàng</h2>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<section class="ftco-section">
+	<!-- container sản phẩm -->
+	<section class="ftco-section" th:object="${order}">
 		<div class="container">
+			<a th:href="@{/sportify/order/historyList}">Quay lại Lịch sử đặt
+				hàng</a>
 			<div class="row">
-				<div class="table-wrap col-12">
-					<table class="table">
-						<thead class="thead-primary">
-							<tr>
-								<th>&nbsp;</th>
-								<th>&nbsp;</th>
-								<th>Tên sản phẩm</th>
-								<th>Giá</th>
-								<th>Số lượng</th>
-								<th>Thành tiền</th>
-								<th>&nbsp;</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="alert" role="alert" ng-repeat="item in cart.items">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" checked> <span
-										class="checkmark"></span>
-								</label></td>
-								<td><img class="img" alt="Error"
-									src="/user/images/{{item.image}}"></img> <!-- <div class="img"  style="background-image: url(/user/images/prod-1.jpg);"></div> -->
-								</td>
-								<td>
-									<div class="email">
-										<span>{{item.productname}}</span> <span></span>
-									</div>
-								</td>
-								<td class="price-tag">{{item.price | number: 0}} VNĐ</td>
-								<td class="quantity">
-									<div class="input-group">
-										<input ng-change="cart.saveToSessionStorage()"
-											ng-model="item.quantity" type="number" name="quantity"
-											class="quantity form-control input-number" value="1" min="1"
-											max="100">
-									</div>
-								</td>
-								<td class="price-tag total-price">{{item.quantity *
-									item.price | number: 0}} VNĐ</td>
-								<td>
-									<button ng-click="cart.removeProduct(item.productid)"
-										type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div>
-						<button ng-click="cart.clearCart()" class="btn btn-danger"
-							style="float: right;">Clear</button>
-					</div>
-				</div>
+				<!-- show sản phẩm -->
+				<h1 class="d-flex justify-content-center col-md-12 mt-1">
+					Đơn hàng #<span th:text="${order.orderid}">
+				</h1>
 			</div>
-			<div class="row justify-content-end">
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Thanh toán giỏ hàng</h3>
-						<p class="d-flex">
-							<span>Thành tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Phí vận chuyển</span> <span>0 VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Giảm giá</span> <span>0 VNĐ</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Tổng tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
-						</p>
-					</div>
-					<p class="text-center">
-						<a th:href="@{/sportify/order/checkout}"
-							class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
-					</p>
+			<div class="col-12">
+				<table class="table table-hover table-bordered">
+					<thead>
+						<tr class="text-center bg-secondary text-light">
+							<th scope="col">ID</th>
+							<th scope="col">Tên SP</th>
+							<th scope="col">Giá</th>
+							<th scope="col">Số lượng</th>
+							<th scope="col">Thành tiền</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="detail: *{orderDetails}" th:object="${detail}"
+							class="text-center">
+							<th scope="row">[[*{products.productid}]]</th>
+							<td>[[*{products.productname}]]</td>
+							<td>[[*{#numbers.formatDecimal(price,0,'COMMA',2,'POINT')}]]
+								VNĐ</td>
+							<td>[[*{quantity}]]</td>
+							<td>[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]
+								VNĐ</td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<button ng-click="" th:if="${order.orderstatus} == 'Chờ Xác Nhận'" class="btn btn-danger" style="float: right;">Hủy
+						đơn hàng</button>
 				</div>
 			</div>
 		</div>
 	</section>
 
+	<!-- footer -->
 	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">
@@ -388,15 +349,14 @@
 		</div>
 	</footer>
 
-
-
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen">
 		<svg class="circular" width="48px" height="48px">
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke="#eeeeee" />
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
 	</div>
 
 
@@ -418,6 +378,6 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
 	<script src="/user/js/shopping-cart-app.js"></script>
-
 </body>
+
 </html>
