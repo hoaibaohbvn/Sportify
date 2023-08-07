@@ -56,8 +56,9 @@ public class Teamdetails implements Serializable {
     
     @Column(name="infouser", length=5000)
     private String     infouser ;
-
-
+    
+    @Column(name = "status", nullable = false)
+    private Boolean status;
     //--- ENTITY LINKS ( RELATIONSHIP )
     @JsonIgnore
     @ManyToOne
