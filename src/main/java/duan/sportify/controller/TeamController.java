@@ -146,6 +146,7 @@ public class TeamController {
         String username = (String) request.getSession().getAttribute("username");
 	    model.addAttribute("teamId", teamId);
 		// Người dùng đã đăng nhập
+		if (username != null) {
 
 			// Người dùng tồn tại và thông tin đăng nhập chính xác
 			// Kiểm tra user đã tồn tại trong team
@@ -155,7 +156,6 @@ public class TeamController {
 			// Lấy số lượng thành viên trong team
 			Teams team = teamService.findById(teamId);
 			int quantity = team.getQuantity();
-			// Đếm số lượng thành viên trong teamDetail
 			Integer countMembers = detailDAO.countUser(teamId);
 
 			// username đã có trong team
@@ -171,8 +171,10 @@ public class TeamController {
 
 
 				// Người dùng chưa có trong team
-			} else if (countMembers < quantity) {
-
+			} else 
+				// kiểm tra trong team con chỗ trống không
+				if (countMembers < quantity) {
+				// gửi Thông báo về cho đội trưởng
 				// Add vô team
 				Teamdetails newUser = new Teamdetails();
 				newUser.setJoindate(LocalDate.now());
@@ -196,6 +198,10 @@ public class TeamController {
 			}
 
 			// Chưa đăng nhập trả về login
+		} else {
+			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
+			return "redirect:/sportify/login";
+		}
 	}
 
 	@PostMapping("/team/teamdetail/updateinfoUser")
