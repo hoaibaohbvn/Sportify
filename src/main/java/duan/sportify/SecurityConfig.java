@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {	
 			http.csrf().disable().cors().disable();
 			http.authorizeRequests()
-				.antMatchers("/sportify/field/booking/**").authenticated()
+				.antMatchers("/sportify/field/booking/**","/sportify/field/profile/**","/sportify/team/teamdetail/**" ).authenticated()
 				.antMatchers("/admin/**").hasAnyRole("R01", "R02")
 				.antMatchers("/rest/authorities").hasRole("R01")
 				.anyRequest().permitAll();

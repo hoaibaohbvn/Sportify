@@ -21,7 +21,7 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "LEFT JOIN sporttype ON  teams.sporttypeid = sporttype.sporttypeid \r\n"
 			+ "GROUP BY teams.teamid;", 
 			nativeQuery = true)
-	Page<Object[]> findAllTeam(Pageable pageable);
+	List<Object[]> findAllTeam();
 	
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
@@ -30,7 +30,7 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "            where nameteam like %:searchText%\r\n"
 			+ "			GROUP BY teams.teamid;", 
 			nativeQuery = true)
-	Page<Object[]> SearchTeam(@Param("searchText") String searchText,Pageable pageable);
+	List<Object[]> SearchTeam(@Param("searchText") String searchText);
 
 	@Query(value = "SELECT teams.*, categoryname, COUNT(teamdetails.teamid) AS member_count \r\n"
 			+ "			FROM teams\r\n" + "			LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
@@ -38,7 +38,7 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "            where sporttype.sporttypeid like :sporttypeid\r\n"
 			+ "			GROUP BY teams.teamid;",
 			nativeQuery = true)
-	Page<Object[]> FilterTeam(String sporttypeid ,Pageable pageable);
+	List<Object[]> FilterTeam(String sporttypeid );
 	
 	//search in admin 
 	@Query(value = "SELECT * FROM teams WHERE (:nameteam IS NULL OR nameteam LIKE %:nameteam%) AND (:sporttypeid IS NULL OR sporttypeid LIKE %:sporttypeid%)", nativeQuery = true)
