@@ -70,8 +70,8 @@
 						style="display: block;">
 						<p class="mb-0">
 							<a th:href="@{/sportify/login}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> 
-							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -257,30 +257,43 @@
 					</div>
 				</div>
 			</div>
-			<div class="row justify-content-end">
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Thanh toán giỏ hàng</h3>
-						<p class="d-flex">
-							<span>Thành tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Phí vận chuyển</span> <span>0 VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Giảm giá</span> <span>0 VNĐ</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Tổng tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
+			<br>
+			<div class="row">
+				<div class="row col-6 justify-content-start">
+					<div class="col col-lg-10 col-md-12 mt-10 cart-wrap ftco-animate">
+						<div class="">
+							<h5>Mã giảm giá:</h5>
+							<p class="d-flex">
+								<input type="text" class="col-12" placeholder="Nhập mã giảm giá ở đây">
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="row col-6 justify-content-end">
+					<div class="col col-lg-10 col-md-12 mt-10 cart-wrap ftco-animate">
+						<div class="cart-total mb-3">
+							<h3>Thanh toán giỏ hàng</h3>
+							<p class="d-flex">
+								<span>Tạm tính: </span> <span>{{cart.totalPrice | number:
+									0}} VNĐ</span>
+							</p>
+							<p class="d-flex">
+								<span>Phí vận chuyển: </span> <span>{{shippingFee.cartShipFee() | number:0}} VNĐ</span>
+							</p>
+							<p class="d-flex">
+								<span>Giảm giá: </span> <span>0 VNĐ</span>
+							</p>
+							<hr>
+							<p class="d-flex total-price">
+								<span>Thành tiền</span> <span>{{cart.totalPrice + shippingFee.cartShipFee()| number:
+									0}} VNĐ</span>
+							</p>
+						</div>
+						<p class="text-center">
+							<a th:href="@{/sportify/order/checkout}"
+								class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
 						</p>
 					</div>
-					<p class="text-center">
-						<a th:href="@{/sportify/order/checkout}"
-							class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
-					</p>
 				</div>
 			</div>
 		</div>

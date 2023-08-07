@@ -11,7 +11,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		//thêm SP
 		addProduct(productid) {
 			//alert(productid);
-			const testItem = { name: "Product1", img: "product1_img.png", price: "$100" };
+			//const testItem = { name: "Product1", img: "product1_img.png", price: "$100" };
 			//const testCart = JSON.stringify(angular.copy(testItem));
 			//localStorage.setItem("testCart", testCart);
 			var item = this.items.find(item => item.productid == productid);
@@ -62,7 +62,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			this.items = json ? JSON.parse(json) : [];
 		}
 	}
-
+	
+	//tính phí vận chuyển
+	$scope.shippingFee = {
+		shipFee: 0,
+		cartShipFee(){
+			return ($scope.cart.totalPrice > 300000 ? 0 : 30000);
+		}
+	}
+	
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
