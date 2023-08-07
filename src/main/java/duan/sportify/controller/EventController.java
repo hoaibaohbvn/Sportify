@@ -15,10 +15,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import duan.sportify.dao.EventDAO;
 import duan.sportify.entities.Eventweb;
@@ -33,16 +35,27 @@ public class EventController {
 	@Autowired
 	EventDAO eventDAO;
 	@GetMapping("/event")
-	public String view(Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
-		
+	public String view(@ModelAttribute("eventName") String eventName, Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
+		) {
+		System.out.print(eventName);
 		Page<Eventweb> eventwebList;
-		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không		
-		if(keywordLength > 0 ) {
+		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không
+
+		if(keywordLength > 0 && eventName==null) {
 			eventwebList = eventDAO.searchEvents(keyword, pageable);
 			
-		}else {
+		}else if(eventName=="thethao" && keywordLength==0) {
+			eventwebList = eventDAO.searchbtnTheThao(pageable);
+		}else if(eventName=="khuyenmai" && keywordLength==0) {
+			eventwebList = eventDAO.searchbtnKhuyenMai(pageable);
+		}else if(eventName=="baotri" && keywordLength==0) {
+			eventwebList = eventDAO.searchbtnBaoTri(pageable);
+		}
+			else{
+			
 			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
 		}
+		
 		
 		
 		
@@ -51,6 +64,7 @@ public class EventController {
 		model.addAttribute("eventList", events);
 		model.addAttribute("page", eventwebList);
 		model.addAttribute("keyword", keyword);
+		
 		return "user/blog";
 	}
 	
@@ -66,7 +80,9 @@ public class EventController {
 
 	
 	@PostMapping("/search")
-    public String search(@RequestParam("keyword")String keyword, Model model) {
+    public String search(@RequestParam("keyword")String keyword, Model model ,RedirectAttributes redirectAttributes) {
+		String event= null;
+	    redirectAttributes.addFlashAttribute("eventName", event);
 		try {
 	        String encodedSearchText = URLEncoder.encode(keyword, "UTF-8");
 	        if (encodedSearchText.isEmpty()) {
@@ -78,4 +94,28 @@ public class EventController {
 	        return "error"; // Ví dụ: "error.html"
 	    }
     }
+	
+	
+	@GetMapping("/event/thethao")
+	public String thethao(Model model,RedirectAttributes redirectAttributes) {
+		String event= "thethao";
+	    redirectAttributes.addFlashAttribute("eventName", event);
+		return "redirect:/sportify/event?eventName="+event;
+	}
+	
+	@GetMapping("/event/khuyenmai")
+	public String khuyenmai(Model model,RedirectAttributes redirectAttributes) {
+		String event= "khuyenmai";
+	    redirectAttributes.addFlashAttribute("eventName", event);
+		return "redirect:/sportify/event?eventName="+event;
+	}
+	
+	@GetMapping("/event/baotri")
+	public String baotri(Model model,RedirectAttributes redirectAttributes) {
+		String event= "baotri";
+	    redirectAttributes.addFlashAttribute("eventName", event);
+		return "redirect:/sportify/event?eventName="+event;
+	}
+	
+	
 }

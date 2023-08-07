@@ -19,9 +19,13 @@ import duan.sportify.entities.Eventweb;
 public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 	@Query(value="SELECT COUNT(*) FROM eventweb;", nativeQuery = true)
 	List<Object> CountEvent();
+	//Lọc theo tháng
 	@Query(value = "SELECT * FROM eventweb\r\n"
-			+ "WHERE MONTH(datestart) = MONTH(CURDATE()) AND YEAR(datestart) = YEAR(CURDATE());", nativeQuery = true)
+			+ "WHERE MONTH(datestart) = MONTH(CURDATE()) AND YEAR(datestart) = YEAR(CURDATE())\r\n"
+            + "ORDER BY datestart DESC\r\n"
+            + "LIMIT 4;", nativeQuery = true)
 	List<Object[]> fillEventInMonth();
+	
 	@Query("SELECT s FROM Eventweb s WHERE MONTH(s.datestart) = :month")
     List<Eventweb> findByMonth(@Param("month") int month);
 	
@@ -59,5 +63,25 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
     		+ "WHERE (nameevent LIKE %:nameevent% OR :nameevent IS NULL) "
     		+ "AND (eventtype like %:eventtype% OR :eventtype IS NULL)", nativeQuery = true)
     List<Eventweb> searchEventAdmin(@Param("nameevent") Optional<String> nameevent, @Param("eventtype") Optional<String> eventtype);
+    
+    // tìm loại sự kiện
+    @Query("SELECT e FROM Eventweb e WHERE e.eventtype = :eventtype")
+    Page<Eventweb> findEventsByEventType(String eventtype, Pageable pageable);
 	
+   
+
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) not LIKE 'Bảo trì' AND lower(eventtype) not LIKE 'Khuyến mãi' " +
+            "ORDER BY datestart DESC", nativeQuery = true)
+    Page<Eventweb> searchbtnTheThao(Pageable pageable);
+    
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) LIKE 'Khuyến mãi' " +
+            "ORDER BY datestart DESC", nativeQuery = true)
+    Page<Eventweb> searchbtnKhuyenMai(Pageable pageable);
+    
+    @Query(value = "SELECT * FROM Eventweb " +
+            "WHERE lower(eventtype) LIKE 'Bảo trì' " +
+            "ORDER BY datestart DESC", nativeQuery = true)
+    Page<Eventweb> searchbtnBaoTri(Pageable pageable);
 }

@@ -8424,6 +8424,7 @@ h1, h2, h3, h4, h5,
       bottom: 0;
       content: '';
       opacity: .3; }
+
     .hero-wrap.hero-wrap-2 .slider-text {
       height: 400px !important; }
       .hero-wrap.hero-wrap-2 .slider-text .breadcrumbs {
@@ -9376,6 +9377,16 @@ textarea.form-control {
     content: '';
     background: #000000;
     opacity: .7; }
+    
+     .testimony-section .overlay1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: #000000;
+    opacity: 0.2; }
   .testimony-section .owl-carousel {
     margin: 0; }
   .testimony-section .owl-carousel .owl-stage-outer {
@@ -10139,10 +10150,216 @@ a:hover span {
   background: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 0.5 */
 }
 
+
 .event-description {
     white-space: pre-line; /* Hiển thị dòng mới dựa trên các ký tự xuống dòng (\n) trong văn bản */
     word-wrap: break-word; /* Tự động ngắt từ khi vượt quá chiều rộng của div */
 }
 
 
+/* Nut bảo trì*/
+
+.btn-baotri {
+	 --color: #00A97F;
+	 --color2: rgb(10, 25, 30);
+	 padding: 1.2em 1.8em;	
+	 border: .3px solid ;
+	 transition: .5s;
+	 position: relative;
+	 overflow: hidden;
+	 cursor: pointer;
+	 font-weight: 400; 
+	 z-index: 1;
+	 font-weight: 300;
+	 font-size: 12px;
+	 text-align: center;
+	 text-transform: uppercase;
+	 color: var(--color);
+}
+.gradient-element {
+  background-image: linear-gradient(to bottom, #ff0000, #00ff00);
+}
+
+.btn-baotri::after, .btn-baotri::before {
+	 content: '';
+	 display: block;
+	 height: 100%;
+	 width: 100%;
+	 transform: skew(90deg) translate(-50%, -50%);
+	 position: absolute;
+	 inset: 50%;
+	 left: 25%;
+	 z-index: -1;
+	 transition: .5s ease-out;
+	 background-color: var(--color);
+}
+
+.btn-baotri::before {
+	 top: -50%;
+	 left: -25%;
+	 transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn-baotri:hover::before {
+	 transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn-baotri:hover::after {
+ 	transform: skew(45deg) translate(-50%, -50%);
+}
+
+.btn-baotri:hover {
+	 color: var(--color2);
+}
+
+.btn-baotri:active {
+	 filter: brightness(.7);
+	 transform: scale(.98);
+}
+
+/* Nút thể thao*/
+
+.btn-thethao {
+	 --color: #00A97F;
+	 padding: 1.2em 1.8em;
+	 background-color: transparent;
+	 position: relative;
+	 overflow: hidden;
+	 cursor: pointer;
+	 transition: .5s;
+	 font-weight: 400;
+	 text-align: center;
+	 font-size: 12px;
+	 border: 1px solid;
+	 font-family: inherit;
+	 text-transform: uppercase;
+	 color: var(--color);
+	 z-index: 1;
+}
+
+.btn-thethao::before, .btn-thethao::after {
+	 content: '';
+	 display: block;
+	 width: 50px;
+	 height: 50px;
+	 transform: translate(-50%, -50%);
+	 position: absolute;
+	 border-radius: 50%;
+	 z-index: -1;
+	 background-color: var(--color);
+	 transition: 1s ease;
+}
+
+.btn-thethao::before {
+	 top: -1em;
+	 left: -1em;
+}
+
+.btn-thethao::after {
+	 left: calc(100% + 1em);
+	 top: calc(100% + 1em);
+}
+
+.btn-thethao:hover::before, .btn-thethao:hover::after {
+	 height: 410px;
+	 width: 410px;
+}
+
+.btn-thethao:hover {
+ 	color: rgb(10, 25, 30);
+}
+
+.btn-thethao:active {
+ 	filter: brightness(.8);
+}
+
+/* Nút khuyến mãi */
+
+.btn-khuyenmai {
+	 padding: 1.2em 1.8em;
+	 border: 1px solid;
+	 position: relative;
+	 overflow: hidden;
+	 background-color: transparent;
+	 text-align: center;
+	 text-transform: uppercase;
+	 font-size: 12px;
+	 transition: .3s;
+	 z-index: 1;
+	 font-family: inherit;
+	 color: #00A97F;
+}
+
+.btn-khuyenmai::before {
+	 content: '';
+	 width: 0;
+	 height: 300%;
+	 position: absolute;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%) rotate(45deg);
+	 background: #00A97F;
+	 transition: .5s ease;
+	 display: block;
+	 z-index: -1;
+}
+
+.btn-khuyenmai:hover::before {
+	 width: 105%;
+}
+
+.btn-khuyenmai:hover {
+ 	color: #111;
+}
+
+.hr1 {
+	 border: none; /* Xóa viền (border) mặc định của hr */
+	 height: 4px; /* Chiều cao của hr */
+	 background-image: linear-gradient(to right, #f00, #00f); /* Màu gradient ngang từ đỏ (#f00) sang xanh dương (#00f) */
+	 border-radius: 2px;
+}
+
+.block-25 .blog-img {
+  display: block;
+  height: 70px;
+  width: 70px;
+  border-radius: 4px; }
+
+.block-25 .text {
+  width: calc(100% - 70px); }
+  .block-25 .text .heading {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 10px; }
+    .block-25 .text .heading a {
+      color: #000000; }
+      .block-25 .text .heading a:hover, .block-25 .text .heading a:active, .block-25 .text .heading a:focus {
+        color: #2E7D32; }
+  .block-25 .text .meta > div {
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 5px; }
+    .block-25 .text .meta > div a {
+      color: #b3b3b3; 
+   }
+
+.video-container {
+  display: flex;
+  gap: 20px;
+}
+
+.main-video {
+  flex: 1;
+}
+
+.related-videos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.related-video iframe {
+  width: 100%;
+}
 
