@@ -65,5 +65,11 @@ public class BookingServiceImpl implements BookingService{
 		return bookingDAO.getBookingInfoByBookingDetail(bookingid);
 	}
 
+	@Override
+	public int countBooking() {
+		// TODO Auto-generated method stub
+		return bookingDAO.countBooking();
+	}
+
 	
 }

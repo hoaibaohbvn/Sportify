@@ -31,8 +31,8 @@
 <style>
 .info-content {
 	display: none; /* Ẩn thông tin ban đầu */
-	background-color: #FBEAEB;
-	color: #2F3C7E;
+	background-color: #FAF0E4;;
+	color: #606C5D;
 	font-weight: bold;
 	padding: 5px;
 	border: 1px solid #ccc;
@@ -40,6 +40,8 @@
 	top: 20px;
 	left: 0;
 	z-index: 1;
+	border-radius: 5px;
+	opacity: 0.9;
 }
 
 /* Định dạng biểu tượng "i" */
@@ -47,7 +49,7 @@
 	display: inline-block;
 	width: 15px;
 	height: 15px;
-	background-color: graytext;
+	background-color: #F2BE22;
 	color: white;
 	text-align: center;
 	line-height: 15px;
@@ -198,7 +200,7 @@
 		</div>
 	</section>
 
-	<form action="#">
+	<form action="/sportify/getIp/create" method="post">
 		<section class="ftco-section">
 			<div class="container">
 				<div class="container">
@@ -229,8 +231,9 @@
 														<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
 												</span>
 												</span> <input id="phoneNumberInput"
-													onchange="validatePhoneNumber()" th:value="${users.phone}"
+													onchange="validatePhoneNumber()" name="phone" th:value="${users.phone}"
 													type="text" size="10" class="form-control">
+													
 											</div>
 											<div>
 												<label for="Mail">Email</label> <span class="info-container"><span
@@ -243,7 +246,7 @@
 											</div>
 											<div>
 												<label>Ghi chú thông tin ( nếu cần )</label>
-												<textarea type="text" class="form-control" placeholder=""> </textarea>
+												<textarea type="text" name="note" value="note"  class="form-control" placeholder=""> </textarea>
 											</div>
 										</div>
 									</div>
@@ -260,17 +263,20 @@
 													<h5
 														style="color: #4B56D2; padding-top: 20px; font-weight: bold;"
 														th:value="${e.namefield}" th:text="${e.namefield}"></h5>
+														<input type="hidden"  name="fieldid" th:value="${e.fieldid}" />
 												</div>
 												<div style="background-color: #EEEEEE;">
 													<div style="padding-left: 10px">
 														<span>Ngày nhận sân:</span> &nbsp; <span
 															style="color: black; font-weight: bold;"
 															th:value="${dateselect}" th:text="${formattedDate}"></span>
+															<input type="hidden"  name="playdate" th:value="${dateselect}" />
 													</div>
 													<div style="padding-left: 10px">
 														<span>Giờ chơi:</span> &nbsp; <span id="nameshift-input"
 															name="nameshift" style="color: black; font-weight: bold;"
 															th:value="${nameShift}" th:text="${nameShift}"></span>
+														<input type="hidden"  name="shiftid" th:value="${shiftid}" />
 													</div>
 												</div>
 												<div class="d-flex">
@@ -323,6 +329,7 @@
 													<label>Giá Tiền</label> <span th:value="${e.price}"
 														th:text="${#numbers.formatCurrency(e.price)}"
 														style="color: black; font-weight: bold; margin-left: 30px"></span>
+														<input type="hidden"  name="pricefield" th:value="${e.price}" />
 												</div>
 												<div class="d-flex">
 													<label>Phụ Thu &nbsp;</label> <span class="info-container"><span
@@ -372,6 +379,7 @@
 												style="color: black; font-weight: bold;"
 												th:value="${thanhtien}"
 												th:text="${#numbers.formatCurrency(thanhtien)}"></span>
+												<input type="hidden"  name="thanhtien" th:value="${thanhtien}" />
 										</div>
 										<div
 											style="font-size: medium; background-color: #F6F4EB; height: 40px; display: flex; justify-content: center; align-items: center;">
@@ -379,9 +387,10 @@
 													class="info-icon">i</span> <span class="info-content">
 														<p>Tiền quý khách thanh toán cọc giữ chổ theo quy định</p>
 												</span></span> &nbsp;
-											</span> <span style="color: black; font-weight: bold;"
-												th:value="${tiencoc}"
+											</span> <span  style="color: black; font-weight: bold;"
+												  th:value="${tiencoc}"
 												th:text="${#numbers.formatCurrency(tiencoc)}"></span>
+												<input type="hidden" id="amountInput" name="amount" th:value="${tiencoc}" />
 										</div>
 										<div
 											style="font-size: large; background-color: #91C8E4; height: 40px; display: flex; justify-content: center; align-items: center;">
@@ -389,6 +398,7 @@
 												style="color: black; font-weight: bold;"
 												th:value="${conlai}"
 												th:text="${#numbers.formatCurrency(conlai)}"></span>
+												
 										</div>
 									</div>
 								</div>
@@ -408,14 +418,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-md-12">
-												<div class="radio">
-													<label><input type="radio" name="optradio"
-														class="mr-2">Thanh toán trực tiếp</label>
-												</div>
-											</div>
-										</div>
+										
 										<div
 											style="background-color: white; color: black; font-weight: bold;">
 											Khi nhấn vào nút này bạn công nhận mình đã đọc và đồng ý với
@@ -424,7 +427,10 @@
 												th:href="@{/sportify/chinhsach}" style="color: blue;">Chính
 												sách quyền riêng tư</a> của Sportify
 											<p>
-												<a href="#" class="btn btn-primary py-3 px-4">Đặt hàng</a>
+												
+												
+										<!-- 		<a  th:href="@{/sportify/getIp/create/{amount}(amount=${tiencoc})}" class="btn btn-primary py-3 px-4">Đặt Sân</a>-->
+												<button type="submit" class="btn btn-primary py-3 px-4">Đặt Sân</button>
 											</p>
 										</div>
 									</div>
@@ -605,7 +611,10 @@
 			}
 		}
 	</script>
-
+	
+	
+	
+	
 
 </body>
 

@@ -185,14 +185,14 @@
 				<span style= "color:#1F8A70; font-weight: bold;">Đặt lúc</span>
 				<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[1], 'dd/MM/yyyy HH:mm:ss')}"></span>
 				<span th:with="statusColor=${bookingInfo[4] == 'Hoàn Thành' ? '#39AEA9' : (bookingInfo[4] == 'Đã Cọc' ? '#FFA41B' : (bookingInfo[4] == 'Hủy Đặt' ? 'red' : 'white'))}" 
-				      th:style="'font-size:medium;color:snow; font-weight:bold;margin-left: 55%; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}" 
+				      th:style="'font-size:medium;color:snow; font-weight:bold;margin-left: 44%; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}" 
 				      th:text="${bookingInfo[4]}">
 				</span>
 				</h6>
 				<div class="card-body">
 					<h5 class="card-title text-success font-weight-bold" th:text="${bookingInfo[5]}"></h5>
 					<img style="width:20%; height:50%" th:src="@{'/user/images/' + ${bookingInfo[6]}}" alt="Image">
-					<p class="card-text limited-length2" th:text="${bookingInfo[3]}"></p> <hr>
+					<p  class="card-text limited-length5" th:text="${bookingInfo[3]}"></p> <hr>
 					<p>Tổng tiền: <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(bookingInfo[2])}"></span> 
 					<a  style="padding-left: 70%" th:href="@{/sportify/field/profile/historybooking/detail(bookingId=${bookingInfo[0]}, bookingPrice=${bookingInfo[2]})}">
 							<button type="button" class="btn btn-outline-info">Xem
@@ -206,7 +206,82 @@
 			
 		</div>
 	</div>
-
+	<footer class="ftco-footer">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2 logo">
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
+						</h2>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<ul class="ftco-footer-social list-unstyled mt-2">
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-twitter"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+									class="fa fa-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-instagram"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4 ml-md-4">
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
+						<div class="block-23 mb-3">
+							<ul>
+								<li><span class="icon fa fa-map marker"></span><span
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+								<li><a href="#"><span class="icon fa fa-phone"></span><span
+										class="text">0123456789</span></a></li>
+								<li><a href="#"><span
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid px-0 py-5 bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Bản quyền &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 	
 
 	<!-- loader -->

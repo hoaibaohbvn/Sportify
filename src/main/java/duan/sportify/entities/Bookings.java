@@ -46,7 +46,7 @@ public class Bookings implements Serializable {
     //--- ENTITY PRIMARY KEY 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="bookingid", nullable=false)
+    @Column(name="bookingid", nullable=false, unique = true)
     private Integer    bookingid ;
 
     //--- ENTITY DATA FIELDS 

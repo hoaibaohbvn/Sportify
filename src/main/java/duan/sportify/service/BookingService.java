@@ -21,4 +21,6 @@ public interface BookingService {
 
 	List<Object[]> getBookingInfoByUsername(String username);
 	Object[] getBookingInfoByBookingDetail(String bookingid);
+	
+	int countBooking();
 }

@@ -22,24 +22,6 @@
 <link rel="stylesheet" href="/user/css/styleprofile.css">
 </head>
 <style>
-#nz-div-3 h3.tde span {
-    background: #EA3A3C;
-    padding: 10px 20px 8px 20px;
-    color: white;
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    border-radius: 23px 23px 0px 0px;
-}
-
-#nz-div-3 h3.tde {
-    margin: 15px 0;
-    border-bottom: 2px solid #ea3a3c;
-    font-size: 16px;
-    line-height: 20px;
-    text-transform: uppercase;
-}
-
 
 .nz-div-7 {    position: relative;    margin: 20px 0; text-align: center;}
 .nz-div-7 .box-title-name {    font-size: 24px;    font-weight: 900;    text-transform: uppercase;    color: #333;    display: inline-block;    vertical-align: top;    position: relative;    z-index: 1;    padding-bottom: 28px;}
@@ -168,19 +150,12 @@
 	</section>
 	<!-- END nav -->
 <div class="nz-div-7">
-               <div class="box-title-name"><span class="null">Lịch Sử</span> Đặt Sân Của Bạn</div>
+               <div class="box-title-name"><span class="null">Chi Tiết</span> Lịch Sử Đặt Sân</div>
 			</div>
 	<div class="container d-flex justify-content-center rounded mb-5" >
 		<div class=" col-md-12 rounded row" id="profiles" style="margin-top:50px;background-color:rgb(247 249 250);">
 
-
-			<div id='nz-div-3'>
-  <h3 class="tde">         
-            <span>Hiển thị 20 phiếu đặt gần nhất</span>         
-  </h3>
-</div>
-
-			<div th:each="bookingInfo : ${listbooking}" class="card col-12 mb-3" style="border-radius:10px">
+			<div th:each="bookingInfo : ${listbooking}" class="card col-12 mb-3" style="border-radius:10px; margin-top: 20px">
 				<h6 class="card-header">Mã phiếu #<span th:text="${bookingInfo[0]}" ></span> 
 				<span style= "color:#1F8A70; font-weight: bold;">Đặt lúc</span>
 				<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[1], 'dd/MM/yyyy HH:mm:ss')}"></span>
@@ -211,7 +186,8 @@
 					 <hr>
 					 <div>
 					<p>
-					<span>Phụ Thu:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(phuthu)}"></span>
+					<span>Phụ Thu:
+					</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(phuthu)}"></span>
 					<span>Tạm Tính:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(tamtinh)}"></span> 
 					<span>Giảm giá:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(giamgia)}"></span> ||
 					<span class="font-weight-bold">Tiền đã cọc:</span> <span class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(tiencoc)}"></span> ||
@@ -225,7 +201,82 @@
 			
 		</div>
 	</div>
-
+<footer class="ftco-footer">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2 logo">
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
+						</h2>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</p>
+						<ul class="ftco-footer-social list-unstyled mt-2">
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-twitter"></span></a></li>
+							<li class="ftco-animate"><a href="https://www.facebook.com/profile.php?id=100094025267338"><span
+									class="fa fa-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span
+									class="fa fa-instagram"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4 ml-md-4">
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/chinhsach}"><span class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+						
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
+						<ul class="list-unstyled">
+							<li><a th:href="@{/sportify/contact}"><span class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
+						<div class="block-23 mb-3">
+							<ul>
+								<li><span class="icon fa fa-map marker"></span><span
+									class="text">Công viên phần mềm Quang QTSC Building 1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
+								<li><a href="#"><span class="icon fa fa-phone"></span><span
+										class="text">0123456789</span></a></li>
+								<li><a href="#"><span
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid px-0 py-5 bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Bản quyền &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện  <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer Sportify</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 	
 
 	<!-- loader -->

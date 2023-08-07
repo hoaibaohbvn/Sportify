@@ -258,11 +258,11 @@ public class FieldController {
 		double thanhtien = 0;
 		double tiencoc = 0;
 		double conlai = 0;
-		
-//		Users loggedInUser = userService.findById(userlogin);
+		int shiftid = 0;
 		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
 		for(int i = 0 ; i < shift.size();i++) {
 				time = shift.get(i).getStarttime();
+				shiftid = shift.get(i).getShiftid();
 		}
 		// Khởi tạo giờ 17:00
         LocalTime timeToCompare = LocalTime.of(17, 0);
@@ -274,9 +274,7 @@ public class FieldController {
         // Định dạng thành chuỗi "dd/MM/yyyy"
         String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        
 
-        
         double phuthu = 0; // giá phụ thu
 		if (userlogin != null) {
 //			List<Voucher> listvoucher = voucherService.findAll();
@@ -338,6 +336,7 @@ public class FieldController {
 			
 				
 			}
+			model.addAttribute("shiftid",shiftid);
 			model.addAttribute("pricevoucher", pricevoucher);
 			model.addAttribute("conlai", conlai);
 			model.addAttribute("tiencoc", tiencoc);

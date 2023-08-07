@@ -114,54 +114,7 @@ body {
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
-					</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-				</div>
-			</div>
+			
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -203,9 +156,8 @@ body {
 							</span>
 						</h1>
 						<p>
-							<a href="#" class="btn btn-primary py-2 px-4">Tham gia</a> <a
-								href="#" class="btn btn-white btn-outline-white py-2 px-4">Xem
-								thêm</a>
+							<a th:href="@{/sportify/field}" class="btn btn-primary py-2 px-4">Đặt Sân Ngay</a> <a
+								th:href="@{/sportify/product}" class="btn btn-white btn-outline-white py-2 px-4">Đi Mua Sắm</a>
 						</p>
 					</div>
 				</div>
@@ -259,37 +211,7 @@ body {
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-no-pb">
-		<div class="container">
-			<div class="row">
-				<div
-					class="col-md-5 img img-3 d-flex justify-content-center align-items-center"
-					style="background-image: url(/user/images/bg_index3.png);"></div>
-				<div class="col-md-7 wrap-about pl-md-5 ftco-animate py-5">
-					<div class="heading-section">
-						<h3 class="mb-4">GIẢM GIÁ 30% QUẦN ÁO - NÂNG CẤP TỦ ĐỒ CỦA
-							BẠN</h3>
-
-						<p>Chào mừng mùa hè! Chúng tôi rất vui thông báo về chương
-							trình giảm giá 30% quần áo tại cửa hàng. Đây là cơ hội tuyệt vời
-							để bạn cải thiện tủ đồ của mình với một phong cách mới.</p>
-						<p>Chúng tôi tự hào mang đến bộ sưu tập thời trang đa dạng, từ
-							trang phục công sở đến thời trang dạo phố. Bạn sẽ tìm thấy những
-							món đồ ưng ý trong bộ sưu tập của chúng tôi.</p>
-						<p>Chất lượng là ưu tiên hàng đầu. Sản phẩm được chú trọng đến
-							từng chi tiết, mang lại sự thoải mái và phong cách thời thượng.
-							Với giảm giá 30%, bạn còn có cơ hội tiết kiệm một khoản tiền đáng
-							kể.</p>
-						<p>Hãy nhanh chóng đến cửa hàng để tận hưởng chương trình giảm
-							giá này. Thời gian giới hạn, đừng bỏ lỡ cơ hội tuyệt vời này. Cập
-							nhật tủ đồ và thể hiện phong cách mới với giá ưu đãi!</p>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
+	
 
 	<section class="ftco-section ftco-no-pb">
 		<div class="container">
@@ -536,7 +458,8 @@ body {
 			</div>
 			<div class="row d-flex">
 				<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
-					th:each="e: ${eventList}">
+					th:each="e, iterStat : ${eventList}"
+					th:if="${iterStat.index} &lt; 4">
 					<div class="blog-entry d-flex">
 
 						<img class="block-19 block-20 img" alt=""

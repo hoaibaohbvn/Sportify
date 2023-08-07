@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KẾT QUẢ THANH TOÁN</title>
+    <link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
+    <link href="/vnpay_thymeleaf/assets/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/vnpay_thymeleaf/assets/jumbotron-narrow.css" rel="stylesheet">
+    
+</head>
+<style>
+body {
+    background: snow;
+    min-height: 100vh;
+    vertical-align: middle;
+    display: flex
+}
+
+.card {
+    margin: auto;
+    width: 600px;
+    padding: 3rem 3.5rem;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+@media(max-width:767px) {
+    .card {
+        width: 90%;
+        padding: 1.5rem
+    }
+}
+
+@media(height:1366px) {
+    .card {
+        width: 90%;
+        padding: 8vh
+    }
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 2.5em;
+    text-align: center;
+    color: #0D1282;
+    justify-content: center;
+    
+}
+.title{
+	margin-bottom: 10%;
+}
+
+.nav {
+    display: flex
+}
+
+.nav ul {
+    list-style-type: none;
+    display: flex;
+    padding-inline-start: unset;
+    margin-bottom: 6vh
+}
+
+.nav li {
+    padding: 1rem
+}
+
+.nav li a {
+    color: black;
+    text-decoration: none
+}
+
+.active {
+    border-bottom: 2px solid black;
+    font-weight: bold
+}
+
+form .row {
+    margin: 0;
+    overflow: hidden
+}
+
+form .row-1 {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 10px;
+    outline: none;
+    width: 100%;
+    min-width: unset;
+    border-radius: 5px;
+    background-color: rgba(221, 228, 236, 0.301);
+    border-color: rgba(221, 228, 236, 0.459);
+    margin: 2vh 0;
+    overflow: hidden
+}
+
+form .row-2 {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 0.8rem
+}
+
+form .row .row-2 {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 0.8rem
+}
+
+form .row .col-2,
+.col-7,
+.col-3 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0 1vh
+}
+
+form .row .col-2 {
+    padding-right: 0
+}
+
+#card-header {
+    font-weight: bold;
+    font-size: 0.9rem
+}
+
+#card-inner {
+    font-size: 0.7rem;
+    color: gray
+}
+
+
+.btn {
+    width: 30%;
+    background-color: #F7F7F7;
+    border-color: rgb(65, 202, 127);
+    color: #5D5D5D;
+    justify-content: center;
+    padding: 2vh 0;
+    margin-top: 10%;
+    margin-left: 12%;
+    font-weight: bold;
+    
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    transition: none
+}
+.text-success {
+  	color: #0C9463;
+  	font-weight: bold;
+}
+
+.text-danger {
+  	color: #DF2E38;
+  	font-weight: bold;
+}
+</style>
+
+
+<body>
+
+    <!--Begin display -->
+   
+    <div class="card mt-50 mb-50">
+    <div class="title">
+    	<label class="card-title mx-auto d-flex justify-content-start"> <img style="width: 15%; height: 15%; margin-right: 0%" th:src="@{'/user/images/' + iconVNP.png}" alt="Image">
+    		
+    	<span >Kết Quả Thanh Toán</span>
+		<img   style="width: 20%; height: 40%; margin-bottom: 5%" th:src="@{'/user/images/' + Logo3.png}" alt="Image">
+		</label>
+		
+    </div>
+
+    
+    
+    <span id="card-header">Thông tin giao dịch:</span>
+    
+        <div class="row row-1">
+            <div class="col-3 d-flex justify-content-center"> Mã giao dịch:&nbsp;<span th:text="${param.vnp_TxnRef}"></span> </div>
+            <div class="col-3 d-flex justify-content-center"> Mô tả giao dịch:&nbsp;<span th:text="${param.vnp_OrderInfo}"></span> </div>
+        </div>
+        <div class="row row-1">
+            
+            <div class="col-3 d-flex justify-content-center"> Số tiền:&nbsp;<span id="trangthai" th:text="${#numbers.formatCurrency(amountInVND)}"></span> </div>
+        </div> <span id="card-header">Thông tin ngân hàng:</span>
+        <div class="row-1">
+        	<div class="col-3 d-flex justify-content-center"> Mã giao dịch tại CTT VNPAY-QR:&nbsp; <span th:text="${param.vnp_TransactionNo}"></span> </div>
+        	
+            <div class="col-3 d-flex justify-content-center"> Mã ngân hàng thanh toán::&nbsp;<span th:text="${param.vnp_BankCode}"></span> </div>
+        </div>
+        <span id="card-header">Trạng Thái:</span>
+        <div class="row-1">
+        	<div class="col-3 d-flex justify-content-center"> Tình trạng giao dịch:&nbsp; <span  th:text="${transactionStatus}" th:class="${transactionStatus == 'Thành công' ? 'text-success' : 'text-danger'}"></span> </div>
+        	<div class="col-3 d-flex justify-content-center"> Giao dịch lúc:&nbsp; <span th:text="${param.vnp_PayDate}"></span> </div>
+        	
+        </div>
+       <a th:href="@{/sportify}">
+        <button class="btn d-flex mx-auto"><b>Về Trang Chủ</b></button>
+       </a>
+       <a th:href="@{/sportify/field/profile/historybooking}">
+        <button class="btn d-flex mx-auto"><b>Lịch Sử Đặt Sân</b></button>
+       </a>
+    
+</div>
+</body>
+</html>

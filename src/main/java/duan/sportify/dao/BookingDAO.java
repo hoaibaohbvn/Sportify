@@ -50,4 +50,7 @@ public interface BookingDAO extends JpaRepository<Bookings, Integer>{
 			+ "WHERE \r\n"
 			+ "    b.bookingid = :bookingid", nativeQuery = true)
 	Object[] getBookingInfoByBookingDetail(String bookingid);
+	
+	@Query(value = "select count(*) from bookings", nativeQuery = true)
+	int countBooking();
 }
