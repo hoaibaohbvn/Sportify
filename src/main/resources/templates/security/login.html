@@ -3,6 +3,8 @@
 
 <head>
 <title>Đăng Nhập</title>
+<link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
+
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -33,6 +35,7 @@
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
 								<h3 class="display-4">Đăng nhập</h3>
+								<p id="notification" class="text-info font-weight-bold" th:text="${thongbao}"></p>
 								<form th:action="@{/sportify/login}" method="post">
 									<div class="form-group mb-3">
 										<input name="username" type="text" placeholder="username"
@@ -46,12 +49,7 @@
 										<label for="customCheck1"
 											class="custom-control-label text-danger" th:text="${message}"></label>
 									</div>
-									<div class="custom-control custom-checkbox mb-3">
-										<input name=remember-me type="checkbox"
-											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Nhớ
-											mật khẩu ?</label>
-									</div>
+									
 
 									<div class="d-grid gap-2 mb-3">
 										<a th:href="@{/sportify/login/form}"><button
@@ -64,7 +62,7 @@
 
 									<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Bạn chưa có tài khoản <a th:href="@{/sportify/signups}">Đăng kí</a>
+											Bạn chưa có tài khoản <a th:href="@{/sportify/signup}">Đăng kí</a>
 										</p>
 									</div>
 
@@ -79,32 +77,31 @@
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
 								<h3 class="display-4">Quên mật khẩu</h3>
-								<p class="text-muted mb-4">Create a login split page using
-									Bootstrap 4.</p>
-								<form>
+								<p class="text-muted mb-4">Chúng tôi sẽ giúp bạn khôi phục ký ức..!</p>
+								<form th:action="@{/sportify/forgotpassword}" method="post"
+									id="forgotPasswordForm">
+									
 									<div class="form-group mb-3">
-										<input id="inputEmail" type="email"
-											placeholder="Email address" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
-									</div>
-									<div class="form-group mb-3">
-										<input id="inputPassword" type="password"
-											placeholder="Password" required=""
+										<input id="inputUsername" type="text" name="usernameforgot"
+											placeholder="Tên tài khoản" required=""
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+										
 									</div>
-									<div class="custom-control custom-checkbox mb-3">
-										<input id="customCheck1" type="checkbox" checked
-											class="custom-control-input"> <label
-											for="customCheck1" class="custom-control-label">Remember
-											password</label>
+									<div class="form-group mb-3">
+										<input id="inputEmail" type="text" placeholder="Email"
+											required="" autofocus="" name="emailforgot"
+											class="form-control rounded-pill border-0 shadow-sm px-4">
+										<span id="invalidUserEmailMessage" class="text-danger"></span>
 									</div>
+									
 									<button type="submit"
-										class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign
-										in</button>
+										class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+										onclick="validateAndSubmit()">Khôi Phục Mật Khẩu</button>
+								</form>
 
-									<div class="text-center d-flex justify-content-between mt-4">
+								<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Đã có tài khoản <a href=""> <u>Đăng nhập</u></a>
+											Đã có tài khoản <a th:href="@{/sportify}"> <u>Đăng nhập</u></a>
 										</p>
 									</div>
 
@@ -120,7 +117,7 @@
 
 		</div>
 	</div>
-
+	
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -149,7 +146,45 @@
 			});
 		});
 	</script>
+	<script>
+	 const notification = document.getElementById('notification');
 
+	    // Display notification if thongbao has content
+	    const thongbaoContent = notification.textContent.trim();
+	    if (thongbaoContent !== '') {
+	        notification.style.display = 'block';
+	        setTimeout(() => {
+	            notification.style.display = 'none';
+	        }, 4000);
+	    }
+	</script>
+	<script th:inline="javascript">
+    var listUser = /*[[${listUser}]]*/ [];
+
+    function validateAndSubmit() {
+        var inputUsername = document.getElementById('inputUsername').value;
+        var inputEmail = document.getElementById('inputEmail').value;
+        var invalidUserEmailMessage = document.getElementById('invalidUserEmailMessage');
+        var isUserValid = false;
+
+        for (var i = 0; i < listUser.length; i++) {
+            if (listUser[i].username === inputUsername && listUser[i].email === inputEmail) {
+                isUserValid = true;
+                break;
+            }
+        }
+
+        if (isUserValid == true) {
+        	document.getElementById('forgotPasswordForm').submit();
+
+        } else {
+			event.preventDefault();
+
+            invalidUserEmailMessage.textContent = 'Tên tài khoản hoặc Email không tồn tại.';
+        }
+    }
+</script>
+	
 </body>
 
 </html>
