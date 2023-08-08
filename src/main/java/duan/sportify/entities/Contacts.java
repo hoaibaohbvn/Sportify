@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,6 +38,8 @@ public class Contacts {
 	private Date       	datecontact ;
 	@Column(name = "category", length = 30, nullable = false)
 	private String category;
+	@NotBlank(message = "{NotBlank.contact.title}")
+	@Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.contact.title}")
 	@Column(name = "title", length = 200, nullable = false)
 	private String title;
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
