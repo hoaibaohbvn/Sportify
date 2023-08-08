@@ -239,8 +239,8 @@
 					</tbody>
 				</table>
 				<div>
-					<button ng-click="" th:if="${order.orderstatus} == 'Chờ Xác Nhận'" class="btn btn-danger" style="float: right;">Hủy
-						đơn hàng</button>
+					<a th:href="@{'/sportify/order/detail/cancelOrder/' + ${order.orderid}}"><button th:if="${order.orderstatus} == 'Chờ Xác Nhận'" class="btn btn-danger" style="float: right;">Hủy
+						đơn hàng</button></a>
 				</div>
 			</div>
 		</div>
