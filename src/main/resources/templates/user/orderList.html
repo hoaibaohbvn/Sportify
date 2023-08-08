@@ -209,7 +209,7 @@
 				<div class="container d-flex justify-content-center rounded mb-5">
 					<div class=" col-md-12 rounded row" id="profiles"
 						style="margin-top: 50px; background-color: rgb(247, 249, 250);">
-						<div th:each="order, stare : ${orders}" class="card col-12 mb-3"
+						<div th:each="order, stare : ${orders}" th:object="${order}" class="card col-12 mb-3"
 							style="border-radius: 10px">
 							<h6 class="card-header row">
 								<span class="col-4">Đơn hàng # <span
@@ -221,18 +221,25 @@
 									th:with="statusColor=${order.orderstatus == 'Hoàn Thành' ? 'green' : (order.orderstatus == 'Chờ Xác Nhận' ? '#F86F03' : (order.orderstatus == 'Đang Giao' ? '#FFA41B' : (order.orderstatus == 'Hủy Đặt' ? 'red' : 'crimson')))}"
 									th:style="'font-size:medium;color:snow; font-weight:bold; text-align: center; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}"
 									th:text="${order.orderstatus}"> </span>
-								<!-- <div class="col-6" style="position: right;">
-									<a th:href="@{'/sportify/order/detail/' + ${order.orderid}}">
-										<button type="button" class="btn btn-outline-info">Xem
-											Chi Tiết</button>
-									</a>
-								</div> -->
 							</h6>
 
-							<div class="card-body">
-								<!-- Tổng tiền: <span class="text-danger font-weight-bold"
-										th:text="${order.}"></span> -->
-								<a th:href="@{'/sportify/order/detail/' + ${order.orderid}}">
+							<div class="card-body row">
+								<div th:each="detail: *{orderDetails}" th:object="${detail}">
+									<a>[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]</a>
+									<a ng-model="orderTotal" value="[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]"></a> 
+								</div>
+								<p class="col-4">
+									<span>Tổng tiền: {{order.orderTotalPrice()}}</span> <br> <span>Tình trạng: <span
+										th:with="paymentStatusColor=${order.paymentstatus == true ? 'green' : 'red'}"
+										th:text="${order.paymentstatus} ? 'Đã thanh toán' : 'Chưa thanh toán'"
+										th:style="'text-align: center; color:' + ${paymentStatusColor}"></span>
+									</span>
+								</p>
+								<span class="col-6" style="color: #1F8A70; font-weight: bold;">
+									Giao đến: <span style="color: #1F8A70; font-weight: bold;"
+									th:text="${order.address}"></span>
+								</span> <a th:href="@{'/sportify/order/detail/' + ${order.orderid}}"
+									class="col-2">
 									<button type="button" class="btn btn-outline-info">Xem
 										Chi Tiết</button>
 								</a>

@@ -133,6 +133,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				alert("Đặt hàng lỗi!")
 				console.log(error)
 			});
+		},
+		//tính tổng tiền order
+		orderTotalPrice(){
+			var orderTotal = 0;
+			for (var i = 0; i < this.order.orderDetails().legth; i++){
+				var productTotal = this.order.orderDetails(i); 
+				orderTotal += (productTotal.price * productTotal.quantity);
+			}
+			return orderTotal;
 		}
 	}
 })
