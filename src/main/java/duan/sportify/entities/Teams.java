@@ -5,6 +5,7 @@
 package duan.sportify.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -49,31 +50,23 @@ public class Teams implements Serializable {
     //--- ENTITY DATA FIELDS 
     @Column(name="sporttypeid", nullable=false, length=6)
     private String     sporttypeid ;
-    @NotBlank(message = "{NotBlank.teams.nameteam}")
     @Column(name="nameteam", nullable=false, length=50)
     private String     nameteam ;
-    @NotNull(message = "{NotNull.teams.quantity}")
-    @Max(value = 120, message = "{Max.teams.quantity}")
-    @Min(value = 0, message = "{Min.teams.quantity}")
     @Column(name="quantity", nullable=false)
     private Integer    quantity ;
 
     @Column(name="avatar", length=100)
     private String     avatar ;
-    @Pattern(regexp = "^(0|\\+84)\\d{9,10}$", message = "{Pattern.teams.contact}")
-    @NotBlank(message = "{NotBlank.teams.contact}")
     @Column(name="contact", nullable=false, length=10)
     private String     contact ;
-    @NotBlank(message = "{NotBlank.teams.descriptions}")
     @Column(name="descriptions", length=1000)
     private String     descriptions ;
 
     @Column(name="username", nullable=false, length=16)
     private String     username ;
 
-    @Temporal(TemporalType.DATE)
     @Column(name="createdate", nullable=false)
-    private Date       createdate ;
+    private LocalDate createdate ;
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )

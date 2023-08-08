@@ -240,32 +240,85 @@
 				</div>
 
 				<div class="row col-md-12 ml-5 mt-4">
-					<div class="row col-md-12 mb-4">
+
+					<div class="row col-md-12 mb-1">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
-							<h4 class="product-select">Lọc theo môn thể thao</h4>
-							<div class="dropdown filter">
-								<button class="btn btn-success dropdown-toggle" type="button"
-									id="dropdownMenuButton" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">Lọc</button>
+							<div>
+								<h4 class="product-select">Lọc theo môn thể thao</h4>
+								<div class="dropdown filter">
+									<button class="btn btn-success dropdown-toggle col-md-8 mb-3" type="button"
+										id="dropdownMenuButton" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">Lọc</button>
 
-								<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
-								<div class="dropdown-menu dropdown-menu-right filter-item"
-									aria-labelledby="dropdownMenuButton">
-									<a th:href="@{/sportify/team}" class="dropdown-item">Tất cả</a>
-									<a th:each="spt : ${sporttypeList}"
-										th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
-										th:value="${sporttypeid}" class="dropdown-item"
-										th:text="${spt.categoryname}"></a>
+									<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
+									<div class="dropdown-menu filter-item"
+										aria-labelledby="dropdownMenuButton">
+										<a th:href="@{/sportify/team}" class="dropdown-item">Tất
+											cả</a> <a th:each="spt : ${sporttypeList}"
+											th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
+											th:value="${spt.sporttypeid}" class="dropdown-item"
+											th:text="${spt.categoryname}"></a>
+									</div>
 								</div>
 							</div>
+							<button class="btn btn-success col-2 pt-2 pb-2" type="button"
+								id="createTeamButton">Tạo đội</button>
 						</div>
 					</div>
 					<!-- Hiển thị thông báo tìm kiếm khi KQ =0 -->
 					<div class="col-md-12" th:if="${notFoundMessage}"
 						th:text="${notFoundMessage}"></div>
-					<!-- Đỗ dự liệu khi trong team  -->
 
+
+					<div class="col-12 addteam d-none" id="createModal">
+						<div class="col-6" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Điền thông tin để tạo nhóm.</h5>
+									<button type="button" class="close" id="closeCreateButton">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form class="row" th:action="@{/sportify/team/createTeam}"
+										method="post">
+										<div class="col-md-6 form-group">
+											<label>Tên nhóm:</label> <input type="text"
+												class="form-control" name="newNameteam" rows="4"></input>
+										</div>
+										<div class=" col-md-6 form-group">
+											<label>Ảnh đại diện:</label> <input type="file"
+												class="form-control" name="newAvatar" rows="4"></input>
+										</div>
+										<div class=" col-md-6 form-group">
+											<label>Số liên hệ:</label> <input type="text"
+												class="form-control" name="newContact" rows="4"></input>
+										</div>
+										<div class="col-md-6 form-group">
+											<label>Số Lượng:</label> <input type="number"
+												class="form-control" name="newQuantity" rows="4"></input>
+										</div>
+										<div class=" col-md-6 form-group">
+											<label>Môn thể thao:</label> <select
+												class="custom-select form-control" name="newSporttypeid">
+												<option th:each="spt : ${sporttypeList}"
+													th:value="${spt.sporttypeid}" th:text="${spt.categoryname}"></option>
+											</select>
+										</div>
+										<div class="col-md-6 form-group">
+											<label>Mô tả:</label>
+											<textarea class="form-control" name="newDescriptions"
+												rows="4"></textarea>
+										</div>
+										<div class=" col-md-12 modal-footer">
+											<button type="submit" class="btn btn-primary">Tạo</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 
 					<div class="col-md-12 row d-flex">
 						<div th:each="teamItem: ${team}"
@@ -477,6 +530,23 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			const createTeamButton = document
+					.getElementById("createTeamButton");
+			const descriptionModal = document.getElementById("createModal");
+			const closeCreateButton = document
+					.getElementById("closeCreateButton");
+
+			createTeamButton.addEventListener("click", function() {
+				descriptionModal.classList.remove("d-none");
+			});
+
+			closeCreateButton.addEventListener("click", function() {
+				descriptionModal.classList.add("d-none");
+			});
+		});
+	</script>
 
 </body>
 </html>
