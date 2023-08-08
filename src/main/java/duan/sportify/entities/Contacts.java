@@ -43,6 +43,7 @@ public class Contacts {
 	@Column(name = "title", length = 200, nullable = false)
 	private String title;
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
+	@NotBlank(message = "{NotBlank.contact.meesagecontact}")
 	private String meesagecontact;
 	// quan hệ
 	@JsonIgnore

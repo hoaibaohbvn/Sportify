@@ -46,14 +46,14 @@ public class ContactController {
 	
     @PostMapping("/submit-contact")
     public String processContactForm(Model model, HttpSession session, RedirectAttributes redirectAttributes, @RequestParam("contactType") String contactType,
-			@RequestParam String title, @RequestParam String message, @Valid Contacts contacts, BindingResult result) {
+			@RequestParam String title, @RequestParam String meesagecontact, @Valid Contacts contacts, BindingResult result) {
     	if (result.hasErrors()) {
             return "user/contact"; // Return the form view to show validation errors
         }
     	
     	contacts.setUsername(userlogin);
     	contacts.setTitle(title);
-    	contacts.setMeesagecontact(message);
+    	contacts.setMeesagecontact(meesagecontact);
     	contacts.setCategory(contactType);
     	LocalDate localDate = LocalDate.now();
     	Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
