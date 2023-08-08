@@ -297,7 +297,7 @@
 								</div>
 								<div class="submit-section align-self-end mt-auto">
 									<!-- Chuyển đến trang Detail của Team được chọn -->
-									<a
+									<a th:if="${oneUser==null}"
 										th:href="@{/sportify/team/teamdetail/{teamId}/exit(teamId=${s[0]})}"
 										class="btn btn-success">Rời Team</a>
 								</div>
@@ -309,9 +309,8 @@
 
 
 				<!-- chờ xác nhận -->
-				<div class="pt-5 mt-5 col-12">
-					<div class="d-flex">
-						<h3 class="mb-5"></h3>
+				<div class="pt-5 mt-5 col-12" th:if="${oneUser!=null}">
+					<div th:if="${userCheckTeam.size()!=0}" class="d-flex">
 						<h3 class="mb-5 ml-2">Chờ xác nhận</h3>
 					</div>
 					<ul th:each="uc:${userCheckTeam}" class="comment-list col-12">
@@ -354,9 +353,24 @@
 									<a class="reply" onclick="showMore(event)">Xem thêm...</a>
 								</p>
 							</div>
-							<div class="col-4 d-flex justify-content-center align-items-center">
-								<button type="button" class="btn btn-success mr-2 ml-2">Chấp nhận</button>
-								<button type="button" class="btn btn-danger mr-2 ml-2">Từ chối</button>
+							<div
+								class="col-4 d-flex justify-content-center align-items-center">
+								<form th:action="@{/sportify/team/teamdetail/xacnhan}"
+									method="post">
+									<input type="hidden" name="username" th:value="${uc[0]}">
+									<input type="hidden" name="teamId" th:value="${uc[11]}">
+									<!-- Đổi 'userId' thành tên trường bạn muốn truyền -->
+									<button type="submit" class="btn btn-success mr-2 ml-2">Chấp
+										nhận</button>
+								</form>
+								<form th:action="@{/sportify/team/teamdetail/tuchoi}"
+									method="post">
+									<input type="hidden" name="username" th:value="${uc[0]}">
+									<input type="hidden" name="teamId" th:value="${uc[11]}">
+									<!-- Đổi 'userId' thành tên trường bạn muốn truyền -->
+									<button type="submit" class="btn btn-danger mr-2 ml-2">Từ
+										chối</button>
+								</form>
 
 							</div>
 						</li>
@@ -371,45 +385,68 @@
 						<h3 class="mb-5 ml-2">Thành viên</h3>
 					</div>
 					<ul th:each="u:${user}" class="comment-list col-12">
-						<li class="comment col-12">
-							<div class="vcard bio">
-								<img th:if=${u[7]!=null} class=""
-									th:src="@{'/user/images/' + ${u[7]}}" alt="" src=""
-									style="width: 60px; height: 60px;"> <img
-									th:if=${u[7]==null} class="rounded-circle border border-white"
-									src="/user/images/noavatar.jpg" alt=""
-									style="width: 60px; height: 60px;">
-							</div>
-							<div class="comment-body d-flex">
-								<h3 th:text="${u[2]}"></h3>
-								<h3 th:text="${u[3]}" class="ml-1"></h3>
-								<!-- Họ tên -->
-							</div>
-							<div>
-								<p class="fa fa-calendar"></p>
-								<span th:text="${#dates.format(u[12], 'dd-MM-yyyy')}"></span>
-							</div>
-							<div>
-								<p th:text="${u[13]}"></p>
-							</div>
+						<li class="comment col-12 d-flex">
+							<div class="col-8">
+								<div class="vcard bio">
+									<img th:if=${u[7]!=null} class=""
+										th:src="@{'/user/images/' + ${u[7]}}" alt="" src=""
+										style="width: 60px; height: 60px;"> <img
+										th:if=${u[7]==null} class="rounded-circle border border-white"
+										src="/user/images/noavatar.jpg" alt=""
+										style="width: 60px; height: 60px;">
+								</div>
+								<div class="comment-body d-flex">
+									<h3 th:text="${u[2]}"></h3>
+									<h3 th:text="${u[3]}" class="ml-1"></h3>
+									<span class="ml-3 pr-3 pl-3 pt-1 rounded" style="background-color:#F7FF85" th:if=${u[1]==checkBoss.username}> Trưởng nhóm</span>
 
-							<div class="meta metaDiv" style="display: none">
-								<div class="d-flex">
-									<p>SDT :</p>
-									<p th:text="${u[4]}"></p>
+									<!-- Họ tên -->
 								</div>
-								<div class="d-flex">
-									<p>Email :</p>
-									<p th:text="${u[5]}"></p>
+								<div>
+									<p class="fa fa-calendar"></p>
+									<span th:text="${#dates.format(u[12], 'dd-MM-yyyy')}"></span>
 								</div>
-								<div class="d-flex">
-									<p>Địa chỉ :</p>
-									<p th:text="${u[6]}"></p>
+								<div>
+									<p th:text="${u[13]}"></p>
 								</div>
+
+								<div class="meta metaDiv" style="display: none">
+									<div class="d-flex">
+										<p>SDT :</p>
+										<p th:text="${u[4]}"></p>
+									</div>
+									<div class="d-flex">
+										<p>Email :</p>
+										<p th:text="${u[5]}"></p>
+									</div>
+									<div class="d-flex">
+										<p>Địa chỉ :</p>
+										<p th:text="${u[6]}"></p>
+									</div>
+								</div>
+								<p class="showMoreParagraph">
+									<a class="reply" onclick="showMore(event)">Xem thêm...</a>
+								</p>
+
 							</div>
-							<p class="showMoreParagraph">
-								<a class="reply" onclick="showMore(event)">Xem thêm...</a>
-							</p>
+							<div th:if="${oneUser!=null}"
+								class="col-4 d-flex justify-content-center align-items-center">
+								<form th:if="${oneUser.username!=u[0]}"
+									th:action="@{/sportify/team/teamdetail/phongdoitruong}"
+									method="post">
+									<input type="hidden" name="username" th:value="${u[0]}">
+									<input type="hidden" name="teamId" th:value="${u[11]}">
+									<button type="submit" class="btn btn-success mr-2 ml-2">Phong
+										làm đội trưởng</button>
+								</form>
+								<form th:if="${oneUser.username!=u[0]}"
+									th:action="@{/sportify/team/teamdetail/kik}" method="post">
+									<input type="hidden" name="username" th:value="${u[0]}">
+									<input type="hidden" name="teamId" th:value="${u[11]}">
+									<button type="submit" class="btn btn-danger mr-2 ml-2">Kik
+										khỏi nhóm</button>
+								</form>
+							</div>
 						</li>
 					</ul>
 				</div>

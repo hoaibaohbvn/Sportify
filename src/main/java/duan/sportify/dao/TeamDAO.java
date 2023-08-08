@@ -38,6 +38,17 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			nativeQuery = true)
 	List<Object[]> FilterTeam(String sporttypeid );
 	
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where username like :username and teamid like :teamId",
+			nativeQuery = true)
+	Teams findOneTeam(Integer teamId,String username);
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where teamid like :teamId  And username like :usernameLogin ",
+			nativeQuery = true)
+	Teams findOneTeamUser(Integer teamId,String usernameLogin);
+	
 	//search in admin 
 	@Query(value = "SELECT * FROM teams WHERE (:nameteam IS NULL OR nameteam LIKE %:nameteam%) AND (:sporttypeid IS NULL OR sporttypeid LIKE %:sporttypeid%)", nativeQuery = true)
 	List<Teams> searchTeamAdmin(@Param("nameteam") Optional<String> nameteam, @Param("sporttypeid") Optional<String> sporttypeid);

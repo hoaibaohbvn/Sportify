@@ -37,6 +37,17 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 			+ "INNER JOIN teams ON teamdetails.teamid = teams.teamid\r\n"
 			+ "WHERE teams.teamid like :teamId and teamdetails.status=0",nativeQuery = true)
 	List<Object[]> findUserCheckByIdTeam(Integer teamId);
+	
+	
+	@Query(value = "SELECT teamdetails.*\r\n"
+			+ "			FROM teamdetails\r\n"
+			+ "			WHERE teamdetails.teamid like :teamId and teamdetails.username like :username and teamdetails.status=0",nativeQuery = true)
+	Teamdetails findOneUserCheckByIdTeam0(Integer teamId,String username);
+	
+	@Query(value = "SELECT teamdetails.*\r\n"
+			+ "			FROM teamdetails\r\n"
+			+ "			WHERE teamdetails.teamid like :teamId and teamdetails.username like :username and teamdetails.status=1",nativeQuery = true)
+	Teamdetails findOneUserCheckByIdTeam1(Integer teamId,String username);
 	// fix status 
 	
 	@Query(value = "SELECT * FROM sportify.teamdetails\r\n"
