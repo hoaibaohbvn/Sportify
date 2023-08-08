@@ -162,25 +162,25 @@
 						<div class="row no-gutters">
 							<div class="col-md-7">
 								<div class="contact-wrap w-100 p-md-5 p-4">
-									<h3 class="mb-4">Liên hệ & góp ý</h3>
+									<h3 class="mb-4" style="color: #2E7D32;text-align: center;">Liện Hệ - Góp Ý</h3>
 									<form method="POST" id="contactForm" name="contactForm"
 										class="contactForm" th:action="@{/sportify/submit-contact}" th:object="${contacts}">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-12">
 												<div class="form-group">
-													<span th:if="${users != null}" class="m-1 mr-2"
-														style="color: Black;">Xin chào : <span
+													<h4 th:if="${users != null}" class="m-1 mr-2"
+														style="color: Black;">Xin chào ! <span
 														th:name="username"
-														th:text="${users.firstname} + ' ' + ${users.lastname}"></span></span>
+														th:text="${users.firstname} + ' ' + ${users.lastname}"></span></h4>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="label">Loại phản hồi</label> <select
-														name="contactType">
+													<label class="label"  for="subject">Loại phản hồi</label> 
+													<select name="contactType" class="custom-select">
 														<option value="Giao diện">Giao diện</option>
 														<option value="Chức năng">Chức năng</option>
-														<option value="Tạo đội">Tạo đội</option>
+														<option value="Hiệu suất">Hiệu suất</option>
 														<option value="Liên hệ quảng cáo">Liên hệ quảng cáo</option>
 														<option value="Khác">Khác</option>
 													</select>
@@ -189,11 +189,11 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="label" for="subject">Tiêu đề</label> <input
-														type="text" class="form-control" name="title" id="title"
+														type="text" class="form-control" name="title" id="title" placeholder="Nhập tiêu đề..."
 														  th:field="*{title}">
 														<span class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
 																<p th:if="${#fields.errors('title').get(0).code == 'NotBlank'}" th:errors="*{title}"></p>
-															 	<p th:if="${#fields.errors('title').get(0).code == 'Pattern'}" th:errors="*{title}"></p>
+															 	
 														</span>
 														
 												</div>
@@ -239,7 +239,7 @@
 								</div>
 
 							</div>
-							<div class="col-md-5 order-md-first d-flex align-items-stretch">
+							<div class="col-md-5 order-md-first d-flex align-items-stretch" style="border: 3px solid #2E7D32;">
 
 								<iframe
 									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4435924064874!2d106.62525347460408!3d10.853826357762184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b161f50ae47%3A0x2328d1d1acc3b11a!2sFPT%20Polytechnic%20-%20T%C3%B2a%20F!5e0!3m2!1svi!2s!4v1691058165130!5m2!1svi!2s"
