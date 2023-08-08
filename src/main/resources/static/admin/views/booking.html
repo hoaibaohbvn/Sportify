@@ -22,11 +22,7 @@
 						<li class="breadcrumb-item active">Booking</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
-					<a href="#" class="btn add-btn" data-toggle="modal"
-						data-target="#add"><i class="fa fa-plus"></i> Add Booking</a>
 
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->
@@ -35,25 +31,46 @@
 		<div class="row filter-row">
 
 			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Người đặt</label>
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating"> <label
-						class="focus-label">Field Name</label>
+					<input type="text" class="form-control floating"
+						ng-model="searchName">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Ngày đặt</label>
+				<div class="form-group form-focus">
+					<input type="date" class="form-control floating"
+						ng-model="searchDate">
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Trạng thái</label>
 				<div class="form-group form-focus select-focus">
-					<select class="select floating">
-						<option>Tất cả</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select> <label class="focus-label">Category Field</label>
+
+					<select ng-model="searchStatus" class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value="'Đã Cọc'">Đã Cọc</option>
+						<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
+						<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
+					</select>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+			<div class=" col-md-3 d-flex mt-4">
+				<div class="col-sm-6 col-md-6 mt-1">
+					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="search()">
+						Search </a>
+
+				</div>
+				<div class="col-sm-6 col-md-6 mt-1">
+					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="refresh()">
+						Refresh </a>
+
+				</div>
+
 			</div>
+
+
 		</div>
 		<!-- Search Filter -->
 
@@ -69,7 +86,7 @@
 								<th>Thành tiền</th>
 								<th>Phone</th>
 								<th>Trạng thái</th>
-								<th class="text-right no-sort">Action</th>
+								<th class="text-center no-sort">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -80,19 +97,16 @@
 								<td>{{formatCurrency(item.bookingprice)}}</td>
 								<td>{{item.phone}}</td>
 								<td>{{item.bookingstatus}}</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false"><i
-											class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i>
-												Edit</a> <a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#view"><i class="fa fa-pencil m-r-5"></i>
-												View</a>
-										</div>
-									</div>
+								<td class="text-center">
+
+
+
+									<button class="btn btn-danger btn-block" href="#"
+										data-toggle="modal" data-target="#edit" ng-click="edit(item)">
+										<i class="fa fa-pencil m-r-5"></i> Xem chi tiết
+									</button>
+
+
 								</td>
 							</tr>
 
@@ -106,11 +120,11 @@
 
 	<!-- Edit Employee Modal -->
 	<div id="edit" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 1300px;"
-			role="document">
+		<div class="modal-dialog modal-dialog-centered modal-lg"
+			style="max-width: 1300px;" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Chi tiết lịch dặt sân</h5>
+					<h5 class="modal-title">Chi tiết phiếu đặt sân</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -123,43 +137,57 @@
 								<div class="form-group">
 									<label class="col-form-label">Mã phiếu <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
+										type="text" ng-model="form.bookingid" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image</label><span
+									<label class="col-form-label">Người đặt</label><span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
+										type="text"
+										ng-model="form.users.firstname + ' ' + form.users.lastname"
+										readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span
+									<label class="col-form-label">Ngày đặt <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
+										type="text"
+										ng-model="form.bookingdate | date:'dd-MM-yyyy | HH:mm:ss'"
+										readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span
+									<label class="col-form-label">Phone <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="email">
+										type="email" ng-model="form.phone" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field </label> <select
-										class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
+									<label class="col-form-label">Trạng thái <span
+										class="text-danger">*</span></label> <select class="select"
+										ng-model="form.bookingstatus">
+										<option ng-value="'Đã Cọc'">Đã Cọc</option>
+										<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
+										<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Description</label> <input
-										class="form-control" type="password">
+									<label class="col-form-label">Thành tiền <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="email" ng-model="form.bookingprice" readonly>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Ghi chú</label>
+									<textarea class="form-control" type="text" ng-model="form.note"
+										readonly></textarea>
 								</div>
 							</div>
 
@@ -168,31 +196,31 @@
 						</div>
 						<div class="col-md-12 d-flex">
 							<div class="card card-table flex-fill">
-								
+
 								<div class="card-body">
 									<div class="table-responsive">
 										<table class="table table-nowrap custom-table mb-0">
 											<thead>
 												<tr>
-													<th>Invoice ID</th>
-													<th>Client</th>
-													<th>Due Date</th>
-													<th>Total</th>
-													<th>Status</th>
+													<th>#</th>
+													<th>Tên sân</th>
+													<th>Ngày chơi</th>
+													<th>Ca</th>
+													<th>Số tiền đã cọc</th>
+													<th>Số tiền còn lại</th>
+
 												</tr>
 											</thead>
 											<tbody>
 												<tr ng-repeat="b in bookingdetail">
-													<td>{{b.price}}</td>
-													<td>
-														<h2>
-															<a href="#">Global Technologies</a>
-														</h2>
-													</td>
-													<td>11 Mar 2019</td>
-													<td>$380</td>
-													<td><span class="badge bg-inverse-warning">Partially
-															Paid</span></td>
+													<td>{{$index + 1}}</td>
+													<td>{{b.field.namefield}}</td>
+													<td>{{b.playdate | date:'dd-MM-yyyy'}}</td>
+													<td>{{b.shifts.nameshift}}</td>
+													<td>{{formatCurrency(form.bookingprice * 0.3)}}</td>
+													<td>{{formatCurrency(form.bookingprice -
+														(form.bookingprice * 0.3))}}</td>
+
 												</tr>
 											</tbody>
 										</table>
@@ -202,7 +230,8 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Edit Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Edit
+								Booking</button>
 						</div>
 					</form>
 				</div>
@@ -211,105 +240,9 @@
 	</div>
 	<!-- /Edit Employee Modal -->
 
-	<!-- Detail Modal -->
-	<div id="view" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg"
-			role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Chi tiết đặt sân</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Field Name <span
-										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Image</label><span
-										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Price <span
-										class="text-danger">*</span></label> <input class="form-control"
-										type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Address <span
-										class="text-danger">*</span></label> <input class="form-control"
-										type="email">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Category Field </label> <select
-										class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Description</label> <input
-										class="form-control" type="password">
-								</div>
-							</div>
 
 
 
-						</div>
-
-						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Edit Field</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Edit Employee Modal -->
-
-	<!-- Delete Employee Modal -->
-	<div class="modal custom-modal fade" id="delete_employee" role="dialog">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-header">
-						<h3>Delete Field</h3>
-						<p>Are you sure want to delete?</p>
-					</div>
-					<div class="modal-btn delete-action">
-						<div class="row">
-							<div class="col-6">
-								<a href="javascript:void(0);"
-									class="btn btn-primary continue-btn">Delete</a>
-							</div>
-							<div class="col-6">
-								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Delete Employee Modal -->
-
+	<div id="toast"></div>
 </div>
 <!-- /Page Wrapper -->

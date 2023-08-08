@@ -1,53 +1,42 @@
-app.controller('BookingController', function($scope, $http) {
+app.controller('OrderController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		$http.get("/rest/accounts/getAll").then(resp => {
 			$scope.accounts = resp.data;
 		})
-		$http.get("/rest/fields/getAll").then(resp => {
-			$scope.fields = resp.data;
+		$http.get("/rest/products/getAll").then(resp => {
+			$scope.products = resp.data;
 		})
-		$http.get("/rest/shifts/getAll").then(resp => {
-			$scope.shifts = resp.data;
+		$http.get("/rest/categories/getAll").then(resp => {
+			$scope.categories = resp.data;
 		})
 		// lấy danh sách product
-		$http.get("/rest/bookings/getAll").then(resp => {
+		$http.get("/rest/orders/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.bookingdate = new Date(item.bookingdate)
+				item.createdate = new Date(item.createdate)
 			})
 		});
 		
 		
 	}
 	
-	// hàm rest form
-	$scope.reset = function() {
-		$scope.form = {
-			sporttypeid: "B01",
-			status: true,
-			image: "loading.jpg"
-		}
-	}
+	
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 		$scope.errors = [];
 		// lấy danh sách bookingdetail theo idbooking
-		$http.get("/rest/bookingdetails/" + item.bookingid).then(resp => {
-			$scope.bookingdetail = resp.data;
-			$scope.bookingdetail.forEach(item => {
-				item.bookingdate = new Date(item.bookingdate)
-			})
-			
+		$http.get("/rest/orderdetails/" + item.orderid).then(resp => {
+			$scope.orderdetail = resp.data;
 		});
 	}
 
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/bookings/update/${item.bookingid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.bookingid == item.bookingid);
+		$http.put(`/rest/bookings/update/${item.orderid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
 			$scope.items[index] = item;
 			showSuccessToast("Đã cập nhập thành công trạng thái của phiếu đặt sân")
 			$('#edit').modal('hide')
@@ -66,7 +55,6 @@ app.controller('BookingController', function($scope, $http) {
 		});
 	}
 	
-
 	$scope.getAll();
 
 
