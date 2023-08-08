@@ -34,10 +34,6 @@ public class OrderDetailRestController {
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
-	@GetMapping("getAll")
-    public List<Orderdetails> getOrderDetails() {
-        return orderDetailDAO.findAll();
-    }
 	@GetMapping("{id}")
     public List<Orderdetails> getOrderDetails(@PathVariable("id") Integer productid) {
         return orderDetailDAO.detailOrder(productid);

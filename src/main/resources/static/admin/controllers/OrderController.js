@@ -1,15 +1,7 @@
 app.controller('OrderController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
-		$http.get("/rest/accounts/getAll").then(resp => {
-			$scope.accounts = resp.data;
-		})
-		$http.get("/rest/products/getAll").then(resp => {
-			$scope.products = resp.data;
-		})
-		$http.get("/rest/categories/getAll").then(resp => {
-			$scope.categories = resp.data;
-		})
+		
 		// lấy danh sách product
 		$http.get("/rest/orders/getAll").then(resp => {
 			$scope.items = resp.data;
@@ -35,7 +27,7 @@ app.controller('OrderController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/bookings/update/${item.orderid}`, item).then(resp => {
+		$http.put(`/rest/orders/update/${item.orderid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
 			$scope.items[index] = item;
 			showSuccessToast("Đã cập nhập thành công trạng thái của phiếu đặt sân")
