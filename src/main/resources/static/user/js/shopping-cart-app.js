@@ -11,7 +11,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		//thêm SP
 		addProduct(productid) {
 			//alert(productid);
-			const testItem = { name: "Product1", img: "product1_img.png", price: "$100" };
+			//const testItem = { name: "Product1", img: "product1_img.png", price: "$100" };
 			//const testCart = JSON.stringify(angular.copy(testItem));
 			//localStorage.setItem("testCart", testCart);
 			var item = this.items.find(item => item.productid == productid);
@@ -63,6 +63,46 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		}
 	}
 
+	//tính phí vận chuyển
+	$scope.shippingFee = {
+		shipFee: 0,
+		cartShipFee() {
+			return ($scope.cart.totalPrice >= 300000 ? 0 : 30000);
+		}
+	}
+
+	//tính mã giảm giá
+	//$scope.voucherid = voucher.id;
+	$scope.voucherCode = {
+		vouchers: [],
+		addVoucher(voucherid) {
+			var voucher = this.vouchers.find(voucher => voucher.voucherid == voucherid);
+			if (voucher) {
+				
+			} else {
+				$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
+					this.vouchers.push(resp.data);
+					this.saveToSessionStorage();
+				});
+			};
+			/*$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
+				this.vouchers = resp.data;
+				this.vouchers.forEach(voucher => {
+					voucher.startdate = new Date(voucher.startdate)
+					voucher.enddate = new Date(voucher.enddate)
+				})
+				//alert(voucherid);
+			});*/
+		}
+	};
+	//update tổng tiền
+	$scope.updateTotalPrice = {
+		updateTotalPrice() {
+			var updatePrice;
+			updatePrice = ($scope.cart.totalPrice + $scope.shippingFee.cartShipFee())
+			return updatePrice;
+		}
+	}
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
@@ -93,6 +133,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				alert("Đặt hàng lỗi!")
 				console.log(error)
 			});
+		},
+		//tính tổng tiền order
+		orderTotalPrice(){
+			var orderTotal = 0;
+			for (var i = 0; i < this.order.orderDetails().legth; i++){
+				var productTotal = this.order.orderDetails(i); 
+				orderTotal += (productTotal.price * productTotal.quantity);
+			}
+			return orderTotal;
 		}
 	}
 })

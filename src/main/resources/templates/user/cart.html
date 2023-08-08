@@ -34,7 +34,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
-
+	<!-- login bar -->
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
@@ -70,8 +70,8 @@
 						style="display: block;">
 						<p class="mb-0">
 							<a th:href="@{/sportify/login}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> 
-							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- STRART nav bar -->
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
@@ -180,7 +180,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-
+	<!-- Background -->
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('/user/images/bg_product.png');"
 		data-stellar-background-ratio="0.5">
@@ -257,35 +257,49 @@
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="row justify-content-end">
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Thanh toán giỏ hàng</h3>
-						<p class="d-flex">
-							<span>Thành tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Phí vận chuyển</span> <span>0 VNĐ</span>
-						</p>
-						<p class="d-flex">
-							<span>Giảm giá</span> <span>0 VNĐ</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Tổng tiền</span> <span>{{cart.totalPrice | number:
-								0}} VNĐ</span>
+			<div class="col col-lg-7 col-md-6 mt-7 cart-wrap ftco-animate justify-content-start">
+						<div class="">
+						<br> <br>
+							<h5>Mã giảm giá:</h5>
+							<p class="d-flex" >
+								<input type="text" ng-model="voucherid" class="col-7">
+								<button class="btn btn-info" ng-click="voucherCode.addVoucher(voucherid)">Áp dụng</button>
+								
+							</p>
+							
+						</div>
+					</div>
+					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+						<div class="cart-total mb-3">
+							<h3>Thanh toán giỏ hàng</h3>
+							<p class="d-flex">
+								<span>Tạm tính: </span> <span>{{cart.totalPrice | number:
+									0}} VNĐ</span>
+							</p>
+							<p class="d-flex">
+								<span>Phí vận chuyển: </span> <span>{{shippingFee.cartShipFee() | number:0}} VNĐ</span>
+							</p>
+							<p class="d-flex">
+								<span>Giảm giá: </span> <span>0 VNĐ</span>
+							</p>
+							<hr>
+							<p class="d-flex total-price">
+								<span>Thành tiền</span> <span>{{updateTotalPrice.updateTotalPrice() | number:
+									0}} VNĐ</span>
+							</p>
+						</div>
+						<p class="text-center">
+							<a th:href="@{/sportify/order/checkout}"
+								class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
 						</p>
 					</div>
-					<p class="text-center">
-						<a th:href="@{/sportify/order/checkout}"
-							class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a>
-					</p>
 				</div>
-			</div>
 		</div>
 	</section>
-
+	
+	<!-- footer -->
 	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">

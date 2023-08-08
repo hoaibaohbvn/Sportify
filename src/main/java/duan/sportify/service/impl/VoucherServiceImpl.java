@@ -47,5 +47,11 @@ public class VoucherServiceImpl implements VoucherService{
 		// TODO Auto-generated method stub
 		return voucherDAO.findById(id).get();
 	}
+
+	@Override
+	public List<Voucher> findByVoucherId(String voucherid) {
+		// TODO Auto-generated method stub
+		return voucherDAO.findByVoucherId(voucherid);
+	}
 	
 }
