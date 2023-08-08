@@ -355,7 +355,7 @@ public class FieldController {
 		
 		}else {
 			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login/form";
+			return "redirect:/sportify/login";
 		}
 		
 		return "user/checkout-dat-san";

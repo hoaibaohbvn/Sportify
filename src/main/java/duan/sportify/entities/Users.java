@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,36 +35,29 @@ public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //--- ENTITY PRIMARY KEY 
-    @Pattern(regexp = "^(.{6,})$", message = "{Pattern.users.username}")
-    @Pattern(regexp = "^(.{1,15})$", message = "{Pattern.users.username}")
-    @NotBlank(message = "{NotBlank.users.username}")
+    
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="username", nullable=false, length=16)
     private String     username ;
 
     //--- ENTITY DATA FIELDS 
-    @Pattern(regexp = "^(.{6,})$", message = "{Pattern.users.passwords}")
-    @Pattern(regexp = "^(.{1,15})$", message = "{Pattern.users.passwords}")
-    @NotBlank(message = "{{Pattern.users.passwords}}")
+    
     @Column(name="passwords", nullable=false, length=16)
     private String     passwords ;
-    @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.users.firstname}")
-    @NotBlank(message = "{NotBlank.users.firstname}")
+   
     @Column(name="firstname", length=50)
     private String     firstname ;
-    @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.users.firstname}")
-    @NotBlank(message = "{NotBlank.users.firstname}")
+   
     @Column(name="lastname", length=50)
     private String     lastname ;
-    @Pattern(regexp = "^(0|\\+84)\\d{9,10}$", message = "{Pattern.users.phone}")
-    @NotBlank(message = "{NotBlank.users.phone}")
+    
     @Column(name="phone", nullable=false, length=10)
     private String     phone ;
-    @NotBlank(message = "{NotBlank.users.email}")
-    @Email(message = "{Email.users.email}")
+    
     @Column(name="email", length=50)
     private String     email ;
-    @NotBlank(message = "{NotBlank.users.address}")
+    
     @Column(name="address", length=100)
     private String     address ;
 
