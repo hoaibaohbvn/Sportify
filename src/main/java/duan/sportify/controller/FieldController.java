@@ -66,7 +66,7 @@ public class FieldController {
 	private String dateselect;
 	
 	String userlogin = null;
-
+	String phone = null;
 	// Tìm sân trống theo input: date, sportype, giờ chơi
 	 @PostMapping("/field/search")
 	 public String SreachData(@RequestParam("dateInput") String dateInput,
@@ -134,6 +134,7 @@ public class FieldController {
 	@GetMapping("/field")
 	public String viewField(Model model , HttpServletRequest request) {
 		userlogin = (String) request.getSession().getAttribute("username");
+		
 		selectedSportTypeId = "tatca"; // Giá trị được chọn mặc định môn thể thao là tất cả
 		String sportTypeId = null;
 		List<Shifts> shift = shiftservice.findAll(); // Gọi tất cả danh sách ca
@@ -251,7 +252,8 @@ public class FieldController {
 	@GetMapping("/field/booking/{idField}")
 	public String Booking(Model model, @RequestParam(value = "nameshift", required = false) String nameShift, 
 			@PathVariable Integer idField, HttpSession session, RedirectAttributes redirectAttributes,
-			@RequestParam(value = "voucher", required = false) String voucher, HttpServletRequest request) {
+			@RequestParam(value = "voucher", required = false) String voucher,
+			@RequestParam(name = "note", required = false) String note,HttpServletRequest request) {
 		int discountpercent = 0;
 		double pricevoucher = 0;
 		double totalprice = 0 ;
@@ -259,6 +261,7 @@ public class FieldController {
 		double tiencoc = 0;
 		double conlai = 0;
 		int shiftid = 0;
+		
 		List<Shifts> shift = shiftservice.findShiftByName(nameShift);
 		for(int i = 0 ; i < shift.size();i++) {
 				time = shift.get(i).getStarttime();
@@ -314,28 +317,29 @@ public class FieldController {
 						thanhtien = totalprice - pricevoucher;
 						tiencoc = thanhtien * 30 / 100;
 						conlai = thanhtien - tiencoc;
-						model.addAttribute("thongbaovoucher","Mã "+ voucher +" đã được áp dụng giảm " +discountpercent+"%");
+						model.addAttribute("thongbaovoucher","Mã đã được áp dụng giảm " +discountpercent+"%");
 						break;
 					}
 					else if(!voucher.equals(magiamgia.get(i).getVoucherid())) {
 						thanhtien = totalprice - pricevoucher;
 						tiencoc = thanhtien * 30 / 100;
 						conlai = thanhtien - tiencoc;
-						model.addAttribute("thongbaovoucher","Mã "+voucher+ " không hợp lệ");
+						model.addAttribute("thongbaovoucher","Mã không hợp lệ");
 					
 					}else if(startDate.isAfter(currentDate) || endDate.isBefore(currentDate) && voucher.equals(magiamgia.get(i).getVoucherid())) {
 						thanhtien = totalprice - pricevoucher;
 						tiencoc = thanhtien * 30 / 100;
 						conlai = thanhtien - tiencoc;
-						model.addAttribute("thongbaovoucher","Mã "+voucher+ " không áp dụng hôm nay");
+						model.addAttribute("thongbaovoucher","Mã không áp dụng hôm nay");
 						
 						break;
 					}
 					
 				}
-			
-				
+
 			}
+		
+			model.addAttribute("note", note);
 			model.addAttribute("shiftid",shiftid);
 			model.addAttribute("pricevoucher", pricevoucher);
 			model.addAttribute("conlai", conlai);
@@ -351,7 +355,7 @@ public class FieldController {
 		
 		}else {
 			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login/form";
+			return "redirect:/sportify/login";
 		}
 		
 		return "user/checkout-dat-san";

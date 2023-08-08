@@ -223,14 +223,20 @@
 													th:value="${users.lastname}" th:text="${users.lastname}"></span>
 											</div>
 											<div>
-												<label>Số điện thoại <span class="text-danger">*</span>
+												<label>Số điện thoại 
 												</label><span class="info-container"> <span class="info-icon">i</span>
 													<span class="info-content">
 														<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
 												</span>
-												</span> <input id="phoneNumberInput"
-													onchange="validatePhoneNumber()" name="phone" th:value="${users.phone}"
-													type="text" size="10" class="form-control">
+												</span>:
+												
+												<span
+													style="color: #A8A196; font-weight: bold; font-size: large;"
+													 th:text="${users.phone}"></span>
+												
+												 <input type="hidden" id="phoneNumberInput"
+													onchange="validatePhoneNumber()" name="phone" readonly th:value="${users.phone}"
+													 size="10" class="form-control">
 													
 											</div>
 											<div>
@@ -238,13 +244,18 @@
 													class="info-icon">i</span> <span class="info-content">
 														<p>Email để nhận thông báo thông tin dặt sân, được lấy
 															từ tài khoản của bạn.</p>
-												</span> </span> <input readonly
+												</span> </span>:
+													<span
+													style="color: #A8A196; font-weight: bold; font-size: large;"
+													 th:text="${users.email != null ? users.email : ''}"></span>
+												
+												 <input readonly
 													th:value="${users.email != null ? users.email : ''}"
-													type="email" class="form-control" placeholder="">
+													type="hidden" class="form-control">
 											</div>
 											<div>
-												<label>Ghi chú thông tin ( nếu cần )</label>
-												<textarea type="text" name="note" value="note"  class="form-control" placeholder=""> </textarea>
+												<label>Ghi chú thông tin ( nếu cần ) :</label>
+												<textarea  type="text" name="note" th:value="${note}" th:text="${note}"  class="form-control" > </textarea>
 											</div>
 										</div>
 									</div>
@@ -565,7 +576,7 @@
 
 
 	<script>
-		document.getElementById("booking-link").onclick = function(event) {
+			document.getElementById("booking-link").onclick = function(event) {
 			event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a> (chuyển đến URL)
 
 			// Lấy giá trị của nameshift từ thẻ <span>
@@ -576,7 +587,14 @@
 			const voucherInput = document
 					.querySelector('input[name="voucher"]');
 			const voucherCode = voucherInput.value;
+			
+			
+			 const noteTextArea = document.querySelector('textarea[name="note"]');
+		     const noteValue = noteTextArea.value;
 
+		     const phoneNumberInput = document.getElementById('phoneNumberInput');
+		     const phoneNumberValue = phoneNumberInput.value;
+		        
 			// Lấy URL của thẻ <a> (URL bạn muốn chuyển đến)
 			const bookingUrl = this.getAttribute('href');
 
@@ -588,12 +606,20 @@
 			if (voucherCode) {
 				updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}voucher=${encodeURIComponent(voucherCode)}`;
 			}
+			if (noteValue) {
+		            updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}note=${encodeURIComponent(noteValue)}`;
+		        }
+		   	if (phoneNumberValue) {
+		            updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}phone=${encodeURIComponent(phoneNumberValue)}`;
+		        }
 
 			// Chuyển đến URL mới với tham số nameshift và voucher (nếu có)
 			window.location.href = updatedUrl;
 		};
-	</script>
-	<script>
+</script>
+	
+<script>
+		// Validate số điện thoại
 		function validatePhoneNumber() {
 			const phoneNumberInput = document
 					.getElementById('phoneNumberInput');
@@ -608,7 +634,7 @@
 				alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại 10 chữ số & đúng mã vùng Việt Nam.');
 			}
 		}
-	</script>
+</script>
 	
 	
 	
