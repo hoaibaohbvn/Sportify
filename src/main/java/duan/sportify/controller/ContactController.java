@@ -8,11 +8,13 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,18 +38,21 @@ public class ContactController {
 	@GetMapping("contact")
 	public String view(Model model, HttpServletRequest request ) {
 		 userlogin = (String) request.getSession().getAttribute("username");
+		 model.addAttribute("contacts", new Contacts());
 		 System.out.println(userlogin);
 //		model.addAttribute("user", new Contacts());
 	return "user/contact"; 
 	}
 	
     @PostMapping("/submit-contact")
-    public String processContactForm(Model model, HttpSession session, RedirectAttributes redirectAttributes,@ModelAttribute("users") User user, @RequestParam("contactType") String contactType,
-			@RequestParam String subject, @RequestParam String message) {
-    	Contacts contacts = new Contacts();
+    public String processContactForm(Model model, HttpSession session, RedirectAttributes redirectAttributes, @RequestParam("contactType") String contactType,
+			@RequestParam String title, @RequestParam String message, @Valid Contacts contacts, BindingResult result) {
+    	if (result.hasErrors()) {
+            return "user/contact"; // Return the form view to show validation errors
+        }
     	
     	contacts.setUsername(userlogin);
-    	contacts.setTitle(subject);
+    	contacts.setTitle(title);
     	contacts.setMeesagecontact(message);
     	contacts.setCategory(contactType);
     	LocalDate localDate = LocalDate.now();

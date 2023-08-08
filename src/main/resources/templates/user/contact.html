@@ -164,7 +164,7 @@
 								<div class="contact-wrap w-100 p-md-5 p-4">
 									<h3 class="mb-4">Liên hệ & góp ý</h3>
 									<form method="POST" id="contactForm" name="contactForm"
-										class="contactForm" th:action="@{/sportify/submit-contact}">
+										class="contactForm" th:action="@{/sportify/submit-contact}" th:object="${contacts}">
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
@@ -189,8 +189,13 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="label" for="subject">Tiêu đề</label> <input
-														type="text" class="form-control" name="subject"
-														id="subject" placeholder="Nhập tiêu đề...">
+														type="text" class="form-control" name="title" id="title"
+														  th:field="*{title}">
+														<span class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+																<p th:if="${#fields.errors('title').get(0).code == 'NotBlank'}" th:errors="*{title}"></p>
+															 	<p th:if="${#fields.errors('title').get(0).code == 'Pattern'}" th:errors="*{title}"></p>
+														</span>
+														
 												</div>
 											</div>
 											<div class="col-md-12">
@@ -398,7 +403,17 @@
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
 
-
+	<script>
+	
+	document.addEventListener('DOMContentLoaded', function() {
+	    var titleInput = document.getElementById('title');
+	    var errorMessage = document.querySelector('.error-message');
+	    
+	    titleInput.addEventListener('focus', function() {
+	        errorMessage.style.display = 'none'; // Ẩn thông báo lỗi khi người dùng chọn vào input
+	    });
+	});
+</script>
 	<script src="/user/js/jquery.min.js"></script>
 	<script src="/user/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="/user/js/popper.min.js"></script>
