@@ -72,7 +72,7 @@ public class ProfilesController {
 		updateUser.setGender(gender);
 		updateUser.setAddress(address);
 		userDAO.save(updateUser);
-		redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin thành công!");
+		redirectAttributes.addFlashAttribute("message", "Cảm ơn bạn đã gửi phản hồi với chúng tôi!");
 		return "redirect:/sportify/profile";
 	}
 }

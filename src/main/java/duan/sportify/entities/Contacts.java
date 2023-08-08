@@ -1,7 +1,7 @@
 package duan.sportify.entities;
 
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,9 +29,11 @@ public class Contacts {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="contactid", nullable=false)
 	private String contactid;
+	@Column(name="username", nullable=false, length=16)
+    private String     username ;
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(name="datecontact", nullable=false)
-    private Date       datecontact ;
+	private Date       	datecontact ;
 	@Column(name = "category", length = 30, nullable = false)
 	private String category;
 	@Column(name = "title", length = 200, nullable = false)
@@ -43,4 +45,6 @@ public class Contacts {
 	@ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 
+	
+	
 }
