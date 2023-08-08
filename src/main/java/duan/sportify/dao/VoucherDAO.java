@@ -24,4 +24,7 @@ public interface VoucherDAO extends JpaRepository<Voucher, String>{
 			+ "FROM voucher\r\n"
 			+ "WHERE enddate > CURDATE() and startdate >  CURDATE();", nativeQuery = true)
 	List<Voucher> fillWillActive();
+	
+	@Query("Select v From Voucher v Where v.voucherid=?1")
+	List<Voucher> findByVoucherId(String voucherid);
 }

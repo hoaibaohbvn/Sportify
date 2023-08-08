@@ -34,7 +34,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
-
+	<!-- login bar -->
 	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- STRART nav bar -->
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
@@ -180,7 +180,7 @@
 		</div>
 	</nav>
 	<!-- END nav -->
-
+	<!-- Background -->
 	<section class="hero-wrap hero-wrap-2"
 		style="background-image: url('/user/images/bg_product.png');"
 		data-stellar-background-ratio="0.5">
@@ -258,19 +258,20 @@
 				</div>
 			</div>
 			<br>
-			<div class="row">
-				<div class="row col-6 justify-content-start">
-					<div class="col col-lg-10 col-md-12 mt-10 cart-wrap ftco-animate">
+			<div class="row justify-content-end">
+			<div class="col col-lg-7 col-md-6 mt-7 cart-wrap ftco-animate justify-content-start">
 						<div class="">
+						<br> <br>
 							<h5>Mã giảm giá:</h5>
-							<p class="d-flex">
-								<input type="text" class="col-12" placeholder="Nhập mã giảm giá ở đây">
+							<p class="d-flex" >
+								<input type="text" ng-model="voucherid" class="col-7">
+								<button class="btn btn-info" ng-click="voucherCode.addVoucher(voucherid)">Áp dụng</button>
+								
 							</p>
+							
 						</div>
 					</div>
-				</div>
-				<div class="row col-6 justify-content-end">
-					<div class="col col-lg-10 col-md-12 mt-10 cart-wrap ftco-animate">
+					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
 						<div class="cart-total mb-3">
 							<h3>Thanh toán giỏ hàng</h3>
 							<p class="d-flex">
@@ -285,7 +286,7 @@
 							</p>
 							<hr>
 							<p class="d-flex total-price">
-								<span>Thành tiền</span> <span>{{cart.totalPrice + shippingFee.cartShipFee()| number:
+								<span>Thành tiền</span> <span>{{updateTotalPrice.updateTotalPrice() | number:
 									0}} VNĐ</span>
 							</p>
 						</div>
@@ -295,10 +296,10 @@
 						</p>
 					</div>
 				</div>
-			</div>
 		</div>
 	</section>
-
+	
+	<!-- footer -->
 	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">

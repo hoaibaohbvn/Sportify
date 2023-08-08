@@ -17,4 +17,6 @@ public interface VoucherService {
 	void delete(String id);
 	
 	Voucher findById(String id);
+
+	List<Voucher> findByVoucherId(String voucherid);
 }

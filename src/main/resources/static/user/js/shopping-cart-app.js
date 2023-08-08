@@ -62,15 +62,47 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			this.items = json ? JSON.parse(json) : [];
 		}
 	}
-	
+
 	//tính phí vận chuyển
 	$scope.shippingFee = {
 		shipFee: 0,
-		cartShipFee(){
-			return ($scope.cart.totalPrice > 300000 ? 0 : 30000);
+		cartShipFee() {
+			return ($scope.cart.totalPrice >= 300000 ? 0 : 30000);
 		}
 	}
-	
+
+	//tính mã giảm giá
+	//$scope.voucherid = voucher.id;
+	$scope.voucherCode = {
+		vouchers: [],
+		addVoucher(voucherid) {
+			var voucher = this.vouchers.find(voucher => voucher.voucherid == voucherid);
+			if (voucher) {
+				
+			} else {
+				$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
+					this.vouchers.push(resp.data);
+					this.saveToSessionStorage();
+				});
+			};
+			/*$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
+				this.vouchers = resp.data;
+				this.vouchers.forEach(voucher => {
+					voucher.startdate = new Date(voucher.startdate)
+					voucher.enddate = new Date(voucher.enddate)
+				})
+				//alert(voucherid);
+			});*/
+		}
+	};
+	//update tổng tiền
+	$scope.updateTotalPrice = {
+		updateTotalPrice() {
+			var updatePrice;
+			updatePrice = ($scope.cart.totalPrice + $scope.shippingFee.cartShipFee())
+			return updatePrice;
+		}
+	}
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
