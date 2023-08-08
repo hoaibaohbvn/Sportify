@@ -1,62 +1,51 @@
-app.controller('EventController', function($scope, $http) {
-	// Khởi tạo trình soạn thảo Summernote khi trang đã sẵn sàng
-    
-	// Dữ liệu cứng mẫu cho eventtype
-	$scope.tableData = [
-		{ id: 1, name: "Bóng đá" },
-		{ id: 2, name: "Bóng rổ" },
-		{ id: 3, name: "Cầu lông" },
-		{ id: 4, name: "Bảo trì" },
-		{ id: 5, name: "Tennis" },
-		{ id: 6, name: "Khác" },
-	];
+app.controller('BookingController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
-		// lấy danh sách category
-		$http.get("/rest/events/getAll").then(resp => {
+		$http.get("/rest/accounts/getAll").then(resp => {
+			$scope.accounts = resp.data;
+		})
+		// lấy danh sách product
+		$http.get("/rest/bookings/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.datestart = new Date(item.datestart)
-				item.dateend = new Date(item.dateend)
+				item.bookingdate = new Date(item.bookingdate)
 			})
 		});
-		$scope.reset();
+		
+		
 	}
-
+	
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
-			datestart: new Date(),
-			dateend: new Date(),
-			productstatus: true,
-			image: "loading.jpg",
-			eventtype: $scope.tableData.name = "Bóng đá"
-
+			sporttypeid: "B01",
+			status: true,
+			image: "loading.jpg"
 		}
 	}
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 		$scope.errors = [];
+		// lấy danh sách product
+		$http.get("/rest/bookingdetails/" + item.bookingid).then(resp => {
+			$scope.bookingdetail = resp.data;
+			$scope.bookingdetail.forEach(item => {
+				item.bookingdate = new Date(item.bookingdate)
+			})
+			
+		});
 	}
-
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		if (item.datestart >= item.dateend) {
-			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
-			return; // Dừng việc thêm mới nếu ngày không hợp lệ
-		}
-		$http.post(`/rest/events/create`, item).then(resp => {
+		$http.post(`/rest/fields/create`, item).then(resp => {
 
-			resp.data.dateStart = new Date(resp.data.dateStart)
-			resp.data.dateEnd = new Date(resp.data.dateEnd)
 			$scope.items.push(resp.data);
-			showSuccessToast("Event mới tên " + item.nameevent + " đã được thêm vào cửa hàng")
+			showSuccessToast("Sân mới tên " + item.namefield + " đã được thêm vào cửa hàng")
 			$scope.reset();
 			$('#add').modal('hide')
 			refreshPageAfterThreeSeconds();
-
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
 			if (error.data && error.data.errors) {
@@ -66,48 +55,44 @@ app.controller('EventController', function($scope, $http) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
-			console.log(error);
+      		console.log(error);
 		});
 	}
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		if (item.datestart >= item.dateend) {
-			showErrorToast("Ngày bắt đầu phải trước ngày kết thúc sự kiện")
-			return; // Dừng việc thêm mới nếu ngày không hợp lệ
-		}
-		$http.put(`/rest/events/update/${item.eventid}`, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.put(`/rest/fields/update/${item.fieldid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items[index] = item;
-			showSuccessToast("Cập nhập sự kiện thành công")
+			showSuccessToast("Cập nhập sân thành công")
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-				// Xử lý lỗi phản hồi từ máy chủ
-				if (error.data && error.data.errors) {
-					$scope.errors = error.data.errors;
-				}
-				if (error.data) {
-					showErrorToast("Vui lòng kiểm tra lại form");
-				}
-				console.log($scope.errors);
-				console.log(error);
-			});
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
 	}
 	// ham delete
 	$scope.delete = function(item) {
-		$http.delete(`/rest/events/delete/${item.eventid}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.eventid == item.eventid);
+		$http.delete(`/rest/fields/delete/${item.fieldid}`).then(resp => {
+			var index = $scope.items.findIndex(p => p.fieldid == item.fieldid);
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
-
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
-			showSuccessToast("Sự kiện tên " + item.nameevent + " đã được xóa")
+			showSuccessToast("Sân tên " + item.namefield + " đã được xóa")
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
-			showErrorToast("Xóa sự kiện " + item.nameevent + " thất bại")
+			showErrorToast("Xóa sân tên " + item.namefield + " thất bại")
+			console.log("Error", error);
 		})
 	}
 
@@ -120,7 +105,7 @@ app.controller('EventController', function($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			showErrorToast("Lỗi tải hình ảnh")
+			showErrorToast("Lổi tải hình ảnh")
 			console.log("Error", error);
 		})
 	}
@@ -207,26 +192,30 @@ app.controller('EventController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	$scope.searchName = '';
-	$scope.searchStyte = null;
-	$scope.search = function() {
-
-		$http.get('/rest/events/search', {
-			params:
-			{
-				nameevent: $scope.searchName,
-				eventtype: $scope.searchStyte
-			}
-		}).then(function(response) {
-			$scope.items = response.data;
-			$scope.items.forEach(item => {
-				item.datestart = new Date(item.datestart)
-				item.dateend = new Date(item.dateend)
-			})
-			console.log($scope.items);
-		})
-			.catch(function(error) {
-				console.log('Lỗi khi gửi yêu cầu:', error);
-			});
+	 $scope.searchName = '';
+   	 $scope.searchSport = null;
+   	 $scope.searchStatus = 1;
+   	 $scope.search = function () {
+			
+      $http.get('/rest/fields/search', { params: 
+      		{ 	
+				namefield: $scope.searchName, 
+      			sporttypeid: $scope.searchSport,
+      			status: $scope.searchStatus
+      		} 
+      		}).then(function (response) {
+          $scope.items = response.data;
+          
+			 console.log($scope.items);
+        })
+        .catch(function (error) {
+          console.log('Lỗi khi gửi yêu cầu:', error);
+        });
+    };
+	// định dạng tiền tệ VND
+	$scope.formatCurrency = function(value) {
+		// Sử dụng filter number để định dạng thành 100,000
+		var formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+		return formattedValue + ' VND';
 	};
 })

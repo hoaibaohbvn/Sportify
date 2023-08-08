@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import duan.sportify.entities.Bookingdetails;
 import duan.sportify.entities.Field;
@@ -17,4 +18,6 @@ public interface BookingDetailDAO extends JpaRepository<Bookingdetails, Integer>
 			+ "ORDER BY COUNT(*) DESC\r\n"
 			, nativeQuery = true)
     List<Object[]> findTopFieldsWithMostBookings();
+    @Query(value = "SELECT * FROM bookingdetails WHERE bookingid = :bookingid", nativeQuery = true)
+    List<Bookingdetails> detailBooking(@Param("bookingid") Integer bookingid);
 }

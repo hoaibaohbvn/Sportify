@@ -77,6 +77,7 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: '/admin/views/category-sport.html',
             pageTitle: 'Category Sport'
         })
+        
 
 }).run(function ($rootScope, $route) {
     $rootScope.$on('$routeChangeSuccess', function () {
