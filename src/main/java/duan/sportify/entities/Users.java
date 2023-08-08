@@ -86,9 +86,7 @@ public class Users implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Bookings> listOfBookings ; 
-    @JsonIgnore
-    @OneToMany(mappedBy="users")
-    private List<Favoritefield> listOfFavoritefield ; 
+   
     @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Teams> listOfTeams ;  
