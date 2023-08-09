@@ -73,9 +73,7 @@ public class Field implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
-    @JsonIgnore
-    @OneToMany(mappedBy="field")
-    private List<Favoritefield> listOfFavoritefield ; 
+   
 
     @ManyToOne
     @JoinColumn(name="sporttypeid", referencedColumnName="sporttypeid", insertable=false, updatable=false)

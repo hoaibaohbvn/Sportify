@@ -10376,4 +10376,29 @@ a:hover span {
 .related-video iframe {
   width: 100%;
 }
+/*Custom select*/
+.custom-select {
+  display: block;
+  width: 80%;
+  padding: 5px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  appearance: none;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s; /* Chuyển đổi màu nền và viền */
+}
+
+/* Khi nút select được nhấn */
+.custom-select:active {
+  border-color: #007bff;
+}
+
+
+
+
+
+
 
