@@ -39,6 +39,7 @@ public class Contacts {
 	@Column(name = "category", length = 30, nullable = false)
 	private String category;
 	@NotBlank(message = "{NotBlank.contact.title}")
+	@Pattern(regexp = "^[a-zA-Z0-9\\sÀ-ÿ]+$",message = "{Pattern.contact.title}")
 	@Column(name = "title", length = 200, nullable = false)
 	private String title;
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
