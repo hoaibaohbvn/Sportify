@@ -219,7 +219,7 @@
 					<thead>
 						<tr class="text-center bg-secondary text-light">
 							<th scope="col">ID</th>
-							<th scope="col">  </th>
+							<th scope="col">Hình</th>
 							<th scope="col">Tên SP</th>
 							<th scope="col">Giá</th>
 							<th scope="col">Số lượng</th>
@@ -230,12 +230,11 @@
 						<tr th:each="detail: *{orderDetails}" th:object="${detail}"
 							class="text-center">
 							<th scope="row">[[*{products.productid}]]</th>
-							<td> [[*{products.image}]]<img
-										class="img d-flex align-items-center justify-content-center"
-										src="@{'/user/images/' + [[*{products.image}]]}"
+							<td><img	class="img d-flex align-items-center justify-content-center"
+										th:src="@{'/user/images/' + *{products.image}}"
 										alt="Error"></td>
 							<td>[[*{products.productname}]]</td>
-							<td>[[*{#numbers.formatDecimal(price,0,'COMMA',2,'POINT')}]]
+							<td>[[*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')}]]
 								VNĐ</td>
 							<td>[[*{quantity}]]</td>
 							<td>[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]
