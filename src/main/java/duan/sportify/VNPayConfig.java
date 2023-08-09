@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class VNPayConfig {
 	  public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 	    public static String vnp_Returnurl = "http://localhost:8080/sportify/checkoutResult";
+	    public static String vnp_Returnurl2 = "http://localhost:8080/sportify/checkoutResult";
 	    public static String vnp_TmnCode = "LYUMYHGP";
 	    public static String vnp_HashSecret = "FAYIYDBZBFIGDBYRQXJRKPHLUHNZOLTQ";
 	    public static String vnp_Version = "2.1.0";

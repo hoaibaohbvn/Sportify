@@ -5,7 +5,9 @@ package duan.sportify.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +64,8 @@ public class OrderController {
 	public String list(Model model, HttpServletRequest request) {
 		String username = (String) request.getSession().getAttribute("username");
 		model.addAttribute("orders", orderService.findByUsername(username));
+		
+
 		return "user/orderList";
 	}
 	

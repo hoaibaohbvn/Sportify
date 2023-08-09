@@ -209,8 +209,8 @@
 				<div class="container d-flex justify-content-center rounded mb-5">
 					<div class=" col-md-12 rounded row" id="profiles"
 						style="margin-top: 50px; background-color: rgb(247, 249, 250);">
-						<div th:each="order, stare : ${orders}" th:object="${order}" class="card col-12 mb-3"
-							style="border-radius: 10px">
+						<div th:each="order, stare : ${orders}" th:object="${order}"
+							class="card col-12 mb-3" style="border-radius: 10px">
 							<h6 class="card-header row">
 								<span class="col-4">Đơn hàng # <span
 									th:text="${order.orderid}"></span></span> <span class="col-6"
@@ -224,12 +224,22 @@
 							</h6>
 
 							<div class="card-body row">
-								<div th:each="detail: *{orderDetails}" th:object="${detail}">
-									<a>[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]</a>
-									<a ng-model="orderTotal" value="[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',2,'POINT')}]]"></a> 
+								<div hidden>
+									<div th:each="detail : ${order.orderDetails}"
+										th:object="${detail}">
+										<span th:text="${detail.price}"></span> <span
+											th:text="${detail.quantity}"></span> <span
+											th:text="${(detail.price * detail.quantity)}"
+											ng-model="productTotalPrice"></span>
+
+
+									</div>
+									<div ng-repeat="price in productTotalPrice">
+										<span ng-model="price.value"></span>
+									</div>
 								</div>
 								<p class="col-4">
-									<span>Tổng tiền: {{order.orderTotalPrice()}}</span> <br> <span>Tình trạng: <span
+									<span>Tình trạng: <span
 										th:with="paymentStatusColor=${order.paymentstatus == true ? 'green' : 'red'}"
 										th:text="${order.paymentstatus} ? 'Đã thanh toán' : 'Chưa thanh toán'"
 										th:style="'text-align: center; color:' + ${paymentStatusColor}"></span>
@@ -384,6 +394,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	<script src="/user/js/main.js"></script>
 	<script src="/user/js/shopping-cart-app.js"></script>
+
 </body>
 
 </html>
