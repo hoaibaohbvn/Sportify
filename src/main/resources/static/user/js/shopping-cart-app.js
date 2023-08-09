@@ -95,6 +95,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			});*/
 		}
 	};
+	
 	//update tổng tiền
 	$scope.updateTotalPrice = {
 		updateTotalPrice() {
@@ -117,7 +118,8 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				return {
 					products: { productid: item.productid },
 					price: item.price,
-					quantity: item.quantity
+					quantity: item.quantity,
+					//producTotalPrice: item.price * item.quantity 
 				}
 			});
 		},
@@ -133,15 +135,11 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				alert("Đặt hàng lỗi!")
 				console.log(error)
 			});
-		},
-		//tính tổng tiền order
-		orderTotalPrice(){
-			var orderTotal = 0;
-			for (var i = 0; i < this.order.orderDetails().legth; i++){
-				var productTotal = this.order.orderDetails(i); 
-				orderTotal += (productTotal.price * productTotal.quantity);
-			}
-			return orderTotal;
 		}
+		
 	}
+	
+	//tính tổng tiền order
+	$scope.orderTotalPrice = [];
+	
 })
