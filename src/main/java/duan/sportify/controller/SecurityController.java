@@ -12,13 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import duan.sportify.service.MailerService;
 import duan.sportify.service.UserService;
 import duan.sportify.dao.UserDAO;
+import duan.sportify.DTO.MailInfo;
 import duan.sportify.dao.AuthorizedDAO;
 import duan.sportify.entities.Users;
+
 import duan.sportify.entities.Authorized;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,12 +39,14 @@ public class SecurityController {
 	
 	@Autowired
 	UserDAO userDAO;
-
+	
 	@Autowired
 	AuthorizedDAO authorizedDAO;
-	
+	List<Users> listUser = new ArrayList<>();
 	@RequestMapping("/sportify/login")
 	public String loginForm(Model model) {
+		 listUser = userService.findAll();
+		 model.addAttribute("listUser",listUser);
 		return "security/login";
 	}
 	@RequestMapping("/sportify/signup")
@@ -82,8 +92,6 @@ public class SecurityController {
 	        @RequestParam("genderSignUp") String genderSignUp,
 			@RequestParam("emailSignUp") String emailSignUp) {
 
-	    
-
 		Optional<Users> userOptional = Optional.ofNullable(userService.findById(usernameSignUp));
 
 		// Kiểm tra xem tên đăng nhập đã tồn tại chưa
@@ -113,18 +121,9 @@ public class SecurityController {
 		
 		}
 		
-
-//		// Lưu người dùng vào cơ sở dữ liệu thông qua UserDAO
-//
-//		// Đăng nhập ngay sau khi đăng kí thành công (tùy chỉnh theo yêu cầu của bạn)
-//		// Chú ý: đây chỉ là một cách đơn giản để giữ phiên đăng nhập. Trong thực tế,
-//		// bạn nên thực hiện cơ chế xác thực hợp lệ.
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		String username = authentication.getName();
-//		HttpSession session = request.getSession();
-//		session.setAttribute("username", username);
-		return "redirect:/sportify/login/form";
+		return "redirect:/sportify/login";
 	}
+
 
 	@CrossOrigin("*")
 	@ResponseBody

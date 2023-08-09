@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,7 +61,8 @@ public class Bookings implements Serializable {
 
     @Column(name="bookingprice", nullable=false)
     private Double     bookingprice ;
-
+    @Pattern(regexp = "^(0|\\+84)\\d{9,10}$", message = "{Pattern.bookings.phone}")
+    @NotBlank(message = "{NotBlank.bookings.phone}")
     @Column(name="phone", nullable=false, length=10)
     private String     phone ;
 
