@@ -15,7 +15,7 @@ import duan.sportify.entities.Teams;
 @SuppressWarnings("unused")
 public interface TeamDAO extends JpaRepository<Teams, Integer> {
 
-	@Query(value = "SELECT teams.teamid,teams.sporttypeid,teams.nameteam,teams.quantity,teams.avatar,teams.contact,teams.descriptions,teams.username,teams.createdate, sporttype.categoryname, COUNT(teamdetails.teamid) AS count \r\n"
+	@Query(value = "SELECT teams.teamid,teams.sporttypeid,teams.nameteam,teams.quantity,teams.avatar,teams.contact,teams.descriptions,teams.username,teams.createdate, sporttype.categoryname, COUNT(CASE WHEN teamdetails.status = 1 THEN teamdetails.teamid ELSE NULL END) AS count \r\n"
 			+ "			FROM teams LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
 			+ "	LEFT JOIN sporttype ON  teams.sporttypeid =sporttype.sporttypeid\r\n"
 			+ "						GROUP BY teams.teamid;", 
@@ -37,6 +37,22 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "			GROUP BY teams.teamid;",
 			nativeQuery = true)
 	List<Object[]> FilterTeam(String sporttypeid );
+	
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where username like :username and teamid like :teamId",
+			nativeQuery = true)
+	Teams findOneTeam(Integer teamId,String username);
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where teamid like :teamId  And username like :usernameLogin ",
+			nativeQuery = true)
+	Teams findOneTeamUser(Integer teamId,String usernameLogin);
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where username like :username ",
+			nativeQuery = true)
+	Teams findTeamUser(String username);
 	
 	//search in admin 
 	@Query(value = "SELECT * FROM teams WHERE (:nameteam IS NULL OR nameteam LIKE %:nameteam%) AND (:sporttypeid IS NULL OR sporttypeid LIKE %:sporttypeid%)", nativeQuery = true)
