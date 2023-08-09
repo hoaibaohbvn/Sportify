@@ -143,9 +143,9 @@
 							<img th:if="${profiles.image != null}" id="previewAvatar"
 								class="border border-dark rounded-circle mt-5" width="250px"
 								height="250px" th:src="@{'/user/images/' + ${profiles.image}}">
-							<img th:if=${profiles.image==null}
+							<img th:if="${profiles.image==null}"
 								class="border border-dark rounded-circle mt-5" width="250px"
-								height="250px" src="/user/images/noavatar.jpg" alt="">
+								height="250px" src="../user/images/noavatar.jpg" alt="">
 							<input type="hidden" name="avatarProfile"
 								th:value="${profiles.image}">
 
@@ -153,7 +153,7 @@
 							<div
 								style="position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); z-index: 1;">
 								<label for="avatarFileInput"> <i
-									style="font-size: 30px; color: gray;" class="fa fa-camera"></i>
+									style="font-size: 25px; color: black;" class="fa fa-camera"></i>
 									<!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
 								</label> <input style="display: none" id="avatarFileInput"
 									class="form-control-file" type="file" value="macdinh.jpg"
@@ -205,9 +205,9 @@
 								<label class="labels">Mật khẩu</label>
 
 								<div class="d-flex">
-									<input type="password" class="form-control col-md-12"
+									<input readonly type="password" class="form-control col-md-12"
 										name="passwords" th:value="${profiles.passwords}"><a
-										class=" col-md-5" data-toggle="collapse"
+										class=" col-md-5" data-toggle="collapse" 
 										href="#collapseExample" role="button" aria-expanded="false"
 										aria-controls="collapseExample"> <i class="fa fa-edit"></i></a>
 									</input>
@@ -358,6 +358,14 @@
 	<script>
 		var regexVietnameseName = /^[\p{L}\s]*$/u; // Biểu thức chính quy cho Họ và Tên tiếng Việt
 		var check = true;
+		 const newPasswordInput = document.getElementsByName('newpassword')[0];
+		    const confirmPasswordInput = document.getElementsByName('confirmpassword')[0];
+		    const errorDiv = document.getElementById('password-match-error');
+		    const submitButton = document.getElementById('submitBtn');
+
+		    newPasswordInput.addEventListener('input', validatePassword);
+		    confirmPasswordInput.addEventListener('input', validatePassword);
+		    
 		function validateFirstName(input) {
 			var value = input.value;
 			var errorDiv = document.getElementById('firstname-error');
@@ -366,9 +374,14 @@
 				errorDiv.textContent = 'Họ không được để trống';
 				return check = false;
 			} else if (!regexVietnameseName.test(value)) {
-				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt';
+				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt như: !@#.,';
 				return check = false;
-			} else {
+			}else if(value.length > 50) {
+				errorDiv.textContent = 'Không được quá 50 ký tự';
+				return check = false;
+			}
+				
+			else {
 				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
 				return check = true;
 			}
@@ -381,7 +394,10 @@
 				errorDiv.textContent = 'Tên không được để trống';
 				return check = false;
 			} else if (!regexVietnameseName.test(value)) {
-				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt';
+				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt như: !@#.,';
+				return check = false;
+			}else if(value.length > 50) {
+				errorDiv.textContent = 'Không được quá 50 ký tự';
 				return check = false;
 			} else {
 				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
@@ -428,20 +444,28 @@
 				return check = true;
 			}
 		}
-		function validatePasswordMatch() {
-			var newPassword = document.getElementsByName('newpassword')[0].value;
-			var confirmPassword = document.getElementsByName('confirmpassword')[0].value;
-			var errorDiv = document.getElementById('password-match-error');
-
-			if ((newPassword !== '' || confirmPassword !== '')
-					&& newPassword !== confirmPassword) {
-				errorDiv.textContent = 'Mật khẩu mới và xác thực không khớp';
-				return false;
-			} else {
-				errorDiv.textContent = '';
-				return true;
-			}
-		}
+		function validatePassword() {
+	        const newPassword = newPasswordInput.value;
+	        const confirmPassword = confirmPasswordInput.value;
+	        var errorDiv = document.getElementById('password-match-error');
+	        if (newPassword.length < 6 || newPassword.length > 16) {
+	            errorDiv.textContent = 'Mật khẩu phải từ 6 đến 16 ký tự';
+	            return check = false;
+	            
+	           
+	        }else if(confirmPassword.length < 6 || confirmPassword.length > 16){
+	        	errorDiv.textContent = 'Mật khẩu phải từ 6 đến 16 ký tự';
+	            return check = false;
+	        }else if (newPassword !== confirmPassword) {
+	            errorDiv.textContent = 'Mật khẩu mới và xác thực không khớp';
+	            return check = false;
+	         
+	        } else {
+	            errorDiv.textContent = '';
+	            return check = true;
+	            
+	        }
+	    }
 		function validateFormAndSubmit() {
 
 			// Kiểm tra trạng thái của biến check

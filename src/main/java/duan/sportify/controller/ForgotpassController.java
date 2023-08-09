@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import duan.sportify.DTO.MailInfo;
 import duan.sportify.entities.Users;
@@ -67,25 +70,29 @@ public class ForgotpassController {
 			}
 	}
 	@PostMapping("/changePassword")
-	public String changePassword(Model model, HttpServletRequest request,
+	public String changePassword(Model model, HttpServletRequest request, 
 								@RequestParam("newpassword") String newpassword,
-								@RequestParam("confirmpassword") String confirmpassword
+								@RequestParam("confirmpassword") String confirmpassword,
+								@Valid Users user, BindingResult result 
 								) {
 			Users userChange = userService.findById(username);
-			Users updateUser = new Users();
-			updateUser.setUsername(username);
+
+			if (result.hasErrors()) {
+//	            return "security/login"; // Return the form view to show validation errors
+	        }
+			user.setUsername(username);
 			if(newpassword.equals(confirmpassword)) {
-				updateUser.setPasswords(newpassword);
+				user.setPasswords(newpassword);
 			}
-			updateUser.setFirstname(userChange.getFirstname());
-			updateUser.setLastname(userChange.getLastname());
-			updateUser.setEmail(email);
-			updateUser.setPhone(userChange.getPhone());
-			updateUser.setAddress(userChange.getAddress());
-			updateUser.setImage(userChange.getImage());
-			updateUser.setGender(userChange.getGender());
-			updateUser.setStatus(userChange.getStatus());
-			userService.update(updateUser);
+			user.setFirstname(userChange.getFirstname());
+			user.setLastname(userChange.getLastname());
+			user.setEmail(email);
+			user.setPhone(userChange.getPhone());
+			user.setAddress(userChange.getAddress());
+			user.setImage(userChange.getImage());
+			user.setGender(userChange.getGender());
+			user.setStatus(userChange.getStatus());
+			userService.update(user);
 			model.addAttribute("thongbao","Đổi mật khẩu thành công");
 			return "security/login";
 	}

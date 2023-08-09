@@ -79,7 +79,7 @@ public class ProfilesController {
 		// Xử lý tải lên ảnh
 		updateUser.setUsername(username);
 		String fileName = avatarFile.getOriginalFilename();
-		System.out.println(fileName);
+
 		if (!fileName.isEmpty()) {
 		try {
 				// Thay đổi đường dẫn tới thư mục lưu trữ ảnh (thay thế "/" bằng đường dẫn thư

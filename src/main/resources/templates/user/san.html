@@ -142,7 +142,7 @@ input[type="date"]:out-of-range {
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin Tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -472,18 +472,7 @@ input[type="date"]:out-of-range {
 	            var maxDate = (yyyy) + '-12-31'; // Cập nhật 'max' là ngày cuối cùng trong năm
 	            document.getElementById('dateInput').max = maxDate;
 	        }
-		 function validateDate() {
-			  var dateInput = document.getElementById("dateInput").value;
-			  var selectedDate = new Date(dateInput);
-			  var currentDate = new Date();
-
-			  if (selectedDate <= currentDate) {
-			    alert("Vui lòng chọn một ngày lớn hơn ngày hiện tại");
-			    return false; // Ngăn chặn gửi form
-			  }
-
-			  return true; // Cho phép gửi form
-			}
+		 
 		 function parsePrice(priceString) {
 			  // Loại bỏ dấu chấm trong chuỗi giá tiền
 			  var priceWithoutDot = priceString.replace(/\./g, '');

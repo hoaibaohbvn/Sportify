@@ -368,7 +368,23 @@ public class FieldController {
 		String nameSportype = fieldservice.findNameSporttypeById(idField); // Tên môn thể thao để hiện thị trong các sân liên quan ở Detail
 		String idSporttype = fieldservice.findIdSporttypeById(idField); // Lấy id môn thể thao dựa vào sân đang chọn Detail
 		List<Field> fieldListByIdSporttype = fieldservice.findBySporttypeIdlimit3(idSporttype); // Danh sách 3 sân liên quan đến môn thể thao đang xem.
-		List<Shifts> shiftsNull = shiftservice.findShiftDate(idField, date);
+		List<Shifts> shiftsempty = shiftservice.findShiftDate(idField, date);
+		
+		LocalTime currentTime = LocalTime.now(); // Lấy giờ hiện tại
+		LocalDate currentDate = LocalDate.now(); // lấy ngày hiện tại
+		LocalDate selectedDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+		 if (selectedDate.equals(currentDate)) {
+			    List<Shifts> shiftsNull = new ArrayList<>();
+			    for (Shifts shift : shiftsempty) {
+			        LocalTime shiftStartTime = shift.getStarttime(); // Lấy thời gian bắt đầu của ca làm việc
+			        if (shiftStartTime.isAfter(currentTime)) { // Kiểm tra thời gian bắt đầu của ca làm việc
+			            shiftsNull.add(shift); // Thêm vào danh sách nếu thỏa mãn điều kiện
+			        }
+			    }
+			    model.addAttribute("shiftsNull", shiftsNull);
+			} else {
+			    model.addAttribute("shiftsNull", shiftsempty);
+			}
 		// Format yyyy-mm-dd thành dd-mm-yyyy
 		LocalDate dateformat = LocalDate.parse(date);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -376,7 +392,6 @@ public class FieldController {
 		// Dữ liệu hiển thị trong trang Detail
 		model.addAttribute("date",date);
 		model.addAttribute("formattedDate",formattedDate);
-		model.addAttribute("shiftsNull",shiftsNull);
 		model.addAttribute("fieldListByIdSporttype",fieldListByIdSporttype);
 		model.addAttribute("nameSportype",nameSportype);
 		model.addAttribute("fieldListById",fieldListById);
