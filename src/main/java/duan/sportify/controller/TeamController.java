@@ -279,7 +279,7 @@ public class TeamController {
 				// Thay đổi đường dẫn tới thư mục lưu trữ ảnh (thay thế "/" bằng đường dẫn thư
 				// mục thực tế)
 				String rootDir = System.getProperty("user.dir"); // Đường dẫn đến thư mục gốc của dự án
-				String uploadDir = rootDir + "\\src\\main\\resources\\static\\user\\images";
+				String uploadDir = rootDir + "\\src\\main\\resources\\static\\user\\images\\team_img";
 				Path filePath = Paths.get(uploadDir, fileName);
 				Files.write(filePath, newAvatar.getBytes());
 
