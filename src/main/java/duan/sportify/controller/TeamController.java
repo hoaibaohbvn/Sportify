@@ -1,6 +1,7 @@
 package duan.sportify.controller;
 
 import java.awt.SystemColor;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import duan.sportify.entities.Users;
@@ -33,6 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @SuppressWarnings("unused")
 @Controller
@@ -143,7 +148,7 @@ public class TeamController {
 	public String teamdetail(HttpServletRequest request, Model model, @PathVariable("teamId") Integer teamId,
 			RedirectAttributes redirectAttributes) {
 		// Lấy username từ session
-		String username = (String) request.getSession().getAttribute("username");		
+		String username = (String) request.getSession().getAttribute("username");
 		model.addAttribute("teamId", teamId);
 		// Người dùng đã đăng nhập
 		if (username != null) {
@@ -163,9 +168,9 @@ public class TeamController {
 				List<Object[]> listall = detailDAO.findByIdTeam(teamId);
 				List<Object[]> userTeam = detailDAO.findUserByIdTeam(teamId);
 				List<Object[]> userCheckTeam = detailDAO.findUserCheckByIdTeam(teamId);
-				Teams checkOneUser= teamdao.findOneTeam(teamId, username);
+				Teams checkOneUser = teamdao.findOneTeam(teamId, username);
 				Teams checkBoss = teamService.findById(teamId);
-				model.addAttribute("oneUser",checkOneUser);
+				model.addAttribute("oneUser", checkOneUser);
 				model.addAttribute("team", listall);
 				model.addAttribute("userCheckTeam", userCheckTeam);
 				model.addAttribute("user", userTeam);
@@ -178,7 +183,7 @@ public class TeamController {
 			} else if (countMembers < quantity) {
 				Teamdetails checkAllTeamUser = detailDAO.checkAllTeamUser(username, teamId);
 				model.addAttribute("checkAllTeamUser", checkAllTeamUser);
-				if(checkAllTeamUser!=null) {
+				if (checkAllTeamUser != null) {
 					redirectAttributes.addFlashAttribute("message1", "Đợi đội trưởng xác nhận !");
 					return "redirect:/sportify/team";
 				}
@@ -218,55 +223,72 @@ public class TeamController {
 		}
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
+
 	@PostMapping("/team/teamdetail/xacnhan")
-	public String joinTeam(Model model,@ModelAttribute("teamId") Integer teamId,@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
-		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId,username);
+	public String joinTeam(Model model, @ModelAttribute("teamId") Integer teamId,
+			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
+		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId, username);
 		checkOneTeamUser.setStatus(true);
 		checkOneTeamUser.setJoindate(LocalDate.now());
 		detailDAO.save(checkOneTeamUser);
 		redirectAttributes.addFlashAttribute("message", "Xác nhận thành viên thành công !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
+
 	@PostMapping("/team/teamdetail/tuchoi")
-	public String tuchoi(Model model,@ModelAttribute("teamId") Integer teamId,@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
-		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId,username);
+	public String tuchoi(Model model, @ModelAttribute("teamId") Integer teamId,
+			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
+		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId, username);
 		detailDAO.delete(checkOneTeamUser);
 		redirectAttributes.addFlashAttribute("message", "Từ chối thành viên !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
+
 	@PostMapping("/team/teamdetail/kik")
-	public String kik(Model model,@ModelAttribute("teamId") Integer teamId,@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
-		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam1(teamId,username);
+	public String kik(Model model, @ModelAttribute("teamId") Integer teamId,
+			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
+		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam1(teamId, username);
 		detailDAO.delete(checkOneTeamUser);
 		redirectAttributes.addFlashAttribute("message", "Kik thành viên thành công !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
+
 	@PostMapping("/team/teamdetail/phongdoitruong")
-	public String phongdoitruong( HttpServletRequest request,Model model,@ModelAttribute("teamId") Integer teamId,@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
-		String usernameLogin = (String) request.getSession().getAttribute("username");		
-		Teams findTeam = teamdao.findOneTeamUser(teamId,usernameLogin);
+	public String phongdoitruong(HttpServletRequest request, Model model, @ModelAttribute("teamId") Integer teamId,
+			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
+		String usernameLogin = (String) request.getSession().getAttribute("username");
+		Teams findTeam = teamdao.findOneTeamUser(teamId, usernameLogin);
 		findTeam.setUsername(username);
 		teamdao.save(findTeam);
 		redirectAttributes.addFlashAttribute("message", "Phong đội trưởng thành công !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
-	
+
 	@PostMapping("team/createTeam")
-	public String createTeam( HttpServletRequest request,Model model,RedirectAttributes redirectAttributes,
-			@RequestParam("newNameteam") String newNameteam,
-			@RequestParam("newContact") String newContact,
-			@RequestParam("newQuantity") Integer newQuantity,
+	public String createTeam(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes,
+			@RequestParam("newNameteam") String newNameteam, @RequestParam("newAvatar") MultipartFile newAvatar,
+			@RequestParam("newContact") String newContact, @RequestParam("newQuantity") Integer newQuantity,
 			@RequestParam("newSporttypeid") String newSporttypeid,
-			@RequestParam("newDescriptions") String newDescriptions) {
+			@RequestParam("newDescriptions") String newDescriptions){
 		String usernameLogin = (String) request.getSession().getAttribute("username");
 		Teams findTeamUser = teamdao.findTeamUser(usernameLogin);
-		if(findTeamUser==null) {
-			//Tạo đội
+		if (findTeamUser == null) {
+			String fileName = newAvatar.getOriginalFilename();
 			Teams newTeams = new Teams();
+			try {
+				// Thay đổi đường dẫn tới thư mục lưu trữ ảnh (thay thế "/" bằng đường dẫn thư
+				// mục thực tế)
+				String rootDir = System.getProperty("user.dir"); // Đường dẫn đến thư mục gốc của dự án
+				String uploadDir = rootDir + "\\src\\main\\resources\\static\\user\\images";
+				Path filePath = Paths.get(uploadDir, fileName);
+				Files.write(filePath, newAvatar.getBytes());
+
+				newTeams.setAvatar(fileName);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// Tạo đội
 			newTeams.setNameteam(newNameteam);
 			newTeams.setContact(newContact);
 			newTeams.setSporttypeid(newSporttypeid);
@@ -275,7 +297,7 @@ public class TeamController {
 			newTeams.setUsername(usernameLogin);
 			newTeams.setCreatedate(LocalDate.now());
 			teamdao.save(newTeams);
-			//Thêm ng vô đội
+			// Thêm ng vô đội
 //			// gửi Thông báo về cho đội trưởng
 			int teamId = newTeams.getTeamid();
 			Teamdetails newUser = new Teamdetails();
@@ -286,11 +308,12 @@ public class TeamController {
 			detailDAO.save(newUser);
 			redirectAttributes.addFlashAttribute("message", "Tạo đội thành công");
 			return "redirect:/sportify/team/teamdetail/" + teamId;
-		}else {
+//			return "redirect:/sportify/team";
+		} else {
 			redirectAttributes.addFlashAttribute("message1", "Mỗi người chỉ tạo được 1 đội");
 			return "redirect:/sportify/team";
 		}
-		
+
 	}
-	
+
 }

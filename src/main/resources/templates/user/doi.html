@@ -247,8 +247,8 @@
 							<div>
 								<h4 class="product-select">Lọc theo môn thể thao</h4>
 								<div class="dropdown filter">
-									<button class="btn btn-success dropdown-toggle col-md-8 mb-3" type="button"
-										id="dropdownMenuButton" data-toggle="dropdown"
+									<button class="btn btn-success dropdown-toggle col-md-8 mb-3"
+										type="button" id="dropdownMenuButton" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false">Lọc</button>
 
 									<!-- Đỗ bộ lọc và lấy giá trị sporttypeid về để lọc-->
@@ -282,7 +282,7 @@
 								</div>
 								<div class="modal-body">
 									<form class="row" th:action="@{/sportify/team/createTeam}"
-										method="post">
+										method="post" enctype="multipart/form-data">
 										<div class="col-md-6 form-group">
 											<label>Tên nhóm:</label> <input type="text"
 												class="form-control" name="newNameteam" rows="4"></input>
@@ -299,8 +299,8 @@
 											<label>Số Lượng:</label> <input type="number"
 												class="form-control" name="newQuantity" rows="4"></input>
 										</div>
-										<div class=" col-md-6 form-group">
-											<label>Môn thể thao:</label> <select
+										<div class=" form-group col-md-6">
+											<label>Môn thể thao:</label> <select style="width: 100%"
 												class="custom-select form-control" name="newSporttypeid">
 												<option th:each="spt : ${sporttypeList}"
 													th:value="${spt.sporttypeid}" th:text="${spt.categoryname}"></option>
