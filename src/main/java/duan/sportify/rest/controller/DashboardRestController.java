@@ -51,7 +51,7 @@ public class DashboardRestController {
 	public long countUser() {
 		return userDAO.count();
 	}
-
+	
 	// tổng phiếu đặt trong ngày
 	@GetMapping("totalOrderBooking")
 	public long sumOrderBooking() {
@@ -104,4 +104,30 @@ public class DashboardRestController {
 	public List<Object[]> statisticsBooking(){
 		return bookingDAO.statisticsBooking();
 	}
+	// đếm số hoa đơn trong ngày
+	@GetMapping("countBookingInDate")
+	public Integer countBookingInDate(){
+		return bookingDAO.countBookingInDate();
+	}
+	// đếm sân dang hoạt động
+	@GetMapping("countFieldActiving")
+	public Integer countFieldActiving(){
+		return fieldDAO.countFieldActiving();
+	}
+	
+	// đếm phiếu dặt trong ngày
+	@GetMapping("countOrderInDate")
+	public Integer countOrderInDate(){
+		return orderDAO.countOrderInDate();
+	}
+	// đếm sản phẩm đang bày bán
+	@GetMapping("countProductActive")
+	public Integer countProductActive(){
+		return productDAO.countProductActive();
+	}
+	// thong ke booking trong ngay
+		@GetMapping("thongkebookingtrongngay")
+		public List<Object[]> thongkebookingtrongngay(){
+			return bookingDAO.thongkebookingtrongngay();
+		}
 }

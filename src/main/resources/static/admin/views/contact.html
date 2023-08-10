@@ -1,0 +1,175 @@
+<!-- Header -->
+<div ng-include="'/admin/templates/header.html'"></div>
+<!-- /Header -->
+
+<!-- Sidebar -->
+<div ng-include="'/admin/templates/sidebar.html'"></div>
+<!-- /Sidebar -->
+
+<!-- Page Wrapper -->
+<div class="page-wrapper" ng-controller="ContactController">
+
+	<!-- Page Content -->
+	<div class="content container-fluid">
+
+		<!-- Page Header -->
+		<div class="page-header">
+			<div class="row align-items-center">
+				<div class="col">
+					<h3 class="page-title">Contact</h3>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item active">Contact</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<!-- /Page Header -->
+
+		<!-- Search Filter -->
+		<div class="row filter-row">
+
+			<div class="col-sm-6 col-md-3">
+				<div class="form-group form-focus">
+					<input type="text" class="form-control floating" ng-model="searchName">
+					<label class="focus-label">Category Product Name</label>
+				</div>
+			</div>
+			
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+			</div>
+		</div>
+		<!-- Search Filter -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table table-striped custom-table datatable">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Người liên hệ</th>							
+								<th>Ngày yêu cầu</th>
+								<th>Loại liên hệ</th>
+								<th>Tiêu đề</th>
+								
+								<th class="text-right no-sort">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in items">
+								<td>{{$index + 1}}</td>
+								<td>{{item.users.firstname + ' ' + item.users.lastname }}</td>
+								<td>{{item.datecontact | date:'dd-MM-yyyy | HH:mm:ss'}}</td>
+								<td>{{item.category}}</td>
+								<td>{{item.title}}</td>
+								
+								<td class="text-right">
+									<div class="dropdown dropdown-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+											aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal"
+												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Xem chi tiết</a>
+											<a class="dropdown-item" href="#" data-toggle="modal"
+												data-target="#delete" ng-click="edit(item)"><i class="fa fa-trash-o m-r-5"></i>
+												Xóa</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Page Content -->
+
+	
+
+	<!-- Edit Employee Modal -->
+	<div id="edit" class="modal custom-modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Chi tiết liên hệ</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Người liên hệ <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.users.firstname + ' ' + form.users.lastname">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Ngày liên hệ <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.datecontact | date:'dd-MM-yyyy | HH:mm:ss'">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Loại liên hệ <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.category">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Tiêu đề <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.title">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Tin nhắn <span class="text-danger">*</span></label>
+									<textarea class="form-control" type="text" ng-model="form.meesagecontact"></textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="submit-section">
+							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Category Sport</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Edit Employee Modal -->
+
+	<!-- Delete Employee Modal -->
+	<div class="modal custom-modal fade" id="delete" role="dialog">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="form-header">
+						<h3>Delete Category Sport</h3>
+						<p>Are you sure want to delete <strong ng-model="form.categoryname"></strong> ?</p>
+					</div>
+					<div class="modal-btn delete-action">
+						<div class="row">
+							<div class="col-6">
+								<a href="javascript:void(0);" class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
+							</div>
+							<div class="col-6">
+								<a href="javascript:void(0);" data-dismiss="modal"
+									class="btn btn-primary cancel-btn">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Delete Employee Modal -->
+	<div id="toast"></div>
+</div>
+<!-- /Page Wrapper -->

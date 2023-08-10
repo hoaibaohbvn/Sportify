@@ -29,10 +29,10 @@
 			<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 				<div class="card dash-widget">
 					<div class="card-body">
-						<span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+						<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
 						<div class="dash-widget-info">
-							<h3>{{totalProduct}}</h3>
-							<span>Sản phẩm</span>
+							<h3>{{countOrderInDate}}</h3>
+							<span>Phiếu đặt hàng trong ngày</span>
 						</div>
 					</div>
 				</div>
@@ -42,8 +42,8 @@
 					<div class="card-body">
 						<span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
 						<div class="dash-widget-info">
-							<h3>{{totalOrderBooking}}</h3>
-							<span>Phiếu đặt trong ngày</span>
+							<h3>{{countBookingInDate}}</h3>
+							<span>Phiếu đặt sân trong ngày</span>
 						</div>
 					</div>
 				</div>
@@ -53,8 +53,8 @@
 					<div class="card-body">
 						<span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
 						<div class="dash-widget-info">
-							<h3>{{totalField}}</h3>
-							<span>Sân</span>
+							<h3>{{countFieldActiving}}</h3>
+							<span>Sân đang hoạt động</span>
 						</div>
 					</div>
 				</div>
@@ -62,17 +62,18 @@
 			<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 				<div class="card dash-widget">
 					<div class="card-body">
-						<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+						<span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
 						<div class="dash-widget-info">
-							<h3>{{totalUser}}</h3>
-							<span>Người dùng</span>
+							<h3>{{countProductActive}}</h3>
+							<span>Sản phẩm đang bày bán</span>
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-6 text-center">
@@ -93,156 +94,57 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card-group m-b-30">
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between mb-3">
-								<div>
-									<span class="d-block">Tổng số phiếu trong tháng này </span>
-								</div>
-								<div>
-									<span ng-style="{ 'color': setColor1 }">
-										{{percentGrowthBooking_Order}}</span>
-								</div>
-							</div>
-							<h3 class="mb-3">{{thisthatMonth[0][0]}}</h3>
-							<div class="progress mb-2" style="height: 5px;">
-								<div class="progress-bar bg-primary" role="progressbar"
-									ng-style="{ 'width': percentGrowthBooking_Order }"
-									aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<p class="mb-0">
-								Tháng trước có <span>{{thisthatMonth[0][1]}}</span> <span>
-									phiếu đặt</span>
-							</p>
 
-						</div>
-					</div>
-
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between mb-3">
-								<div>
-									<span class="d-block">Doanh thu đặt sân tháng này</span>
-								</div>
-								<div>
-									<span ng-style="{ 'color': setColor2 }">
-										{{percentGrowthBooking}}</span>
-								</div>
-							</div>
-							<h3 class="mb-3">{{formatCurrency(sumThisThatMonth[0][0])}}</h3>
-							<div class="progress mb-2" style="height: 5px;">
-								<div class="progress-bar bg-primary" role="progressbar"
-									ng-style="{ 'width': percentGrowthBooking }" aria-valuenow="40"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<p class="mb-0">
-								Tháng trước <span class="text-muted">{{formatCurrency(sumThisThatMonth[0][1])}}</span>
-							</p>
-						</div>
-					</div>
-
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between mb-3">
-								<div>
-									<span class="d-block">Doanh thu bán hàng tháng này</span>
-								</div>
-								<div>
-									<span ng-style="{ 'color': setColor3 }">{{percentGrowthOrder}}</span>
-								</div>
-							</div>
-							<h3 class="mb-3">{{formatCurrency(sumRevenueOrder2Month[0][0])}}</h3>
-							<div class="progress mb-2" style="height: 5px;">
-								<div class="progress-bar bg-primary" role="progressbar"
-									ng-style="{ 'width': percentGrowthOrder }" aria-valuenow="40"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<p class="mb-0">
-								Tháng trước <span class="text-muted">{{formatCurrency(sumRevenueOrder2Month[0][1])}}</span>
-							</p>
-
-						</div>
-					</div>
-
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between mb-3">
-								<div>
-									<span class="d-block">Hoàn tiền trong tháng này</span>
-								</div>
-								<div>
-									<span ng-style="{ 'color': setColor4 }">{{percentGrowthCancel}}</span>
-								</div>
-							</div>
-							<h3 class="mb-3">{{formatCurrency(total_cancelled_amount_this_that_month[0][0])}}</h3>
-							<div class="progress mb-2" style="height: 5px;">
-								<div class="progress-bar bg-primary" role="progressbar"
-									style="width: 70%;" aria-valuenow="40" aria-valuemin="0"
-									aria-valuemax="100"></div>
-							</div>
-							<p class="mb-0">
-								Tháng trước <span class="text-muted">{{formatCurrency(total_cancelled_amount_this_that_month[0][1])}}</span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Statistics Widget -->
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-xl-4 d-flex">
 				<div class="card flex-fill">
 					<div class="card-body">
-						<h4 class="card-title">Số liệu thống kê lịch đặt sân</h4>
+						<h4 class="card-title">Thống kê lịch đặt sân trong ngày</h4>
 						<div class="statistics">
 							<div class="row">
 								<div class="col-md-6 col-6 text-center">
 									<div class="stats-box mb-4">
-										<p>Tổng số lịch đặt sân</p>
-										<h3>{{statisticsBooking[0][1]}}</h3>
+										<p>Tổng số lịch đặt sân trong ngày</p>
+										<h3>{{thongkebookingtrongngay[0][1]}}</h3>
 									</div>
 								</div>
 								<div class="col-md-6 col-6 text-center">
 									<div class="stats-box mb-4">
 										<p>Doanh thu</p>
-										<h3>{{formatCurrency(finalRevenueBooking)}}</h3>
+										<h3>{{formatCurrency(thongkebookingtrongngay[1][2] + (thongkebookingtrongngay[3][2] * 0.3) - (thongkebookingtrongngay[2][2] * 2))}}</h3>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="progress mb-4">
 							<div class="progress-bar bg-purple" role="progressbar"
-								ng-style="{'width': percentDone}" aria-valuenow="0"
-								aria-valuemin="0" aria-valuemax="100">{{percentDone}}</div>
+								ng-style="{'width': percentDone_ngay}" aria-valuenow="0"
+								aria-valuemin="0" aria-valuemax="100">{{percentDone_ngay}}</div>
 
 							<div class="progress-bar bg-warning" role="progressbar"
-								ng-style="{'width': percentCoc}" aria-valuenow="0"
-								aria-valuemin="0" aria-valuemax="100">{{percentCoc}}</div>
+								ng-style="{'width': percentCoc_ngay}" aria-valuenow="0"
+								aria-valuemin="0" aria-valuemax="100">{{percentCoc_ngay}}</div>
 
 							<div class="progress-bar bg-danger" role="progressbar"
-								ng-style="{'width': percentCancel}" aria-valuenow="0"
-								aria-valuemin="0" aria-valuemax="100">{{percentCancel}}</div>
+								ng-style="{'width': percentCancel_ngay}" aria-valuenow="0"
+								aria-valuemin="0" aria-valuemax="100">{{percentCancel_ngay}}</div>
 						</div>
 
 						<div>
 							<p>
 								<i class="fa fa-dot-circle-o text-purple mr-2"></i>Hoàn thành <span
-									class="float-right">{{statisticsBooking[2][1]}}</span>
+									class="float-right">{{thongkebookingtrongngay[1][1]}}</span>
 							</p>
 							<p>
 								<i class="fa fa-dot-circle-o text-warning mr-2"></i>Đã đặt cọc <span
-									class="float-right">{{statisticsBooking[1][1]}}</span>
+									class="float-right">{{thongkebookingtrongngay[3][1]}}</span>
 							</p>
 
 							<p>
 								<i class="fa fa-dot-circle-o text-danger mr-2"></i>Hủy đặt <span
-									class="float-right">{{statisticsBooking[3][1]}}</span>
+									class="float-right">{{thongkebookingtrongngay[2][1]}}</span>
 							</p>
 
 						</div>
@@ -365,6 +267,106 @@
 		</div>
 		<!-- /Statistics Widget -->
 
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-group m-b-30">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<div>
+									<span class="d-block">Tổng số phiếu trong tháng này </span>
+								</div>
+								<div>
+									<span ng-style="{ 'color': setColor1 }">
+										{{percentGrowthBooking_Order}}</span>
+								</div>
+							</div>
+							<h3 class="mb-3">{{thisthatMonth[0][0]}}</h3>
+							<div class="progress mb-2" style="height: 5px;">
+								<div class="progress-bar bg-primary" role="progressbar"
+									ng-style="{ 'width': percentGrowthBooking_Order }"
+									aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<p class="mb-0">
+								Tháng trước có <span>{{thisthatMonth[0][1]}}</span> <span>
+									phiếu đặt</span>
+							</p>
+
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<div>
+									<span class="d-block">Doanh thu đặt sân tháng này</span>
+								</div>
+								<div>
+									<span ng-style="{ 'color': setColor2 }">
+										{{percentGrowthBooking}}</span>
+								</div>
+							</div>
+							<h3 class="mb-3">{{formatCurrency(sumThisThatMonth[0][1] + (sumThisThatMonth[2][1] * 0.3) - (sumThisThatMonth[1][1] * 2)) }}</h3>
+							<div class="progress mb-2" style="height: 5px;">
+								<div class="progress-bar bg-primary" role="progressbar"
+									ng-style="{ 'width': percentGrowthBooking }" aria-valuenow="40"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<p class="mb-0">
+								Tháng trước <span class="text-muted">{{formatCurrency(sumThisThatMonth[0][2] + (sumThisThatMonth[2][2] * 0.3) - (sumThisThatMonth[1][2] * 2)) }}</span>
+							</p>
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<div>
+									<span class="d-block">Doanh thu bán hàng tháng này</span>
+								</div>
+								<div>
+									<span ng-style="{ 'color': setColor3 }">{{percentGrowthOrder}}</span>
+								</div>
+							</div>
+							<h3 class="mb-3">{{formatCurrency(sumRevenueOrder2Month[0][0])}}</h3>
+							<div class="progress mb-2" style="height: 5px;">
+								<div class="progress-bar bg-primary" role="progressbar"
+									ng-style="{ 'width': percentGrowthOrder }" aria-valuenow="40"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<p class="mb-0">
+								Tháng trước <span class="text-muted">{{formatCurrency(sumRevenueOrder2Month[0][1])}}</span>
+							</p>
+
+						</div>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<div>
+									<span class="d-block">Hoàn tiền trong tháng này</span>
+								</div>
+								<div>
+									<span ng-style="{ 'color': setColor4 }">{{percentGrowthCancel}}</span>
+								</div>
+							</div>
+							<h3 class="mb-3">{{formatCurrency(total_cancelled_amount_this_that_month[0][0])}}</h3>
+							<div class="progress mb-2" style="height: 5px;">
+								<div class="progress-bar bg-primary" role="progressbar"
+									style="width: 70%;" aria-valuenow="40" aria-valuemin="0"
+									aria-valuemax="100"></div>
+							</div>
+							<p class="mb-0">
+								Tháng trước <span class="text-muted">{{formatCurrency(total_cancelled_amount_this_that_month[0][1])}}</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Statistics Widget -->
 		<div class="row">
 			<div class="col-md-6 d-flex">
 				<div class="card card-table flex-fill">

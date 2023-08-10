@@ -1,13 +1,15 @@
 app.controller('EventController', function($scope, $http) {
+	// Khởi tạo trình soạn thảo Summernote khi trang đã sẵn sàng
+    
 	// Dữ liệu cứng mẫu cho eventtype
-    $scope.tableData = [
-        { id: 1, name: "Bóng đá" },
-        { id: 2, name: "Bóng rổ" },
-        { id: 3, name: "Cầu lông" },
-        { id: 4, name: "Bảo trì" },
-        { id: 5, name: "Tennis" },
-        { id: 6, name: "Khác" },
-    ];
+	$scope.tableData = [
+		{ id: 1, name: "Bóng đá" },
+		{ id: 2, name: "Bóng rổ" },
+		{ id: 3, name: "Cầu lông" },
+		{ id: 4, name: "Bảo trì" },
+		{ id: 5, name: "Tennis" },
+		{ id: 6, name: "Khác" },
+	];
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách category
@@ -20,7 +22,7 @@ app.controller('EventController', function($scope, $http) {
 		});
 		$scope.reset();
 	}
-	
+
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
@@ -29,7 +31,7 @@ app.controller('EventController', function($scope, $http) {
 			productstatus: true,
 			image: "loading.jpg",
 			eventtype: $scope.tableData.name = "Bóng đá"
-			
+
 		}
 	}
 	// hàm edit
@@ -37,7 +39,7 @@ app.controller('EventController', function($scope, $http) {
 		$scope.form = angular.copy(item);
 		$scope.errors = [];
 	}
-	
+
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
@@ -64,7 +66,7 @@ app.controller('EventController', function($scope, $http) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
-      		console.log(error);
+			console.log(error);
 		});
 	}
 	// hàm cập nhập
@@ -81,16 +83,16 @@ app.controller('EventController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		})
 			.catch(error => {
-			// Xử lý lỗi phản hồi từ máy chủ
-			if (error.data && error.data.errors) {
-				$scope.errors = error.data.errors;
-			}
-			if (error.data) {
-				showErrorToast("Vui lòng kiểm tra lại form");
-			}
-			console.log($scope.errors);
-      		console.log(error);
-		});
+				// Xử lý lỗi phản hồi từ máy chủ
+				if (error.data && error.data.errors) {
+					$scope.errors = error.data.errors;
+				}
+				if (error.data) {
+					showErrorToast("Vui lòng kiểm tra lại form");
+				}
+				console.log($scope.errors);
+				console.log(error);
+			});
 	}
 	// ham delete
 	$scope.delete = function(item) {
@@ -99,7 +101,7 @@ app.controller('EventController', function($scope, $http) {
 			$scope.items.splice(index, 1);
 			// Đặt lại trạng thái của form (nếu có)
 			$scope.reset();
-			
+
 			$('#delete').modal('hide')
 			// Hiển thị thông báo thành công
 			showSuccessToast("Sự kiện tên " + item.nameevent + " đã được xóa")
@@ -205,25 +207,26 @@ app.controller('EventController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.searchName = '';
-	 $scope.searchStyte = null;
-   	 $scope.search = function () {
-			
-      $http.get('/rest/events/search', { params: 
-      		{ 	
+	$scope.searchName = '';
+	$scope.searchStyte = null;
+	$scope.search = function() {
+
+		$http.get('/rest/events/search', {
+			params:
+			{
 				nameevent: $scope.searchName,
-      			eventtype: $scope.searchStyte
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          $scope.items.forEach(item => {
+				eventtype: $scope.searchStyte
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.items.forEach(item => {
 				item.datestart = new Date(item.datestart)
 				item.dateend = new Date(item.dateend)
 			})
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
+			console.log($scope.items);
+		})
+			.catch(function(error) {
+				console.log('Lỗi khi gửi yêu cầu:', error);
+			});
+	};
 })

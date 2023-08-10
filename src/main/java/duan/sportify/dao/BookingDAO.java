@@ -93,9 +93,11 @@ public interface BookingDAO extends JpaRepository<Bookings, Integer>{
 	    
 	    //Tính tổng số doanh thu dặt sân tháng hiện tại và tháng trước cho bảng bookings
 	    @Query(value = "SELECT\r\n"
-	    		+ "  SUM(CASE WHEN MONTH(bookingdate) = MONTH(CURRENT_DATE()) AND YEAR(bookingdate) = YEAR(CURRENT_DATE()) THEN bookingprice ELSE 0 END) AS revenue_this_month,\r\n"
-	    		+ "  SUM(CASE WHEN MONTH(bookingdate) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(bookingdate) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH) THEN bookingprice ELSE 0 END) AS revenue_last_month\r\n"
-	    		+ "FROM bookings where bookingstatus like 'Hoàn Thành' or bookingstatus like 'Đã Cọc';", nativeQuery = true)
+	    		+ "  bookingstatus,\r\n"
+	    		+ "  SUM(CASE WHEN MONTH(bookingdate) = MONTH(CURRENT_DATE()) AND YEAR(bookingdate) = YEAR(CURRENT_DATE()) THEN bookingprice ELSE 0 END) AS `Tháng này`,\r\n"
+	    		+ "  SUM(CASE WHEN MONTH(bookingdate) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(bookingdate) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH) THEN bookingprice ELSE 0 END) AS `Tháng trước`\r\n"
+	    		+ "FROM bookings\r\n"
+	    		+ "GROUP BY bookingstatus;", nativeQuery = true)
 	    List<Object[]> sumThisThatMonth();
 	    
 	    // tính tổng hoàn tiền tháng này và tháng trước
@@ -121,5 +123,25 @@ public interface BookingDAO extends JpaRepository<Bookings, Integer>{
 	    		+ "FROM bookings\r\n"
 	    		+ "GROUP BY bookingstatus;", nativeQuery = true)
 	    List<Object[]> statisticsBooking();
-	    
+	    // Đếm số lượng hóa đơn trong ngày 
+	    @Query(value = "  SELECT COUNT(*) AS total_bookings\r\n"
+	    		+ "FROM bookings\r\n"
+	    		+ "WHERE DATE(bookingdate) = CURDATE();", nativeQuery = true)
+	    int countBookingInDate();
+	    // thong kê booking trong ngày
+	    @Query(value = "SELECT\r\n"
+	    		+ "  'Tổng số booking' AS description,\r\n"
+	    		+ "  SUM(CASE WHEN DATE(bookingdate) = CURDATE() THEN 1 ELSE 0 END) AS value,\r\n"
+	    		+ "  SUM(CASE WHEN DATE(bookingdate) = CURDATE() THEN bookingprice ELSE 0 END) AS total_revenue\r\n"
+	    		+ "FROM bookings \r\n"
+	    		+ "\r\n"
+	    		+ "UNION ALL\r\n"
+	    		+ "\r\n"
+	    		+ "SELECT\r\n"
+	    		+ "  bookingstatus AS description,\r\n"
+	    		+ "  SUM(CASE WHEN DATE(bookingdate) = CURDATE() THEN 1 ELSE 0 END) AS value,\r\n"
+	    		+ "  SUM(CASE WHEN DATE(bookingdate) = CURDATE() THEN bookingprice ELSE 0 END) AS total_revenue\r\n"
+	    		+ "FROM bookings\r\n"
+	    		+ "GROUP BY bookingstatus;", nativeQuery = true)
+	    List<Object[]> thongkebookingtrongngay();
 }
