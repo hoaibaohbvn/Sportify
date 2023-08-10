@@ -55,4 +55,9 @@ public interface OrderDAO extends JpaRepository<Orders, Integer>{
 				+ "JOIN orderdetails od ON o.orderid = od.orderid\r\n"
 				+ "WHERE o.paymentstatus = 1 or o.orderstatus = 'Hoàn Thành';", nativeQuery = true)
 		List<Object[]> sumRevenueOrder2Month();
+		// đếm phiếu dặt trong ngày
+		@Query(value =  "  SELECT COUNT(*) AS total_orders\r\n"
+				+ "FROM orders\r\n"
+				+ "WHERE DATE(createdate) = CURDATE();", nativeQuery = true)
+		int countOrderInDate();
 }

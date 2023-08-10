@@ -38,8 +38,10 @@ public class Contacts {
 	private String title;
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
 	private String meesagecontact;
+	@Column(name = "username", length = 16, nullable = false)
+	private String username;
 	// quan hệ
-	@JsonIgnore
+	
 	@ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 

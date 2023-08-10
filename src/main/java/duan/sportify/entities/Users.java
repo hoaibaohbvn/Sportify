@@ -93,7 +93,8 @@ public class Users implements Serializable {
     @OneToMany(mappedBy="users")
     private List<Teams> listOfTeams ;  
     @JsonIgnore
-    @OneToMany(mappedBy="users")
+    @OneToMany(mappedBy="username")
     private List<Contacts> listOfContact ;  
+    
 
 }

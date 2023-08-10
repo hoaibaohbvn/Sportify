@@ -27,4 +27,9 @@ public interface ProductDAO extends JpaRepository<Products, Integer> {
 
 	@Query(value = "select * from products where productstatus = 1", nativeQuery = true)
 	List<Products> findProductActive();
+	//dem product đang hoạt động
+	@Query(value = "  SELECT COUNT(*) AS total_product\r\n"
+			+ "FROM products\r\n"
+			+ "WHERE productstatus = 1", nativeQuery = true)
+	int countProductActive();
 }

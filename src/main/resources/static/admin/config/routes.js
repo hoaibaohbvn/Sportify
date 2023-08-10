@@ -77,6 +77,22 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: '/admin/views/category-sport.html',
             pageTitle: 'Category Sport'
         })
+        .when('/admin/contacts', {
+            templateUrl: '/admin/views/contact.html',
+            pageTitle: 'Contact'
+        })
+        .when('/admin/reportBooking', {
+            templateUrl: '/admin/views/reportBooking.html',
+            pageTitle: 'Report Booking'
+        })
+        .when('/admin/reportOrder', {
+            templateUrl: '/admin/views/reportOrder.html',
+            pageTitle: 'Report Order'
+        })
+        .when('/admin/reportAll', {
+            templateUrl: '/admin/views/reportAll.html',
+            pageTitle: 'Report All'
+        })
         
 
 }).run(function ($rootScope, $route) {
