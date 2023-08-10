@@ -7,7 +7,7 @@
 <!-- /Sidebar -->
 
 <!-- Page Wrapper -->
-<div class="page-wrapper">
+<div class="page-wrapper" ng-controller="DashboardController">
 
 	<!-- Page Content -->
 	<div class="content container-fluid">
@@ -52,10 +52,31 @@
 					<label class="focus-label">Category Field</label>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-2">
 				<a href="#" class="btn btn-success btn-block"> Search </a>
 			</div>
+			<div class="col-sm-6 col-md-2">
+				<a href="#" class="btn btn-success btn-block"> Export Excel </a>
+			</div>
+			
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					
+					<div class="col-md-12 text-center">
+						<div class="card">
+							<div class="card-body">
+								<h3 class="card-title">Tổng số phiếu</h3>
+								<div id="line-charts"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
 		<!-- Search Filter -->
 
 		<div class="row">
@@ -344,8 +365,9 @@
 					</table>
 				</div>
 			</div>
-		</div>
+			
 	</div>
+	
 	<!-- /Page Content -->
 
 	<!-- Add Employee Modal -->

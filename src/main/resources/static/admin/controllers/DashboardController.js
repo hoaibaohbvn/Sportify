@@ -109,8 +109,8 @@ app.controller('DashboardController', function($scope, $http) {
 	// Tính tổng số doanh thu dặt sân tháng hiện tại và tháng trước cho bảng bookings
 	$http.get("/rest/dashboard/sumThisThatMonth").then(rp => {
 		$scope.sumThisThatMonth = rp.data;
-		var revenue_this_month = $scope.sumThisThatMonth[0][0];
-		var revenue_last_month = $scope.sumThisThatMonth[0][1];
+		var revenue_this_month = $scope.sumThisThatMonth[0][1] + ($scope.sumThisThatMonth[2][1] * 0.3) - ($scope.sumThisThatMonth[1][1] * 2);
+		var revenue_last_month = $scope.sumThisThatMonth[0][2] + ($scope.sumThisThatMonth[2][2] * 0.3) - ($scope.sumThisThatMonth[1][2] * 2)
 		var percentGrowthBooking = ((revenue_this_month - revenue_last_month) / revenue_last_month * 100).toFixed(2);
 		if (percentGrowthBooking > 0) {
 			$scope.setColor2 = 'green'
@@ -129,10 +129,10 @@ app.controller('DashboardController', function($scope, $http) {
 		var percentGrowthOrder = ((revenue_this_month_order - revenue_last_month_order) / revenue_last_month_order * 100).toFixed(2);
 		if (percentGrowthOrder > 0) {
 			$scope.setColor3 = 'green'
-			$scope.percentGrowthOrder = '+' + percentGrowthOrder +'%'
+			$scope.percentGrowthOrder = '+' + percentGrowthOrder + '%'
 		} else {
 			$scope.setColor3 = 'red'
-			$scope.percentGrowthOrder = percentGrowthOrder +'%'
+			$scope.percentGrowthOrder = percentGrowthOrder + '%'
 		}
 	})
 	// // tính tổng hoàn tiền tháng này và tháng trước
@@ -143,10 +143,10 @@ app.controller('DashboardController', function($scope, $http) {
 		var percentGrowthCancel = total_cancelled_amount_this_month - total_cancelled_amount_last_month
 		if (percentGrowthCancel > 0) {
 			$scope.setColor4 = 'red'
-			$scope.percentGrowthCancel = 'Lớn Hơn ' + percentGrowthCancel 
+			$scope.percentGrowthCancel = 'Lớn Hơn ' + percentGrowthCancel
 		} else {
 			$scope.setColor4 = 'green'
-			$scope.percentGrowthCancel = 'Nhỏ hơn ' + percentGrowthCancel 
+			$scope.percentGrowthCancel = 'Nhỏ hơn ' + percentGrowthCancel
 		}
 	})
 	// Số liệu thống kế booking
@@ -163,12 +163,49 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.percentDone = ((countBookingDone / totalAllBooking) * 100).toFixed(1) + '%';
 		$scope.percentCancel = ((countBookingCancel / totalAllBooking) * 100).toFixed(1) + '%';
 	})
+	// Đếm booking trong ngày
+	$http.get("/rest/dashboard/countBookingInDate").then(rp => {
+		$scope.countBookingInDate = rp.data;
+	})
+	// đếm sân đang hoạt động
+	$http.get("/rest/dashboard/countFieldActiving").then(rp => {
+		$scope.countFieldActiving = rp.data;
+	})
+	// đếm pheiu61 dặt hàng trong ngày
+	$http.get("/rest/dashboard/countOrderInDate").then(rp => {
+		$scope.countOrderInDate = rp.data;
+	})
+	// đếm pheiu61 dặt hàng trong ngày
+	$http.get("/rest/dashboard/countProductActive").then(rp => {
+		$scope.countProductActive = rp.data;
+	})
+	// thong ke booking trong ngày
+	$http.get("/rest/dashboard/thongkebookingtrongngay").then(rp => {
+		$scope.thongkebookingtrongngay = rp.data;
+		var totalAllBooking = $scope.thongkebookingtrongngay[0][1]
+		var countBookingCoc = $scope.thongkebookingtrongngay[3][1];
+		var countBookingDone = $scope.thongkebookingtrongngay[1][1];
+		var countBookingCancel = $scope.thongkebookingtrongngay[2][1];
+		$scope.percentCoc_ngay = ((countBookingCoc / totalAllBooking) * 100).toFixed(1) + '%';
+		if (countBookingCoc === 0) {
+			$scope.percentCoc_ngay = '0%';
+		}
+		$scope.percentDone_ngay = ((countBookingDone / totalAllBooking) * 100).toFixed(1) + '%';
+		if (countBookingDone ===0) {
+			$scope.percentDone_ngay = '0%';
+		}
+		$scope.percentCancel_ngay = ((countBookingCancel / totalAllBooking) * 100).toFixed(1) + '%';
+		if (countBookingCancel === 0) {
+			$scope.percentCancel_ngay = '0%';
+		}
+	})
 	// định dạng tiền tệ VND
 	$scope.formatCurrency = function(value) {
 		// Sử dụng filter number để định dạng thành 100,000
 		var formattedValue = new Intl.NumberFormat('vi-VN').format(value);
 		return formattedValue + ' VND';
 	};
+
 	// gọi hàm
 	$scope.dash_widget();
 	$scope.barcharts()

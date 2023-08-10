@@ -1,5 +1,4 @@
-
-  app.controller('HeaderController', function($scope, $http) {
+app.controller('HeaderController', function($scope, $http, $timeout) {
     $scope.username = '';
 
     $scope.getUsername = function() {
@@ -16,5 +15,11 @@
       });
     };
 
+    $scope.refreshPageAfterThreeSeconds = function() {
+      $timeout(function() {
+        location.reload();
+      }, 500); // 500 milliseconds tương đương 0.5 giây
+    };
+
     $scope.getUsername(); // Gọi hàm này khi controller được tải
-  });
+});

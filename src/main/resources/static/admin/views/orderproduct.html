@@ -7,7 +7,7 @@
 <!-- /Sidebar -->
 
 <!-- Page Wrapper -->
-<div class="page-wrapper">
+<div class="page-wrapper" ng-controller="OrderController">
 
 	<!-- Page Content -->
 	<div class="content container-fluid">
@@ -16,17 +16,13 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Order Product</h3>
+					<h3 class="page-title">Booking</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Order Product</li>
+						<li class="breadcrumb-item active">Booking</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i
-							class="fa fa-plus"></i> Add Order Product</a>
 
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->
@@ -35,26 +31,46 @@
 		<div class="row filter-row">
 
 			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Người đặt</label>
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Field Name</label>
+					<input type="text" class="form-control floating"
+						ng-model="searchName">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Ngày đặt</label>
+				<div class="form-group form-focus">
+					<input type="date" class="form-control floating"
+						ng-model="searchDate">
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<label class="focus-label">Trạng thái</label>
 				<div class="form-group form-focus select-focus">
-					<select class="select floating">
-						<option>Tất cả</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
+
+					<select ng-model="searchStatus" class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value="'Đã Cọc'">Đã Cọc</option>
+						<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
+						<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
 					</select>
-					<label class="focus-label">Category Field</label>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Search </a>
+			<div class=" col-md-3 d-flex mt-4">
+				<div class="col-sm-6 col-md-6 mt-1">
+					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="search()">
+						Search </a>
+
+				</div>
+				<div class="col-sm-6 col-md-6 mt-1">
+					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="refresh()">
+						Refresh </a>
+
+				</div>
+
 			</div>
+
+
 		</div>
 		<!-- Search Filter -->
 
@@ -64,282 +80,36 @@
 					<table class="table table-striped custom-table datatable">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Employee ID</th>
-								<th>Email</th>
-								<th>Mobile</th>
-								<th class="text-nowrap">Join Date</th>
-								<th>Role</th>
-								<th class="text-right no-sort">Action</th>
+								<th>#</th>
+								<th>Người dặt</th>
+								<th>Ngày đặt</th>
+								<th>Địa chỉ giao hàng</th>
+								<th>Trạng thái giao hàng</th>
+								<th>Trạng thái thanh toán</th>
+								<th class="text-center no-sort">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-02.jpg"></a>
-										<a href="profile.html">John Doe <span>Web Designer</span></a>
-									</h2>
-								</td>
-								<td>FT-0001</td>
-								<td>johndoe@example.com</td>
-								<td>9876543210</td>
-								<td>1 Jan 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
+							<tr ng-repeat="item in items">
+								<td>{{$index + 1}}</td>
+								<td>{{item.users.firstname + ' ' + item.users.lastname}}</td>
+								<td>{{item.createdate | date:'dd-MM-yyyy | HH:mm:ss' }}</td>
+								<td>{{item.address}}</td>
+								<td>{{item.orderstatus}}</td>
+								<td>{{item.paymentstatus?'Thành công':'Thất bại'}}</td>
+								<td class="text-center">
+
+
+
+									<button class="btn btn-danger btn-block" href="#"
+										data-toggle="modal" data-target="#edit" ng-click="edit(item)">
+										<i class="fa fa-pencil m-r-5"></i> Xem chi tiết
+									</button>
+
+
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-09.jpg"></a>
-										<a href="profile.html">Richard Miles <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0002</td>
-								<td>richardmiles@example.com</td>
-								<td>9876543210</td>
-								<td>18 Mar 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-10.jpg"></a>
-										<a href="profile.html">John Smith <span>Android Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0003</td>
-								<td>johnsmith@example.com</td>
-								<td>9876543210</td>
-								<td>1 Apr 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-05.jpg"></a>
-										<a href="profile.html">Mike Litorus <span>IOS Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0004</td>
-								<td>mikelitorus@example.com</td>
-								<td>9876543210</td>
-								<td>1 Apr 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-11.jpg"></a>
-										<a href="profile.html">Wilmer Deluna <span>Team Leader</span></a>
-									</h2>
-								</td>
-								<td>FT-0005</td>
-								<td>wilmerdeluna@example.com</td>
-								<td>9876543210</td>
-								<td>22 May 2014</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-12.jpg"></a>
-										<a href="profile.html">Jeffrey Warden <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0006</td>
-								<td>jeffreywarden@example.com</td>
-								<td>9876543210</td>
-								<td>16 Jun 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h2 class="table-avatar">
-										<a href="profile.html" class="avatar"><img alt=""
-												src="assets/img/profiles/avatar-13.jpg"></a>
-										<a href="profile.html">Bernardo Galaviz <span>Web Developer</span></a>
-									</h2>
-								</td>
-								<td>FT-0007</td>
-								<td>bernardogalaviz@example.com</td>
-								<td>9876543210</td>
-								<td>1 Jan 2013</td>
-								<td>
-									<div class="dropdown">
-										<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-										<div class="dropdown-menu">
-											<a class="dropdown-item" href="#">Software Engineer</a>
-											<a class="dropdown-item" href="#">Software Tester</a>
-											<a class="dropdown-item" href="#">Frontend Developer</a>
-											<a class="dropdown-item" href="#">UI/UX Developer</a>
-										</div>
-									</div>
-								</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-											aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
-										</div>
-									</div>
-								</td>
-							</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -348,81 +118,15 @@
 	</div>
 	<!-- /Page Content -->
 
-	<!-- Add Employee Modal -->
-	<div id="add_employee" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Add Field</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Field Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Image</label><span
-										class="text-danger">*</span></label>
-									<input class="form-control" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Price <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Address <span class="text-danger">*</span></label>
-									<input class="form-control" type="email">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Category Field </label>
-									<select class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Description</label>
-									<input class="form-control" type="password">
-								</div>
-							</div>
-
-
-
-						</div>
-
-						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Add Field</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Add Employee Modal -->
-
 	<!-- Edit Employee Modal -->
-	<div id="edit_employee" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	<div id="edit" class="modal custom-modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-lg"
+			style="max-width: 1300px;" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Field</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<h5 class="modal-title">Chi tiết phiếu đặt hàng</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -431,51 +135,113 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Field Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Mã phiếu <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text" ng-model="form.orderid" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image</label><span
-										class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Người đặt</label><span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text"
+										ng-model="form.users.firstname + ' ' + form.users.lastname"
+										readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span class="text-danger">*</span></label>
-									<input class="form-control" type="text">
+									<label class="col-form-label">Ngày đặt <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="text"
+										ng-model="form.createdate | date:'dd-MM-yyyy | HH:mm:ss'"
+										readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span class="text-danger">*</span></label>
-									<input class="form-control" type="email">
+									<label class="col-form-label">Địa chỉ <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="email" ng-model="form.address" readonly>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field </label>
-									<select class="select">
-										<option value="">Bóng đá</option>
-										<option value="1">Bóng rỗ</option>
+									<label class="col-form-label">Trạng thái đặt hàng<span
+										class="text-danger">*</span></label> <select class="form-control"
+										ng-model="form.orderstatus">
+										<option ng-value="'Trả Hàng'">Trả Hàng</option>
+										<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
+										<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
+										<option ng-value="'Đang Giao'">Đang Giao</option>
+										<option ng-value="'Chờ Xác Nhận'">Chờ Xác Nhận</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Description</label>
-									<input class="form-control" type="password">
+									<label class="col-form-label">Trạng thái thanh toán<span
+										class="text-danger">*</span></label> <select class="form-control"
+										ng-model="form.paymentstatus">
+										<option ng-value="true">Thành công</option>
+										<option ng-value="false">Thất Bại</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Thành tiền <span
+										class="text-danger">*</span></label> <input class="form-control"
+										type="email" readonly>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label class="col-form-label">Ghi chú</label>
+									<textarea class="form-control" type="text" ng-model="form.note"
+										readonly></textarea>
 								</div>
 							</div>
 
 
 
 						</div>
+						<div class="col-md-12 d-flex">
+							<div class="card card-table flex-fill">
+
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-nowrap custom-table mb-0">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Tên sản phảm</th>
+													<th>Giá</th>
+													<th>Số lượng</th>
+													<th>Tổng tiền</th>
+													
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="o in orderdetail">
+													<td>{{$index + 1}}</td>
+													<td>{{o.products.productname}}</td>
+													<td>{{formatCurrency(o.products.price)}}</td>
+													<td>{{o.quantity}}</td>
+													<td>{{formatCurrency(o.products.price * o.quantity)}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Edit Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Edit
+								Booking</button>
 						</div>
 					</form>
 				</div>
@@ -484,31 +250,9 @@
 	</div>
 	<!-- /Edit Employee Modal -->
 
-	<!-- Delete Employee Modal -->
-	<div class="modal custom-modal fade" id="delete_employee" role="dialog">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-header">
-						<h3>Delete Field</h3>
-						<p>Are you sure want to delete?</p>
-					</div>
-					<div class="modal-btn delete-action">
-						<div class="row">
-							<div class="col-6">
-								<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-							</div>
-							<div class="col-6">
-								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Delete Employee Modal -->
 
+
+
+	<div id="toast"></div>
 </div>
 <!-- /Page Wrapper -->

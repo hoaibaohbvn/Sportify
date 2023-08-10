@@ -45,8 +45,9 @@ public class Contacts {
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
 	@NotBlank(message = "{NotBlank.contact.meesagecontact}")
 	private String meesagecontact;
+	
 	// quan hệ
-	@JsonIgnore
+	
 	@ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 
