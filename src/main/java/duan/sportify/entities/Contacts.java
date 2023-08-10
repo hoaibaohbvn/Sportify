@@ -45,8 +45,7 @@ public class Contacts {
 	@Column(name = "meesagecontact", length = 5000, nullable = false)
 	@NotBlank(message = "{NotBlank.contact.meesagecontact}")
 	private String meesagecontact;
-	@Column(name = "username", length = 16, nullable = false)
-	private String username;
+	
 	// quan hệ
 	
 	@ManyToOne
