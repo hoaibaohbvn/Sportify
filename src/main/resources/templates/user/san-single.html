@@ -158,7 +158,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin Tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -292,7 +292,7 @@
 
 								<div class="text p-4 bg-light">
 									<h3 class="heading mb-3">
-										<a href="#" th:text="${f.namefield}"></a>
+										<a th:href="@{/sportify/field/detail/{idField}(idField=${f.fieldid})}" th:text="${f.namefield}"></a>
 									</h3>
 									<p class="truncate-text" style="max-width: 200px;"
 										th:utext="${#strings.length(f.descriptionfield) > 200 ? #strings.substring(f.descriptionfield, 0, 105) + '...' : f.descriptionfield}"></p>
@@ -456,51 +456,8 @@
             var maxDate = (yyyy) + '-12-31'; //Cập nhật 'max' là ngày cuối cùng trong năm
             document.getElementById('dateInput').max = maxDate;
         }
-	 function validateDate() {
-		  var dateInput = document.getElementById("dateInput").value;
-		  var selectedDate = new Date(dateInput);
-		  var currentDate = new Date();
-
-		  if (selectedDate <= currentDate) {
-		    alert("Vui lòng chọn một ngày lớn hơn ngày hiện tại");
-		    return false; // Ngăn chặn gửi form
-		  }
-
-		  return true; // Cho phép gửi form
-		}
-		$(document).ready(function() {
-
-			var quantitiy = 0;
-			$('.quantity-right-plus').click(function(e) {
-
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				$('#quantity').val(quantity + 1);
-
-				// Increment
-
-			});
-
-			$('.quantity-left-minus').click(function(e) {
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				// Increment
-				if (quantity > 0) {
-					$('#quantity').val(quantity - 1);
-				}
-			});
-
-		});
+	 
+		
 		
 	</script>
 	<script>

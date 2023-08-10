@@ -23,7 +23,7 @@
 
 <body>
 
-		<div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -58,8 +58,8 @@
 						style="display: block;">
 						<p class="mb-0">
 							<a th:href="@{/sportify/login}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> 
-							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -105,54 +105,7 @@
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>3</small>
-					</div>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-1.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Bacardi 151</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-2.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Jim Beam Kentucky Straight</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-									02</span>
-							</p>
-						</div>
-					</div>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<div class="img"
-							style="background-image: url(/user/images/prod-3.jpg);"></div>
-						<div class="text pl-3">
-							<h4>Citadelle</h4>
-							<p class="mb-0">
-								<a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-									01</span>
-							</p>
-						</div>
-					</div>
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-				</div>
-			</div>
+
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -180,30 +133,41 @@
 	<!-- END nav -->
 
 	<div class="container d-flex justify-content-center rounded mt-5 mb-5 ">
-		<div th:each="prf : ${prodiles}"
-			class=" col-md-12 bg-white d-flex rounded " id="profiles">
+		<div class=" col-md-12 bg-white d-flex rounded " id="profiles">
 			<form th:action="@{/sportify/profile/save-profile}" method="post"
 				class="d-flex" enctype="multipart/form-data">
 				<div class="col-md-5">
 					<div
 						class="d-flex flex-column align-items-center text-center p-3 py-5">
 						<div style="position: relative;">
-							<img id="previewAvatar" class="border border-dark rounded-circle mt-5" width="250px"
-								height="250px" th:src="@{'/user/images/'+ ${prf.image}}">
-							<div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 1;">
-								<label for="avatarFileInput"> <i style="font-size: 30px;color: white;"
-									class="fa fa-camera"></i> <!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
-								</label> <input id="avatarFileInput" type="file"
-									class="form-control-file" name="avatarFile"
-									style="display: none;" accept="image/*">
+							<img th:if="${profiles.image != null}" id="previewAvatar"
+								class="border border-dark rounded-circle mt-5" width="250px"
+								height="250px" th:src="@{'/user/images/' + ${profiles.image}}">
+							<img th:if="${profiles.image==null}"
+								class="border border-dark rounded-circle mt-5" width="250px"
+								height="250px" src="../user/images/noavatar.jpg" alt="">
+							<input type="hidden" name="avatarProfile"
+								th:value="${profiles.image}">
+
+
+							<div
+								style="position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); z-index: 1;">
+								<label for="avatarFileInput"> <i
+									style="font-size: 25px; color: black;" class="fa fa-camera"></i>
+									<!-- Sử dụng icon của Font Awesome, bạn có thể thay thế bằng biểu tượng tùy ý khác -->
+								</label> <input style="display: none" id="avatarFileInput"
+									class="form-control-file" type="file" value="macdinh.jpg"
+									name="avatarFile" accept="image/*">
 							</div>
 						</div>
-						<div class="d-flex mt-4">
-							<h5 th:text="${prf.firstname}" class="font-weight-bold"></h5>
-							<h5 th:text="${prf.lastname}" class="font-weight-bold ml-1"></h5>
-						</div>
-						<span class="text-black-50">Admin</span> <span
-							th:text="${prf.email}" class="text-black-50"></span>
+						<br>
+						<h3 class="" th:text="${profiles.firstname}+' ' + ${profiles.lastname}"></h3>
+						<span class=" font-weight-bold rounded"
+							style="padding: 3px; color: #4682A9; margin-bottom: 10%"
+							th:text="${roleuserOnl}"></span>
+
+
+
 
 					</div>
 				</div>
@@ -211,51 +175,92 @@
 					<div class="p-3 py-5">
 						<div
 							class="d-flex justify-content-between align-items-center mb-3">
-							<h4 class="text-right text-uppercase">Thông tin</h4>
+							<h4 class="text-right text-uppercase">Thông tin cá nhân</h4>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<label class="labels">Họ</label> <input
-									th:value="${prf.firstname}" type="text" class="form-control"
-									name="firstname">
+								<label class="labels">Họ</label> <span class="text-danger">*</span>
+								<input type="text" class="form-control" name="firstname"
+									onblur="validateFirstName(this)"
+									th:value="${profiles.firstname}">
+								<div id="firstname-error" class="error-message text-danger"></div>
 							</div>
 							<div class="col-md-6">
-								<label class="labels">Tên</label> <input
-									th:value="${prf.lastname}" type="text" class="form-control"
-									name="lastname">
+								<label class="labels">Tên</label> <span class="text-danger">*</span>
+								<input type="text" class="form-control" name="lastname"
+									onblur="validateLastName(this)" th:value="${profiles.lastname}">
+								<div id="lastname-error" class="error-message text-danger"></div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<label class="labels">Tài khoản</label> <input
-									th:value="${prf.username}" type="text" class="form-control"
-									readonly name="username">
+								<label class="labels">Tài khoản</label> <input type="text"
+									class="form-control" readonly name="username"
+									th:value="${profiles.username}">
+							</div>
+
+
+
+							<div class="col-md-12">
+								<label class="labels">Mật khẩu</label>
+
+								<div class="d-flex">
+									<input readonly type="password" class="form-control col-md-12"
+										name="passwords" th:value="${profiles.passwords}"><a
+										class=" col-md-5" data-toggle="collapse" 
+										href="#collapseExample" role="button" aria-expanded="false"
+										aria-controls="collapseExample"> <i class="fa fa-edit"></i></a>
+									</input>
+								</div>
+							</div>
+
+
+							<div class="collapse" id="collapseExample">
+								<div class="col-md-12">
+									<label class="labels"
+										style="float: left; width: 250px; text-align: justify; margin-right: 10px;">Mật
+										khẩu mới:</label> <input onblur="validatePasswordMatch()"
+										type="password" class="form-control" name="newpassword">
+									<div id="password-match-error"
+										class="error-message text-danger"></div>
+
+								</div>
+								<div class="col-md-12">
+									<label class="labels"
+										style="float: left; width: 250px; text-align: justify; margin-right: 10px;">Xác
+										thực mật khẩu mới:</label> <input onblur="validatePasswordMatch()"
+										type="password" class="form-control" name="confirmpassword">
+									<div id="password-match-error"
+										class="error-message text-danger"></div>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<label class="labels">Số điện thoại</label> <span
+									class="text-danger">*</span> <input type="text"
+									class="form-control" name="phone" onblur="validatePhone(this)"
+									th:value="${profiles.phone}">
+								<div id="phone-error" class="error-message text-danger"></div>
 							</div>
 							<div class="col-md-12">
-								<label class="labels">Mật khẩu</label> <input
-									th:value="${prf.passwords}" type="password"
-									class="form-control" name="passwords">
+								<label class="labels">Email</label> <input type="text"
+									class="form-control" name="email" onblur="validateEmail(this)"
+									th:value="${profiles.email}">
+								<div id="email-error" class="error-message text-danger"></div>
 							</div>
 							<div class="col-md-12">
-								<label class="labels">Số điện thoại</label> <input
-									th:value="${prf.phone}" type="text" class="form-control"
-									name="phone">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Email</label> <input
-									th:value="${prf.email}" type="text" class="form-control"
-									name="email">
-							</div>
-							<div class="col-md-12">
-								<label class="labels">Giới tính</label>
+								<label class="labels">Giới tính</label> <span
+									class="text-danger">*</span>
 								<div class="d-flex">
 									<div class="radio-container mr-4">
 										<input type="radio" name="gender" id="male" value="true"
-											class="form-control mr-1" th:checked="${prf.gender}" /> <span>Nam</span>
+											class="form-control mr-1"
+											th:checked="${profiles.gender} == true" /> <span>Nam</span>
 									</div>
 									<div class="radio-container">
 										<input type="radio" name="gender" id="female" value="false"
-											class="form-control mr-1" th:checked="${!prf.gender}" /> <span>Nữ</span>
+											class="form-control mr-1"
+											th:checked="${profiles.gender} == false" /> <span>Nữ</span>
 									</div>
 								</div>
 
@@ -263,14 +268,16 @@
 
 
 							<div class="col-md-12">
-								<label class="labels">Địa chỉ</label> <input
-									th:value="${prf.address}" type="text" class="form-control"
-									name="address">
+								<label class="labels">Địa chỉ</label> <input type="text"
+									class="form-control" name="address"
+									onblur="validateAddress(this)" th:value="${profiles.address}">
+								<div id="address-error" class="error-message"></div>
 							</div>
 						</div>
 						<div class="mt-5 text-center">
-							<button class="btn btn-primary profile-button" type="submit">Save
-								Profile</button>
+							<button onclick="validateFormAndSubmit()"
+								class="btn btn-outline-success" type="submit">Cập nhật
+								hồ sơ</button>
 						</div>
 
 					</div>
@@ -324,29 +331,154 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="/user/js/google-map.js"></script>
 	<script src="/user/js/main.js"></script>
-	<script>
-    const avatarInput = document.getElementById('avatarInput');
-    const previewAvatar = document.getElementById('previewAvatar');
 
-    avatarInput.addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        
-        if (file) {
-            previewAvatar.style.display = 'block';
-            const reader = new FileReader();
-            
-            reader.onload = function (e) {
-                previewAvatar.setAttribute('src', e.target.result);
-            }
-            
-            reader.readAsDataURL(file);
-        } else {
-            previewAvatar.style.display = 'none';
-            previewAvatar.removeAttribute('src');
-        }
-    });
-</script>
-	
+	<script>
+		const avatarInput = document.getElementById('avatarInput');
+		const previewAvatar = document.getElementById('previewAvatar');
+
+		avatarInput.addEventListener('change', function(event) {
+			const file = event.target.files[0];
+
+			if (file) {
+				previewAvatar.style.display = 'block';
+				const reader = new FileReader();
+
+				reader.onload = function(e) {
+					previewAvatar.setAttribute('src', e.target.result);
+				}
+
+				reader.readAsDataURL(file);
+			} else {
+				previewAvatar.style.display = 'none';
+				previewAvatar.removeAttribute('src');
+			}
+		});
+	</script>
+
+	<script>
+		var regexVietnameseName = /^[\p{L}\s]*$/u; // Biểu thức chính quy cho Họ và Tên tiếng Việt
+		var check = true;
+		 const newPasswordInput = document.getElementsByName('newpassword')[0];
+		    const confirmPasswordInput = document.getElementsByName('confirmpassword')[0];
+		    const errorDiv = document.getElementById('password-match-error');
+		    const submitButton = document.getElementById('submitBtn');
+
+		    newPasswordInput.addEventListener('input', validatePassword);
+		    confirmPasswordInput.addEventListener('input', validatePassword);
+		    
+		function validateFirstName(input) {
+			var value = input.value;
+			var errorDiv = document.getElementById('firstname-error');
+
+			if (value.trim() === '') {
+				errorDiv.textContent = 'Họ không được để trống';
+				return check = false;
+			} else if (!regexVietnameseName.test(value)) {
+				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt như: !@#.,';
+				return check = false;
+			}else if(value.length > 50) {
+				errorDiv.textContent = 'Không được quá 50 ký tự';
+				return check = false;
+			}
+				
+			else {
+				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
+				return check = true;
+			}
+		}
+		function validateLastName(input) {
+			var value = input.value;
+			var errorDiv = document.getElementById('lastname-error');
+
+			if (value.trim() === '') {
+				errorDiv.textContent = 'Tên không được để trống';
+				return check = false;
+			} else if (!regexVietnameseName.test(value)) {
+				errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt như: !@#.,';
+				return check = false;
+			}else if(value.length > 50) {
+				errorDiv.textContent = 'Không được quá 50 ký tự';
+				return check = false;
+			} else {
+				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
+				return check = true;
+			}
+		}
+		function validateEmail(input) {
+			var value = input.value;
+			var errorDiv = document.getElementById('email-error');
+
+			if (!/^$|^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(value)) {
+				errorDiv.textContent = 'Email không hợp lệ';
+				return check = false;
+			} else {
+				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
+				return check = true;
+			}
+		}
+		function validatePhone(input) {
+			var value = input.value;
+			var errorDiv = document.getElementById('phone-error');
+
+			if (value.trim() === '') {
+				errorDiv.textContent = 'Số điện thoại không được để trống';
+				return check = false;
+			} else if (!/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+					.test(value)) {
+				errorDiv.textContent = 'Không đúng số điện thoại Việt Nam';
+				return check = false;
+			} else {
+				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
+				return check = true;
+			}
+		}
+		function validateAddress(input) {
+			var value = input.value;
+			var errorDiv = document.getElementById('address-error');
+
+			if (!/^$|^[\p{L}0-9\s.,/-]+$/u.test(value)) {
+				errorDiv.textContent = 'Địa chỉ không hợp lệ';
+				return check = false;
+			} else {
+				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
+				return check = true;
+			}
+		}
+		function validatePassword() {
+	        const newPassword = newPasswordInput.value;
+	        const confirmPassword = confirmPasswordInput.value;
+	        var errorDiv = document.getElementById('password-match-error');
+	        if (newPassword.length < 6 || newPassword.length > 16) {
+	            errorDiv.textContent = 'Mật khẩu phải từ 6 đến 16 ký tự';
+	            return check = false;
+	            
+	           
+	        }else if(confirmPassword.length < 6 || confirmPassword.length > 16){
+	        	errorDiv.textContent = 'Mật khẩu phải từ 6 đến 16 ký tự';
+	            return check = false;
+	        }else if (newPassword !== confirmPassword) {
+	            errorDiv.textContent = 'Mật khẩu mới và xác thực không khớp';
+	            return check = false;
+	         
+	        } else {
+	            errorDiv.textContent = '';
+	            return check = true;
+	            
+	        }
+	    }
+		function validateFormAndSubmit() {
+
+			// Kiểm tra trạng thái của biến check
+			if (check) {
+
+				// Tất cả dữ liệu hợp lệ, thực hiện submit
+				document.querySelector('form').submit();
+			} else {
+				event.preventDefault();
+			}
+		}
+	</script>
+
 </body>
 
 </html>

@@ -41,7 +41,7 @@
 	left: 0;
 	z-index: 1;
 	border-radius: 5px;
-	opacity: 0.9;
+	
 }
 
 /* Định dạng biểu tượng "i" */
@@ -161,7 +161,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin Tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -223,14 +223,20 @@
 													th:value="${users.lastname}" th:text="${users.lastname}"></span>
 											</div>
 											<div>
-												<label>Số điện thoại <span class="text-danger">*</span>
+												<label>Số điện thoại 
 												</label><span class="info-container"> <span class="info-icon">i</span>
 													<span class="info-content">
 														<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
 												</span>
-												</span> <input id="phoneNumberInput"
-													onchange="validatePhoneNumber()" name="phone" th:value="${users.phone}"
-													type="text" size="10" class="form-control">
+												</span>:
+												
+												<span
+													style="color: #A8A196; font-weight: bold; font-size: large;"
+													 th:text="${users.phone}"></span>
+												
+												 <input type="hidden" id="phoneNumberInput"
+													onchange="validatePhoneNumber()" name="phone" readonly th:value="${users.phone}"
+													 size="10" class="form-control">
 													
 											</div>
 											<div>
@@ -238,13 +244,19 @@
 													class="info-icon">i</span> <span class="info-content">
 														<p>Email để nhận thông báo thông tin dặt sân, được lấy
 															từ tài khoản của bạn.</p>
-												</span> </span> <input readonly
+												</span> </span>:
+													<span
+													style="color: #A8A196; font-weight: bold; font-size: large;"
+													 th:text="${users.email != null ? users.email : ''}"></span>
+												
+												 <input readonly
 													th:value="${users.email != null ? users.email : ''}"
-													type="email" class="form-control" placeholder="">
+													type="hidden" class="form-control">
 											</div>
 											<div>
-												<label>Ghi chú thông tin ( nếu cần )</label>
-												<textarea type="text" name="note" value="note"  class="form-control" placeholder=""> </textarea>
+												<label>Ghi chú thông tin ( nếu cần ) :</label>
+												<textarea  type="text" name="note" th:value="${note}" th:text="${note}"  class="form-control" > </textarea>
+												<span id="div" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -332,8 +344,7 @@
 												<div class="d-flex">
 													<label>Phụ Thu &nbsp;</label> <span class="info-container"><span
 														class="info-icon">i</span> <span class="info-content">
-															<p>Phụ thu 30% giá sân theo quy định các ca sau
-																17h00.</p>
+															<p>Phụ thu 30% giá sân theo quy định các ca từ 18h00</p>
 													</span> </span> <span
 														style="color: black; font-weight: bold; margin-left: 7px"
 														th:value="${phuthu}"
@@ -391,7 +402,7 @@
 												<input type="hidden" id="amountInput" name="amount" th:value="${tiencoc}" />
 										</div>
 										<div
-											style="font-size: large; background-color: #91C8E4; height: 40px; display: flex; justify-content: center; align-items: center;">
+											style="font-size: large; background-color: #EAC696; height: 40px; display: flex; justify-content: center; align-items: center;">
 											<span>Thanh toán khi nhận sân:</span> &nbsp; <span
 												style="color: black; font-weight: bold;"
 												th:value="${conlai}"
@@ -565,7 +576,7 @@
 
 
 	<script>
-		document.getElementById("booking-link").onclick = function(event) {
+			document.getElementById("booking-link").onclick = function(event) {
 			event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a> (chuyển đến URL)
 
 			// Lấy giá trị của nameshift từ thẻ <span>
@@ -576,7 +587,14 @@
 			const voucherInput = document
 					.querySelector('input[name="voucher"]');
 			const voucherCode = voucherInput.value;
+			
+			
+			 const noteTextArea = document.querySelector('textarea[name="note"]');
+		     const noteValue = noteTextArea.value;
 
+		     const phoneNumberInput = document.getElementById('phoneNumberInput');
+		     const phoneNumberValue = phoneNumberInput.value;
+		        
 			// Lấy URL của thẻ <a> (URL bạn muốn chuyển đến)
 			const bookingUrl = this.getAttribute('href');
 
@@ -588,27 +606,39 @@
 			if (voucherCode) {
 				updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}voucher=${encodeURIComponent(voucherCode)}`;
 			}
+			if (noteValue) {
+		            updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}note=${encodeURIComponent(noteValue)}`;
+		        }
+		   	if (phoneNumberValue) {
+		            updatedUrl += `${updatedUrl.includes('?') ? '&' : '?'}phone=${encodeURIComponent(phoneNumberValue)}`;
+		        }
 
 			// Chuyển đến URL mới với tham số nameshift và voucher (nếu có)
 			window.location.href = updatedUrl;
 		};
-	</script>
-	<script>
-		function validatePhoneNumber() {
-			const phoneNumberInput = document
-					.getElementById('phoneNumberInput');
-			const phoneNumber = phoneNumberInput.value;
+</script>
+	
+<script>
 
-			// Biểu thức chính quy để kiểm tra định dạng số điện thoại
-			const phoneNumberRegex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
+const noteTextArea = document.querySelector('textarea[name="note"]');
+const errorDiv = document.createElement('div');
+errorDiv.classList.add('text-danger');
+noteTextArea.parentNode.appendChild(errorDiv);
 
-			if (phoneNumberRegex.test(phoneNumber)) {
+noteTextArea.addEventListener('input', function() {
+    const noteValue = noteTextArea.value;
+    const allowedCharactersRegex = /^[,.\p{L}0-9\s]*$/u; // Cho phép , . chữ số và khoảng trắng
+    const maxLength = 5000;
 
-			} else {
-				alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại 10 chữ số & đúng mã vùng Việt Nam.');
-			}
-		}
-	</script>
+    if (!allowedCharactersRegex.test(noteValue)) {
+        errorDiv.textContent = 'Không nhập ký tự đặc biệt, ngoại trừ , và .';
+    } else if (noteValue.length > maxLength) {
+        errorDiv.textContent = `Tối đa ${maxLength} ký tự`;
+    } else {
+        errorDiv.textContent = '';
+    }
+});
+</script>
 	
 	
 	

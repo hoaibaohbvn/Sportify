@@ -43,4 +43,10 @@ public class AuthorizedServiceImpl implements AuthorizedService{
 		// TODO Auto-generated method stub
 		return authorizedDAO.findById(id).get();
 	}
+
+	@Override
+	public Authorized findAllAuthorized(String username) {
+		// TODO Auto-generated method stub
+		return authorizedDAO.findAllAuthorized(username);
+	}
 }

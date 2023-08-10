@@ -10100,6 +10100,20 @@ a:hover span {
         z-index: 9;
 }
 
+.addteam{
+	display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Tùy chỉnh màu nền (có thể thay đổi độ mờ) */
+        z-index: 9;
+}
+
+
   /* Định dạng radio button nhỏ */
   .form-control[type="radio"] {
     width: 16px; /* Độ rộng */
@@ -10362,4 +10376,30 @@ a:hover span {
 .related-video iframe {
   width: 100%;
 }
+/*Custom select*/
+
+.custom-select {
+  display: block;
+  width: 80%;
+  padding: 5px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  appearance: none;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s; /* Chuyển đổi màu nền và viền */
+}
+
+/* Khi nút select được nhấn */
+.custom-select:active {
+  border-color: #007bff;
+}
+
+
+
+
+
+
 
