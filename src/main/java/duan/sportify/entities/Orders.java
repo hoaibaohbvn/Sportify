@@ -89,7 +89,8 @@ public class Orders implements Serializable {
     private String     orderstatus ;
     @Column(name="paymentstatus", nullable=false)
     private Boolean     paymentstatus ;
-
+    @Column(name="totalprice", nullable=false)
+    private Double     totalprice ;
 
     //--- ENTITY LINKS ( RELATIONSHIP )
    
