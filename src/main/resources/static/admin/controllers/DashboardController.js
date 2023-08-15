@@ -183,9 +183,9 @@ app.controller('DashboardController', function($scope, $http) {
 	$http.get("/rest/dashboard/thongkebookingtrongngay").then(rp => {
 		$scope.thongkebookingtrongngay = rp.data;
 		var totalAllBooking = $scope.thongkebookingtrongngay[0][1]
-		var countBookingCoc = $scope.thongkebookingtrongngay[3][1];
+		var countBookingCoc = $scope.thongkebookingtrongngay[2][1];
 		var countBookingDone = $scope.thongkebookingtrongngay[1][1];
-		var countBookingCancel = $scope.thongkebookingtrongngay[2][1];
+		var countBookingCancel = $scope.thongkebookingtrongngay[3][1];
 		$scope.percentCoc_ngay = ((countBookingCoc / totalAllBooking) * 100).toFixed(1) + '%';
 		if (countBookingCoc === 0) {
 			$scope.percentCoc_ngay = '0%';
@@ -199,13 +199,120 @@ app.controller('DashboardController', function($scope, $http) {
 			$scope.percentCancel_ngay = '0%';
 		}
 	})
+	// danh sach contact ngay
+	$http.get("/rest/dashboard/danhsach3contact").then(rp => {
+		$scope.list3Contact = rp.data;
+	})
+	// dem lien he trong ngày
+	$http.get("/rest/dashboard/demLienHeTrongNgay").then(rp => {
+		$scope.countLienHe = rp.data;
+	})
+	// tong số phiếu dat san trong thang này va thang trước
+	
+	$http.get("/rest/dashboard/tongSoPhieuDatSan2Thang").then(rp => {
+		$scope.tongSoPhieuDatSan2Thang = rp.data;
+		
+		$scope.percentPhieuDat = ((($scope.tongSoPhieuDatSan2Thang[0][1] - $scope.tongSoPhieuDatSan2Thang[1][1])/ $scope.tongSoPhieuDatSan2Thang[1][1]) * 100)
+		if($scope.percentPhieuDat === Infinity){
+			$scope.percentPhieuDat = 'Vượt trội'
+			$scope.colorDatSan = 'blue';  
+		} else if($scope.percentPhieuDat > 0){
+			$scope.percentPhieuDat = ($scope.percentPhieuDat).toFixed(1) + '%'
+			$scope.colorDatSan = 'green';  
+		} else{
+			$scope.percentPhieuDat = ($scope.percentPhieuDat).toFixed(1) + '%'
+			$scope.colorDatSan = 'red'; 
+		}
+	})
+	// tong phieu ban hang trong thang nay va thang truoc
+	$http.get("/rest/dashboard/tongSoPhieuOrder2Thang").then(rp => {
+		$scope.tongSoPhieuOrder2Thang = rp.data;
+		
+		$scope.percentOrder = ((($scope.tongSoPhieuOrder2Thang[0][1] - $scope.tongSoPhieuOrder2Thang[1][1])/ $scope.tongSoPhieuOrder2Thang[1][1]) * 100)
+		if($scope.percentOrder === Infinity){
+			$scope.percentOrder = 'Vượt trội'
+			$scope.colorOrder = 'blue';  
+		} else if($scope.percentOrder > 0){
+			$scope.percentOrder = ($scope.percentOrder).toFixed(1) + '%'
+			$scope.colorOrder = 'green';  
+		} else{
+			$scope.percentOrder = ($scope.percentOrder).toFixed(1) + '%'
+			$scope.colorOrder = 'red'; 
+		}
+	})
+	// tổng da=oanh thu booking tháng này so với tháng trước
+	$http.get("/rest/dashboard/tongDoanhThuBooking2Month").then(rp => {
+		$scope.tongDoanhThuBooking2Month = rp.data;
+		
+		$scope.percentDTBooking = ((($scope.tongDoanhThuBooking2Month[0][0] - $scope.tongDoanhThuBooking2Month[0][1])/ $scope.tongDoanhThuBooking2Month[0][1]) * 100)
+		if($scope.percentDTBooking === Infinity){
+			$scope.percentDTBooking = 'Vượt trội'
+			$scope.colorDTBooking = 'blue';  
+		} else if($scope.percentDTBooking > 0){
+			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
+			$scope.colorDTBooking = 'green';  
+		} else{
+			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
+			$scope.colorDTBooking = 'red'; 
+		}
+	})
+	
+	// tổng daoanh thu order tháng này so với tháng trước
+	$http.get("/rest/dashboard/doanhThuOrder2Month").then(rp => {
+		$scope.doanhThuOrder2Month = rp.data;
+		
+		$scope.percentDTOrder = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1])/ $scope.doanhThuOrder2Month[0][1]) * 100)
+		if($scope.percentDTOrder === Infinity){
+			$scope.percentDTOrder = 'Vượt trội'
+			$scope.colorDTOrder = 'blue';  
+		} else if($scope.percentDTOrder > 0){
+			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'
+			$scope.colorDTOrder = 'green';  
+		} else{
+			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'
+			$scope.colorDTOrder = 'red'; 
+		}
+	})
+	// top 3 san được dặt nhiều nhat\
+	$http.get("/rest/dashboard/top3SanDatNhieu").then(rp => {
+		$scope.top3SanDatNhieu = rp.data;
+	})
+	// top 3 san pham ban nhiều nhất
+	$http.get("/rest/dashboard/top3SanPhamBanNhieu").then(rp =>{
+		$scope.top3SanPhamBanNhieu = rp.data;
+	})
+	// top 5 user dat san nhieu nhat top5UserDatSan
+	$http.get("/rest/dashboard/top5UserDatSan").then(rp =>{
+		$scope.top5UserDatSan = rp.data;
+	})
+	// top 5 user order nhieu nhat
+	$http.get("/rest/dashboard/top5UserOrder").then(rp =>{
+		$scope.top5UserOrder = rp.data;
+	})
+	// thong ke order trong ngay thongKeOrderInDay
+	$http.get("/rest/dashboard/thongKeOrderInDay").then(rp =>{
+		$scope.thongKeOrderInDay = rp.data;
+		
+		var totalAllOrder = $scope.thongKeOrderInDay[0][1]
+		var countOrderDone = $scope.thongKeOrderInDay[1][1];
+		var countOrderFailure = $scope.thongKeOrderInDay[3][1];
+		$scope.percentOrderDone_ngay = ((countOrderDone / totalAllOrder) * 100).toFixed(1) + '%';
+		if (countOrderDone === 0) {
+			$scope.percentOrderDone_ngay = '0%';
+		}
+		$scope.percentOrderFailure_ngay = ((countOrderFailure / totalAllOrder) * 100).toFixed(1) + '%';
+		if (countOrderFailure ===0) {
+			$scope.percentOrderFailure_ngay = '0%';
+		}
+		
+	})
 	// định dạng tiền tệ VND
 	$scope.formatCurrency = function(value) {
 		// Sử dụng filter number để định dạng thành 100,000
 		var formattedValue = new Intl.NumberFormat('vi-VN').format(value);
 		return formattedValue + ' VND';
 	};
-
+	
 	// gọi hàm
 	$scope.dash_widget();
 	$scope.barcharts()

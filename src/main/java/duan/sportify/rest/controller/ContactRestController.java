@@ -1,5 +1,7 @@
 package duan.sportify.rest.controller;
 
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,9 +63,9 @@ public class ContactRestController {
 		contactDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
-//	// search
-//	@GetMapping("search")
-//	public ResponseEntity<List<Contacts>> search(@RequestParam("categoryname") Optional<String> categoryname){
-//		return ResponseEntity.ok(contactDAO.searchCategoryAdmin(categoryname));
-//	}
+	// search
+	@GetMapping("search")
+	public ResponseEntity<List<Contacts>> search(@RequestParam("datecontact") Date datecontact, @RequestParam("category") Optional<String> category){
+		return ResponseEntity.ok(contactDAO.findByDatecontact(datecontact, category));
+	}
 }

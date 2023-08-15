@@ -149,21 +149,25 @@ app.controller('BookingController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.searchName = '';
-   	 $scope.searchSport = null;
-   	 $scope.searchStatus = 1;
+	 $scope.keyword = ' ';
+   	 $scope.date = '';
+   	 $scope.status = '';
    	 $scope.search = function () {
-			
-      $http.get('/rest/fields/search', { params: 
+			var momentDate = moment($scope.date); // xài import thư viện Moment.js
+		var dateString = momentDate.format("YYYY-MM-DD");
+      $http.get('/rest/bookings/search', { params: 
       		{ 	
-				namefield: $scope.searchName, 
-      			sporttypeid: $scope.searchSport,
-      			status: $scope.searchStatus
+				keyword: $scope.keyword, 
+      			date: dateString,
+      			status: $scope.status
       		} 
       		}).then(function (response) {
           $scope.items = response.data;
-          
-			 console.log($scope.items);
+          $scope.items.forEach(item => {
+				item.bookingdate = new Date(item.bookingdate)
+				
+			})
+			console.log(dateString)
         })
         .catch(function (error) {
           console.log('Lỗi khi gửi yêu cầu:', error);

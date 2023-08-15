@@ -6,7 +6,7 @@ app.controller('FieldController', function($scope, $http) {
 			$scope.sporttype = resp.data;
 		})
 		// lấy danh sách product
-		$http.get("/rest/fields/getAll").then(resp => {
+		$http.get("/rest/fields/getAllActive").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate)
@@ -19,7 +19,8 @@ app.controller('FieldController', function($scope, $http) {
 		$scope.form = {
 			sporttypeid: "B01",
 			status: true,
-			image: "loading.jpg"
+			image: "loading.jpg",
+			price: 0
 		}
 	}
 	// hàm edit

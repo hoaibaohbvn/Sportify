@@ -16,10 +16,10 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Contact</h3>
+					<h3 class="page-title">Liên hệ</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Contact</li>
+						<li class="breadcrumb-item active">Liên hệ</li>
 					</ul>
 				</div>
 				
@@ -30,15 +30,33 @@
 		<!-- Search Filter -->
 		<div class="row filter-row">
 
+			
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating" ng-model="searchName">
-					<label class="focus-label">Category Product Name</label>
+					<input type="date" class="form-control floating"
+						ng-model="searchDate"> <label class="focus-label"></label>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-2">
+				<div class="form-group form-focus select-focus">
+					<select ng-model="searchCate" class="select floating">
+						<option ng-value="''">Tất cả</option>
+						<option ng-value="'Giao diên'">Giao diên</option>
+						<option ng-value="'Chức năng'">Chức năng</option>
+						<option ng-value="'Liên hệ quảng cáo'">Liên hệ quảng cáo</option>
+						<option ng-value="'Hiệu suất'">Hiệu suất</option>
+						<option ng-value="'Khác'">Khác</option>
+					</select> <label class="focus-label">Loại liên hệ</label>
 				</div>
 			</div>
 			
-			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+			<div class="col-sm-6 col-md-2">
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Tìm kiếm </a>
+			</div>
+			<div class="col-sm-6 col-md-2">
+				<a href="#" class="btn btn-success btn-block" ng-click="refresh()">
+					Làm mới </a>
+
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -62,7 +80,7 @@
 							<tr ng-repeat="item in items">
 								<td>{{$index + 1}}</td>
 								<td>{{item.users.firstname + ' ' + item.users.lastname }}</td>
-								<td>{{item.datecontact | date:'dd-MM-yyyy | HH:mm:ss'}}</td>
+								<td>{{item.datecontact | date:'dd-MM-yyyy'}}</td>
 								<td>{{item.category}}</td>
 								<td>{{item.title}}</td>
 								
@@ -112,7 +130,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="col-form-label">Ngày liên hệ <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.datecontact | date:'dd-MM-yyyy | HH:mm:ss'">
+									<input class="form-control" type="text" ng-model="form.datecontact | date:'dd-MM-yyyy'">
 								</div>
 							</div>
 							<div class="col-sm-12">
@@ -135,9 +153,7 @@
 							</div>
 						</div>
 
-						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Category Sport</button>
-						</div>
+						
 					</form>
 				</div>
 			</div>
@@ -151,8 +167,8 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="form-header">
-						<h3>Delete Category Sport</h3>
-						<p>Are you sure want to delete <strong ng-model="form.categoryname"></strong> ?</p>
+						<h3>Xóa liên hệ</h3>
+						<p>Bạn có muốn xóa liên hệ của {{form.users.firstname + ' ' + form.users.lastname}} ?</p>
 					</div>
 					<div class="modal-btn delete-action">
 						<div class="row">

@@ -16,15 +16,15 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Category Product</h3>
+					<h3 class="page-title">Loại sản phẩm</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Category Product</li>
+						<li class="breadcrumb-item active">Loại sản phẩm</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add" ng-click="reset()"><i
-							class="fa fa-plus"></i> Add Category Product</a>
+							class="fa fa-plus"></i> Thêm loại sản phẩm mới</a>
 
 				</div>
 			</div>
@@ -37,12 +37,15 @@
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating" ng-model="searchName">
-					<label class="focus-label">Category Product Name</label>
+					<label class="focus-label">Tên loại sản phẩm</label>
 				</div>
 			</div>
 			
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Tìm kiếm </a>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block" ng-click="refresh()"> Làm mới</a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -54,7 +57,7 @@
 						<thead>
 							<tr>
 								<th>#</th>							
-								<th>Name</th>
+								<th>Tên loại sản phẩm</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -68,10 +71,10 @@
 											aria-expanded="false"><i class="material-icons">more_vert</i></a>
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
 											<a class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#delete" ng-click="edit(item)"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
+												Xóa</a>
 										</div>
 									</div>
 								</td>
@@ -89,7 +92,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Category Product</h5>
+					<h5 class="modal-title">Thêm mới loại sản phẩm</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -99,7 +102,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Category Product Name <span class="text-danger">*</span></label>
+									<label class="col-form-label">Tên loại sản phẩm <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'categoryname' && index === 0">{{
@@ -109,7 +112,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add Category Sport</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm mới loại sản phẩm</button>
 						</div>
 					</form>
 				</div>
@@ -123,7 +126,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Category Product</h5>
+					<h5 class="modal-title">Chỉnh sửa loại sản phẩm</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -133,8 +136,8 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Category Product Name <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.categoryname">
+									<label class="col-form-label">Tên loại sản phẩm <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'categoryname' && index === 0">{{
 										error.message }}</errors>
@@ -143,7 +146,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Category Sport</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa loại sản phẩm</button>
 						</div>
 					</form>
 				</div>
@@ -158,17 +161,17 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="form-header">
-						<h3>Delete Category Sport</h3>
-						<p>Are you sure want to delete <strong ng-model="form.categoryname"></strong> ?</p>
+						<h3>Xóa loại sản phẩm</h3>
+						<p>Bạn có muốn xóa loại sản phẩm tên <span>{{form.categoryname}}</span> ?</p>
 					</div>
 					<div class="modal-btn delete-action">
 						<div class="row">
 							<div class="col-6">
-								<a href="javascript:void(0);" class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
+								<a href="javascript:void(0);" class="btn btn-primary continue-btn" ng-click="delete(form)">Xóa</a>
 							</div>
 							<div class="col-6">
 								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
+									class="btn btn-primary cancel-btn">Hủy</a>
 							</div>
 						</div>
 					</div>

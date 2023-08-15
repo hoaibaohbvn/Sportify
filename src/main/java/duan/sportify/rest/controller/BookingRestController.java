@@ -1,6 +1,8 @@
 package duan.sportify.rest.controller;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
@@ -25,6 +28,7 @@ import duan.sportify.dao.BookingDAO;
 import duan.sportify.dao.FieldDAO;
 import duan.sportify.entities.Bookings;
 import duan.sportify.entities.Field;
+import duan.sportify.entities.Sporttype;
 import duan.sportify.utils.ErrorResponse;
 
 @CrossOrigin(origins = "*")
@@ -42,7 +46,7 @@ public class BookingRestController {
 	}
 	@GetMapping("getAll")
 	public ResponseEntity<List<Bookings>> getAll(Model model){
-		return ResponseEntity.ok(bookingDAO.findAll());
+		return ResponseEntity.ok(bookingDAO.findAllBookingAndUser());
 	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Bookings> getOne(@PathVariable("id") Integer id) {
@@ -61,5 +65,9 @@ public class BookingRestController {
 		return ResponseEntity.ok(booking);
 	}
 	
-	
+	// search
+	@GetMapping("search")
+	public ResponseEntity<List<Bookings>> search(@RequestParam("keyword") String keyword, @RequestParam("date") Date date,@RequestParam("status") String status){
+		return ResponseEntity.ok(bookingDAO.findByConditions(keyword, date, status));
+	}
 }

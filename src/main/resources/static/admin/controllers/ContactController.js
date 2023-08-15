@@ -121,22 +121,29 @@ app.controller('ContactController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.searchName = '';
 	
-   	 $scope.search = function () {
+	$scope.searchDate = new Date();
+	$scope.searchCate = '';
+	$scope.search = function() {
+		var momentDate = moment($scope.searchDate); // Giả sử bạn đã import thư viện Moment.js
+		var dateString = momentDate.format("YYYY-MM-DD");
+		$http.get('/rest/contacts/search', {
+			params:
+			{
+				
+				datecontact: dateString,
+				category: $scope.searchCate
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.items.forEach(item => {
+				item.datecontact = new Date(item.datecontact)
+				
+			})
 			
-      $http.get('/rest/categories/search', { params: 
-      		{ 	
-				categoryname: $scope.searchName,
-      			
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
+		})
+			.catch(function(error) {
+				console.log('Lỗi khi gửi yêu cầu:', error);
+			});
+	};
 })

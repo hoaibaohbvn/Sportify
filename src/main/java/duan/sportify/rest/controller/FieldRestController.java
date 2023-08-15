@@ -46,6 +46,10 @@ public class FieldRestController {
 	public ResponseEntity<List<Field>> getAll(Model model){
 		return ResponseEntity.ok(fieldDAO.findAll());
 	}
+	@GetMapping("getAllActive")
+	public ResponseEntity<List<Field>> getAllActive(Model model){
+		return ResponseEntity.ok(fieldDAO.findAllActive());
+	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Field> getOne(@PathVariable("id") Integer id) {
 		if(!fieldDAO.existsById(id)) {
