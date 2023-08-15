@@ -16,16 +16,16 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Event</h3>
+					<h3 class="page-title">Sự kiện</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Event</li>
+						<li class="breadcrumb-item active">Sự kiện</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal"
 						data-target="#add" ng-click="reset()"><i class="fa fa-plus"></i>
-						Add Event</a>
+						Thêm sự kiện mới</a>
 
 				</div>
 			</div>
@@ -37,14 +37,14 @@
 
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
-					<input type="text" class="form-control floating" ng-model="searchName"> <label
-						class="focus-label">Event Name</label>
+					<input type="text" class="form-control floating"
+						ng-model="searchName"> <label class="focus-label">Tên
+						sư kiện</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus select-focus">
-					<select ng-model="searchStyte"
-						class="select floating">
+					<select ng-model="searchStyte" class="select floating">
 						<option ng-value=null>Tất cả</option>
 						<option ng-value="'Bóng đá'">Bóng đá</option>
 						<option ng-value="'Cầu lông'">Cầu lông</option>
@@ -56,10 +56,11 @@
 			</div>
 
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()">
+					Tìm kiếm </a>
 			</div>
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block"> Refresh </a>
+				<a href="#" class="btn btn-success btn-block"> Làm mới </a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -71,11 +72,11 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Name</th>
-								<th>Image</th>
-								<th>Date Start</th>
-								<th>Date End</th>
-								<th>Event type</th>
+								<th>Tên sự kiện</th>
+								<th>Ảnh sự kiện</th>
+								<th>Ngày bắt đầu</th>
+								<th>Ngày két thúc</th>
+								<th>Loại sự kiện</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -117,7 +118,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Event</h5>
+					<h5 class="modal-title">Tạo sự kiện mới</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -136,17 +137,18 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Event Name <span
+									<label class="col-form-label">Tên sự kiện <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameevent" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'nameevent' && index === 0">{{
-										error.message }}</errors>
+										type="text" ng-model="form.nameevent"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'nameevent' ">{{ error.message
+									}}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Ảnh sự kiện<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -154,21 +156,21 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date Start <span
+									<label class="col-form-label">Ngày bắt đầu <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="date" ng-model="form.datestart">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date End <span
+									<label class="col-form-label">Ngày kết thúc <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="date" ng-model="form.dateend">
 								</div>
 							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Event type</label> <select
+									<label class="col-form-label">Loại sự kiện</label> <select
 										ng-model="form.eventtype" class="form-control">
 										<option ng-repeat="c in tableData" ng-value="c.name">{{c.name}}</option>
 									</select>
@@ -179,9 +181,9 @@
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
 										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'descriptions' && index === 0">{{
-										error.message }}</errors>
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'descriptions' ">{{
+									error.message }}</errors>
 								</div>
 							</div>
 
@@ -189,9 +191,9 @@
 
 						</div>
 
+
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add
-								Event</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm sự kiện mới</button>
 						</div>
 					</form>
 				</div>
@@ -225,17 +227,18 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Event Name <span
+									<label class="col-form-label">Tên sự kiện <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="text" ng-model="form.nameevent" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'nameevent' && index === 0">{{
-										error.message }}</errors>
+										type="text" ng-model="form.nameevent"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'nameevent' ">{{ error.message
+									}}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Ảnh sự kiện<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -243,21 +246,21 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date Start <span
+									<label class="col-form-label">Ngày bắt đầu <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="date" ng-model="form.datestart">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date End <span
+									<label class="col-form-label">Ngày kết thúc <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="date" ng-model="form.dateend">
 								</div>
 							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Event type</label> <select 
+									<label class="col-form-label">Loại sự kiện</label> <select
 										ng-model="form.eventtype" class="form-control">
 										<option ng-repeat="c in tableData" ng-value="c.name">{{c.name}}</option>
 									</select>
@@ -268,9 +271,9 @@
 									<label class="col-form-label">Description</label>
 									<textarea class="form-control" type="text"
 										ng-model="form.descriptions" ng-change="clearErrors()"></textarea>
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'descriptions' && index === 0">{{
-										error.message }}</errors>
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'descriptions' ">{{
+									error.message }}</errors>
 								</div>
 							</div>
 
@@ -279,8 +282,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit
-								Event</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa sự kiện</button>
 						</div>
 					</form>
 				</div>

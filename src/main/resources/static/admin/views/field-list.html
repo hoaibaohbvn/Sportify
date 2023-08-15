@@ -16,16 +16,16 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Field</h3>
+					<h3 class="page-title">Sân thể thao</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Field</li>
+						<li class="breadcrumb-item active">Sân thể thao</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal"
-						data-target="#add"><i class="fa fa-plus" ng-click="reset()"></i>
-						Add Field</a>
+						data-target="#add" ng-click="reset()"><i class="fa fa-plus"></i>
+						Thêm mới sân thể thao</a>
 
 				</div>
 			</div>
@@ -38,7 +38,7 @@
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating" ng-model="searchName"> <label
-						class="focus-label">Field Name</label>
+						class="focus-label">Tên sân thể thao</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
@@ -60,10 +60,10 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Tìm kiếm </a>
 			</div>
 			<div class="col-sm-6 col-md-2">
-				<a href="#" class="btn btn-success btn-block"> Reset </a>
+				<a href="#" class="btn btn-success btn-block"> Làm mới </a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -75,12 +75,12 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Sport type</th>
-								<th>Name Field</th>
-								<th>Image</th>
-								<th>Price</th>
-								<th>Address</th>
-								<th>Action</th>
+								<th>Loại môn thể thao</th>
+								<th>Tên sân</th>
+								<th>Hình ảnh</th>
+								<th>Giá</th>
+								<th>Trạng thái</th>
+								<th class="text-center">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -91,22 +91,12 @@
 								<td><img src="/user/images/{{item.image}}" width="100px"
 									height="100px"></td>
 								<td>{{formatCurrency(item.price)}}</td>
-								<td>{{item.address}}</td>
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false"><i
-											class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i
-												class="fa fa-pencil m-r-5"></i> Edit</a> <a
-												class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete" ng-click="edit(item)"><i
-												class="fa fa-trash-o m-r-5"></i> Delete</a>
-										</div>
-									</div>
-								</td>
+								<td>{{item.status ? 'Đang hoạt động': 'Ngưng hoạt động'}}</td>
+								<td class="text-center">
+									<button class="btn btn-danger btn-block" href="#"
+										data-toggle="modal" data-target="#edit" ng-click="edit(item)">
+										<i class="fa fa-pencil m-r-5"></i> Xem chi tiết
+									</button>
 							</tr>
 
 						</tbody>
@@ -122,7 +112,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Field</h5>
+					<h5 class="modal-title">Thêm mới sân thể thao</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -141,17 +131,17 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Field Name <span
+									<label class="col-form-label">Tên sân thể thao <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.namefield" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'namefield' && index === 0">{{
+										<errors class="badge badge-danger" ng-repeat=" error in errors"
+										ng-if="error.field === 'namefield' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Hình ảnh<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -159,7 +149,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span
+									<label class="col-form-label">Giá sân<span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="number" ng-model="form.price" ng-change="clearErrors()">
 										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
@@ -169,28 +159,40 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span
+									<label class="col-form-label">Địa chỉ <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.address" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'address' && index === 0">{{
+										<errors class="badge badge-danger" ng-repeat=" error in errors"
+										ng-if="error.field === 'address' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
-							<div class="col-sm-12">
+							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field</label> <select
+									<label class="col-form-label">Loại sân<span
+										class="text-danger">*</span></label> <select
 										 ng-model="form.sporttypeid" class="form-control">
 										<option  ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="col-form-label">Trạng thái <span
+										class="text-danger">*</span></label> <select
+										class="form-control" ng-model="form.status">
+										<option ng-value="true">Đang hoạt động</option>
+										<option ng-value="false">Ngưng hoạt động</option>
+									</select>
+								</div>
+							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Description</label>
+									<label class="col-form-label">Mô tả<span
+										class="text-danger">*</span></label>
 									<textarea class="form-control" ng-model="form.descriptionfield" ng-change="clearErrors()"></textarea>
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'descriptionfield' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'descriptionfield' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
@@ -200,7 +202,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm sân thể thao</button>
 						</div>
 					</form>
 				</div>
@@ -215,7 +217,7 @@
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Field</h5>
+					<h5 class="modal-title">Chỉnh sửa sân</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -234,17 +236,17 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Field Name <span
+									<label class="col-form-label">Tên sân thể thao <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.namefield" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'namefield' && index === 0">{{
+										<errors class="badge badge-danger" ng-repeat=" error in errors"
+										ng-if="error.field === 'namefield' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Hình ảnh<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -252,7 +254,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Price <span
+									<label class="col-form-label">Giá sân<span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="number" ng-model="form.price" ng-change="clearErrors()">
 										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
@@ -262,28 +264,40 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span
+									<label class="col-form-label">Địa chỉ <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.address" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'address' && index === 0">{{
+										<errors class="badge badge-danger" ng-repeat=" error in errors"
+										ng-if="error.field === 'address' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
-							<div class="col-sm-12">
+							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Category Field</label> <select
+									<label class="col-form-label">Loại sân<span
+										class="text-danger">*</span></label> <select
 										 ng-model="form.sporttypeid" class="form-control">
 										<option  ng-repeat="c in sporttype" ng-value="c.sporttypeid">{{c.categoryname}}</option>
 									</select>
 								</div>
 							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label class="col-form-label">Trạng thái <span
+										class="text-danger">*</span></label> <select
+										class="form-control" ng-model="form.status">
+										<option ng-value="true">Đang hoạt động</option>
+										<option ng-value="false">Ngưng hoạt động</option>
+									</select>
+								</div>
+							</div>
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Description</label>
+									<label class="col-form-label">Mô tả<span
+										class="text-danger">*</span></label>
 									<textarea class="form-control" ng-model="form.descriptionfield" ng-change="clearErrors()"></textarea>
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'descriptionfiled' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'descriptionfield' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
@@ -293,7 +307,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Field</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa sân thể thao</button>
 						</div>
 					</form>
 				</div>
