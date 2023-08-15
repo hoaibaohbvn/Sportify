@@ -240,7 +240,9 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa đơn hàng</button>
+							<button ng-if="form.orderstatus == 'Chờ Xác Nhận'" class="btn btn-primary submit-btn" ng-click="confirm()">Xác nhận đơn hàng</button>
+							<button ng-if="form.orderstatus == 'Chờ Xác Nhận'" class="btn btn-danger submit-btn" ng-click="cancel()">Hủy đơn hàng</button>
+							<button class="btn btn-info submit-btn" ng-click="update()">Chỉnh sửa đơn hàng</button>
 						</div>
 					</form>
 				</div>
