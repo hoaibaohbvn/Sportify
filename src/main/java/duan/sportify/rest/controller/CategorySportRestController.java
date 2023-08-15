@@ -54,11 +54,14 @@ public class CategorySportRestController {
 	}
 	@PostMapping("create")
 	public ResponseEntity<Sporttype> create(@Valid @RequestBody Sporttype sporttype) {
-	    if (sporttype.getSporttypeid() != null && sportTypeDAO.existsById(sporttype.getSporttypeid())) {
-	        return ResponseEntity.badRequest().build();
+		if (sporttype.getSporttypeid() != null && sportTypeDAO.existsById(sporttype.getSporttypeid())) {
+	        return ResponseEntity.status(1000).build();
+	    }else if(sporttype.getSporttypeid() == null && !sportTypeDAO.existsById(sporttype.getSporttypeid())) {
+	    	return ResponseEntity.badRequest().build();
+	    }else {
+	    	sportTypeDAO.save(sporttype);
+		    return ResponseEntity.ok(sporttype);
 	    }
-	    sportTypeDAO.save(sporttype);
-	    return ResponseEntity.ok(sporttype);
 	}
 	@PutMapping("update/{id}")
 	public ResponseEntity<Sporttype> update(@PathVariable("id") String id, @Valid @RequestBody Sporttype sportType) {

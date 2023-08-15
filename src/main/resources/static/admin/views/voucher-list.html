@@ -16,15 +16,15 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Vocher</h3>
+					<h3 class="page-title">Mã giảm giá</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Vocher</li>
+						<li class="breadcrumb-item active">Mã giảm giá</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add"><i
-							class="fa fa-plus" ng-click="reset()"></i> Add Vocher</a>
+							class="fa fa-plus" ng-click="reset()"></i> Thêm mã giảm giá</a>
 
 				</div>
 			</div>
@@ -58,10 +58,10 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Voucher ID</th>
-								<th>Discount Percent</th>
-								<th>Start Date</th>
-								<th>End Date</th>
+								<th>Mã giảm giá</th>
+								<th>Chiết khấu</th>
+								<th>Ngày bắt đầu</th>
+								<th>Ngày kết thúc</th>
 								
 								<th>Action</th>
 							</tr>
@@ -81,10 +81,10 @@
 											aria-expanded="false"><i class="material-icons">more_vert</i></a>
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
 											<a class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#delete" ng-click="edit(item)"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
+												Xóa</a>
 										</div>
 									</div>
 								</td>
@@ -103,7 +103,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Voucher</h5>
+					<h5 class="modal-title">Thêm mã giảm giá</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -113,45 +113,45 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Voucher ID <span class="text-danger">*</span></label>
+									<label class="col-form-label">Mã giảm giá <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.voucherid" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field == 'voucherid' && index == 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'voucherid' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Discount Percent</label><span
+									<label class="col-form-label">Chiết khấu</label><span
 										class="text-danger">*</span></label>
 									<input class="form-control" type="number" ng-model="form.discountpercent" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field == 'discountpercent' && index == 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'discountpercent' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date start <span class="text-danger">*</span></label>
+									<label class="col-form-label">Ngày bắt đầu <span class="text-danger">*</span></label>
 									<input class="form-control" type="date" ng-model="form.startdate" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field == 'startdate' && index == 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'startdate' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">End date <span class="text-danger">*</span></label>
+									<label class="col-form-label">Ngày kết thúc <span class="text-danger">*</span></label>
 									<input class="form-control" type="date" ng-model="form.enddate" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'enddate' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'enddate' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add Voucher</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm mã giảm giá</button>
 						</div>
 					</form>
 				</div>
@@ -165,7 +165,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Voucher</h5>
+					<h5 class="modal-title">Chỉnh sửa mã giảm giá</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -175,43 +175,45 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Voucher ID <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.voucherid" readonly>
-									
+									<label class="col-form-label">Mã giảm giá <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.voucherid" ng-change="clearErrors()">
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'voucherid' ">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Discount Percent</label><span
+									<label class="col-form-label">Chiết khấu</label><span
 										class="text-danger">*</span></label>
 									<input class="form-control" type="number" ng-model="form.discountpercent" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'discountpercent' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'discountpercent' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Date start <span class="text-danger">*</span></label>
+									<label class="col-form-label">Ngày bắt đầu <span class="text-danger">*</span></label>
 									<input class="form-control" type="date" ng-model="form.startdate" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'startdate' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field == 'startdate' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">End Date <span class="text-danger">*</span></label>
+									<label class="col-form-label">Ngày kết thúc <span class="text-danger">*</span></label>
 									<input class="form-control" type="date" ng-model="form.enddate" ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'enddate' && index === 0">{{
+									<errors class="badge badge-danger" ng-repeat="error in errors"
+										ng-if="error.field === 'enddate' ">{{
 										error.message }}</errors>
 								</div>
 							</div>
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Voucher</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa mã giảm giá</button>
 						</div>
 					</form>
 				</div>
@@ -226,8 +228,8 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="form-header">
-						<h3>Delete Field</h3>
-						<p>Are you sure want to delete?</p>
+						<h3>Xóa mã giảm giá</h3>
+						<p>Bạn có muốn xóa mã giảm giá <span>{{form.voucherid}}</span></p>
 					</div>
 					<div class="modal-btn delete-action">
 						<div class="row">

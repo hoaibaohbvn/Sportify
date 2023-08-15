@@ -13,77 +13,52 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/admin/accounts', {
             templateUrl: '/admin/views/account.html',
-            pageTitle: 'Account'
+            pageTitle: 'Quản lý tài khoản'
         })
         .when('/admin/bookings', {
             templateUrl: '/admin/views/booking.html',
-            pageTitle: 'Booking'
-        })
-        .when('/admin/teams/:teamid', {
-            templateUrl: '/admin/views/team-detail.html',
-            pageTitle: 'Team Detail'
+            pageTitle: 'Lịch đặt sân'
         })
         .when('/admin/events', {
             templateUrl: '/admin/views/event-list.html',
-            pageTitle: 'Event'
+            pageTitle: 'Sự kiện'
         })
         .when('/admin/fields', {
             templateUrl: '/admin/views/field-list.html',
-            pageTitle: 'Field'
-        })
-        .when('/admin/login', {
-            templateUrl: '/admin/views/login.html',
-            pageTitle: 'Login',
-            
+            pageTitle: 'Sân'
         })
         .when('/admin/order-products', {
             templateUrl: '/admin/views/orderproduct.html',
-            pageTitle: 'Order Product'
+            pageTitle: 'Đặt hàng'
         })
         .when('/admin/products', {
             templateUrl: '/admin/views/products-list.html',
-            pageTitle: 'Products'
-        })
-        .when('/admin/profiles', {
-            templateUrl: '/admin/views/profile.html',
-            pageTitle: 'Profile'
-        })
-        .when('/admin/register', {
-            templateUrl: '/admin/views/register.html',
-            pageTitle: 'Register'
-        })
-        .when('/admin/reports', {
-            templateUrl: '/admin/views/report.html',
-            pageTitle: 'Report'
-        })
-        .when('/admin/resignation', {
-            templateUrl: '/admin/views/resignation.html',
-            pageTitle: 'Resignation'
+            pageTitle: 'Sản phẩm'
         })
         .when('/admin/teams', {
             templateUrl: '/admin/views/team-list.html',
-            pageTitle: 'Team'
+            pageTitle: 'Đội'
         })
         .when('/admin/vouchers', {
             templateUrl: '/admin/views/voucher-list.html',
-            pageTitle: 'Voucher'
+            pageTitle: 'Mã khuyến mãi'
         })
         .when('/admin/category-product', {
             templateUrl: '/admin/views/category-product.html',
-            pageTitle: 'Category Product'
+            pageTitle: 'Loại sản phẩm'
             
         })
         .when('/admin/category-sport', {
             templateUrl: '/admin/views/category-sport.html',
-            pageTitle: 'Category Sport'
+            pageTitle: 'Loại thể thao'
         })
         .when('/admin/contacts', {
             templateUrl: '/admin/views/contact.html',
-            pageTitle: 'Contact'
+            pageTitle: 'Liên hệ'
         })
         .when('/admin/reportBooking', {
             templateUrl: '/admin/views/reportBooking.html',
-            pageTitle: 'Report Booking'
+            pageTitle: 'Báo cáo thống kê đặt sân'
         })
         .when('/admin/reportOrder', {
             templateUrl: '/admin/views/reportOrder.html',

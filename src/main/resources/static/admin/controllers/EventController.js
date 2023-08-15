@@ -3,12 +3,13 @@ app.controller('EventController', function($scope, $http) {
     
 	// Dữ liệu cứng mẫu cho eventtype
 	$scope.tableData = [
-		{ id: 1, name: "Bóng đá" },
-		{ id: 2, name: "Bóng rổ" },
-		{ id: 3, name: "Cầu lông" },
-		{ id: 4, name: "Bảo trì" },
+		{ id: 1, name: "Bóng Đá" },
+		{ id: 2, name: "Bóng Rổ" },
+		{ id: 3, name: "Cầu Lông" },
+		{ id: 4, name: "Bảo Trì" },
 		{ id: 5, name: "Tennis" },
-		{ id: 6, name: "Khác" },
+		{ id: 6, name: "Khuyến Mãi" },
+		{ id: 7, name: "Khác" },
 	];
 	// hàm đổ tất cả
 	$scope.getAll = function() {
@@ -30,8 +31,7 @@ app.controller('EventController', function($scope, $http) {
 			dateend: new Date(),
 			productstatus: true,
 			image: "loading.jpg",
-			eventtype: $scope.tableData.name = "Bóng đá"
-
+			eventtype: $scope.tableData.name = "Bóng Đá"
 		}
 	}
 	// hàm edit
