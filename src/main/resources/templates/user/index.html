@@ -27,7 +27,7 @@ body {
 </style>
 </head>
 
-<body ng-app="">
+<body>
 
 		<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
@@ -90,7 +90,8 @@ body {
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -237,7 +238,7 @@ body {
 				<div class="col-lg-2 col-md-4 ">
 					<div class="sort w-100 text-center ftco-animate">
 						<div class="img"
-							style="background-image: url(/user/images/do_the_thao.png);"></div>
+							style="background-image: url(/user/images/dothethao.jpg);"></div>
 						<h5>Đồ Thể Thao</h5>
 					</div>
 				</div>
@@ -265,8 +266,8 @@ body {
 			<div class="row justify-content-center pb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
 
-					<h2>Sân Thể Thao</h2>
-					<span class="subheading">Sân được đặt nhiều nhất</span>
+					<h2>SÂN NỔI BẬT</h2>
+					<span class="subheading">Top 4 sân được đặt nhiều nhất</span>
 				</div>
 			</div>
 			<div class="row d-flex">
@@ -278,7 +279,7 @@ body {
 							th:src="@{'/user/images/' + ${f[5]}}">
 						<div class="text p-4 bg-light">
 							<h3 class="heading mb-3">
-								<a href="#" th:text="${f[2]}"></a>
+								<a th:href="@{/sportify/field/detail/{idField}(idField=${f[0]})}" th:text="${f[2]}"></a>
 							</h3>
 							<p>
 								<span class="text-success font-weight-bold">Giá tiền</span>: <span
@@ -289,7 +290,7 @@ body {
 								<span class="text-success font-weight-bold">Địa chỉ</span>: <span
 									class="text-dark font-weight" th:text="${f[6]}"></span>
 							</p>
-							<a href="#" class="btn-custom">Continue <span
+							<a th:href="@{/sportify/field/detail/{idField}(idField=${f[0]})}" class="btn-custom">Chi tiết <span
 								class="fa fa-long-arrow-right"></span></a>
 
 						</div>
@@ -299,13 +300,57 @@ body {
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-4">
-					<a href="product.html" class="btn btn-primary d-block">Xem tất
-						cả sân <span class="fa fa-long-arrow-right"></span>
+					<a th:href="@{/sportify/field}" class="btn btn-primary d-block">Xem thêm sân
 					</a>
 				</div>
 			</div>
 	</section>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center pb-5">
+				<div class="col-md-7 heading-section text-center ftco-animate">
 
+					<h2>XU HƯỚNG MUA SẮM</h2>
+					<span class="subheading">Top 4 sản phẩm bán chạy</span>
+				</div>
+			</div>
+			<div class="row d-flex">
+				<div class="col-lg-6 d-flex align-items-stretch ftco-animate"
+					th:each="p : ${topproduct}">
+					<div class="blog-entry d-flex">
+						<img class="block-20 img" alt=""
+							th:src="@{'/user/images/' + ${p[3]}}">
+						<div class="text p-4 bg-light">
+							<h3 class="heading mb-3">
+								<a th:href="@{/sportify/product-single/{productid}(productid=${p[0]})}" th:text="${p[1]}"></a>
+							</h3>
+							<p>
+								<span class="text-success font-weight-bold">Giá tiền</span>: <span
+									class="text-danger font-weight-bold"
+									th:text="${#numbers.formatCurrency(p[4])}"></span>
+							</p>
+							<p>
+								<span class="text-success font-weight-bold">Mô tả</span>: <span
+									class="text-dark font-weight limited-length" th:text="${p[5]}"></span>
+							</p>
+							<a th:href="@{/sportify/product-single/{productid}(productid=${p[0]})}" class="btn-custom">Chi tiết <span
+								class="fa fa-long-arrow-right"></span></a>
+							<p style="background-color: #ADC4CE; color: #252B48;font-weight:bold; width:50%; padding-left: 4px; margin-top: 30px; border-radius: 10px">
+								<span>Lượt mua:</span>
+								<span th:text="${p[2]}"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<a th:href="@{/sportify/product}" class="btn btn-primary d-block">Xem thêm sản phẩm khác
+					</a>
+				</div>
+			</div>
+	</section>
 	<section class="ftco-section testimony-section img"
 		style="background-image: url(/user/images/bgcaunoi.jpg);">
 		<div class="overlay"></div>
@@ -447,8 +492,8 @@ body {
 		<div class="container">
 			<div class="row justify-content-center mb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h2>Event</h2>
-					<span class="subheading">Sự kiện trong tháng <span
+					<h2>HOẠT ĐỘNG</h2>
+					<span class="subheading">Trong tháng <span
 						th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></span>
 
 				</div>
@@ -469,16 +514,21 @@ body {
 								<p class="m-1" th:text="${e[3]}"></p>
 							</div>
 							<h3 th:text="${e[1]}" class="heading mb-3">
-								<a href="#"></a>
 							</h3>
 							<p th:text="${e[5]}" class="limited-length"></p>
-							<a href="#" class="btn-custom">Continue <span
+							<a th:href="@{/sportify/eventdetail/{eventid}(eventid=${e[0]})}" class="btn-custom">Chi tiết <span
 								class="fa fa-long-arrow-right"></span></a>
 
 						</div>
 					</div>
 				</div>
-
+				
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<a th:href="@{/sportify/event}" class="btn btn-primary d-block">Xem thêm tin tức
+					</a>
+				</div>
 			</div>
 		</div>
 	</section>
