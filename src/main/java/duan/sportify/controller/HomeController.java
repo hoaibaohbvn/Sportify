@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import duan.sportify.dao.BookingDetailDAO;
 import duan.sportify.dao.EventDAO;
 import duan.sportify.dao.FieldDAO;
-import duan.sportify.dao.ProductDAO;
 
 
 
@@ -30,17 +29,19 @@ public class HomeController {
 	// Tiêm BookingDetailDAO
 	@Autowired
 	BookingDetailDAO bookingDetailDAO;
-	@Autowired
-	ProductDAO productDAO;
+	/**
+	 * phương thức gọi đến trang home
+	 * @param model giá trị của model
+	 * @return trả về file index trong user
+	 */
 	@GetMapping("")
 	public String view(Model model) {
 		
 		List<Object[]> eventList = eventDAO.fillEventInMonth();
 		model.addAttribute("eventList", eventList);
 		List<Object[]> fieldList = bookingDetailDAO.findTopFieldsWithMostBookings();
+		
 		model.addAttribute("fieldList", fieldList);
-		List<Object[]> topproduct = productDAO.Top4OrderProduct();
-		model.addAttribute("topproduct", topproduct);
 		return "user/index";
 	}
 

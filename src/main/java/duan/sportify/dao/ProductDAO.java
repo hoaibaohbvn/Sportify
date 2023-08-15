@@ -32,12 +32,4 @@ public interface ProductDAO extends JpaRepository<Products, Integer> {
 			+ "FROM products\r\n"
 			+ "WHERE productstatus = 1", nativeQuery = true)
 	int countProductActive();
-	// Thống kê top 4 sản phẩm được mua nhiều nhất trong Trang Chủ
-	@Query(value = "SELECT p.productid, p.productname, SUM(od.quantity) AS total_sold, p.image, p.price, p.descriptions\r\n"
-			+ "FROM products p\r\n"
-			+ "JOIN orderdetails od ON p.productid = od.productid\r\n"
-			+ "GROUP BY p.productid, p.productname\r\n"
-			+ "ORDER BY total_sold DESC\r\n"
-			+ "LIMIT 4", nativeQuery = true)
-	List<Object[]> Top4OrderProduct();
 }

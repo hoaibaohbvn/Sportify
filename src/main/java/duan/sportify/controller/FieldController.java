@@ -407,8 +407,9 @@ public class FieldController {
 	@GetMapping("/field/profile/historybooking/detail")
 	public String viewDetail(Model model,@RequestParam("bookingId") String bookingId,
             @RequestParam("bookingPrice") double bookingPrice) {
-		double giamgia = 0.0; // giảm giá
-		double phuthu = 0.0; // Phụ thu
+		double giamgia = 0.0;
+		double phuthu = 0.0;
+		double tongtien = 0.0;
 		double tiencoc = 0.0;
 		double tamtinh = 0.0;
 		double conlai = 0.0;
@@ -424,13 +425,15 @@ public class FieldController {
 		            	phuthu = price * 30 / 100;
 		            	tamtinh = phuthu+price;
 		            	giamgia = bookingPrice - tamtinh;
-		            	tiencoc = bookingPrice * 30 / 100;
+		            	tongtien = tamtinh - giamgia;
+		            	tiencoc = tongtien * 30 / 100;
 		            	conlai = bookingPrice - tiencoc;
 		            }else {
 		            	
 		            	tamtinh = price;
 		            	giamgia = bookingPrice - tamtinh;
-		            	tiencoc = bookingPrice * 30 / 100;
+		            	tongtien = tamtinh - giamgia;
+		            	tiencoc = tongtien * 30 / 100;
 		            	conlai = bookingPrice - tiencoc;
 		            }
 		        } 
@@ -440,6 +443,7 @@ public class FieldController {
 		model.addAttribute("thanhtien",bookingPrice);
 		model.addAttribute("phuthu",phuthu);
 		model.addAttribute("giamgia",giamgia);
+		model.addAttribute("tongtien",tongtien);
 		model.addAttribute("tamtinh",tamtinh);
 		model.addAttribute("tiencoc",tiencoc);
 		model.addAttribute("listbooking",listbookingdetail);

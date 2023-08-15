@@ -127,8 +127,7 @@
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
-								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -227,7 +226,7 @@
 												<label>Số điện thoại 
 												</label><span class="info-container"> <span class="info-icon">i</span>
 													<span class="info-content">
-														<p>Số điện thoại để đối chiếu khi đến nhận sân.</p>
+														<p>Số điện thoại sử dụng check khi đến nhận sân.</p>
 												</span>
 												</span>:
 												
@@ -319,7 +318,7 @@
 												<div>
 													<img
 														src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/a/ac4257c709f6621e4c315f641f60202f.svg">
-													&nbsp; <span>Không hoàn tiền đã cọc</span>
+													&nbsp; <span>Không hoàn tiền</span>
 												</div>
 											</div>
 										</div>
