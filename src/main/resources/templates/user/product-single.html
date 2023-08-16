@@ -96,7 +96,9 @@
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a
+								th:href="@{/sportify/order/historyList}" class="dropdown-item"
+								href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -138,7 +140,7 @@
 							{{cart.cartCount}}</p>
 						<p>
 							<a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice |
-								number: 0}} VNĐ</a>
+								number: 0}}đ</a>
 						</p>
 					</div>
 					<div class="dropdown-item d-flex align-items-start"
@@ -150,7 +152,7 @@
 							<p class="mb-0">
 								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
 									href="#" class="price ml-3">{{item.quantity * item.price |
-									number: 0}} VNĐ</a>
+									number: 0}}đ</a>
 							</p>
 						</div>
 					</div>
@@ -162,6 +164,7 @@
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
+
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a th:href="@{/sportify/field}"
@@ -169,7 +172,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin Tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -212,45 +215,13 @@
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 					<h3>[[${product.productname}]]</h3>
-					<div class="rating d-flex">
-						<p class="text-left mr-4">
-							<a href="#" class="mr-2">5.0</a> <a href="#"><span
-								class="fa fa-star"></span></a> <a href="#"><span
-								class="fa fa-star"></span></a> <a href="#"><span
-								class="fa fa-star"></span></a> <a href="#"><span
-								class="fa fa-star"></span></a> <a href="#"><span
-								class="fa fa-star"></span></a>
-						</p>
-						<p class="text-left mr-4">
-							<a href="#" class="mr-2" style="color: #000;">100 <span
-								style="color: #bbb;">Rating</span></a>
-						</p>
-						<p class="text-left">
-							<a href="#" class="mr-2" style="color: #000;">500 <span
-								style="color: #bbb;">Sold</span></a>
-						</p>
-					</div>
 					<p class="price">
 						<span>[[${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')}]]
-							VNĐ</span>
+							đ</span>
 					</p>
 
 					<div class="row mt-4">
-						<!-- <div class="input-group col-md-6 d-flex mb-3">
-							<span class="input-group-btn mr-2">
-								<button type="button" class="quantity-left-minus btn"
-									data-type="minus" data-field="">
-									<i class="fa fa-minus"></i>
-								</button>
-							</span> <input type="text" id="quantity" name="quantity"
-								class="quantity form-control input-number" value="1" min="1"
-								max="100"> <span class="input-group-btn ml-2">
-								<button type="button" class="quantity-right-plus btn"
-									data-type="plus" data-field="">
-									<i class="fa fa-plus"></i>
-								</button>
-							</span>
-						</div> -->
+
 						<div class="w-100"></div>
 						<div class="col-md-12">
 							<p style="color: #000;"
@@ -259,7 +230,8 @@
 					</div>
 					<p>
 						<a th:attr="ng-click=@{|cart.addProduct(${product.productid})|}"
-							class="btn btn-product py-3 px-5 mr-2 " style="color: white">Thêm vào giỏ</a>
+							class="btn btn-product py-3 px-5 mr-2 " style="color: white">Thêm
+							vào giỏ</a>
 					</p>
 				</div>
 			</div>
@@ -273,10 +245,7 @@
 						role="tablist" aria-orientation="vertical">
 						<a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab"
 							data-toggle="pill" href="#v-pills-1" role="tab"
-							aria-controls="v-pills-1" aria-selected="true">Mô tả</a> <a
-							class="nav-link ftco-animate" id="v-pills-3-tab"
-							data-toggle="pill" href="#v-pills-3" role="tab"
-							aria-controls="v-pills-3" aria-selected="false">Đánh giá</a>
+							aria-controls="v-pills-1" aria-selected="true">Mô tả</a>
 
 					</div>
 				</div>
@@ -292,190 +261,69 @@
 							</div>
 						</div>
 
-
-						<div class="tab-pane fade" id="v-pills-3" role="tabpanel"
-							aria-labelledby="v-pills-day-3-tab">
-							<div class="row p-4">
-								<div class="col-md-7">
-									<h3 class="mb-4">23 Reviews</h3>
-									<div class="review">
-										<div class="user-img"
-											style="background-image: url(images/person_1.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span> <span
-													class="text-right">25 April 2020</span>
-											</h4>
-											<p class="star">
-												<span> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span> <span class="text-right"><a href="#" class="reply"><i
-														class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic
-												Mountains, she had a last view back on the skyline of her
-												hometown Bookmarksgrov</p>
-										</div>
-									</div>
-									<div class="review">
-										<div class="user-img"
-											style="background-image: url(images/person_2.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span> <span
-													class="text-right">25 April 2020</span>
-											</h4>
-											<p class="star">
-												<span> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span> <span class="text-right"><a href="#" class="reply"><i
-														class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic
-												Mountains, she had a last view back on the skyline of her
-												hometown Bookmarksgrov</p>
-										</div>
-									</div>
-									<div class="review">
-										<div class="user-img"
-											style="background-image: url(images/person_3.jpg)"></div>
-										<div class="desc">
-											<h4>
-												<span class="text-left">Jacob Webb</span> <span
-													class="text-right">25 April 2020</span>
-											</h4>
-											<p class="star">
-												<span> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i>
-												</span> <span class="text-right"><a href="#" class="reply"><i
-														class="icon-reply"></i></a></span>
-											</p>
-											<p>When she reached the first hills of the Italic
-												Mountains, she had a last view back on the skyline of her
-												hometown Bookmarksgrov</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="rating-wrap">
-										<h3 class="mb-4">Give a Review</h3>
-										<p class="star">
-											<span> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> (98%)
-											</span> <span>20 Reviews</span>
-										</p>
-										<p class="star">
-											<span> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> (85%)
-											</span> <span>10 Reviews</span>
-										</p>
-										<p class="star">
-											<span> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> (98%)
-											</span> <span>5 Reviews</span>
-										</p>
-										<p class="star">
-											<span> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> (98%)
-											</span> <span>0 Reviews</span>
-										</p>
-										<p class="star">
-											<span> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> (98%)
-											</span> <span>0 Reviews</span>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
+	<!-- footer -->
 	<footer class="ftco-footer">
 		<div class="container">
 			<div class="row mb-5">
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log
-									In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term
-									&amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New
-									User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help
-									Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report
-									Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
+										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -489,13 +337,14 @@
 
 						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							Bản quyền &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>

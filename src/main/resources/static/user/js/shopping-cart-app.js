@@ -111,6 +111,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		createdate: new Date(),
 		address: "",
 		note: "",
+		totalprice: 0,
 		orderstatus: 1,
 		paymentstatus: 0,
 		get orderDetails() {
