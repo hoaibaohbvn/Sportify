@@ -16,15 +16,15 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Category Sport</h3>
+					<h3 class="page-title">Loại môn thể thao</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Category Sport</li>
+						<li class="breadcrumb-item active">Loại môn thể thao</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add" ng-click="reset()"><i
-							class="fa fa-plus"></i> Add Category Sport</a>
+							class="fa fa-plus"></i> Thêm môn thể thao mới</a>
 
 				</div>
 			</div>
@@ -37,12 +37,15 @@
 			<div class="col-sm-6 col-md-3">
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating" ng-model="searchName">
-					<label class="focus-label">Category Sport Name</label>
+					<label class="focus-label">Tên môn thể thao</label>
 				</div>
 			</div>
 			
 			<div class="col-sm-6 col-md-3">
-				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Search </a>
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Tìm kiếm </a>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a href="#" class="btn btn-success btn-block" ng-click="search()"> Làm mới </a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -53,9 +56,9 @@
 					<table class="table table-striped custom-table datatable">
 						<thead>
 							<tr>
-								<th>STT</th>
-								<th>ID</th>
-								<th>Name</th>
+								<th>#</th>
+								<th>Mã môn thể thao</th>
+								<th>Tên môn thể thao</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -70,10 +73,10 @@
 											aria-expanded="false"><i class="material-icons">more_vert</i></a>
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+												data-target="#edit" ng-click="edit(item)"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
 											<a class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#delete" ng-click="edit(item)"><i class="fa fa-trash-o m-r-5"></i>
-												Delete</a>
+												Xóa</a>
 										</div>
 									</div>
 								</td>
@@ -91,7 +94,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Category Sport</h5>
+					<h5 class="modal-title">Thêm môn thể thao mới</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -101,7 +104,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Sport Type ID <span class="text-danger">*</span></label>
+									<label class="col-form-label">Mã môn thể thao <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.sporttypeid" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'sporttypeid' && index === 0">{{
@@ -112,7 +115,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Category Sport Name <span class="text-danger">*</span></label>
+									<label class="col-form-label">Tên môn thể thao <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'categoryname' && index === 0">{{
@@ -122,7 +125,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add Category Sport</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm môn thể thao mới</button>
 						</div>
 					</form>
 				</div>
@@ -136,7 +139,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Category Sport</h5>
+					<h5 class="modal-title">Chỉnh sửa môn thể thao</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -146,8 +149,8 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Sport Type ID <span class="text-danger">*</span></label>
-									<input class="form-control" type="text" ng-model="form.sporttypeid" readonly>
+									<label class="col-form-label">Mã môn thể thao <span class="text-danger">*</span></label>
+									<input class="form-control" type="text" ng-model="form.sporttypeid" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'sporttypeid' && index === 0">{{
 										error.message }}</errors>
@@ -157,7 +160,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="form-group">
-									<label class="col-form-label">Category Sport Name <span class="text-danger">*</span></label>
+									<label class="col-form-label">Tên môn thể thao <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" ng-model="form.categoryname" ng-change="clearErrors()">
 									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'categoryname' && index === 0">{{
@@ -167,7 +170,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit Category Sport</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa môn thể thao mới</button>
 						</div>
 					</form>
 				</div>
@@ -182,17 +185,17 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="form-header">
-						<h3>Delete Category Sport</h3>
-						<p>Are you sure want to delete?</p>
+						<h3>Xóa môn thể thao</h3>
+						<p>Bạn có muốn xóa môn thể thao tên <span>{{form.categoryname}}</span> ?</p>
 					</div>
 					<div class="modal-btn delete-action">
 						<div class="row">
 							<div class="col-6">
-								<a href="javascript:void(0);" class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
+								<a href="javascript:void(0);" class="btn btn-primary continue-btn" ng-click="delete(form)">Xóa</a>
 							</div>
 							<div class="col-6">
 								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
+									class="btn btn-primary cancel-btn">Hủy</a>
 							</div>
 						</div>
 					</div>

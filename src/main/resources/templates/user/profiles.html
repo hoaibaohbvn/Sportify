@@ -84,7 +84,8 @@
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -271,7 +272,7 @@
 								<label class="labels">Địa chỉ</label> <input type="text"
 									class="form-control" name="address"
 									onblur="validateAddress(this)" th:value="${profiles.address}">
-								<div id="address-error" class="error-message"></div>
+								<div id="address-error" class="error-message text-danger"></div>
 							</div>
 						</div>
 						<div class="mt-5 text-center">
@@ -411,6 +412,9 @@
 			if (!/^$|^[\w\.-]+@[\w\.-]+\.\w{2,}$/.test(value)) {
 				errorDiv.textContent = 'Email không hợp lệ';
 				return check = false;
+			}else if (value.trim() === '') {
+				errorDiv.textContent = 'Email không được để trống';
+				return check = false;
 			} else {
 				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
 				return check = true;
@@ -439,6 +443,9 @@
 			if (!/^$|^[\p{L}0-9\s.,/-]+$/u.test(value)) {
 				errorDiv.textContent = 'Địa chỉ không hợp lệ';
 				return check = false;
+			}else if (value.trim() === '') {
+				errorDiv.textContent = 'Địa chỉ không được để trống';
+				return check = false;
 			} else {
 				errorDiv.textContent = ''; // Xóa thông báo lỗi khi hợp lệ
 				return check = true;
@@ -447,6 +454,7 @@
 		function validatePassword() {
 	        const newPassword = newPasswordInput.value;
 	        const confirmPassword = confirmPasswordInput.value;
+	        var errorDiv = document.getElementById('password-match-error');
 	        var errorDiv = document.getElementById('password-match-error');
 	        if (newPassword.length < 6 || newPassword.length > 16) {
 	            errorDiv.textContent = 'Mật khẩu phải từ 6 đến 16 ký tự';

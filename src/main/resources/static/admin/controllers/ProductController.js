@@ -130,10 +130,10 @@ app.controller('ProductController', function($scope, $http) {
 			};
 
 			const icons = {
-				success: "fas fa-check-circle",
-				info: "fas fa-info-circle",
-				warning: "fas fa-exclamation-circle",
-				error: "fas fa-exclamation-circle"
+				success: "fa fa-check-circle",
+				info: "fa fa-info-circle",
+				warning: "fa fa-exclamation-circle",
+				error: "fa fa-exclamation-circle"
 			};
 			const icon = icons[type];
 			const delay = (duration / 1000).toFixed(2);
@@ -150,7 +150,7 @@ app.controller('ProductController', function($scope, $http) {
                     <p class="toast__msg">${message}</p>
                 </div>
                 <div class="toast__close">
-                    <i class="fas fa-times"></i>
+                    <i class="fa fa-times"></i>
                 </div>
             `;
 			main.appendChild(toast);

@@ -16,10 +16,10 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Booking</h3>
+					<h3 class="page-title">Phiếu đặt sân</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Booking</li>
+						<li class="breadcrumb-item active">Phiếu đặt sân</li>
 					</ul>
 				</div>
 
@@ -34,22 +34,22 @@
 				<label class="focus-label">Người đặt</label>
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating"
-						ng-model="searchName">
+						ng-model="keyword">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<label class="focus-label">Ngày đặt</label>
 				<div class="form-group form-focus">
 					<input type="date" class="form-control floating"
-						ng-model="searchDate">
+						ng-model="date">
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-3">
 				<label class="focus-label">Trạng thái</label>
 				<div class="form-group form-focus select-focus">
 
-					<select ng-model="searchStatus" class="select floating">
-						<option ng-value=null>Tất cả</option>
+					<select ng-model="status" class="select floating">
+						<option ng-value="''">Tất cả</option>
 						<option ng-value="'Đã Cọc'">Đã Cọc</option>
 						<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
 						<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
@@ -59,12 +59,12 @@
 			<div class=" col-md-3 d-flex mt-4">
 				<div class="col-sm-6 col-md-6 mt-1">
 					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="search()">
-						Search </a>
+						Tìm kiếm </a>
 
 				</div>
 				<div class="col-sm-6 col-md-6 mt-1">
 					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="refresh()">
-						Refresh </a>
+						Làm mới </a>
 
 				</div>
 
@@ -84,7 +84,7 @@
 								<th>Người dặt</th>
 								<th>Ngày đặt</th>
 								<th>Thành tiền</th>
-								<th>Phone</th>
+								<th>Số điện thoại</th>
 								<th>Trạng thái</th>
 								<th class="text-center no-sort">Action</th>
 							</tr>
@@ -160,7 +160,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Phone <span
+									<label class="col-form-label">Số điện thoại <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="email" ng-model="form.phone" readonly>
 								</div>
@@ -230,8 +230,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="update()">Edit
-								Booking</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa phiếu đặt sân</button>
 						</div>
 					</form>
 				</div>

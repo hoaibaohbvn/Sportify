@@ -41,6 +41,9 @@ public interface FieldDAO extends JpaRepository<Field, Integer>{
 	@Query(value="select * from field where sporttypeid = :cid LIMIT 3", nativeQuery = true)
 	List<Field> findBySporttypeIdlimit3(String cid);
 	
+	// admin 
+	@Query(value = "select * from field where status = 1", nativeQuery = true)
+	List<Field> findAllActive();
 	// search team in admin
 	@Query(value = "select * FROM field\r\n"
 			+ "WHERE (namefield LIKE %:namefield% OR :namefield IS NULL)\r\n"

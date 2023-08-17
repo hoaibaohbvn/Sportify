@@ -30,14 +30,15 @@ app.controller('SportTypeController', function($scope, $http) {
 			refreshPageAfterThreeSeconds();
 		}).catch(error => {
 			// Xử lý lỗi phản hồi từ máy chủ
-			if (error.data && error.data.errors) {
+			if(error.status === 1000){
+				showErrorToast("Mã môn thể thao đã tồn tại. Vui lòng nhập một mã môn thể thao khác.");
+			}
+			 else if (error.data && error.data.errors) {
 				$scope.errors = error.data.errors;
 			}
-			if (error.data) {
+			 else if(error.data) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
-			console.log($scope.errors);
-      		console.log(error);
 		});
 	}
 	// hàm cập nhập

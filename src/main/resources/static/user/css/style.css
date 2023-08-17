@@ -10065,7 +10065,7 @@ a:hover span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
+  max-width: 500px; /* Điều chỉnh giá trị này để giới hạn số kí tự */
 }
 .limited-length5 {
   white-space: nowrap;
