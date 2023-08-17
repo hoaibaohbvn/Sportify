@@ -39,7 +39,6 @@ public class ContactController {
 	public String view(Model model, HttpServletRequest request ) {
 		 userlogin = (String) request.getSession().getAttribute("username");
 		 model.addAttribute("contacts", new Contacts());
-		 System.out.println(userlogin);
 //		model.addAttribute("user", new Contacts());
 	return "user/contact"; 
 	}
@@ -59,7 +58,6 @@ public class ContactController {
     	Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     	contacts.setDatecontact(date);
     	contactDAO.save(contacts);
-    	System.out.print(contacts);
     	redirectAttributes.addFlashAttribute("message", "Soprtify Cảm ơn bạn đã phản hồi");
     	return "redirect:/sportify/contact"; // Hoặc điều hướng đến trang khác sau khi đã lưu thành công.
     }
