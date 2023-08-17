@@ -35,11 +35,12 @@ public class AuthorizedRestController {
 	MessageSource messagesource;
 	@Autowired
 	AuthorizedDAO authorizedDAO;
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
 		return GlobalExceptionHandler.handleValidationException(ex);
 	}
+
 //	@GetMapping("getAll")
 //	public ResponseEntity<List<Users>> getAll(Model model){
 //		return ResponseEntity.ok(userDAO.findAll());
@@ -53,11 +54,22 @@ public class AuthorizedRestController {
 //	}
 	@PostMapping("create")
 	public ResponseEntity<Authorized> create(@RequestBody Authorized authorized) {
-	    if (authorized.getAuthorizedid() != null && authorizedDAO.existsById(authorized.getAuthorizedid())) {
-	        return ResponseEntity.badRequest().build();
-	    }
-	    authorizedDAO.save(authorized);
-	    return ResponseEntity.ok(authorized);
+		if (authorized.getAuthorizedid() != null && authorizedDAO.existsById(authorized.getAuthorizedid())) {
+			return ResponseEntity.badRequest().build();
+		}
+		authorizedDAO.save(authorized);
+		return ResponseEntity.ok(authorized);
+	}
+
+	// lấy quyền của tài khoản
+	@GetMapping("getRole/{username}")
+	public ResponseEntity<List<Object[]>> getRole(@PathVariable("username") String username) {
+		return ResponseEntity.ok(authorizedDAO.getRoleByUsername(username));
+	}
+	//xoa quyền
+	@DeleteMapping("{authorizedid}")
+	public void delete(@PathVariable("authorizedid") Integer authorizedid) {
+		authorizedDAO.deleteById(authorizedid);
 	}
 //	@PutMapping("update/{id}")
 //	public ResponseEntity<Users> update(@PathVariable("id") String id, @Valid @RequestBody Users user) {
@@ -67,7 +79,7 @@ public class AuthorizedRestController {
 //		userDAO.save(user);
 //		return ResponseEntity.ok(user);
 //	}
-	
+
 //	@DeleteMapping("delete/{id}")
 //	public ResponseEntity<Void> delete(@PathVariable("id") String id) {
 //		if(!userDAO.existsById(id)) {

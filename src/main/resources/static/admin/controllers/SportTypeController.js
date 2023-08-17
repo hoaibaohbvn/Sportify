@@ -175,6 +175,10 @@ app.controller('SportTypeController', function($scope, $http) {
 			location.reload();
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
+	// hàm refresh
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
 	// search
 	 $scope.searchName = '';
    	 $scope.search = function () {

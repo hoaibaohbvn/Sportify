@@ -6,6 +6,7 @@ app.controller('AccountController', function($scope, $http) {
 			$scope.items = resp.data;
 		});
 		$scope.reset();
+
 	}
 	// hàm rest form
 	$scope.reset = function() {
@@ -17,11 +18,143 @@ app.controller('AccountController', function($scope, $http) {
 		}
 		$scope.form.roleid = 'R03'
 	}
+
 	// hàm edit
+
 	$scope.edit = function(item) {
+
 		$scope.form = angular.copy(item);
+
 		$scope.errors = [];
+		const admin = document.getElementById('admin');
+		const staff = document.getElementById('staff');
+		const user = document.getElementById('user');
+		const usernameQuyen = item.username
+		$scope.form.username = usernameQuyen
+
+
+
+		// lấy quyền username được chọn /rest/authorized/getRole
+		$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+			$scope.listRole = resp.data;
+			// lấy admin
+			if ($scope.listRole[0][1] === 'R01') {
+				admin.checked = true;
+			} else {
+				admin.checked = false;
+			}
+			// lấy staff
+			if ($scope.listRole[1][1] === 'R02') {
+				staff.checked = true;
+			} else {
+				staff.checked = false;
+			}
+			// lay user
+			if ($scope.listRole[2][1] === 'R03') {
+				user.checked = true;
+			} else {
+				user.checked = false;
+			}
+		});
+		// thay đổi quyền
+		$scope.doiQuyenAdmin = function() {
+			$scope.form.roleid = 'R01'
+			if (admin.checked == true) {
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
+					//$scope.items.push(rp.data);
+					
+				})
+				showSuccessToast("Cấp quyền Admin thành công")
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+			}
+			else {
+				// Lấy authorizedid từ dữ liệu resp.data của yêu cầu GET
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				const authorizedid = parseInt($scope.listRole[0][2]);
+				$http.delete(`/rest/authorized/` + authorizedid).then(resp => {
+					var index = $scope.items.findIndex(p => p.authorizedid === authorizedid)
+					//$scope.items.splice(index, 1);
+				});
+				showSuccessToast("Thu quyền Admin thành công");
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+			}
+		}
+		$scope.doiQuyenStaff = function() {
+			$scope.form.roleid = 'R02'
+			if (staff.checked == true) {
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
+					//$scope.items.push(rp.data);
+					
+				})
+				showSuccessToast("Cấp quyền Staff thành công")
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+			}
+			else {
+				// Lấy authorizedid từ dữ liệu resp.data của yêu cầu GET
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				const authorizedid = parseInt($scope.listRole[1][2]);
+				$http.delete(`/rest/authorized/` + authorizedid).then(resp => {
+					var index = $scope.items.findIndex(p => p.authorizedid === authorizedid)
+					//$scope.items.splice(index, 1);
+					
+				});
+				showSuccessToast("Thu quyền Staff thành công");
+			}
+		}
+		$scope.doiQuyenUser = function() {
+			$scope.form.roleid = 'R03'
+			if (user.checked == true) {
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
+					//$scope.items.push(rp.data);
+					
+				})
+				showSuccessToast("Cấp quyền User thành công")
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+			}
+			else {
+				// Lấy authorizedid từ dữ liệu resp.data của yêu cầu GET
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+				const authorizedid = parseInt($scope.listRole[2][2]);
+				$http.delete(`/rest/authorized/` + authorizedid).then(resp => {
+					var index = $scope.items.findIndex(p => p.authorizedid === authorizedid)
+					//$scope.items.splice(index, 1);
+					
+				});
+				showSuccessToast("Thu quyền User thành công");
+				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
+					$scope.listRole = resp.data;
+				})
+			}
+		}
+
 	}
+
+
+
+
 	// hàm tạo
 
 	$scope.create = function() {
@@ -71,22 +204,7 @@ app.controller('AccountController', function($scope, $http) {
 				console.log(error);
 			});
 	}
-	// ham delete
-	$scope.delete = function(item) {
-		$http.delete(`/rest/accounts/delete/${item.username}`).then(resp => {
-			var index = $scope.items.findIndex(p => p.username == item.username);
-			$scope.items.splice(index, 1);
-			// Đặt lại trạng thái của form (nếu có)
-			$scope.reset();
-			$('#delete').modal('hide')
-			// Hiển thị thông báo thành công
-			showSuccessToast("Account tên " + item.username + " đã được xóa")
-			refreshPageAfterThreeSeconds();
-		}).catch(error => {
-			showErrorToast("Xóa sản phảm tên " + item.username + " thất bại")
-			console.log("Error", error);
-		})
-	}
+
 
 	$scope.imageChanged = function(files) {
 		var data = new FormData();
@@ -188,18 +306,21 @@ app.controller('AccountController', function($scope, $http) {
 	}
 
 	// search
-	$scope.searchName = '';
+	$scope.searchHo = '';
+	$scope.searchTen = '';
 	$scope.searchUser = '';
-	$scope.searchRole = null;
-	$scope.searchStatus = 1;
+	$scope.searchRole = '';
+	$scope.searchStatus = null;
 	$scope.search = function() {
 
-		$http.get('/rest/products/search', {
+		$http.get('/rest/accounts/search', {
 			params:
 			{
-				productname: $scope.searchName,
-				categoryid: $scope.searchCate,
-				productstatus: $scope.searchStatus
+				ho: $scope.searchHo,
+				ten: $scope.searchTen,
+				user: $scope.searchUser,
+				role: $scope.searchRole,
+				status: $scope.searchStatus 
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
@@ -212,6 +333,10 @@ app.controller('AccountController', function($scope, $http) {
 				console.log('Lỗi khi gửi yêu cầu:', error);
 			});
 	};
+	// hàm refresh
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
 	// ẩn hiện password
 	$scope.passwordFieldType = 'password'; // Mặc định là password (ẩn mật khẩu)
 

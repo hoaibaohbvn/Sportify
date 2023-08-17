@@ -67,7 +67,7 @@ public class BookingRestController {
 	
 	// search
 	@GetMapping("search")
-	public ResponseEntity<List<Bookings>> search(@RequestParam("keyword") String keyword, @RequestParam("date") Date date,@RequestParam("status") String status){
-		return ResponseEntity.ok(bookingDAO.findByConditions(keyword, date, status));
+	public ResponseEntity<List<Bookings>> search(@RequestParam("keyword") String keyword, @RequestParam("datebook") Date datebook,@RequestParam("status") String status){
+		return ResponseEntity.ok(bookingDAO.findByConditions(keyword, datebook, status));
 	}
 }

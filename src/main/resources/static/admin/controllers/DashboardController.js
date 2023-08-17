@@ -213,11 +213,11 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.tongSoPhieuDatSan2Thang = rp.data;
 		
 		$scope.percentPhieuDat = ((($scope.tongSoPhieuDatSan2Thang[0][1] - $scope.tongSoPhieuDatSan2Thang[1][1])/ $scope.tongSoPhieuDatSan2Thang[1][1]) * 100)
-		if($scope.percentPhieuDat === Infinity){
+		if($scope.tongSoPhieuDatSan2Thang[1][1] <= 0){
 			$scope.percentPhieuDat = 'Vượt trội'
 			$scope.colorDatSan = 'blue';  
 		} else if($scope.percentPhieuDat > 0){
-			$scope.percentPhieuDat = ($scope.percentPhieuDat).toFixed(1) + '%'
+			$scope.percentPhieuDat = '+' + ($scope.percentPhieuDat).toFixed(1) + '%'
 			$scope.colorDatSan = 'green';  
 		} else{
 			$scope.percentPhieuDat = ($scope.percentPhieuDat).toFixed(1) + '%'
@@ -229,11 +229,11 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.tongSoPhieuOrder2Thang = rp.data;
 		
 		$scope.percentOrder = ((($scope.tongSoPhieuOrder2Thang[0][1] - $scope.tongSoPhieuOrder2Thang[1][1])/ $scope.tongSoPhieuOrder2Thang[1][1]) * 100)
-		if($scope.percentOrder === Infinity){
+		if($scope.tongSoPhieuOrder2Thang[1][1] <= 0){
 			$scope.percentOrder = 'Vượt trội'
 			$scope.colorOrder = 'blue';  
 		} else if($scope.percentOrder > 0){
-			$scope.percentOrder = ($scope.percentOrder).toFixed(1) + '%'
+			$scope.percentOrder = '+' +($scope.percentOrder).toFixed(1) + '%'
 			$scope.colorOrder = 'green';  
 		} else{
 			$scope.percentOrder = ($scope.percentOrder).toFixed(1) + '%'
@@ -245,7 +245,7 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.tongDoanhThuBooking2Month = rp.data;
 		
 		$scope.percentDTBooking = ((($scope.tongDoanhThuBooking2Month[0][0] - $scope.tongDoanhThuBooking2Month[0][1])/ $scope.tongDoanhThuBooking2Month[0][1]) * 100)
-		if($scope.percentDTBooking === Infinity){
+		if($scope.tongDoanhThuBooking2Month[0][1] <= 0){
 			$scope.percentDTBooking = 'Vượt trội'
 			$scope.colorDTBooking = 'blue';  
 		} else if($scope.percentDTBooking > 0){
@@ -262,7 +262,7 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.doanhThuOrder2Month = rp.data;
 		
 		$scope.percentDTOrder = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1])/ $scope.doanhThuOrder2Month[0][1]) * 100)
-		if($scope.percentDTOrder === Infinity){
+		if($scope.doanhThuOrder2Month[0][1] <= 0){
 			$scope.percentDTOrder = 'Vượt trội'
 			$scope.colorDTOrder = 'blue';  
 		} else if($scope.percentDTOrder > 0){

@@ -49,7 +49,10 @@ app.controller('OrderController', function($scope, $http) {
 	
 	$scope.getAll();
 
-
+// hàm refresh
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
 
 	// Toast function
 	function toast({ title = "", message = "", type = "info", duration = 3000 }) {

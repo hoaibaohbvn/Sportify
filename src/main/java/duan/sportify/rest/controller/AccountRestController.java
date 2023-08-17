@@ -1,5 +1,6 @@
 package duan.sportify.rest.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,13 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
 
 import duan.sportify.dao.UserDAO;
-
+import duan.sportify.entities.Bookings;
 import duan.sportify.entities.Users;
 import duan.sportify.utils.ErrorResponse;
 
@@ -78,17 +79,13 @@ public class AccountRestController {
 		userDAO.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
-//	// search
-//	@GetMapping("/search")
-//	public ResponseEntity<List<Teams>> search(@RequestParam("nameteam") Optional<String> nameteam, @RequestParam("sporttypeid") Optional<String> sporttypeid){
-//		return ResponseEntity.ok(teamDAO.searchTeamAdmin(nameteam, sporttypeid));
-//	}
-//	// detail
-//	@GetMapping("detail/{id}")
-//	public ResponseEntity<Teams> getDetail(@PathVariable("id") Integer id) {
-//		if(!teamDAO.existsById(id)) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		return ResponseEntity.ok(teamDAO.findById(id).get());
-//	}
+	
+	@GetMapping("search")
+	public ResponseEntity<List<Users>> search(@RequestParam("user") String user,
+			@RequestParam("ho") String ho,
+			@RequestParam("ten") String ten,
+			@RequestParam("status") Optional<Integer> status,
+			@RequestParam("role") String role){
+		return ResponseEntity.ok(userDAO.searchUserAdmin(user, ho, ten, status, role));
+	}
 }

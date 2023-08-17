@@ -20,7 +20,10 @@ app.controller('ContactController', function($scope, $http) {
 		$scope.form = angular.copy(item);
 		
 	}
-	
+	// hàm refresh
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
 	// ham delete
 	$scope.delete = function(item) {
 		$http.delete(`/rest/contacts/delete/${item.contactid}`).then(resp => {

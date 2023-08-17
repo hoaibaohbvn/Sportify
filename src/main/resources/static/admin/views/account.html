@@ -16,16 +16,16 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Account</h3>
+					<h3 class="page-title">Tài khoản</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Account</li>
+						<li class="breadcrumb-item active">Tài khoản</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
 					<a href="#" class="btn add-btn" data-toggle="modal"
-						data-target="#add" ng-click="rest()"><i class="fa fa-plus"></i>
-						Add Account</a>
+						data-target="#add" ng-click="reset()"><i class="fa fa-plus"></i>
+						Thêm tài khoản mới</a>
 
 				</div>
 			</div>
@@ -34,12 +34,16 @@
 
 		<!-- Search Filter -->
 		<div class="row filter-row">
-
 			<div class="col-sm-6 col-md-2">
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating"
-						ng-model="searchName"> <label class="focus-label">Full
-						Name</label>
+						ng-model="searchHo"> <label class="focus-label">Họ</label>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-2">
+				<div class="form-group form-focus">
+					<input type="text" class="form-control floating"
+						ng-model="searchTen"> <label class="focus-label">Tên</label>
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-2">
@@ -60,19 +64,19 @@
 			<div class="col-sm-6 col-md-2">
 				<div class="form-group form-focus select-focus">
 					<select ng-model="searchRole" class="select floating">
-						<option ng-value=null>Tất cả</option>
-						<option ng-value="'R01'">Admin</option>
-						<option ng-value="'R02'">Staff</option>
-						<option ng-value="'R03'">User</option>
+						<option ng-value="''">Tất cả</option>
+						<option ng-value="'Admin'">Admin</option>
+						<option ng-value="'Staff'">Staff</option>
+						<option ng-value="'User'">User</option>
 					</select> <label class="focus-label">Quyền</label>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-2">
+			<div class="col-sm-6 col-md-1">
 				<a href="#" class="btn btn-success btn-block" ng-click="search()">
-					Search </a>
+					Tìm kiếm </a>
 			</div>
-			<div class="col-sm-6 col-md-2">
-				<a href="#" class="btn btn-success btn-block"> Reset </a>
+			<div class="col-sm-6 col-md-1">
+				<a href="#" class="btn btn-success btn-block" ng-click="refresh()"> Làm mới </a>
 			</div>
 		</div>
 		<!-- Search Filter -->
@@ -84,11 +88,11 @@
 						<thead>
 							<tr>
 								<th>STT</th>
-								<th>Fullname</th>
+								<th>Họ và tên</th>
 								<th>Email</th>
-								<th>Phone</th>
-								<th>Address</th>
-								<th>Gender</th>
+								<th>Số điện thoại</th>
+								<th>Địa chỉ</th>
+								<th>Giới tính</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -108,20 +112,11 @@
 								<td>{{item.address}}</td>
 								<td>{{item.gender ?'Nam':'Nữ'}}</td>
 
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle"
-											data-toggle="dropdown" aria-expanded="false"><i
-											class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#edit" ng-click="edit(item)"><i
-												class="fa fa-pencil m-r-5"></i> Edit</a> <a
-												class="dropdown-item" href="#" data-toggle="modal"
-												data-target="#delete" ng-click="edit(item)"><i
-												class="fa fa-trash-o m-r-5"></i> Delete</a>
-										</div>
-									</div>
+								<td class="text-center">
+									<button class="btn btn-danger btn-block" href="#"
+										data-toggle="modal" data-target="#edit" ng-click="edit(item)">
+										<i class="fa fa-pencil m-r-5"></i> Xem chi tiết
+									</button>
 								</td>
 							</tr>
 
@@ -139,7 +134,7 @@
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Employee</h5>
+					<h5 class="modal-title">Thêm tài khoản mới</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -158,21 +153,25 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">First Name <span
+									<label class="col-form-label">Họ <span
 										class="text-danger">*</span></label> <input class="form-control"
-										ng-model="form.firstname" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.firstname" type="text"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'firstname' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Last Name</label> <input
-										class="form-control" ng-model="form.lastname" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<label class="col-form-label">Tên</label> <input
+										class="form-control" ng-model="form.lastname" type="text"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'lastname' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -180,9 +179,10 @@
 									<label class="col-form-label">Username <span
 										class="text-danger">*</span></label> <input class="form-control"
 										ng-model="form.username" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'username' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -190,50 +190,57 @@
 									<label class="col-form-label">Email <span
 										class="text-danger">*</span></label> <input class="form-control"
 										ng-model="form.email" type="email" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'email' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<label class="col-form-label">Password <span
+								<label class="col-form-label">Mật khẩu <span
 									class="text-danger">*</span></label>
 								<div class="password-icon">
 									<input class="form-control" ng-model="form.passwords"
-										ng-attr-type="{{ passwordFieldType }}" ng-change="clearErrors()">
+										ng-attr-type="{{ passwordFieldType }}"
+										ng-change="clearErrors()">
 									<!-- Biểu tượng hình mắt sử dụng Font Awesome -->
 									<i class="fa"
 										ng-class="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}"
 										ng-click="togglePasswordVisibility()"></i>
 								</div>
-								<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'passwords' && index === 0">{{
-										error.message }}</errors>
+								<errors class="badge badge-danger"
+									ng-repeat="(index, error) in errors"
+									ng-if="error.field === 'passwords' && index === 0">{{
+								error.message }}</errors>
 							</div>
 
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span
+									<label class="col-form-label">Địa chỉ <span
 										class="text-danger">*</span></label> <input type="text"
-										ng-model="form.address" class="form-control" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.address" class="form-control"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'address' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Phone <span
+									<label class="col-form-label">Số điện thoại <span
 										class="text-danger">*</span></label> <input type="text"
-										ng-model="form.phone" class="form-control" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.phone" class="form-control"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'phone' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Hình ảnh<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -241,8 +248,8 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Gender <span
-										class="text-danger">*</span></label> <select class="select"
+									<label class="col-form-label">Giới tính <span
+										class="text-danger">*</span></label> <select class="form-control"
 										ng-model="form.gender">
 										<option ng-value="true">Nam</option>
 										<option ng-value="false">Nữ</option>
@@ -251,7 +258,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Status <span
+									<label class="col-form-label">Trạng thái <span
 										class="text-danger">*</span></label> <select class="select"
 										ng-model="form.status">
 										<option ng-value="true">Còn hoạt động</option>
@@ -261,8 +268,8 @@
 							</div>
 						</div>
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-click="create()">Add
-								Account</button>
+							<button class="btn btn-primary submit-btn" ng-click="create()">Thêm
+								tài khoản mới</button>
 						</div>
 					</form>
 				</div>
@@ -277,7 +284,7 @@
 			role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Account</h5>
+					<h5 class="modal-title">Chỉnh sửa tài khoản</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -296,21 +303,25 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">First Name <span
+									<label class="col-form-label">Họ <span
 										class="text-danger">*</span></label> <input class="form-control"
-										ng-model="form.firstname" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.firstname" type="text"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'firstname' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Last Name</label> <input
-										class="form-control" ng-model="form.lastname" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<label class="col-form-label">Tên</label> <input
+										class="form-control" ng-model="form.lastname" type="text"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'lastname' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -318,9 +329,10 @@
 									<label class="col-form-label">Username <span
 										class="text-danger">*</span></label> <input class="form-control"
 										ng-model="form.username" type="text" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'username' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -328,50 +340,57 @@
 									<label class="col-form-label">Email <span
 										class="text-danger">*</span></label> <input class="form-control"
 										ng-model="form.email" type="email" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'email' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<label class="col-form-label">Password <span
+								<label class="col-form-label">Mật khẩu <span
 									class="text-danger">*</span></label>
 								<div class="password-icon">
 									<input class="form-control" ng-model="form.passwords"
-										ng-attr-type="{{ passwordFieldType }}" ng-change="clearErrors()">
+										ng-attr-type="{{ passwordFieldType }}"
+										ng-change="clearErrors()">
 									<!-- Biểu tượng hình mắt sử dụng Font Awesome -->
 									<i class="fa"
 										ng-class="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}"
 										ng-click="togglePasswordVisibility()"></i>
 								</div>
-								<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
-										ng-if="error.field === 'passwords' && index === 0">{{
-										error.message }}</errors>
+								<errors class="badge badge-danger"
+									ng-repeat="(index, error) in errors"
+									ng-if="error.field === 'passwords' && index === 0">{{
+								error.message }}</errors>
 							</div>
 
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Address <span
+									<label class="col-form-label">Địa chỉ <span
 										class="text-danger">*</span></label> <input type="text"
-										ng-model="form.address" class="form-control" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.address" class="form-control"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'address' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Phone <span
+									<label class="col-form-label">Số điện thoại <span
 										class="text-danger">*</span></label> <input type="text"
-										ng-model="form.phone" class="form-control" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-model="form.phone" class="form-control"
+										ng-change="clearErrors()">
+									<errors class="badge badge-danger"
+										ng-repeat="(index, error) in errors"
 										ng-if="error.field === 'phone' && index === 0">{{
-										error.message }}</errors>
+									error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Image<span
+									<label class="col-form-label">Hình ảnh<span
 										class="text-danger">*</span></label> <input type="file"
 										class="form-control" id="image" ng-value="form.image"
 										onchange="angular.element(this).scope().imageChanged(this.files)">
@@ -379,7 +398,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Gender <span
+									<label class="col-form-label">Giới tính <span
 										class="text-danger">*</span></label> <select class="select"
 										ng-model="form.gender">
 										<option ng-value="true">Nam</option>
@@ -389,7 +408,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Status <span
+									<label class="col-form-label">Trạng thái <span
 										class="text-danger">*</span></label> <select class="select"
 										ng-model="form.status">
 										<option ng-value="true">Còn hoạt động</option>
@@ -399,7 +418,7 @@
 							</div>
 						</div>
 						<hr>
-						<h4>Role</h4>
+						<h4>Quyền sử dụng</h4>
 						<div class="table-responsive m-t-15">
 							<table class="table table-striped custom-table">
 								<thead>
@@ -413,10 +432,12 @@
 								</thead>
 								<tbody>
 									<tr>
-
-										<td class="text-center"><input type="checkbox"></td>
-										<td class="text-center"><input type="checkbox"></td>
-										<td class="text-center"><input type="checkbox"></td>
+										<td class="text-center"><input type="checkbox"
+											id="admin" ng-click="doiQuyenAdmin()"></td>
+										<td class="text-center"><input type="checkbox"
+											id="staff" ng-click="doiQuyenStaff()"></td>
+										<td class="text-center"><input type="checkbox"
+											id="user" ng-click="doiQuyenUser()"></td>
 									</tr>
 
 
@@ -424,8 +445,8 @@
 							</table>
 						</div>
 						<div class="submit-section">
-							<button class="btn btn-primary submit-btn" ng-clict="update()">Edit
-								Account</button>
+							<button class="btn btn-primary submit-btn" ng-clict="update()">Chỉnh
+								sửa tài khoản</button>
 						</div>
 					</form>
 				</div>
@@ -434,31 +455,7 @@
 	</div>
 	<!-- /Edit Employee Modal -->
 
-	<!-- Delete Employee Modal -->
-	<div class="modal custom-modal fade" id="delete_employee" role="dialog">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-header">
-						<h3>Delete Account</h3>
-						<p>Are you sure want to delete?</p>
-					</div>
-					<div class="modal-btn delete-action">
-						<div class="row">
-							<div class="col-6">
-								<a href="javascript:void(0);"
-									class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
-							</div>
-							<div class="col-6">
-								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<!-- /Delete Employee Modal -->
 	<div id="toast"></div>
 </div>

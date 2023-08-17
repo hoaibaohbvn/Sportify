@@ -54,11 +54,11 @@ public class Authorized implements Serializable {
 
 
     //--- ENTITY LINKS ( RELATIONSHIP )
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="roleid", referencedColumnName="roleid", insertable=false, updatable=false)
     private Roles      roles ; 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="username", referencedColumnName="username", insertable=false, updatable=false)
     private Users      users ; 

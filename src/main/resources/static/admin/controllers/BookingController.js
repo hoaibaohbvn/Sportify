@@ -20,7 +20,10 @@ app.controller('BookingController', function($scope, $http) {
 		
 		
 	}
-	
+	// hàm refresh
+	$scope.refresh = function refreshNow() {
+		location.reload();
+	}
 	// hàm rest form
 	$scope.reset = function() {
 		$scope.form = {
@@ -149,24 +152,21 @@ app.controller('BookingController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.keyword = ' ';
-   	 $scope.date = '';
+	 $scope.keyword = '';
+   	 $scope.datebook = null;
    	 $scope.status = '';
    	 $scope.search = function () {
-			var momentDate = moment($scope.date); // xài import thư viện Moment.js
+			var momentDate = moment($scope.datebook); // xài import thư viện Moment.js
 		var dateString = momentDate.format("YYYY-MM-DD");
       $http.get('/rest/bookings/search', { params: 
       		{ 	
 				keyword: $scope.keyword, 
-      			date: dateString,
+      			datebook: dateString,
       			status: $scope.status
       		} 
       		}).then(function (response) {
           $scope.items = response.data;
-          $scope.items.forEach(item => {
-				item.bookingdate = new Date(item.bookingdate)
-				
-			})
+          
 			console.log(dateString)
         })
         .catch(function (error) {
