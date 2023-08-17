@@ -5,12 +5,10 @@ package duan.sportify.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import duan.sportify.dao.OrderDAO;
 import duan.sportify.dao.VoucherDAO;
 import duan.sportify.entities.Orders;
+import duan.sportify.entities.Products;
 import duan.sportify.entities.Voucher;
 import duan.sportify.service.OrderService;
 import duan.sportify.service.VoucherService;
@@ -43,14 +42,8 @@ public class OrderController {
 	VoucherService voucherService;
 	
 	@GetMapping("/order/cart")
-	public String viewCart(Model model, @RequestParam("voucherid") Optional<String> voucherid) {
-		//tìm dữ liệu voucher
-		int discountpercent = 0;
+	public String viewCart(Model model) {
 		
-		if (voucherid.isPresent()) {
-			List<Voucher> voucherList = voucherService.findByVoucherId(voucherid.get());
-			model.addAttribute("voucherList", voucherList);
-		}
 		return "user/cart";
 	}
 	
@@ -64,8 +57,6 @@ public class OrderController {
 	public String list(Model model, HttpServletRequest request) {
 		String username = (String) request.getSession().getAttribute("username");
 		model.addAttribute("orders", orderService.findByUsername(username));
-		
-
 		return "user/orderList";
 	}
 	
@@ -78,12 +69,43 @@ public class OrderController {
 	
 	@GetMapping("/order/detail/cancelOrder/{id}")
 	public String cancelOrder(Model model, @ModelAttribute("id") Integer id, RedirectAttributes redirectAttributes) {
-//		System.out.println( id);
-//		return "redirect:/sportify/order/historyList";
-		
 		Orders updateOrder = orderService.findById(id);
 		updateOrder.setOrderstatus("Hủy Đặt");
 		orderDAO.save(updateOrder);
 		return "redirect:/sportify/order/historyList";
 	}
+	
+	//tìm kiếm voucher
+	@PostMapping("/order/cart/voucher")
+	public String cartVoucher(Model model, @RequestParam("voucherId") String voucherId) {
+		if(voucherId == "") {
+			return "redirect:/sportify/order/cart";
+		}
+		List<Voucher> voucherList = voucherDAO.findByVoucherId(voucherId);
+		model.addAttribute("voucherList", voucherList);
+		if (voucherList.size()>0) {
+			Integer discountPercent;
+			for (int i = 0; i < voucherList.size(); i++) {
+				Date startDateSql = (Date) voucherList.get(i).getStartdate();
+				LocalDate startDate = startDateSql.toLocalDate();
+				Date endDateSql = (Date) voucherList.get(i).getEnddate();
+				LocalDate endDate = endDateSql.toLocalDate();
+				LocalDate currentDate = LocalDate.now();
+				if(startDate.isBefore(currentDate) && endDate.isAfter(currentDate)) {
+					discountPercent = voucherList.get(i).getDiscountpercent();
+					model.addAttribute("discountPercent", discountPercent);
+					model.addAttribute("voucherMsg", "Đã áp dụng thành công voucher '" + voucherId + "'. Bạn được giảm " + discountPercent + "% .");
+					break;
+				} else {
+					model.addAttribute("voucherMsg", "Voucher '" + voucherId + "' đã hết hạn sử dụng");
+				}
+				
+			}
+		}
+		if(voucherList.size()==0){
+		    model.addAttribute("voucherMsg", "Không tìm thấy voucher '" + voucherId + "'.");
+		}
+		return "user/cart";
+	}
+	
 }

@@ -49,13 +49,6 @@ public class ProductController {
 		return "user/product";
 	};
 
-//	@GetMapping("product/")
-//	public String category(Model model2) {
-//		List<Categories> categoryList = categoryDAO.findAll();
-//		model2.addAttribute("categoryList", categoryList);
-//		return "user/product";
-//	};
-
 	@GetMapping("product-single/{productid}")
 	public String detail(Model model, @PathVariable("productid") Integer productid) {
 		Products product = productService.findById(productid);

@@ -195,7 +195,7 @@
 				<div class="col-md-9 ftco-animate mb-5 text-center">
 					<p class="breadcrumbs mb-0">
 						<span class="mr-2"><a href="index.html">Trang Chủ <i
-								class="fa fa-chevron-right"></i></a></span> <span>Giỏ Hàng <i
+								class="fa fa-chevron-right"></i></a></span> <span>Cửa hàng <i
 							class="fa fa-chevron-right"></i></span>
 					</p>
 					<h2 class="mb-0 bread">Giỏ Hàng</h2>
@@ -265,17 +265,18 @@
 			<div class="row justify-content-end">
 				<div
 					class="col col-lg-7 col-md-6 mt-7 cart-wrap ftco-animate justify-content-start">
-					<div class="">
+					<form th:action="@{/sportify/order/cart/voucher}" method="post"
+						class="">
 						<br> <br>
 						<h5>Mã giảm giá:</h5>
-						<p class="d-flex">
-							<input type="text" ng-model="voucherid" class="col-7">
-							<button class="btn btn-info"
-								ng-click="voucherCode.addVoucher(voucherid)">Áp dụng</button>
-
-						</p>
-
-					</div>
+						<input type="text" th:value="${voucherId}" name="voucherId"
+							class="col-7">
+						<button class="btn btn-info" type="submit" ng-click="voucherDiscountPercent()">Áp dụng</button>
+					</form>
+					<div class="mr-4 col-md-8" th:if="${voucherMsg}"
+						th:text="${voucherMsg}"></div>
+					<input type="text" th:value="${discountPercent}"
+						id="voucherDiscountPercent" hidden>
 				</div>
 				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
 					<div class="cart-total mb-3">
@@ -285,15 +286,16 @@
 								0}}đ</span>
 						</p>
 						<p class="d-flex">
-							<span>Phí vận chuyển: </span> <span>{{shippingFee.cartShipFee()
-								| number:0}}đ</span>
+							<span>Phí vận chuyển: </span> <span>{{shippingFee() |
+								number:0}}đ</span>
 						</p>
 						<p class="d-flex">
-							<span>Giảm giá: </span> <span>0đ</span>
+							<span>Giảm giá: </span> <span>{{voucherDiscountPrice() |
+								number:0}}đ</span>
 						</p>
 						<hr>
 						<p class="d-flex total-price">
-							<span>Thành tiền</span> <span>{{updateTotalPrice.updateTotalPrice()
+							<span>Thành tiền</span> <span>{{updateTotalPrice()
 								| number: 0}}đ</span>
 						</p>
 					</div>
