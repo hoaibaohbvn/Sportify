@@ -268,7 +268,8 @@ public class FieldController {
 				shiftid = shift.get(i).getShiftid();
 		}
 		// Khởi tạo giờ 17:00
-        LocalTime timeToCompare = LocalTime.of(17, 0);
+        LocalTime timeToCompare = LocalTime.of(17, 0); // Khởi tạo 17h00
+        LocalTime timeToSix = LocalTime.of(06, 0); // Khởi tạo 6h00
         LocalDate currentDate = LocalDate.now();
         
         // Chuyển đổi chuỗi ngày thành đối tượng LocalDate
@@ -285,7 +286,7 @@ public class FieldController {
 			double giasan = fieldListById.get(0).getPrice();
 			String nameSportype = fieldservice.findNameSporttypeById(idField);
 			List<Voucher> magiamgia = voucherService.findAll();
-			if (time.isAfter(timeToCompare)) {
+			if (time.isAfter(timeToCompare) || time.isBefore(timeToSix)) {
 				phuthu = fieldListById.get(0).getPrice() * 30 / 100;
 				totalprice = giasan + phuthu;
 				model.addAttribute("totalprice", totalprice);
@@ -420,7 +421,7 @@ public class FieldController {
 		        if (arrayObject.length >= 9) {
 		            int shiftid = (int) arrayObject[3];
 		            double price = (double) arrayObject[5];
-		            if(shiftid > 10) {
+		            if(shiftid > 10 || shiftid < 3) {
 		            	phuthu = price * 30 / 100;
 		            	tamtinh = phuthu+price;
 		            	giamgia = bookingPrice - tamtinh;
