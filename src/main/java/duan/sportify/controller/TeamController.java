@@ -70,10 +70,11 @@ public class TeamController {
 
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
-	public String viewTeam(Model model, HttpSession session, @RequestParam(name = "page", defaultValue = "0") int page,
+	public String viewTeam(Model model,HttpServletRequest request, HttpSession session, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText,
 			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid) {
 		int size = 4; // Đặt kích thước trang bạn muốn (số phần tử trên mỗi trang)
+		String usernameLogin = (String) request.getSession().getAttribute("username");
 
 		List<Object[]> teamPage;
 
@@ -86,12 +87,16 @@ public class TeamController {
 			teamPage = teamdao.SearchTeam(searchText);
 
 		} else if (searchTextLength == 0 && sporttypeidLength > 0) {// Kiểm tra nếu ng dùng chọn vào lọc thì sẽ dỗ dữ
-																	// liệu theo FilterTeam
+			// liệu theo FilterTeam
 			teamPage = teamdao.FilterTeam(sporttypeid);
 		} else {
 			teamPage = teamdao.findAllTeam();// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 		}
-
+		if (usernameLogin!=null) {
+		List<Object[]> teamUsername = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
+		model.addAttribute("teamUser", teamUsername);
+		}
+		
 		// Tạo một sublist dựa trên số trang và kích thước trang
 		int startIndex = page * size;
 		int endIndex = Math.min(startIndex + size, teamPage.size());
@@ -341,13 +346,15 @@ public class TeamController {
 		if (usernameLogin != null) {
 			List<Object[]> teamPage;
 			teamPage = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
-
+			List<Object[]> teamUsername = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 			// Tạo một sublist dựa trên số trang và kích thước trang
 			int startIndex = page * size;
 			int endIndex = Math.min(startIndex + size, teamPage.size());
 			List<Object[]> pageContent = teamPage.subList(startIndex, endIndex);
 			Page<Object[]> teamPageObj = new PageImpl<>(pageContent, PageRequest.of(page, size), teamPage.size());
 			model.addAttribute("team", teamPageObj);
+			model.addAttribute("teamUser", teamUsername);
+
 			// Kiểm tra để hiển thị thông báo
 //		if (!searchText.isEmpty() && teamPage.size() > 0) {
 //			model.addAttribute("FoundMessage",

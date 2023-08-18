@@ -256,7 +256,7 @@
 										aria-labelledby="dropdownMenuButton">
 										<a th:href="@{/sportify/team}" class="dropdown-item">Tất
 											cả</a> <a th:href="@{/sportify/team/findTeamUsername}"
-											class="dropdown-item">Team của tôi</a> <a
+											class="dropdown-item" >Team của tôi</a> <a
 											th:each="spt : ${sporttypeList}"
 											th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 											th:value="${spt.sporttypeid}" class="dropdown-item"
@@ -359,13 +359,19 @@
 										<p th:text="${teamItem[6]}" class="limited-length"
 											style="font-style: italic;"></p>
 									</div>
-									<div class="submit-section align-self-end mt-auto">
+									<div th:if="${users != null}" class="submit-section align-self-end mt-auto">
+										<a th:if="${#lists.contains(teamUser[0], teamItem[0])}"
+											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
+											class="btn btn-success">Xem thêm</a> 
+										<a th:unless="${#lists.contains(teamUser[0], teamItem[0])}"
+											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
+											class="btn btn-success">Vào Đội</a>
+									</div>
+									<div th:if="${users == null}" class="submit-section align-self-end mt-auto"> 
 										<a
 											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
-											class="btn btn-success">Xem thêm</a>
-
+											class="btn btn-success">Vào đội</a>
 									</div>
-
 								</div>
 							</div>
 						</div>
