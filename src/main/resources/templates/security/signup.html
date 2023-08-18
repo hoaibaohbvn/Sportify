@@ -18,7 +18,13 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="/user/css/styleLogin.css">
 </head>
-
+<style>
+.error-message {
+	font-size: 14px;
+	margin-top: 4px;
+	margin-left: 17px;
+}
+</style>
 <body>
 	<div class="container-fluid">
 		<div class="row no-gutter">
@@ -41,30 +47,38 @@
 									<div class="row">
 										<div class="col-6 form-group mb-3">
 											<input type="text" name="firstnameSignUp" placeholder="Họ"
-												class="form-control rounded-pill border-0 shadow-sm px-4">
+												class="form-control rounded-pill border-0 shadow-sm px-4"
+												onblur="validateFirstName(this)">
+											<div id="firstname-error" class="error-message text-danger"></div>
 										</div>
 										<div class="col-6 form-group mb-3">
 											<input type="text" name="lastnameSignUp" placeholder="Tên"
-												class="form-control rounded-pill border-0 shadow-sm px-4">
+												class="form-control rounded-pill border-0 shadow-sm px-4"
+												onblur="validateLastName(this)">
+											<div id="lastname-error" class="error-message text-danger"></div>
 										</div>
 									</div>
 									<div class="col-12 form-group mb-3">
 										<input type="text" name="usernameSignUp"
 											placeholder="Tài khoản"
-											class="form-control rounded-pill border-0 shadow-sm px-4">
+											class="form-control rounded-pill border-0 shadow-sm px-4"
+											onblur="validateUsername(this)">
+										<div id="username-error" class="error-message text-danger"></div>
 									</div>
 
 									<div class="form-group mb-3">
 										<input type="password" name="passwordSignUp"
 											placeholder="Mật khẩu"
-											class="form-control rounded-pill border-0 shadow-sm px-4">
+											class="form-control rounded-pill border-0 shadow-sm px-4"
+											onblur="validatePassword()">
+										<div id="password-match-error"
+											class="error-message text-danger"></div>
 									</div>
 
 									<div class="row">
 										<!-- giới tính -->
 										<div class="col-4 form-group mb-3">
 											<select name="genderSignUp" id="genderSignUp"
-												placeholder="Tên"
 												class="form-control rounded-pill border-0 shadow-sm px-4">
 												<option value="male">Nam</option>
 												<option value="female">Nữ</option>
@@ -72,36 +86,47 @@
 										</div>
 										<!-- End giới tính -->
 
-										<div class=" col-8 form-group mb-3">
+										<div class="col-8 form-group mb-3">
 											<input type="text" name="phoneSignUp"
 												placeholder="Số điện thoại"
-												class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+												class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+												onblur="validatePhone(this)">
+											<div id="phone-error" class="error-message text-danger"></div>
 										</div>
-
 									</div>
 									<div class="form-group mb-3">
 										<input type="text" name="emailSignUp" placeholder="Email"
-											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+											onblur="validateEmail(this)">
+										<div id="email-error" class="error-message text-danger"></div>
 									</div>
+
+									<div class="form-group mb-3">
+										<input type="text" name="addressSignUp" placeholder="Địa chỉ"
+											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+											onblur="validateAddress(this)">
+										<div id="address-error" class="error-message text-danger"></div>
+									</div>
+
 									<div th:if="${message!=null}"
 										class="custom-control custom-checkbox mb-3">
 										<label for="customCheck1"
 											class="custom-control-label text-danger" th:text="${message}"></label>
 									</div>
-									<button type="submit" class="btn btn-primary">Đăng kí</button>
+									<button onclick="validateFormAndSubmit()" type="submit"
+										class="btn btn-primary">Đăng kí</button>
 									<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Đã có tài khoản <a th:href="@{/sportify/login}"
-												class="mr-2">Đăng nhập</a>
+											Đã có tài khoản <a th:href="@{/sportify/login}" class="mr-2">Đăng
+												nhập</a>
 										</p>
 									</div>
-
 								</form>
 							</div>
 						</div>
 					</div>
 					<!-- End -->
-
+				
 					<!-- Quên mật khẩu-->
 					<div id="forgotPasswordForm" class="container"
 						style="display: none;">
@@ -165,6 +190,168 @@
 		
 	</script>
 
+	<script>
+    var regexVietnameseName = /^[\p{L}\s]*$/u;
+    var regexVietnameseAddress = /^[\p{L}0-9\s.,/-]+$/u;
+    var regexVietnamesePhone = /^(0|\\+84|84)?[0-9]{9,10}$/;
+    var regexEmail = /^[\w\.-]+@[\w\.-]+\.\w{2,}$/;
+
+    const usernameInput = document.getElementsByName('usernameSignUp')[0];
+    const firstnameInput = document.getElementsByName('firstnameSignUp')[0];
+    const lastnameInput = document.getElementsByName('lastnameSignUp')[0];
+    const phoneInput = document.getElementsByName('phoneSignUp')[0];
+    const emailInput = document.getElementsByName('emailSignUp')[0];
+    const addressInput = document.getElementsByName('addressSignUp')[0];
+    const passwordInput = document.getElementsByName('passwordSignUp')[0];
+
+    usernameInput.addEventListener('blur', function() { validateUsername(this); });
+    firstnameInput.addEventListener('blur', function() { validateNameInput(this, 'firstname-error'); });
+    lastnameInput.addEventListener('blur', function() { validateNameInput(this, 'lastname-error'); });
+    phoneInput.addEventListener('blur', function() { validatePhone(this); });
+    emailInput.addEventListener('blur', function() { validateEmail(this); });
+    addressInput.addEventListener('blur', function() { validateAddress(this); });
+    passwordInput.addEventListener('blur', function() { validatePassword(this); });
+
+
+    function validateUsername(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('username-error');
+        if (value === '') {
+            errorDiv.textContent = 'Tài khoản không được để trống';
+            return false;
+        } else if (value.length < 6 || value.length > 15) {
+            errorDiv.textContent = 'Tài khoản phải từ 6 đến 15 ký tự';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    function validatePassword(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('password-match-error');
+       
+       if (value === '') {
+           errorDiv.textContent = 'Mật khẩu không được để trống';
+           return false;
+       } else if (value.length < 6 || value.length > 15) {
+           errorDiv.textContent = 'Mật khẩu phải từ 6 đến 15 ký tự';
+           return false;
+       } else {
+           errorDiv.textContent = '';
+           return true;
+       }
+   }
+    
+    function validateNameInput(input, errorId) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById(errorId);
+        
+        if (value === '') {
+            errorDiv.textContent = 'Không được để trống';
+            return false;
+        } else if (!regexVietnameseName.test(value)) {
+            errorDiv.textContent = 'Không nhập số hoặc ký tự đặc biệt như: !@#.,';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    function validateAddress(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('address-error');
+
+        if (value === '') {
+            errorDiv.textContent = 'Địa chỉ không được để trống';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+    
+    function validateEmail(input) {
+        var value = input.value;
+        var errorDiv = document.getElementById('email-error');
+
+        if (!regexEmail.test(value)) {
+            errorDiv.textContent = 'Email không hợp lệ';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    function validatePhone(input) {
+        var value = input.value;
+        var errorDiv = document.getElementById('phone-error');
+
+        if (value.trim() === '') {
+            errorDiv.textContent = 'Số điện thoại không được để trống';
+            return false;
+        } else if (!regexVietnamesePhone.test(value)) {
+            errorDiv.textContent = 'Không đúng số điện thoại Việt Nam';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    
+
+    function validateFormAndSubmit() {
+        let isValid = true; // Biến để kiểm tra tính hợp lệ của các hàm kiểm tra
+        const errorMessages = []; // Mảng lưu trữ thông báo lỗi
+
+        // Kiểm tra từng hàm kiểm tra và cập nhật biến isValid
+        isValid = isValid && validateUsername(usernameInput);
+        isValid = isValid && validateNameInput(firstnameInput, 'firstname-error');
+        isValid = isValid && validateNameInput(lastnameInput, 'lastname-error');
+        isValid = isValid && validatePassword(passwordInput);
+        isValid = isValid && validatePhone(phoneInput);
+        isValid = isValid && validateEmail(emailInput);
+        isValid = isValid && validateAddress(addressInput);
+
+ 
+        // Xây dựng mảng thông báo lỗi
+        if (!validateUsername(usernameInput)) {
+            errorMessages.push('Tài khoản không được để trống hoặc phải từ 6 đến 15 ký tự');
+        }
+        if (!validateNameInput(firstnameInput, 'firstname-error')) {
+            errorMessages.push('Vui lòng kiểm tra họ');
+        }
+        if (!validateNameInput(lastnameInput, 'lastname-error')) {
+            errorMessages.push('Vui lòng kiểm tra tên');
+        }
+        if (!validatePassword(passwordInput)) {
+            errorMessages.push('Mật khẩu không được để trống hoặc phải từ 6 đến 15 ký tự');
+        }
+        if (!validateAddress(addressInput)) {
+            errorMessages.push('Địa chỉ không được để trống');
+        }
+        if (!validatePhone(phoneInput)) {
+            errorMessages.push('Vui lòng kiểm tra số điện thoại');
+        }
+        if (!validateEmail(emailInput)) {
+            errorMessages.push('Vui lòng kiểm tra email');
+        }
+
+        // Hiển thị thông báo lỗi
+        if (errorMessages.length > 0) {
+			event.preventDefault();
+            const errorMessageContainer = document.getElementById('error-message-container');
+            errorMessageContainer.innerHTML = '<ul><li>' + errorMessages.join('</li><li>') + '</li></ul>';
+        } else {
+            // Tất cả dữ liệu hợp lệ, thực hiện submit
+            document.querySelector('form').submit();
+        }
+    }
+</script>
 </body>
 
 </html>
