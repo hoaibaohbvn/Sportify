@@ -35,7 +35,8 @@
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
 								<h3 class="display-4">Đăng nhập</h3>
-								<p id="notification" class="text-info font-weight-bold" th:text="${thongbao}"></p>
+								<p id="notification" class="text-info font-weight-bold"
+									th:text="${thongbao}"></p>
 								<form th:action="@{/sportify/login}" method="post">
 									<div class="form-group mb-3">
 										<input name="username" type="text" placeholder="username"
@@ -45,11 +46,12 @@
 										<input name="password" type="password" placeholder="password"
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
 									</div>
-									<div th:if="${message!=null}" class="custom-control custom-checkbox mb-3">
+									<div th:if="${message!=null}"
+										class="custom-control custom-checkbox mb-3">
 										<label for="customCheck1"
 											class="custom-control-label text-danger" th:text="${message}"></label>
 									</div>
-									
+
 
 									<div class="d-grid gap-2 mb-3">
 										<a th:href="@{/sportify/login/form}"><button
@@ -62,7 +64,8 @@
 
 									<div class="text-center d-flex justify-content-between mt-4">
 										<p>
-											Bạn chưa có tài khoản <a th:href="@{/sportify/signup}">Đăng kí</a>
+											Bạn chưa có tài khoản <a th:href="@{/sportify/signup}">Đăng
+												kí</a>
 										</p>
 									</div>
 
@@ -71,21 +74,23 @@
 						</div>
 					</div>
 					<!-- End -->
+
 					<!-- Quên mật khẩu-->
 					<div id="forgotPasswordForm" class="container"
 						style="display: none;">
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
 								<h3 class="display-4">Quên mật khẩu</h3>
-								<p class="text-muted mb-4">Chúng tôi sẽ giúp bạn khôi phục ký ức..!</p>
+								<p class="text-muted mb-4">Chúng tôi sẽ giúp bạn khôi phục
+									ký ức..!</p>
 								<form th:action="@{/sportify/forgotpassword}" method="post"
 									id="forgotPasswordForm">
-									
+
 									<div class="form-group mb-3">
 										<input id="inputUsername" type="text" name="usernameforgot"
 											placeholder="Tên tài khoản" required=""
 											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-										
+
 									</div>
 									<div class="form-group mb-3">
 										<input id="inputEmail" type="text" placeholder="Email"
@@ -93,17 +98,18 @@
 											class="form-control rounded-pill border-0 shadow-sm px-4">
 										<span id="invalidUserEmailMessage" class="text-danger"></span>
 									</div>
-									
+
 									<button type="submit"
 										class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
 										onclick="validateAndSubmit()">Khôi Phục Mật Khẩu</button>
 								</form>
 
 								<div class="text-center d-flex justify-content-between mt-4">
-										<p>
-											Đã có tài khoản <a th:href="@{/sportify}"> <u>Đăng nhập</u></a>
-										</p>
-									</div>
+									<p>
+										Đã có tài khoản <a th:href="@{/sportify}"> <u>Đăng
+												nhập</u></a>
+									</p>
+								</div>
 
 								</form>
 							</div>
@@ -117,7 +123,7 @@
 
 		</div>
 	</div>
-	
+
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -184,7 +190,6 @@
         }
     }
 </script>
-	
 </body>
 
 </html>
