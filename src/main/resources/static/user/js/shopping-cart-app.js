@@ -5,7 +5,6 @@ const app = angular.module("shopping-cart-app", []);
 }])*/
 
 app.controller("shopping-cart-ctrl", function($scope, $http) {
-
 	$scope.cart = {
 		items: [],
 		//thêm SP
@@ -64,45 +63,37 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	}
 
 	//tính phí vận chuyển
-	$scope.shippingFee = {
-		shipFee: 0,
-		cartShipFee() {
-			return ($scope.cart.totalPrice >= 300000 ? 0 : 30000);
-		}
+	$scope.shippingFee = function() {
+		return ($scope.cart.totalPrice >= 300000 ? 0 : 30000);
 	}
 
 	//tính mã giảm giá
-	//$scope.voucherid = voucher.id;
-	$scope.voucherCode = {
-		vouchers: [],
-		addVoucher(voucherid) {
-			var voucher = this.vouchers.find(voucher => voucher.voucherid == voucherid);
-			if (voucher) {
-				
-			} else {
-				$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
-					this.vouchers.push(resp.data);
-					this.saveToSessionStorage();
-				});
-			};
-			/*$http.get(`/sportify/rest/order/cart/${voucherid}`).then(resp => {
-				this.vouchers = resp.data;
-				this.vouchers.forEach(voucher => {
-					voucher.startdate = new Date(voucher.startdate)
-					voucher.enddate = new Date(voucher.enddate)
-				})
-				//alert(voucherid);
-			});*/
-		}
-	};
-	//update tổng tiền
-	$scope.updateTotalPrice = {
-		updateTotalPrice() {
-			var updatePrice;
-			updatePrice = ($scope.cart.totalPrice + $scope.shippingFee.cartShipFee())
-			return updatePrice;
+	$scope.voucherDiscountPercent = function() {
+		var discountPercent = document.getElementById('voucherDiscountPercent').value;
+		sessionStorage.setItem("discountPercentStorage", discountPercent);
+	}
+	$scope.voucherDiscountPrice = function() {
+		var discountPercent2 = sessionStorage.getItem("discountPercentStorage");
+		if (discountPercent2) {
+			var voucherPrice;
+			voucherPrice = ($scope.cart.totalPrice * (discountPercent2 / 100));
+			return voucherPrice;
+		} else {
+			return 0;
 		}
 	}
+	$scope.clearVoucher = function() {
+		sessionStorage.setItem("discountPercentStorage", 0);
+	}
+
+	//update tổng tiền
+	$scope.updateTotalPrice = function() {
+		var updatePrice;
+		updatePrice = ($scope.cart.totalPrice + $scope.shippingFee() - $scope.voucherDiscountPrice());
+		return updatePrice;
+	}
+
+
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
@@ -110,6 +101,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		createdate: new Date(),
 		address: "",
 		note: "",
+		totalprice: $scope.updateTotalPrice(),
 		orderstatus: 1,
 		paymentstatus: 0,
 		get orderDetails() {
@@ -117,7 +109,8 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 				return {
 					products: { productid: item.productid },
 					price: item.price,
-					quantity: item.quantity
+					quantity: item.quantity,
+					//producTotalPrice: item.price * item.quantity 
 				}
 			});
 		},
@@ -128,20 +121,17 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			$http.post("/sportify/rest/orders", order).then(resp => {
 				alert("Đặt hàng thành công!");
 				$scope.cart.clearCart();
+				$scope.clearVoucher();
 				location.href = "/sportify/order/detail/" + resp.data.orderid;
 			}).catch(error => {
 				alert("Đặt hàng lỗi!")
 				console.log(error)
 			});
-		},
-		//tính tổng tiền order
-		orderTotalPrice(){
-			var orderTotal = 0;
-			for (var i = 0; i < this.order.orderDetails().legth; i++){
-				var productTotal = this.order.orderDetails(i); 
-				orderTotal += (productTotal.price * productTotal.quantity);
-			}
-			return orderTotal;
 		}
+
 	}
+
+	//tính tổng tiền order
+	$scope.orderTotalPrice = [];
+
 })
