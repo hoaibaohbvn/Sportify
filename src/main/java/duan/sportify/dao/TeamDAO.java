@@ -52,6 +52,11 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 	@Query(value = "SELECT * FROM sportify.teams\r\n"
 			+ "where username like :username ",
 			nativeQuery = true)
+	Teams findOneTeamUserin(String username);
+	
+	@Query(value = "SELECT * FROM sportify.teams\r\n"
+			+ "where username like :username ",
+			nativeQuery = true)
 	Teams findTeamUser(String username);
 	
 	//search in admin 

@@ -257,11 +257,17 @@ public class TeamController {
 	public String phongdoitruong(HttpServletRequest request, Model model, @ModelAttribute("teamId") Integer teamId,
 			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
 		String usernameLogin = (String) request.getSession().getAttribute("username");
-		Teams findTeam = teamdao.findOneTeamUser(teamId, usernameLogin);
-		findTeam.setUsername(username);
-		teamdao.save(findTeam);
-		redirectAttributes.addFlashAttribute("message", "Phong đội trưởng thành công !");
+		Teams findTeamin = teamdao.findOneTeamUserin(username);
+		if(findTeamin==null) {
+			Teams findTeamout = teamdao.findOneTeamUser(teamId, usernameLogin);
+			findTeamout.setUsername(username);
+			teamdao.save(findTeamout);
+			redirectAttributes.addFlashAttribute("message", "Phong đội trưởng thành công !");
+			return "redirect:/sportify/team/teamdetail/" + teamId;
+		}
+		redirectAttributes.addFlashAttribute("message1", "Người này đang làm đội trưởng 1 nhóm khác !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
+		
 	}
 
 	@PostMapping("team/createTeam")
