@@ -255,7 +255,9 @@
 									<div class="dropdown-menu filter-item"
 										aria-labelledby="dropdownMenuButton">
 										<a th:href="@{/sportify/team}" class="dropdown-item">Tất
-											cả</a> <a th:each="spt : ${sporttypeList}"
+											cả</a> <a th:href="@{/sportify/team/findTeamUsername}"
+											class="dropdown-item">Team của tôi</a> <a
+											th:each="spt : ${sporttypeList}"
 											th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 											th:value="${spt.sporttypeid}" class="dropdown-item"
 											th:text="${spt.categoryname}"></a>
