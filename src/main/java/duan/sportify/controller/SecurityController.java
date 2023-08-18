@@ -1,6 +1,8 @@
 package duan.sportify.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -44,7 +46,7 @@ public class SecurityController {
 	AuthorizedDAO authorizedDAO;
 	List<Users> listUser = new ArrayList<>();
 	@RequestMapping("/sportify/login")
-	public String loginForm(Model model) {
+    public String loginForm(Model model) {
 		 listUser = userService.findAll();
 		 model.addAttribute("listUser",listUser);
 		return "security/login";
@@ -60,14 +62,13 @@ public class SecurityController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		session.setAttribute("username", username);
-
 		return "redirect:/sportify";
 	}
 
 	@RequestMapping("/sportify/login/error")
-	public String loginError(Model model) {
-		model.addAttribute("message", "Sai thông tin đăng nhập!");
-		return "security/login";
+	public String loginError(Model model, @RequestParam(name = "error", required = false) String error) {
+	    		model.addAttribute("message", "Thông tin đăng nhập không hợp lệ hoặc tài khoản của bạn đã bị khóa");
+			    return "security/login";
 	}
 
 	@RequestMapping("/sportify/unauthoried")
@@ -90,6 +91,7 @@ public class SecurityController {
 			@RequestParam("passwordSignUp") String passwordSignUp, 
 			@RequestParam("phoneSignUp") String phoneSignUp,
 	        @RequestParam("genderSignUp") String genderSignUp,
+	        @RequestParam("addressSignUp") String addressSignUp,
 			@RequestParam("emailSignUp") String emailSignUp) {
 
 		Optional<Users> userOptional = Optional.ofNullable(userService.findById(usernameSignUp));
@@ -108,8 +110,9 @@ public class SecurityController {
 		newUser.setPasswords(passwordSignUp);
 		newUser.setPhone(phoneSignUp);
 		newUser.setEmail(emailSignUp);
+		newUser.setAddress(addressSignUp);
 		newUser.setStatus(true);
-		newUser.setGender(isMale);
+		newUser.setGender(true);
 		userDAO.save(newUser);
 		
 		//Tạo 1 đối tượng Authorized
