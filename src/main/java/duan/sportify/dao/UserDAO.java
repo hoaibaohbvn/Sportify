@@ -14,8 +14,8 @@ public interface UserDAO extends JpaRepository<Users, String>{
 	@Query(value="SELECT COUNT(*) FROM users;", nativeQuery = true)
 	List<Object> CountUser();
 	
-	@Query(value = "SELECT * FROM sportify.users WHERE username like :usernameLogin  AND passwords like :passwordLogin ", nativeQuery = true)
-	Users findAcc(@Param("usernameLogin") String usernameLogin, @Param("passwordLogin") String passwordLogin);
+	@Query(value = "SELECT * FROM sportify.users WHERE username like :usernameSignup", nativeQuery = true)
+	Users findAcc(String usernameSignup);
 	// search admin
 	@Query(value = "SELECT DISTINCT  users.*\r\n"
 			+ "FROM users\r\n"
