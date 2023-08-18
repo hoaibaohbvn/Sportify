@@ -54,6 +54,9 @@ public class TeamController {
 	TeamDetailDAO detailDAO;
 
 	@Autowired
+	TeamDetailService teamDetailService;
+	
+	@Autowired
 	TeamService teamService;
 
 	@Autowired
@@ -138,6 +141,14 @@ public class TeamController {
 			HttpSession session, RedirectAttributes redirectAttributes) {
 		// Lấy username từ session
 		String username = (String) request.getSession().getAttribute("username");
+		Teams findTeamout = teamdao.findOneTeamUser(teamId, username);
+		int count =detailDAO.countUser(teamId);
+		if(findTeamout!=null && count <=1) {
+			detailDAO.deleteByUsernameAndTeamId(username, teamId);
+			detailDAO.deleteTeamId(username, teamId);
+			redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+			return "redirect:/sportify/team";	
+		}
 		detailDAO.deleteByUsernameAndTeamId(username, teamId);
 		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
 		return "redirect:/sportify/team";
