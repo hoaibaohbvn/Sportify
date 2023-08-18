@@ -23,7 +23,7 @@ public class MailInfo {
 
 	public MailInfo(String to, String subject, String body) {
 		super();
-		this.from = "teamdev.sportify@gmail.com";
+		this.from = "SPORTIFY";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;

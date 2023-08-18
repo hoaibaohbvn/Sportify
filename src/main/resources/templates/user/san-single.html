@@ -28,34 +28,37 @@
 <link rel="stylesheet" href="/user/css/style.css">
 <style>
 .info-content {
-    display: none; /* Ẩn thông tin ban đầu */
-    background-color: #FBEAEB;
-    color: #2F3C7E;
-    font-weight:bold;
-    padding: 5px;
-    border: 1px solid #ccc;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    z-index: 1;
+	display: none; /* Ẩn thông tin ban đầu */
+	background-color: #FAF0E4;;
+	color: #606C5D;
+	font-weight: bold;
+	padding: 5px;
+	border: 1px solid #ccc;
+	position: absolute;
+	top: 20px;
+	left: 0;
+	z-index: 1;
+	border-radius: 5px;
+	
 }
 
 /* Định dạng biểu tượng "i" */
 .info-icon {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-color: graytext;
-    color: white;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background-color: #F2BE22;
+	color: white;
+	text-align: center;
+	line-height: 15px;
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
 }
 
+/* Hiển thị thông tin khi hover vào phần tử chứa thông tin */
 .info-container:hover .info-content {
-    display: block;
+	display: block;
 }
 </style>
 
@@ -220,7 +223,7 @@
 						 <span class="info-container">
                                         <span class="info-icon">i</span>
 										<span class="info-content">
-											<p>Tìm ngày để biết thông tin các giờ còn trống</p>
+											<p>Chọn ngày để tìm kiếm giờ trống của sân này</p>
 										</span> </span>
 						</span>
 						<form  onsubmit="return validateDate()"

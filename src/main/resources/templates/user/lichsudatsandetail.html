@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:java="java.util" xmlns:temporals="java.time.temporal">
 
 <head>
-<title>SPORTIFY - Chi Tiết Booking</title>
+<title>SPORTIFY - Chi Tiết Phiếu</title>
 <link rel="icon" href="/user/images/logotitle.png" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport"
@@ -93,7 +93,8 @@
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -150,52 +151,66 @@
                <div class="box-title-name"><span class="null">Chi Tiết</span> Lịch Sử Đặt Sân</div>
 			</div>
 	<div class="container d-flex justify-content-center rounded mb-5" >
-		<div class=" col-md-12 rounded row" id="profiles" style="margin-top:50px;background-color:rgb(247 249 250);">
+		<div class=" col-md-12 rounded row" id="profiles"
+			style="margin-top: 50px; background-color: rgb(247, 249, 250);">
 
-			<div th:each="bookingInfo : ${listbooking}" class="card col-12 mb-3" style="border-radius:10px; margin-top: 20px">
-				<h6 class="card-header">Mã phiếu #<span th:text="${bookingInfo[0]}" ></span> 
-				<span style= "color:#1F8A70; font-weight: bold;">Đặt lúc</span>
-				<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[1], 'dd/MM/yyyy HH:mm:ss')}"></span>
-				<span th:with="statusColor=${bookingInfo[2] == 'Hoàn Thành' ? '#39AEA9' : (bookingInfo[2] == 'Đã Cọc' ? '#FFA41B' : (bookingInfo[2] == 'Hủy Đặt' ? 'red' : 'white'))}" 
-				      th:style="'font-size:medium;color:snow; font-weight:bold;margin-left: 3%;margin-right: 3%; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}" 
-				      th:text="${bookingInfo[2]}">
-				</span>
-				<span class="text-dark font-weight-bold">Thành Tiền:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(thanhtien)}"></span> 
-				<span>
-				<a  style="padding-left: 2%" th:href="@{/sportify/field/profile/historybooking}">
-							<button type="button" class="btn btn-outline-dark font-weight-bold">VỀ TRANG DANH SÁCH ĐẶT SÂN</button>
-					</a></span>
+			<div th:each="bookingInfo : ${listbooking}" class="card col-12 mb-3"
+				style="border-radius: 10px; margin-top: 20px">
+				<h6 class="card-header">
+					Mã phiếu <span style="color: black; font-weight: bold;" th:text="'#'+${bookingInfo[0]}"></span> <span>Đặt lúc</span> <span
+						style="color: black; font-weight: bold;"
+						th:text="${#dates.format(bookingInfo[1], 'dd/MM/yyyy HH:mm:ss')}"></span>
+					<span
+						th:with="statusColor=${bookingInfo[2] == 'Hoàn Thành' ? '#39AEA9' : (bookingInfo[2] == 'Đã Cọc' ? '#FFA41B' : (bookingInfo[2] == 'Hủy Đặt' ? 'red' : 'white'))}"
+						th:style="'font-size:medium;color:snow; font-weight:bold;margin-left: 3%;margin-right: 3%; padding: 3px 10px 3px 10px; border-radius: 10px; background-color:' + ${statusColor}"
+						th:text="${bookingInfo[2]}"> </span> <span>Thành Tiền:</span> <span
+						class=" font-weight-bold" style="color:#279EFF; padding: 5px; border-radius: 8px"
+						th:text="${#numbers.formatCurrency(thanhtien)}"></span> <span>
+						<a style="padding-left: 2%"
+						th:href="@{/sportify/field/profile/historybooking}">
+							<button type="button"
+								class="btn btn-outline-dark font-weight-bold">VỀ TRANG
+								DANH SÁCH ĐẶT SÂN</button>
+					</a>
+					</span>
 				</h6>
 				<div class="card-body">
-					<h5 class="card-title text-success font-weight-bold" th:text="${bookingInfo[6]}"></h5>
-					<img style="width:20%; height:50%" th:src="@{'/user/images/' + ${bookingInfo[7]}}" alt="Image">
+					<h5 class="card-title text-success font-weight-bold"
+						th:text="${bookingInfo[6]}"></h5>
+					<img style="width: 20%; height: 50%"
+						th:src="@{'/user/images/' + ${bookingInfo[7]}}" alt="Image">
 					<div>
-					<span style= "color:black;">Ngày nhận sân:</span>
-					<span style= "color:#1F8A70; font-weight: bold;" th:text="${#dates.format(bookingInfo[4], 'dd/MM/yyyy')}"></span>
+						<span style="color: black;">Ngày nhận sân:</span> <span
+							style="color: #1F8A70; font-weight: bold;"
+							th:text="${#dates.format(bookingInfo[4], 'dd/MM/yyyy')}"></span>
 					</div>
 					<div>
-					<span style= "color:black;">Giờ chơi:</span>
-					<span style= "color:#1F8A70; font-weight: bold;" th:text="${bookingInfo[8]}"></span>
+						<span style="color: black;">Giờ chơi:</span> <span
+							style="color: #1F8A70; font-weight: bold;"
+							th:text="${bookingInfo[8]}"></span>
 					</div>
 					<div>
-					<span>Giá sân gốc / 1h:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(bookingInfo[5])}"></span>
+						<span style="color: black;">Giá sân gốc / 1h:</span> <span
+							 style="color: #1F8A70; font-weight: bold;"
+							th:text="${#numbers.formatCurrency(bookingInfo[5])}"></span>
 					</div>
-					 <hr>
-					 <div>
-					<p>
-					<span>Phụ Thu:
-					</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(phuthu)}"></span>
-					<span>Tạm Tính:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(tamtinh)}"></span> 
-					<span>Giảm giá:</span> <span class="text-danger font-weight-bold" th:text="${#numbers.formatCurrency(giamgia)}"></span> ||
-					<span class="font-weight-bold">Tiền đã cọc:</span> <span class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(tiencoc)}"></span> ||
-					<span class="text-dark font-weight-bold">Khi nhận sân thanh toán:</span> <span class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(conlai)}"></span> 
-					
-
-					</p>
+					<hr>
+					<div>
+						<p>
+							<span>Phụ Thu: </span> <span class="font-weight-bold"
+								th:text="${#numbers.formatCurrency(phuthu)}"></span> <span>Tạm
+								Tính:</span> <span class="font-weight-bold"
+								th:text="${#numbers.formatCurrency(tamtinh)}"></span> <span>Giảm
+								giá:</span> <span class="font-weight-bold"
+								th:text="${#numbers.formatCurrency(giamgia)}"></span> || <span>Tiền đã cọc:</span> <span
+								class="text-success font-weight-bold"
+								th:text="${#numbers.formatCurrency(tiencoc)}"></span> || <span>Khi nhận sân thanh
+								toán:</span> <span class="text-danger font-weight-bold"
+								th:text="${#numbers.formatCurrency(conlai)}"></span>
+						</p>
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 <footer class="ftco-footer">
