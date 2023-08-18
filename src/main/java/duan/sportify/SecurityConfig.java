@@ -20,6 +20,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
@@ -34,10 +36,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	UserDAO userDAO;
 	@Autowired
 	HttpSession session;
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 	
+	@Bean
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+        failureHandler.setUseForward(true);
+        failureHandler.setDefaultFailureUrl("/sportify/login?error=locked");
+        return failureHandler;
+    }
 	// Cung cấp nguồn dữ liệu đăng nhập
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	        auth.userDetailsService(customUserDetailsService);
 			auth.userDetailsService(username -> {
 				try {
 					Users user = userDAO.findById(username).get();
@@ -65,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {	
 			http.csrf().disable().cors().disable();
 			http.authorizeRequests()
-				.antMatchers("/sportify/field/booking/**","/sportify/field/profile/**","/sportify/team/teamdetail/**","/sportify/submit-contact","/sportify/order/checkout").authenticated()
+				.antMatchers("/sportify/field/booking/**","/sportify/field/profile/**","/sportify/team/teamdetail/**","/sportify/submit-contact" ).authenticated()
+				.antMatchers("/sportify/login/success").authenticated()
 				.antMatchers("/admin/**").hasAnyRole("R01", "R02")
 				.antMatchers("/rest/authorities").hasRole("R01")
 				.anyRequest().permitAll();
