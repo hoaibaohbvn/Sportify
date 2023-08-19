@@ -64,7 +64,7 @@ public class ContactController {
 		List<String> listcontacted = contactDAO.contactedInDay();
 		String loggedInUsername = userlogin;
 		if(listcontacted.contains(loggedInUsername)) {
-			 redirectAttributes.addFlashAttribute("message", "Bạn chỉ có thể gửi phản hồi mới sau 24 giờ.");
+			 redirectAttributes.addFlashAttribute("message", "Để hạn chế spam. Bạn chỉ có thể gửi phản hồi mới vào ngày tiếp theo.");
 		        return "redirect:/sportify/contact";
 		}else {
 		// Lưu thông tin
