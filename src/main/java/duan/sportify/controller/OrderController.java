@@ -27,6 +27,7 @@ import duan.sportify.entities.Orders;
 import duan.sportify.entities.Products;
 import duan.sportify.entities.Voucher;
 import duan.sportify.service.OrderService;
+import duan.sportify.service.UserService;
 import duan.sportify.service.VoucherService;
 
 @Controller
@@ -40,6 +41,8 @@ public class OrderController {
 	VoucherDAO voucherDAO;
 	@Autowired
 	VoucherService voucherService;
+	@Autowired
+	UserService userService;
 	
 	@GetMapping("/order/cart")
 	public String viewCart(Model model) {
@@ -48,8 +51,9 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order/checkout")
-	public String checkOutCart() {
-		
+	public String checkOutCart(Model model, HttpServletRequest request) {
+		String username = (String) request.getSession().getAttribute("username");
+		model.addAttribute("users", userService.findById(username));
 		return "user/checkout";
 	}
 	

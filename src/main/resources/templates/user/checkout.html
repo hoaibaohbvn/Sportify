@@ -205,19 +205,24 @@
 			<div class="row justify-content-center">
 				<!-- Form điền thông tin để thanh toán -->
 				<div class="col-xl-10 ftco-animate">
-					<form action="#" class="billing-form">
+					<form action="#" class="billing-form" th:each="user : ${users}" th:object="${user}" name="myForm">
 						<h3 class="mb-4 billing-heading">Chi tiết thanh toán đơn hàng</h3>
 						<div class="row align-items-end">
+						<div class="col-md-12">
+								<div class="form-group"  hidden>
+									<div class="form-control" id="username" >[[${#request.remoteUser}]]</div>
+								</div>
+							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="firstname">Họ: </label> <input type="text"
-										class="form-control" ng-model="order.username" value="">
+										class="form-control"  th:value="${user.firstname}" readonly>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="lastname">Tên: </label> <input type="text"
-										class="form-control" placeholder="" value="">
+										class="form-control" placeholder="" value="" th:value="${user.lastname}" readonly>
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -225,16 +230,17 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="streetaddress">Địa chỉ nhận hàng: </label> <input
-										type="text" class="form-control"
+										type="text" class="form-control" name="address"
 										placeholder="Địa chỉ nhà, quận, huyện, ..."
-										ng-model="order.address">
+										ng-model="order.address" ng-pattern="/^[a-zA-Z0-9,./ À-Ỹà-ỹ]*$/" required>
+										<p ng-show="myForm.address.$invalid">Vui lòng nhập địa chỉ.</p>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="streetaddress">Ngày đặt hàng: </label> <input
 										type="text" class="form-control" placeholder=""
-										value="{{order.createdate | date: 'dd-MM-yyyy'}}">
+										value="{{order.createdate | date: 'dd-MM-yyyy'}}" readonly>
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -242,13 +248,13 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="phone">Số điện thoại: </label> <input type="text"
-										class="form-control" placeholder="">
+										class="form-control" placeholder="" th:value="${user.phone}" readonly>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="emailaddress">Email: </label> <input type="text"
-										class="form-control" placeholder="">
+										class="form-control" placeholder="" th:value="${user.email}" readonly>
 								</div>
 							</div>
 						</div>
@@ -284,7 +290,7 @@
 						<div class="col-md-6">
 							<div class="cart-detail p-3 p-md-4">
 								<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
-								<div class="form-group">
+								  <div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
 											<label><input type="radio" name="optradio"
@@ -292,14 +298,14 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
+								<!--<div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
 											<label><input type="radio" name="optradio"
 												class="mr-2">Ví điện tử VNPAY</label>
 										</div>
 									</div>
-								</div>
+								</div>-->
 								<div class="form-group">
 									<div class="col-md-12">
 										<div class="checkbox">

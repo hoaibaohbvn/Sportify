@@ -47,5 +47,11 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDAO.findById(id).get();
 	}
+
+	@Override
+	public Object findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userDAO.findByUsername(username);
+	}
 	
 }

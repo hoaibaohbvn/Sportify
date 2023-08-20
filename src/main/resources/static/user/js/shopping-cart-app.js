@@ -97,7 +97,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
-		username: "",
+		username: $("#username").text() ,
 		createdate: new Date(),
 		address: "",
 		note: "",
@@ -133,5 +133,10 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 	//tính tổng tiền order
 	$scope.orderTotalPrice = [];
-
+	
+	
+	// Custom validation function
+    $scope.validateNoSpecialCharacters = function(input) {
+      return /^[a-zA-Z0-9,./ À-Ỹà-ỹ]*$/.test(input);
+    };
 })

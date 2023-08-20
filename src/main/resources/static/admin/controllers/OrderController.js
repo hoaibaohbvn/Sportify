@@ -2,7 +2,7 @@ app.controller('OrderController', function($scope, $http) {
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		
-		// lấy danh sách product
+		// lấy danh sách order
 		$http.get("/rest/orders/getAll").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
@@ -26,6 +26,29 @@ app.controller('OrderController', function($scope, $http) {
 
 	// hàm cập nhập
 	$scope.update = function() {
+		var item = angular.copy($scope.form);
+		$http.put(`/rest/orders/update/${item.orderid}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
+			$scope.items[index] = item;
+			showSuccessToast("Đã cập nhập thành công trạng thái của phiếu đặt sân")
+			$('#edit').modal('hide')
+			$scope.getAll();
+			refreshPageAfterThreeSeconds();
+		}).catch(error => {
+			// Xử lý lỗi phản hồi từ máy chủ
+			if (error.data && error.data.errors) {
+				$scope.errors = error.data.errors;
+			}
+			if (error.data) {
+				showErrorToast("Vui lòng kiểm tra lại form");
+			}
+			console.log($scope.errors);
+      		console.log(error);
+		});
+	}
+	
+	// hàm xác nhận đơn hàng
+	$scope.confirmOrder = function() {
 		var item = angular.copy($scope.form);
 		$http.put(`/rest/orders/update/${item.orderid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
