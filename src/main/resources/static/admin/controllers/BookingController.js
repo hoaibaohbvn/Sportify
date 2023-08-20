@@ -156,8 +156,8 @@ app.controller('BookingController', function($scope, $http) {
    	 $scope.datebook = null;
    	 $scope.status = '';
    	 $scope.search = function () {
-			var momentDate = moment($scope.datebook); // xài import thư viện Moment.js
-		var dateString = momentDate.format("YYYY-MM-DD");
+			   var momentDate = moment($scope.datebook); // xài import thư viện Moment.js
+			   var dateString = momentDate.format("YYYY-MM-DD");
       $http.get('/rest/bookings/search', { params: 
       		{ 	
 				keyword: $scope.keyword, 

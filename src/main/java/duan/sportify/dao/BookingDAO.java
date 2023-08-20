@@ -131,4 +131,77 @@ public interface BookingDAO extends JpaRepository<Bookings, Integer> {
 			+ "    END), 0) AS doanh_thu_thang_truoc\r\n"
 			+ "FROM bookings;", nativeQuery = true)
 	List<Object[]> tongDoanhThuBooking2Month();
+	// rp
+	// rp doanh thu dặt sân trong tháng
+	@Query(value = "SELECT\r\n"
+			+ "  CONCAT(DAY(bookingdate), '-', MONTH(bookingdate)) AS booking_date_month,\r\n"
+			+ "  SUM(\r\n"
+			+ "    CASE\r\n"
+			+ "      WHEN bookingstatus = 'Hoàn Thành' THEN bookingprice\r\n"
+			+ "      WHEN bookingstatus = 'Đã Cọc' THEN bookingprice * 0.3\r\n"
+			+ "      WHEN bookingstatus = 'Hủy Đặt' THEN - bookingprice * 0.3 * 2\r\n"
+			+ "      ELSE 0\r\n"
+			+ "    END\r\n"
+			+ "  ) AS doanhThuThucTe,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Hủy Đặt' THEN  bookingprice * 0.3 * 2 ELSE 0 END) AS huy,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Đã Cọc' THEN  bookingprice * 0.3 ELSE 0 END) AS coc,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Hoàn Thành' THEN  bookingprice  ELSE 0 END) AS hoanthanh,\r\n"
+			+ "  SUM(bookingprice) AS DoanhThuUocTinh\r\n"
+			+ "FROM bookings\r\n"
+			+ "WHERE\r\n"
+			+ "  YEAR(bookingdate) = :year AND MONTH(bookingdate) = :month \r\n"
+			+ "GROUP BY booking_date_month\r\n"
+			+ "ORDER BY booking_date_month;", nativeQuery = true)
+    List<Object[]> rpDoanhThuBookingTrongThang(@Param("year") String year, @Param("month") String month);
+	// lấy năm của các phiếu dặt
+	@Query(value = "SELECT DISTINCT YEAR(bookingdate) AS booking_year\r\n"
+			+ "FROM bookings;", nativeQuery = true)
+	List<Object[]> getYearBooking();
+	// rp daonh thu dặt sân trong năm
+	@Query(value = "SELECT\r\n"
+			+ " concat('Tháng ',month(bookingdate)) AS booking_date_month,\r\n"
+			+ "  SUM(\r\n"
+			+ "    CASE\r\n"
+			+ "      WHEN bookingstatus = 'Hoàn Thành' THEN bookingprice\r\n"
+			+ "      WHEN bookingstatus = 'Đã Cọc' THEN bookingprice * 0.3\r\n"
+			+ "      WHEN bookingstatus = 'Hủy Đặt' THEN - bookingprice * 0.3 * 2\r\n"
+			+ "      ELSE 0\r\n"
+			+ "    END\r\n"
+			+ "  ) AS doanhThuThucTe,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Hủy Đặt' THEN  bookingprice * 0.3 * 2 ELSE 0 END) AS huy,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Đã Cọc' THEN  bookingprice * 0.3 ELSE 0 END) AS coc,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus = 'Hoàn Thành' THEN  bookingprice  ELSE 0 END) AS hoanthanh,\r\n"
+			+ "  SUM(bookingprice) AS DoanhThuUocTinh\r\n"
+			+ "FROM bookings\r\n"
+			+ "WHERE\r\n"
+			+ "  YEAR(bookingdate) = :year \r\n"
+			+ "GROUP BY booking_date_month\r\n"
+			+ "ORDER BY booking_date_month;", nativeQuery = true)
+	List<Object[]> rpDoanhThuBookingTrongNam(@Param("year") String year);
+	// rp so luong phieu dat san trong thang
+	@Query(value = "SELECT\r\n"
+			+ "  CONCAT('Ngày ', DAY(bookingdate), '-', MONTH(bookingdate)) AS booking_date_month,\r\n"
+			+ "  COUNT(bookingid) AS tongphieu,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus LIKE 'Hủy Đặt' THEN 1 ELSE 0 END) AS huy,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus LIKE 'Đã Cọc' THEN 1 ELSE 0 END) AS coc,\r\n"
+			+ "  SUM(CASE WHEN bookingstatus LIKE 'Hoàn Thành' THEN 1 ELSE 0 END) AS hoanthanh\r\n"
+			+ "FROM bookings\r\n"
+			+ "WHERE\r\n"
+			+ "  YEAR(bookingdate) = :year AND MONTH(bookingdate) = :month \r\n"
+			+ "GROUP BY booking_date_month\r\n"
+			+ "ORDER BY booking_date_month;", nativeQuery = true)
+	 List<Object[]> rpSoLuongBookingTrongThang(@Param("year") String year, @Param("month") String month);
+	 // rp so luong phieu dat san trong nam
+	 @Query(value = "SELECT\r\n"
+	 		+ "  CONCAT('Tháng ', MONTH(bookingdate)) AS booking_date_month,\r\n"
+	 		+ "  COUNT(bookingid) AS tongphieu,\r\n"
+	 		+ "  SUM(CASE WHEN bookingstatus LIKE 'Hủy Đặt' THEN 1 ELSE 0 END) AS huy,\r\n"
+	 		+ "  SUM(CASE WHEN bookingstatus LIKE 'Đã Cọc' THEN 1 ELSE 0 END) AS coc,\r\n"
+	 		+ "  SUM(CASE WHEN bookingstatus LIKE 'Hoàn Thành' THEN 1 ELSE 0 END) AS hoanthanh\r\n"
+	 		+ "FROM bookings\r\n"
+	 		+ "WHERE\r\n"
+	 		+ "  YEAR(bookingdate) = :year \r\n"
+	 		+ "GROUP BY booking_date_month\r\n"
+	 		+ "ORDER BY booking_date_month;", nativeQuery = true)
+	 List<Object[]> rpSoLuongBookingTrongNam(@Param("year") String year);
 }
