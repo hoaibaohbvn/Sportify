@@ -375,7 +375,7 @@
 									<div th:if="${users != null}"
 										class="submit-section align-self-end mt-auto">
 										<a th:each="teamUser : ${teamUser}"
-											th:if="${#lists.size(teamUser) > 0 && #lists.contains(teamUser, teamItem[0])}"
+											th:if="${#lists.size(teamUser) > 0 && #lists.contains(teamUser[0], teamItem[0])}"
 											th:href="@{/sportify/team/teamdetail/{teamId}/exit(teamId=${teamItem[0]})}"
 											class="btn btn-danger">Rời Team</a> <a
 											th:unless="${#lists.size(teamUser) > 0 && #lists.contains(teamUser, teamItem[0])}"
