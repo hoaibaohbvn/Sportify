@@ -37,14 +37,15 @@ public class EventController {
 	@GetMapping("/event")
 	public String view(@ModelAttribute("eventName") String eventName, Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
 		) {
-		System.out.print(eventName);
 		Page<Eventweb> eventwebList;
 		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không
-
-		if(keywordLength > 0 && eventName==null) {
+		if (eventName == null) {
+	        eventName = "";
+	    }
+		if(keywordLength > 0 && eventName.isEmpty()) {
 			eventwebList = eventDAO.searchEvents(keyword, pageable);
 			
-		}else if(eventName=="thethao" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("thethao") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnTheThao(pageable);
 		}else if(eventName=="khuyenmai" && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnKhuyenMai(pageable);
@@ -56,11 +57,7 @@ public class EventController {
 			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
 		}
 		
-		
-		
-		
 		List<Eventweb> events = eventwebList.getContent();
-		
 		model.addAttribute("eventList", events);
 		model.addAttribute("page", eventwebList);
 		model.addAttribute("keyword", keyword);
