@@ -1,9 +1,14 @@
 package duan.sportify.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,9 +47,10 @@ public class SecurityController {
 	
 	@Autowired
 	AuthorizedDAO authorizedDAO;
+		
 	List<Users> listUser = new ArrayList<>();
 	@RequestMapping("/sportify/login")
-	public String loginForm(Model model) {
+    public String loginForm(Model model) {
 		 listUser = userService.findAll();
 		 model.addAttribute("listUser",listUser);
 		return "security/login";
@@ -60,14 +66,13 @@ public class SecurityController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		session.setAttribute("username", username);
-
 		return "redirect:/sportify";
 	}
 
 	@RequestMapping("/sportify/login/error")
-	public String loginError(Model model) {
-		model.addAttribute("message", "Sai thông tin đăng nhập!");
-		return "security/login";
+	public String loginError(Model model, @RequestParam(name = "error", required = false) String error) {
+	    		model.addAttribute("message", "Thông tin đăng nhập không hợp lệ hoặc tài khoản của bạn đã bị khóa");
+			    return "security/login";
 	}
 
 	@RequestMapping("/sportify/unauthoried")
@@ -77,28 +82,30 @@ public class SecurityController {
 	}
 
 	@RequestMapping("/sportify/logoff/success")
-	public String logoffSuccess(Model model) {
+	public String logoffSuccess(Model model, HttpSession session) {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
+        session.removeAttribute("username"); //Xóa Session người dùng đăng nhập
 		return "redirect:/sportify";
 	}
 
 	@PostMapping("/sportify/signup/process")
-	public String processSignup(Model model,HttpServletRequest request, 
+	public String processSignup(Model model,HttpServletRequest request, HttpSession session,
 			@RequestParam("firstnameSignUp") String firstnameSignUp,
 			@RequestParam("lastnameSignUp") String lastnameSignUp,
 			@RequestParam("usernameSignUp") String usernameSignUp,
 			@RequestParam("passwordSignUp") String passwordSignUp, 
 			@RequestParam("phoneSignUp") String phoneSignUp,
 	        @RequestParam("genderSignUp") String genderSignUp,
+	        @RequestParam("addressSignUp") String addressSignUp,
 			@RequestParam("emailSignUp") String emailSignUp) {
 
-		Optional<Users> userOptional = Optional.ofNullable(userService.findById(usernameSignUp));
-
+//		Optional<Users> userOptional = Optional.ofNullable(userService.findById(usernameSignUp));
+		Users userOptional = userDAO.findAcc(usernameSignUp);
 		// Kiểm tra xem tên đăng nhập đã tồn tại chưa
-		if (userOptional.isPresent()) {
+		if (userOptional !=null ) {
 			model.addAttribute("message", "Tài khoản đã tồn tại !");
 			return "security/signup";
-		}else {
+		}
 		boolean isMale = genderSignUp.equals("male");
 		// Tạo một đối tượng User mới
 		Users newUser = new Users();
@@ -108,20 +115,17 @@ public class SecurityController {
 		newUser.setPasswords(passwordSignUp);
 		newUser.setPhone(phoneSignUp);
 		newUser.setEmail(emailSignUp);
-		newUser.setStatus(true);
-		newUser.setGender(isMale);
+		newUser.setAddress(addressSignUp);
+		newUser.setStatus(isMale);
+		newUser.setGender(true);
 		userDAO.save(newUser);
-		
 		//Tạo 1 đối tượng Authorized
 		Authorized newAuthorized =new Authorized();
 		newAuthorized.setUsername(usernameSignUp);
 		newAuthorized.setRoleid("R03");
 		authorizedDAO.save(newAuthorized);
-		model.addAttribute("message", "Bạn đã đăng kí thành công !");
-		
-		}
-		
-		return "redirect:/sportify/login";
+//		System.out.print("Bạn đã đăng kí thành công !");
+		return "redirect:/sportify/login"; // hoặc trang bạn muốn
 	}
 
 

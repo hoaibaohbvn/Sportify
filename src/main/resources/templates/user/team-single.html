@@ -297,7 +297,7 @@
 								</div>
 								<div class="submit-section align-self-end mt-auto">
 									<!-- Chuyển đến trang Detail của Team được chọn -->
-									<a th:if="${oneUser==null}"
+									<a th:if="${oneUser==null || s[10]<=1}"
 										th:href="@{/sportify/team/teamdetail/{teamId}/exit(teamId=${s[0]})}"
 										class="btn btn-success">Rời Team</a>
 								</div>

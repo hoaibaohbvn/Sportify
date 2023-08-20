@@ -36,7 +36,7 @@
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
-		<div class="wrap" style="z-index: 9; position: relative">
+	<div class="wrap" style="z-index: 9; position: relative">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 d-flex align-items-center">
@@ -70,10 +70,9 @@
 					<div th:if="${users == null}" class="reg m-1"
 						style="display: block;">
 						<p class="mb-0">
-							<a th:href="@{/sportify/login/form}" class="mr-2"
+							<a th:href="@{/sportify/login}" class="mr-2"
 								style="color: white;">Đăng nhập |</a> <a
-								th:href="@{/sportify/login/form}" style="color: white;">Đăng
-								kí</a>
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -97,11 +96,13 @@
 						<div class="ml-3 mt-2 dropdown-menu"
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
-								tin</a> <a th:href="@{/user/list-order}" class="dropdown-item"
-								href="#">Lịch sử đặt sân</a> <a th:href="@{/sportify/order/historyList}"
-								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
-								th:href="@{/user/change-password}" class="dropdown-item">Đổi
-								mật khẩu</a> <a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
+								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a
+								th:href="@{/sportify/order/historyList}" class="dropdown-item"
+								href="#">Lịch sử đặt hàng</a> <a
+								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
+								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
+							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
 								xuất</a>
 						</div>
 					</div>
@@ -127,26 +128,32 @@
 						<small>{{cart.cartCount}}</small>
 					</div>
 				</a>
-				
+
 				<!-- giỏ hàng ảo -->
-				<div class="dropdown-menu dropdown-menu-right" >
+				<div class="dropdown-menu dropdown-menu-right">
 					<a class="dropdown-item text-center btn-link d-block w-100"
 						th:href="@{/sportify/order/cart}"> View All <span
 						class="ion-ios-arrow-round-forward"></span>
 					</a>
-					<div class="dropdown-item d-flex align-items-start" href="#">						
+					<div class="dropdown-item d-flex align-items-start" href="#">
 						<p class="mb-0">
-								<p class="quantity" style="color: black">Tổng số lượng: {{cart.cartCount}}</p>
-								<p><a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice | number: 0}} VNĐ</a></p>							
+						<p class="quantity" style="color: black">Tổng số lượng:
+							{{cart.cartCount}}</p>
+						<p>
+							<a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice |
+								number: 0}}đ</a>
+						</p>
 					</div>
-					<div class="dropdown-item d-flex align-items-start" ng-repeat="item in cart.items">
+					<div class="dropdown-item d-flex align-items-start"
+						ng-repeat="item in cart.items">
 						<div class="img"
 							style="background-image: url(/user/images/{{item.image}});"></div>
 						<div class="text pl-3">
 							<h4>{{item.productname}}</h4>
 							<p class="mb-0">
-								<span class="quantity">Số lượng: {{item.quantity}}</span>
-								<a href="#" class="price ml-3">{{item.quantity * item.price | number: 0}} VNĐ</a>
+								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
+									href="#" class="price ml-3">{{item.quantity * item.price |
+									number: 0}}đ</a>
 							</p>
 						</div>
 					</div>
@@ -158,6 +165,7 @@
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
+
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a th:href="@{/sportify/field}"
@@ -165,7 +173,7 @@
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin Tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -212,7 +220,8 @@
 				<div class="d-flex justify-content-center col-md-12 mt-1">
 					<div class="mr-4 col-md-8" th:if="${FoundMessage}"
 						th:text="${FoundMessage}"></div>
-				</div> <br>
+				</div>
+				<br>
 				<!-- show sản phẩm -->
 				<div class="col-md-9">
 					<!-- sắp xếp -->
@@ -229,9 +238,10 @@
 									<a class="dropdown-item" href="#">Giá cao - thấp</a> <a
 										class="dropdown-item" href="#">Giá thấp - cao</a> <a
 										class="dropdown-item" href="#">Tên A - Z</a> <a
-										class="dropdown-item" href="#">Tên Z - A </a> <a
-										class="dropdown-item" href="#">Giảm giá nhiều</a> <a
-										class="dropdown-item" href="#">Giảm giá ít</a>
+										class="dropdown-item" href="#">Tên Z - A </a>
+									<!--<a
+										 class="dropdown-item" href="#">Giảm giá nhiều</a> <a
+										class="dropdown-item" href="#">Giảm giá ít</a> -->
 								</div>
 							</div>
 						</div>
@@ -248,8 +258,7 @@
 								<div class="d-flex align-items-center justify-content-center">
 									<img
 										class="img d-flex align-items-center justify-content-center"
-										th:src="@{'/user/images/' + ${product.image}}"
-										alt="Error"
+										th:src="@{'/user/images/' + ${product.image}}" alt="Error"
 										style="height: 250px; width: 255px; object-fit: fill">
 
 								</div>
@@ -264,11 +273,11 @@
 												class="flaticon-shopping-bag"></span></a>
 										</p>
 
-										<p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
+										<!-- <p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
 											<a href=""
 												class="d-flex align-items-center justify-content-center link heart"><span
 												class="flaticon-heart"></span></a>
-										</p>
+										</p> -->
 										<p class="col-xl-4 col-lg-4 col-md-2 col-sm-2">
 											<a
 												th:href="@{'/sportify/product-single/' + ${product.productid}}"
@@ -278,17 +287,17 @@
 									</div>
 									<h2 th:text="${product.productname}"></h2>
 									<p class="mb-0">
-										<span class="price" th:text="${product.price}"></span>
+										<span class="price"
+											th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')} + 'đ'">
+										</span>
 									</p>
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 					<div class="row mt-5">
 						<!-- phân trang -->
-						<div class="col text-center">
+						<!-- <div class="col text-center">
 							<div class="block-27">
 								<ul>
 									<li><a href="#">&lt;</a></li>
@@ -299,11 +308,9 @@
 									<li><a href="#">5</a></li>
 									<li><a href="#">&gt;</a></li>
 								</ul>
-							</div>
-						</div>
+							</div> -->
 					</div>
 				</div>
-
 				<div class="col-md-3">
 					<!-- thanh category -->
 					<div class="sidebar-box ftco-animate">
@@ -320,6 +327,7 @@
 				</div>
 			</div>
 		</div>
+
 	</section>
 
 	<!-- footer -->
@@ -329,74 +337,56 @@
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2 logo">
-							<a href="#">Liquor <span>Store</span></a>
+							<a href="#">Sportify - Giải Pháp Sân Thể Thao</a>
 						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries.</p>
+						<p>Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm
+							thể thao</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
+							<li class="ftco-animate"><a
+								href="https://www.facebook.com/profile.php?id=100094025267338"><span
 									class="fa fa-facebook"></span></a></li>
 							<li class="ftco-animate"><a href="#"><span
 									class="fa fa-instagram"></span></a></li>
 						</ul>
 					</div>
 				</div>
+
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">My Accounts</h2>
+						<h2 class="ftco-heading-2">Chính sách và điều kiện</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Account</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log
-									In</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My
-									Order</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Information</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Catalog</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact
-									us</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Term
-									&amp; Conditions</a></li>
+							<li><a th:href="@{/sportify/chinhsach}"><span
+									class="fa fa-chevron-right mr-2"></span>Chính sách</a></li>
+							<li><a th:href="@{/sportify/quydinh}"><span
+									class="fa fa-chevron-right mr-2"></span>Quy Định & Điều Kiện</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Quick Link</h2>
+						<h2 class="ftco-heading-2">Liên Hệ Nhanh</h2>
 						<ul class="list-unstyled">
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New
-									User</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help
-									Center</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Report
-									Spam</a></li>
-							<li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Faq's</a></li>
+							<li><a th:href="@{/sportify/contact}"><span
+									class="fa fa-chevron-right mr-2"></span>Liên Hệ</a></li>
+
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md">
 					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<h2 class="ftco-heading-2">Thông tin liên hệ</h2>
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon fa fa-map marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
+									class="text">Công viên phần mềm Quang QTSC Building 1,
+										Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam</span></li>
 								<li><a href="#"><span class="icon fa fa-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
+										class="text">0123456789</span></a></li>
 								<li><a href="#"><span
-										class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+										class="icon fa fa-paper-plane pr-4"></span><span class="text">sportify@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -410,13 +400,14 @@
 
 						<p class="mb-0" style="color: rgba(255, 255, 255, .5);">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
+							Bản quyền &copy;
 							<script>
 								document.write(new Date().getFullYear());
 							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib.com</a>
+							Bảo lưu mọi quyền | Mẫu này được thực hiện <i
+								class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a
+								th:href="@{/sportify/about}" target="_blank">Team Developer
+								Sportify</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>

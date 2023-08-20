@@ -66,5 +66,10 @@ public interface TeamDetailDAO extends JpaRepository<Teamdetails, Integer>{
 	@Query(value ="DELETE FROM teamdetails WHERE username like :username AND teamid like :teamId", nativeQuery = true)
 	@Transactional
 	int deleteByUsernameAndTeamId(String username, Integer teamId);
+	
+	@Modifying
+	@Query(value ="DELETE FROM teams WHERE username like :username AND teamid like :teamId", nativeQuery = true)
+	@Transactional
+	int deleteTeamId(String username, Integer teamId);
 
 }

@@ -127,7 +127,7 @@ p {
 					<li class="nav-item"><a th:href="@{/sportify/team}"
 						class="nav-link">Đội</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/event}"
-						class="nav-link">Sự kiện</a></li>
+						class="nav-link">Tin tức</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/product}"
 						class="nav-link">Cửa hàng</a></li>
 					<li class="nav-item"><a th:href="@{/sportify/about}"
@@ -165,24 +165,58 @@ p {
 	            <h2 class="mb-4">Sportify - Nền tảng đa năng cho đặt sân, tạo đội và mua sắm sản phẩm thể thao</h2>
 				
 				<h4 style="color:green; font-weight: bold;">1. Quy định chung</h4>
-	          	<p> Mỗi khách hàng phải tuân thủ các quy định khi sử dụng dịch vụ tại <b class="font-weight-bold">Sportify</b>.</p>
-	  <p>        	(a). <b class="font-weight-bold text-info">Đăng ký và đặt sân:</b> Người dùng phải đăng ký tài khoản và đặt sân trước khi sử dụng dịch vụ sân thể thao. Quy định này giúp quản lý lịch trình sử dụng sân và tránh tình trạng quá tải.<br>
-	          	(b). <b class="font-weight-bold text-info">Thanh toán và hủy đặt:</b> Người dùng phải thực hiện thanh toán trước hoặc cọc một phần tiền trước khi đặt sân. Nếu có yêu cầu hủy đặt sân, người dùng nên tuân thủ quy định và thời hạn hủy đặt để tránh mất phí hoặc hạn chế.<br>
-(c). <b class="font-weight-bold text-info">Tuân thủ quy tắc và luật lệ:</b> Người dùng phải tuân thủ quy tắc và luật lệ của sân thể thao trong quá trình sử dụng dịch vụ. Điều này bao gồm việc không vi phạm các quy định về an toàn, không gây ảnh hưởng đến người chơi khác và không gây ra tình trạng hỗn loạn.<br>
-(d). <b class="font-weight-bold text-info">Trang phục phù hợp:</b> Người dùng nên mặc trang phục phù hợp và an toàn khi tham gia các hoạt động thể thao trên sân.<br>
-(e). <b class="font-weight-bold text-info">Sử dụng trang thiết bị và vật dụng:</b> Người dùng nên sử dụng trang thiết bị và vật dụng theo đúng cách và không gây hư hỏng hoặc làm mất cắp tài sản của sân thể thao.<br>
-(f). <b class="font-weight-bold text-info">Bảo vệ môi trường:</b> Người dùng nên giữ gìn môi trường sạch sẽ và không gây ô nhiễm trong khu vực sân thể thao.<br>
-(g). <b class="font-weight-bold text-info">Tôn trọng nhân viên và người khác:</b> Người dùng nên tôn trọng và lịch sự khi giao tiếp và tương tác với nhân viên và người khác trên sân thể thao.<br>
-(h). <b class="font-weight-bold text-info">Đánh giá và phản hồi:</b> Người dùng nên có thể đánh giá và phản hồi về chất lượng dịch vụ để cải thiện và nâng cao chất lượng phục vụ cho cộng đồng người dùng.<br>
-(i). <b class="font-weight-bold text-info">Không sử dụng chất kích thích:</b> Người dùng nên tuân thủ quy định không sử dụng chất kích thích, rượu và các chất gây nghiện trong khu vực sân thể thao.<br>
-(k). <b class="font-weight-bold text-info">Tuân thủ hướng dẫn của nhân viên:</b> Người dùng nên tuân thủ các hướng dẫn và yêu cầu của nhân viên sân thể thao để đảm bảo an toàn và trật tự.<br>
-<b class="font-weight-bold text-secondary">Những quy định trên giúp đảm bảo việc sử dụng dịch vụ sân thể thao được diễn ra thuận lợi, an toàn và tạo điều kiện thuận lợi cho mọi người tham gia. Ngoài ra, quy định cụ thể có thể thay đổi tùy thuộc vào từng sân thể thao cụ thể và quy định pháp luật của khu vực hoạt động.</b><br>
-</p>
-	         	<h4 style="color:green; font-weight: bold;">2. Quy định & Điều kiện Sân:</h4>
+						<p>
+							Mỗi khách hàng phải tuân thủ các quy định khi sử dụng dịch vụ tại
+							<b class="font-weight-bold">Sportify</b>.
+						</p>
+						<p>
+							(a). <b class="font-weight-bold text-info">Đăng ký và đặt
+								sân:</b> Người dùng phải đăng ký tài khoản và đặt sân trước khi sử
+							dụng dịch vụ sân thể thao. Quy định này giúp quản lý lịch trình
+							sử dụng sân và tránh tình trạng quá tải.<br> (b). <b
+								class="font-weight-bold text-info">Thanh toán và hủy đặt:</b>
+							Người dùng phải thực hiện thanh toán trước hoặc cọc một phần tiền
+							trước khi đặt sân. Nếu có yêu cầu hủy đặt sân, người dùng nên
+							tuân thủ quy định và thời hạn hủy đặt để tránh mất phí hoặc hạn
+							chế.<br> (c). <b class="font-weight-bold text-info">Tuân
+								thủ quy tắc và luật lệ:</b> Người dùng phải tuân thủ quy tắc và luật
+							lệ của sân thể thao trong quá trình sử dụng dịch vụ. Điều này bao
+							gồm việc không vi phạm các quy định về an toàn, không gây ảnh
+							hưởng đến người chơi khác và không gây ra tình trạng hỗn loạn.<br>
+							(d). <b class="font-weight-bold text-info">Trang phục phù
+								hợp:</b> Người dùng nên mặc trang phục phù hợp và an toàn khi tham
+							gia các hoạt động thể thao trên sân.<br> (e). <b
+								class="font-weight-bold text-info">Sử dụng trang thiết bị và
+								vật dụng:</b> Người dùng nên sử dụng trang thiết bị và vật dụng theo
+							đúng cách và không gây hư hỏng hoặc làm mất cắp tài sản của sân
+							thể thao.<br> (f). <b class="font-weight-bold text-info">Bảo
+								vệ môi trường:</b> Người dùng nên giữ gìn môi trường sạch sẽ và
+							không gây ô nhiễm trong khu vực sân thể thao.<br> (g). <b
+								class="font-weight-bold text-info">Tôn trọng nhân viên và
+								người khác:</b> Người dùng nên tôn trọng và lịch sự khi giao tiếp và
+							tương tác với nhân viên và người khác trên sân thể thao.<br>
+							(h). <b class="font-weight-bold text-info">Đánh giá và phản
+								hồi:</b> Người dùng nên có thể đánh giá và phản hồi về chất lượng
+							dịch vụ để cải thiện và nâng cao chất lượng phục vụ cho cộng đồng
+							người dùng.<br> (i). <b class="font-weight-bold text-info">Không
+								sử dụng chất kích thích:</b> Người dùng nên tuân thủ quy định không
+							sử dụng chất kích thích, rượu và các chất gây nghiện trong khu
+							vực sân thể thao.<br> (k). <b
+								class="font-weight-bold text-info">Tuân thủ hướng dẫn của
+								nhân viên:</b> Người dùng nên tuân thủ các hướng dẫn và yêu cầu của
+							nhân viên sân thể thao để đảm bảo an toàn và trật tự.<br> <b
+								class="font-weight-bold text-secondary">Những quy định trên
+								giúp đảm bảo việc sử dụng dịch vụ sân thể thao được diễn ra
+								thuận lợi, an toàn và tạo điều kiện thuận lợi cho mọi người tham
+								gia. Ngoài ra, quy định cụ thể có thể thay đổi tùy thuộc vào
+								từng sân thể thao cụ thể và quy định pháp luật của khu vực hoạt
+								động.</b><br>
+						</p>
+						<h4 style="color:green; font-weight: bold;">2. Quy định & Điều kiện Sân:</h4>
 	         	<p>
 	         	- Đối với <b class="font-weight-bold text-info">Khách vãng lai</b> sẽ sử dụng được tính năng tìm các sân trống theo ngày và khung giờ chọn theo ý muốn và xem chi tiết từng sân. <br>
 	         	- Phải là khách hàng <b class="font-weight-bold text-info">thành viên</b> của <b class="font-weight-bold">Sportify</b>. Đăng ký tài khoản để sử dụng tính năng Đặt Sân. <br>
-	         	- Các giờ đặt từ <b class="font-weight-bold text-info">18h00</b> trở đi chúng tôi sẽ tính phí phụ thu ( các dịch vụ ban đêm ) <b class="font-weight-bold text-danger">thêm 30%</b> theo giá sân gốc. <b class="font-weight-bold text-secondary">Rất mong sự đồng cảm dịch vụ này đến từ quý khách !</b> <br>
+	         	- Các giờ đặt từ <b class="font-weight-bold text-info">18h00 đến 06h00 sáng hôm sau</b> chúng tôi sẽ tính phí phụ thu ( các dịch vụ ban đêm ) <b class="font-weight-bold text-danger">thêm 30%</b> theo giá sân gốc. <b class="font-weight-bold text-secondary">Rất mong sự đồng cảm dịch vụ này đến từ quý khách !</b> <br>
 	         	- Khi đặt sân quý khách phải thanh toán cọc trước <b class="font-weight-bold text-danger">30%</b> tổng giá trị <b class="font-weight-bold text-danger">Thành Tiền</b> của đơn booking. <br>
 	         	- Để nhằm đảm bảo thông tin chính xác, yêu cầu quý khách kiểm tra kỹ thông tin phiếu Booking trước khi thanh toán cọc. <br>
 	         	- Các bước đặt sân chi tiết: <b class="font-weight-bold text-info">Đăng Nhập => Tìm Sân Cụ Thể => Chọn Ngày => Chọn Ca Chơi => Đặt Sân => Kiểm Tra Thông Tin Phiếu Booking => Nhập Voucher giảm giá ( nếu có ) => Thanh Toán Tiền Cọc Giữ Sân</b> <br>

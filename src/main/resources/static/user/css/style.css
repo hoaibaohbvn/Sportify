@@ -1,3 +1,4 @@
+
 /*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -9047,7 +9048,7 @@ h1, h2, h3, h4, h5,
       display: block;
       width: 50%; }
     .cart-total p.total-price span {
-      text-transform: uppercase; }
+      text-transform: none; }
       .cart-total p.total-price span:last-child {
         color: #000000;
         font-weight: 600; }

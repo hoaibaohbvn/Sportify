@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -20,6 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import duan.sportify.dao.UserDAO;
 import duan.sportify.entities.Users;
@@ -34,10 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	UserDAO userDAO;
 	@Autowired
 	HttpSession session;
-	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+
 	// Cung cấp nguồn dữ liệu đăng nhập
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	        auth.userDetailsService(customUserDetailsService);
 			auth.userDetailsService(username -> {
 				try {
 					Users user = userDAO.findById(username).get();
@@ -65,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {	
 			http.csrf().disable().cors().disable();
 			http.authorizeRequests()
-				.antMatchers("/sportify/field/booking/**","/sportify/field/profile/**","/sportify/team/teamdetail/**","/sportify/submit-contact","/sportify/order/checkout").authenticated()
+				.antMatchers("/sportify/field/booking/**","/sportify/field/profile/**","/sportify/team/teamdetail/**","/sportify/submit-contact" ).authenticated()
+				.antMatchers("/sportify/login/success").authenticated()
 				.antMatchers("/admin/**").hasAnyRole("R01", "R02")
 				.antMatchers("/rest/authorities").hasRole("R01")
 				.anyRequest().permitAll();

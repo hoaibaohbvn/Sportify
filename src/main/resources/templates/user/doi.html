@@ -255,7 +255,9 @@
 									<div class="dropdown-menu filter-item"
 										aria-labelledby="dropdownMenuButton">
 										<a th:href="@{/sportify/team}" class="dropdown-item">Tất
-											cả</a> <a th:each="spt : ${sporttypeList}"
+											cả</a> <a th:href="@{/sportify/team/findTeamUsername}"
+											class="dropdown-item">Team của tôi</a> <a
+											th:each="spt : ${sporttypeList}"
 											th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 											th:value="${spt.sporttypeid}" class="dropdown-item"
 											th:text="${spt.categoryname}"></a>
@@ -286,18 +288,25 @@
 										<div class="col-md-6 form-group">
 											<label>Tên nhóm:</label> <input type="text"
 												class="form-control" name="newNameteam" rows="4"></input>
+											<div id="name-error" class="error-message text-danger"></div>
+
 										</div>
 										<div class=" col-md-6 form-group">
 											<label>Ảnh đại diện:</label> <input type="file"
 												class="form-control" name="newAvatar" rows="4"></input>
+
 										</div>
 										<div class=" col-md-6 form-group">
 											<label>Số liên hệ:</label> <input type="text"
 												class="form-control" name="newContact" rows="4"></input>
+											<div id="contact-error" class="error-message text-danger"></div>
+
 										</div>
 										<div class="col-md-6 form-group">
 											<label>Số Lượng:</label> <input type="number"
 												class="form-control" name="newQuantity" rows="4"></input>
+											<div id="quantity-error" class="error-message text-danger"></div>
+
 										</div>
 										<div class=" form-group col-md-6">
 											<label>Môn thể thao:</label> <select style="width: 100%"
@@ -312,7 +321,7 @@
 												rows="4"></textarea>
 										</div>
 										<div class=" col-md-12 modal-footer">
-											<button type="submit" class="btn btn-primary">Tạo</button>
+											<button onclick="validateFormAndSubmit()" type="submit" class="btn btn-primary">Tạo</button>
 										</div>
 									</form>
 								</div>
@@ -333,12 +342,16 @@
 										style="color: #2E7D32; font-weight: bold;">
 										<a href="#"></a>
 									</h3>
-									<div class="meta">
-										<p class="fa fa-calendar"></p>
-										<span th:text="${#dates.format(teamItem[8], 'dd-MM-yyyy')}"></span>
+									<div class="d-flex">
+										<p class="lable_team">Ngày lập :</p>
+										<div class="meta">
+											<p class="fa fa-calendar"></p>
+											<span th:text="${#dates.format(teamItem[8], 'dd-MM-yyyy')}"></span>
+										</div>
 									</div>
+
 									<div class="d-flex ">
-										<p class="lable_team">Thành viên:</p>
+										<p class="lable_team">Thành viên :</p>
 										<p th:text="${teamItem[10]}" style="margin-right: 5px"></p>
 										<p style="margin-right: 5px">/</p>
 										<p th:text="${teamItem[3]}" style="margin-right: 5px"></p>
@@ -348,22 +361,33 @@
 										<p th:text="${teamItem[9]}"></p>
 									</div>
 
-									<div class="d-flex">
-										<p class="lable_team">Liên hệ :</p>
-										<p th:text="${teamItem[5]}"></p>
+									<div class="d-flex ">
+										<p class="lable_team">Đội trưởng :</p>
+										<p th:text="${teamItem[12]}"></p>
 									</div>
 
 									<div class="d-flex">
+										'
 										<p th:text="${teamItem[6]}" class="limited-length"
 											style="font-style: italic;"></p>
+										'
 									</div>
-									<div class="submit-section align-self-end mt-auto">
+									<div th:if="${users != null}"
+										class="submit-section align-self-end mt-auto">
+										<a th:each="teamUser : ${teamUser}"
+											th:if="${#lists.size(teamUser) > 0 && #lists.contains(teamUser, teamItem[0])}"
+											th:href="@{/sportify/team/teamdetail/{teamId}/exit(teamId=${teamItem[0]})}"
+											class="btn btn-danger">Rời Team</a> <a
+											th:unless="${#lists.size(teamUser) > 0 && #lists.contains(teamUser, teamItem[0])}"
+											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
+											class="btn btn-success">Vào Team</a>
+									</div>
+									<div th:if="${users == null}"
+										class="submit-section align-self-end mt-auto">
 										<a
 											th:href="@{/sportify/team/teamdetail/{teamId}(teamId=${teamItem[0]})}"
-											class="btn btn-success">Xem thêm</a>
-
+											class="btn btn-success">Vào đội</a>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -547,6 +571,94 @@
 			});
 		});
 	</script>
+	
+	<script>
+    const nameInput = document.getElementsByName('newNameteam')[0];
+    const contactInput = document.getElementsByName('newContact')[0];
+    const quantityInput = document.getElementsByName('newQuantity')[0];
+    
+    nameInput.addEventListener('blur', function() { validateName(this); });
+    contactInput.addEventListener('blur', function() { validateContact(this); });
+    quantityInput.addEventListener('blur', function() { validateQuantity(this); });
+
+
+    function validateName(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('name-error');
+        if (value === '') {
+            errorDiv.textContent = 'Tên không được để trống';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    
+    function validateContact(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('contact-error');
+
+        if (value === '') {
+            errorDiv.textContent = 'Không được để trống';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+
+    function validateQuantity(input) {
+        var value = input.value.trim();
+        var errorDiv = document.getElementById('quantity-error');
+
+        if (value === '') {
+            errorDiv.textContent = 'Không được để trống';
+            return false;
+        } else {
+            errorDiv.textContent = '';
+            return true;
+        }
+    }
+    
+
+
+    
+
+    
+
+    function validateFormAndSubmit() {
+        let isValid = true; // Biến để kiểm tra tính hợp lệ của các hàm kiểm tra
+        const errorMessages = []; // Mảng lưu trữ thông báo lỗi
+
+        // Kiểm tra từng hàm kiểm tra và cập nhật biến isValid
+        isValid = isValid && validateName(nameInput);
+        isValid = isValid && validateContact(contactInput);
+        isValid = isValid && validateQuantity(quantityInput);
+        // Xây dựng mảng thông báo lỗi
+        if (!validateName(nameInput)) {
+            errorMessages.push('không được để trống');
+        }
+
+        if (!validateContact(contactInput)) {
+            errorMessages.push('Vui lòng kiểm tra tên');
+        }
+        if (!validateQuantity(quantityInput)) {
+            errorMessages.push('Mật khẩu không được để trống hoặc phải từ 6 đến 15 ký tự');
+        }
+
+
+        // Hiển thị thông báo lỗi
+        if (errorMessages.length > 0) {
+			event.preventDefault();
+            const errorMessageContainer = document.getElementById('error-message-container');
+            errorMessageContainer.innerHTML = '<ul><li>' + errorMessages.join('</li><li>') + '</li></ul>';
+        } else {
+            // Tất cả dữ liệu hợp lệ, thực hiện submit
+            document.querySelector('form').submit();
+        }
+    }
+</script>
 
 </body>
 </html>
