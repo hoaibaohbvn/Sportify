@@ -48,9 +48,9 @@ public class EventController {
 			
 		}else if(eventName.equalsIgnoreCase("thethao") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnTheThao(pageable);
-		}else if(eventName=="khuyenmai" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("khuyenmai") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnKhuyenMai(pageable);
-		}else if(eventName=="baotri" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("baotri") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnBaoTri(pageable);
 		}else{
 			
