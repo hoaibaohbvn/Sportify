@@ -39,6 +39,7 @@ public class EventController {
 		) {
 		Page<Eventweb> eventwebList;
 		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không
+		// Nếu eventName không có giá trị thì gán cho nó bằng rỗng
 		if (eventName == null) {
 	        eventName = "";
 	    }
@@ -51,8 +52,7 @@ public class EventController {
 			eventwebList = eventDAO.searchbtnKhuyenMai(pageable);
 		}else if(eventName=="baotri" && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnBaoTri(pageable);
-		}
-			else{
+		}else{
 			
 			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
 		}
@@ -65,7 +65,7 @@ public class EventController {
 		return "user/blog";
 	}
 	
-	
+	// show chi tiết tin tức
 	@GetMapping("eventdetail/{eventid}")
 	public String showEventDetail(@PathVariable("eventid") Integer eventid, Model model) {
 		Eventweb eventdetail = eventDAO.findEventById(eventid);
@@ -75,11 +75,12 @@ public class EventController {
 		return "user/blog-single";
 	}
 
-	
+	// button tìm kiếm
 	@PostMapping("/search")
     public String search(@RequestParam("keyword")String keyword, Model model ,RedirectAttributes redirectAttributes) {
 		String event= null;
 	    redirectAttributes.addFlashAttribute("eventName", event);
+	    // kiểm tra chuỗi tiếng Việt
 		try {
 	        String encodedSearchText = URLEncoder.encode(keyword, "UTF-8");
 	        if (encodedSearchText.isEmpty()) {
@@ -92,7 +93,7 @@ public class EventController {
 	    }
     }
 	
-	
+	// button lọc loại thể thao
 	@GetMapping("/event/thethao")
 	public String thethao(Model model,RedirectAttributes redirectAttributes) {
 		String event= "thethao";
@@ -100,6 +101,7 @@ public class EventController {
 		return "redirect:/sportify/event?eventName="+event;
 	}
 	
+	// button lọc loại Khuyến mãi
 	@GetMapping("/event/khuyenmai")
 	public String khuyenmai(Model model,RedirectAttributes redirectAttributes) {
 		String event= "khuyenmai";
@@ -107,6 +109,7 @@ public class EventController {
 		return "redirect:/sportify/event?eventName="+event;
 	}
 	
+	// button lọc loại bảo trì
 	@GetMapping("/event/baotri")
 	public String baotri(Model model,RedirectAttributes redirectAttributes) {
 		String event= "baotri";
