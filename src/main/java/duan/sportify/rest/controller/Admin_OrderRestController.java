@@ -63,7 +63,7 @@ public class Admin_OrderRestController {
 	}
 	// search
 		@GetMapping("search")
-		public ResponseEntity<List<Orders>> search(@RequestParam("keyword") String keyword, @RequestParam("datebook") Date datebook,@RequestParam("status") String status, @RequestParam("payment") String payment){
+		public ResponseEntity<List<Orders>> search(@RequestParam("keyword") String keyword, @RequestParam("datebook") Date datebook,@RequestParam("status") String status, @RequestParam("payment") Optional<Integer> payment){
 			return ResponseEntity.ok(orderDAO.findByConditions(keyword, datebook, status, payment));
 		}
 }

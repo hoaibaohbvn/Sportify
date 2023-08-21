@@ -35,8 +35,12 @@ app.controller('ProductController', function($scope, $http) {
 	// hàm tạo
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
+		if(item.price < item.discountprice){
+			showErrorToast("Giá sản phẩm không được nhỏ hơn giảm giá")
+			return;
+		}
 		$http.post(`/rest/products/create`, item).then(resp => {
-
+			
 			resp.data.datecreate = new Date(resp.data.datecreate)
 			$scope.items.push(resp.data);
 			showSuccessToast("Sản phẩm mới tên " + item.productname + " đã được thêm vào cửa hàng")

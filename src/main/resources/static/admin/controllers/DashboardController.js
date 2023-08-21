@@ -1,4 +1,31 @@
 app.controller('DashboardController', function($scope, $http) {
+	// ràng quyền
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'R01') {
+						$scope.kiemDuyet = 'ok'
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+	
 	// dash_widget
 	$scope.dash_widget = function() {
 		// tổng product
@@ -177,7 +204,7 @@ app.controller('DashboardController', function($scope, $http) {
 			$scope.percentDTBooking = 'Vượt trội'
 			$scope.colorDTBooking = 'blue';
 		} else if ($scope.percentDTBooking > 0) {
-			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
+			$scope.percentDTBooking = '+'+($scope.percentDTBooking).toFixed(1) + '%'
 			$scope.colorDTBooking = 'green';
 		} else {
 			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
@@ -186,15 +213,15 @@ app.controller('DashboardController', function($scope, $http) {
 	})
 
 	// tổng daoanh thu order tháng này so với tháng trước
-	$http.get("/rest/dashboard/doanhThuOrder2Month").then(rp => {
-		$scope.doanhThuOrder2Month = rp.data;
+	$http.get("/rest/dashboard/sumRevenueOrder2Month").then(rp => {
+		$scope.sumRevenueOrder2Month = rp.data;
 
-		$scope.percentDTOrder = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1]) / $scope.doanhThuOrder2Month[0][1]) * 100)
-		if ($scope.doanhThuOrder2Month[0][1] <= 0) {
+		$scope.percentDTOrder = ((($scope.sumRevenueOrder2Month[1][1] - $scope.sumRevenueOrder2Month[1][2]) / $scope.sumRevenueOrder2Month[1][2]) * 100)
+		if ($scope.sumRevenueOrder2Month[1][2] <= 0) {
 			$scope.percentDTOrder = 'Vượt trội'
 			$scope.colorDTOrder = 'blue';
 		} else if ($scope.percentDTOrder > 0) {
-			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'
+			$scope.percentDTOrder = '+'+($scope.percentDTOrder).toFixed(1) + '%'
 			$scope.colorDTOrder = 'green';
 		} else {
 			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'

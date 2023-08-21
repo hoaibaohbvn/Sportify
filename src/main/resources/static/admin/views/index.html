@@ -16,7 +16,7 @@
 		<div class="page-header">
 			<div class="row">
 				<div class="col-sm-12">
-					<h3 class="page-title">Welcome Admin!</h3>
+					<h3 class="page-title">Welcome <strong>{{username}}</strong>!</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item active">Dashboard</li>
 					</ul>
@@ -110,7 +110,7 @@
 										<h3>{{thongkebookingtrongngay[0][1]}}</h3>
 									</div>
 								</div>
-								<div class="col-md-6 col-6 text-center">
+								<div class="col-md-6 col-6 text-center" ng-show="kiemDuyet === 'ok'">
 									<div class="stats-box mb-4">
 										<p>Doanh thu</p>
 										<h3>{{formatCurrency(thongkebookingtrongngay[1][2] + (thongkebookingtrongngay[2][2] * 0.3) - (thongkebookingtrongngay[3][2] * 0.3 * 2))}}</h3>
@@ -164,10 +164,10 @@
 										<h3>{{thongKeOrderInDay[0][1]}}</h3>
 									</div>
 								</div>
-								<div class="col-md-6 col-6 text-center">
+								<div class="col-md-6 col-6 text-center" ng-show="kiemDuyet === 'ok'">
 									<div class="stats-box mb-4">
 										<p>Doanh thu</p>
-										<h3>{{formatCurrency(thongKeOrderInDay[1][2] - thongKeOrderInDay[2][2])}}</h3>
+										<h3>{{formatCurrency(thongKeOrderInDay[0][2])}}</h3>
 									</div>
 								</div>
 							</div>
@@ -187,11 +187,11 @@
 						<div>
 							<p>
 								<i class="fa fa-dot-circle-o text-purple mr-2"></i>Đã thanh toán <span
-									class="float-right">{{thongKeOrderInDay[1][1]}}</span>
+									class="float-right">{{thongKeOrderInDay[2][1]}}</span>
 							</p>
 							<p>
 								<i class="fa fa-dot-circle-o text-warning mr-2"></i>Chưa thanh toán <span
-									class="float-right">{{thongKeOrderInDay[2][1]}}</span>
+									class="float-right">{{thongKeOrderInDay[1][1]}}</span>
 							</p>
 
 							
@@ -201,7 +201,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-12 col-lg-6 col-xl-4 d-flex">
+			<div class="col-md-12 col-lg-6 col-xl-4 d-flex" >
 				<div class="card flex-fill">
 					<div class="card-body">
 						<h4 class="card-title">
@@ -227,7 +227,7 @@
 							</div>
 						</div>
 						<div class="load-more text-center">
-							<a class="text-dark" href="/admin/contacts">Load More</a>
+							<a class="text-dark" href="/admin/contacts">Xem thêm</a>
 						</div>
 					</div>
 				</div>
@@ -235,14 +235,14 @@
 		</div>
 		<!-- /Statistics Widget -->
 
-		<div class="row">
+		<div class="row" ng-show="kiemDuyet === 'ok'">
 			<div class="col-md-12">
 				<div class="card-group m-b-30">
 					<div class="card">
 						<div class="card-body">
 							<div class="d-flex justify-content-between mb-3">
 								<div>
-									<span class="d-block">Tổng số phiếu sân trong tháng này </span>
+									<span class="d-block">Tổng số phiếu đặt sân trong tháng này </span>
 								</div>
 								<div>
 									<span ng-style="{ 'color': colorDatSan }">
@@ -308,10 +308,10 @@
 									<span ng-style="{ 'color': colorDTOrder }">{{percentDTOrder}}</span>
 								</div>
 							</div>
-							<h3 class="mb-3">{{formatCurrency(doanhThuOrder2Month[0][0])}}</h3>
+							<h3 class="mb-3">{{formatCurrency(sumRevenueOrder2Month[1][1])}}</h3>
 							
 							<p class="mb-0">
-								Tháng trước <span class="text-muted">{{formatCurrency(doanhThuOrder2Month[0][1])}}</span>
+								Tháng trước <span class="text-muted">{{formatCurrency(sumRevenueOrder2Month[1][2])}}</span>
 							</p>
 						</div>
 					</div>
@@ -320,7 +320,7 @@
 		</div>
 
 		<!-- Statistics Widget -->
-		<div class="row">
+		<div class="row" ng-show="kiemDuyet === 'ok'">
 			<div class="col-md-6 d-flex">
 				<div class="card card-table flex-fill">
 					<div class="card-header">
@@ -394,7 +394,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" ng-show="kiemDuyet === 'ok'">
 			<div class="col-md-6 d-flex">
 				<div class="card card-table flex-fill">
 					<div class="card-header">
