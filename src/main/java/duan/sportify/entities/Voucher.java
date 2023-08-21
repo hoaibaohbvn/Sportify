@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,12 +33,14 @@ public class Voucher implements Serializable {
 
     //--- ENTITY PRIMARY KEY 
     @NotNull(message = "{NotNull.voucher.voucherid}")
+    @Size(max = 20, message = "{Size.voucher.voucherid}")
     @Id
     @Column(name="voucherid", nullable=false, length=20)
     private String     voucherid ;
     @NotNull(message  = "{NotNull.voucher.discountpercent}")
     //--- ENTITY DATA FIELDS 
     @Column(name="discountpercent", nullable=false)
+    @Max(value = 30, message = "{Max.voucher.discountpercent}")
     private Integer    discountpercent ;
     @NotNull(message = "{NotNull.voucher.startdate}")
     @Temporal(TemporalType.DATE)

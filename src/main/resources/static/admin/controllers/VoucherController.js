@@ -50,6 +50,7 @@ app.controller('VoucherController', function($scope, $http) {
 			startdate: new Date(),
 			enddate: new Date(),
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -48,10 +49,12 @@ public class Users implements Serializable {
     private String     passwords ;
     @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.users.firstname}")
     @NotBlank(message = "{NotBlank.users.firstname}")
+    @Size(max = 50, message = "{Size.users.firstname}")
     @Column(name="firstname", length=50)
     private String     firstname ;
     @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.users.firstname}")
     @NotBlank(message = "{NotBlank.users.firstname}")
+    @Size(max = 50, message = "{Size.users.lastname}")
     @Column(name="lastname", length=50)
     private String     lastname ;
     @Pattern(regexp = "^(0|\\+84)\\d{9,10}$", message = "{Pattern.users.phone}")
@@ -75,6 +78,7 @@ public class Users implements Serializable {
     private Boolean    status ;
 
     //--- ENTITY LINKS ( RELATIONSHIP )
+    @JsonIgnore
     @OneToMany(mappedBy="users")
     private List<Teamdetails> listOfTeamdetails ; 
     @JsonIgnore

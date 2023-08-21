@@ -37,30 +37,27 @@ public class EventController {
 	@GetMapping("/event")
 	public String view(@ModelAttribute("eventName") String eventName, Model model , Pageable pageable, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
 		) {
-		System.out.print(eventName);
 		Page<Eventweb> eventwebList;
 		int keywordLength = keyword.length();// Kiểm tra xem người dùng có nhập vào ô tìm kiếm hay không
-
-		if(keywordLength > 0 && eventName==null) {
+		// Nếu eventName không có giá trị thì gán cho nó bằng rỗng
+		if (eventName == null) {
+	        eventName = "";
+	    }
+		if(keywordLength > 0 && eventName.isEmpty()) {
 			eventwebList = eventDAO.searchEvents(keyword, pageable);
 			
-		}else if(eventName=="thethao" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("thethao") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnTheThao(pageable);
-		}else if(eventName=="khuyenmai" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("khuyenmai") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnKhuyenMai(pageable);
-		}else if(eventName=="baotri" && keywordLength==0) {
+		}else if(eventName.equalsIgnoreCase("baotri") && keywordLength==0) {
 			eventwebList = eventDAO.searchbtnBaoTri(pageable);
-		}
-			else{
+		}else{
 			
 			eventwebList = eventDAO.findAllOrderByDateStart(pageable);
 		}
 		
-		
-		
-		
 		List<Eventweb> events = eventwebList.getContent();
-		
 		model.addAttribute("eventList", events);
 		model.addAttribute("page", eventwebList);
 		model.addAttribute("keyword", keyword);
@@ -68,7 +65,7 @@ public class EventController {
 		return "user/blog";
 	}
 	
-	
+	// show chi tiết tin tức
 	@GetMapping("eventdetail/{eventid}")
 	public String showEventDetail(@PathVariable("eventid") Integer eventid, Model model) {
 		Eventweb eventdetail = eventDAO.findEventById(eventid);
@@ -78,11 +75,12 @@ public class EventController {
 		return "user/blog-single";
 	}
 
-	
+	// button tìm kiếm
 	@PostMapping("/search")
     public String search(@RequestParam("keyword")String keyword, Model model ,RedirectAttributes redirectAttributes) {
 		String event= null;
 	    redirectAttributes.addFlashAttribute("eventName", event);
+	    // kiểm tra chuỗi tiếng Việt
 		try {
 	        String encodedSearchText = URLEncoder.encode(keyword, "UTF-8");
 	        if (encodedSearchText.isEmpty()) {
@@ -95,7 +93,7 @@ public class EventController {
 	    }
     }
 	
-	
+	// button lọc loại thể thao
 	@GetMapping("/event/thethao")
 	public String thethao(Model model,RedirectAttributes redirectAttributes) {
 		String event= "thethao";
@@ -103,6 +101,7 @@ public class EventController {
 		return "redirect:/sportify/event?eventName="+event;
 	}
 	
+	// button lọc loại Khuyến mãi
 	@GetMapping("/event/khuyenmai")
 	public String khuyenmai(Model model,RedirectAttributes redirectAttributes) {
 		String event= "khuyenmai";
@@ -110,6 +109,7 @@ public class EventController {
 		return "redirect:/sportify/event?eventName="+event;
 	}
 	
+	// button lọc loại bảo trì
 	@GetMapping("/event/baotri")
 	public String baotri(Model model,RedirectAttributes redirectAttributes) {
 		String event= "baotri";

@@ -23,4 +23,10 @@ public interface ContactDAO extends JpaRepository<Contacts, Integer>{
 	// dếm liên hệ trong ngày
 	@Query(value = "SELECT COUNT(*) AS total_contacts FROM contact where date(datecontact) = curdate() ", nativeQuery = true)
 	int demLienHeTrongNgay();
+	// lấy danh sách username đã gửi liên hệ trong ngày
+	@Query(value = "SELECT username\r\n"
+			+ "FROM contact\r\n"
+			+ "WHERE DATE(datecontact) = CURDATE();", nativeQuery = true)
+	List<String> contactedInDay();
+	
 }

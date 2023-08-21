@@ -70,9 +70,11 @@ public class TeamController {
 
 	// Đỗ toàn bộ dữ liệu liên quan đến team
 	@GetMapping("/team")
-	public String viewTeam(Model model,HttpServletRequest request, HttpSession session, @RequestParam(name = "page", defaultValue = "0") int page,
+	public String viewTeam(Model model, HttpServletRequest request, HttpSession session,
+			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText,
-			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid) {
+			@RequestParam(value = "sporttypeid", required = false, defaultValue = "") String sporttypeid,
+			@RequestParam(value = "TeamUsername", required = false, defaultValue = "") String TeamUsername) {
 		int size = 4; // Đặt kích thước trang bạn muốn (số phần tử trên mỗi trang)
 		String usernameLogin = (String) request.getSession().getAttribute("username");
 
@@ -80,23 +82,37 @@ public class TeamController {
 
 		int searchTextLength = searchText.length();// Kiểm tra xem ng dùng có nhập vào ô tìm kiếm không
 		int sporttypeidLength = sporttypeid.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
+		int TeamUsernameLength = TeamUsername.length();// Kiểm tra xem ng dùng có chọn vào bộ lọc không
 
-		if (searchTextLength > 0 && sporttypeidLength == 0) {// Kiểm tra nếu ng dùng có nhập vào ô tìm kiếm thì sẽ dỗ dữ
+		if (searchTextLength > 0 && sporttypeidLength == 0 && TeamUsernameLength == 0) {// Kiểm tra nếu ng dùng có nhập
+																						// vào ô tìm kiếm thì sẽ dỗ dữ
 
 			// liệu theo SearchTeam
 			teamPage = teamdao.SearchTeam(searchText);
 
-		} else if (searchTextLength == 0 && sporttypeidLength > 0) {// Kiểm tra nếu ng dùng chọn vào lọc thì sẽ dỗ dữ
+		} else if (searchTextLength == 0 && sporttypeidLength > 0 && TeamUsernameLength == 0) {// Kiểm tra nếu ng dùng
+																								// chọn vào lọc thì sẽ
+																								// dỗ dữ
 			// liệu theo FilterTeam
 			teamPage = teamdao.FilterTeam(sporttypeid);
+		} else if (searchTextLength == 0 && sporttypeidLength == 0 && TeamUsernameLength > 0) {
+
+			if (usernameLogin != null) {
+				teamPage = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
+			} else {
+				return "security/login";
+			}
+
 		} else {
 			teamPage = teamdao.findAllTeam();// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
 		}
-		if (usernameLogin!=null) {
-		List<Object[]> teamUsername = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
-		model.addAttribute("teamUser", teamUsername);
+
+		if (usernameLogin != null) {
+			List<Object[]> teamUsername = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ
+																					// đỗ toàn bộ
+			model.addAttribute("teamUser", teamUsername);
 		}
-		
+
 		// Tạo một sublist dựa trên số trang và kích thước trang
 		int startIndex = page * size;
 		int endIndex = Math.min(startIndex + size, teamPage.size());
@@ -104,6 +120,7 @@ public class TeamController {
 		Page<Object[]> teamPageObj = new PageImpl<>(pageContent, PageRequest.of(page, size), teamPage.size());
 		model.addAttribute("team", teamPageObj);
 		model.addAttribute("searchText", searchText);
+		model.addAttribute("TeamUsername", TeamUsername);
 		model.addAttribute("sporttypeid", sporttypeid);
 
 		// Kiểm tra để hiển thị thông báo
@@ -148,15 +165,34 @@ public class TeamController {
 		String username = (String) request.getSession().getAttribute("username");
 		Teams findTeamout = teamdao.findOneTeamUser(teamId, username);
 		int count = detailDAO.countUser(teamId);
-		if (findTeamout != null && count <= 1) {
+
+		if (findTeamout != null) {
+			if (count <= 1) {
+				detailDAO.deleteByUsernameAndTeamId(username, teamId);
+				detailDAO.deleteTeamId(username, teamId);
+				redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+			} else {
+				redirectAttributes.addFlashAttribute("message1", "Bạn phải nhường đội trường mới được rời team !");
+			}
+			return "redirect:/sportify/team";
+		} else {
 			detailDAO.deleteByUsernameAndTeamId(username, teamId);
-			detailDAO.deleteTeamId(username, teamId);
-			redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+			redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công !");
 			return "redirect:/sportify/team";
 		}
-		detailDAO.deleteByUsernameAndTeamId(username, teamId);
-		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
-		return "redirect:/sportify/team";
+
+//		if (findTeamout != null && count <= 1) {
+//			detailDAO.deleteByUsernameAndTeamId(username, teamId);
+//			detailDAO.deleteTeamId(username, teamId);
+//			redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+//			return "redirect:/sportify/team";
+//		}
+//			if(count>1){
+//			redirectAttributes.addFlashAttribute("message1", "Trong nhóm còn thành viên khác không thể xóa!");
+//		}
+//		detailDAO.deleteByUsernameAndTeamId(username, teamId);
+//		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
+//		return "redirect:/sportify/team";
 	}
 
 	// Điều hướng đến trang chi tiết
@@ -243,12 +279,22 @@ public class TeamController {
 	@PostMapping("/team/teamdetail/xacnhan")
 	public String joinTeam(Model model, @ModelAttribute("teamId") Integer teamId,
 			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
-		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId, username);
-		checkOneTeamUser.setStatus(true);
-		checkOneTeamUser.setJoindate(LocalDate.now());
-		detailDAO.save(checkOneTeamUser);
-		redirectAttributes.addFlashAttribute("message", "Xác nhận thành viên thành công !");
-		return "redirect:/sportify/team/teamdetail/" + teamId;
+
+		// Lấy số lượng thành viên trong team
+		Teams team = teamService.findById(teamId);
+		int quantity = team.getQuantity();
+		Integer countMembers = detailDAO.countUser(teamId);
+		if(countMembers < quantity) {
+			Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId, username);
+			checkOneTeamUser.setStatus(true);
+			checkOneTeamUser.setJoindate(LocalDate.now());
+			detailDAO.save(checkOneTeamUser);
+			redirectAttributes.addFlashAttribute("message", "Xác nhận thành viên thành công !");
+			return "redirect:/sportify/team/teamdetail/" + teamId;
+		}else {
+			redirectAttributes.addFlashAttribute("message", "Team của bạn đã đủ thành viên !");
+			return "redirect:/sportify/team/teamdetail/" + teamId;
+		}
 	}
 
 	@PostMapping("/team/teamdetail/tuchoi")
@@ -265,7 +311,7 @@ public class TeamController {
 			@ModelAttribute("username") String username, RedirectAttributes redirectAttributes) {
 		Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam1(teamId, username);
 		detailDAO.delete(checkOneTeamUser);
-		redirectAttributes.addFlashAttribute("message", "Kik thành viên thành công !");
+		redirectAttributes.addFlashAttribute("message", "Mời thành viên rời nhóm thành công !");
 		return "redirect:/sportify/team/teamdetail/" + teamId;
 	}
 
@@ -294,82 +340,58 @@ public class TeamController {
 			@RequestParam("newDescriptions") String newDescriptions) {
 		String usernameLogin = (String) request.getSession().getAttribute("username");
 		Teams findTeamUser = teamdao.findTeamUser(usernameLogin);
-		if (findTeamUser == null) {
-			String fileName = newAvatar.getOriginalFilename();
-			Teams newTeams = new Teams();
-			try {
-				// Thay đổi đường dẫn tới thư mục lưu trữ ảnh (thay thế "/" bằng đường dẫn thư
-				// mục thực tế)
-				String rootDir = System.getProperty("user.dir"); // Đường dẫn đến thư mục gốc của dự án
-				String uploadDir = rootDir + "\\src\\main\\resources\\static\\user\\images\\team_img";
-				Path filePath = Paths.get(uploadDir, fileName);
-				Files.write(filePath, newAvatar.getBytes());
+		if (usernameLogin != null) {
+			if (findTeamUser == null) {
+				String fileName = newAvatar.getOriginalFilename();
+				Teams newTeams = new Teams();
+				try {
+					// Thay đổi đường dẫn tới thư mục lưu trữ ảnh (thay thế "/" bằng đường dẫn thư
+					// mục thực tế)
+					String rootDir = System.getProperty("user.dir"); // Đường dẫn đến thư mục gốc của dự án
+					String uploadDir = rootDir + "\\src\\main\\resources\\static\\user\\images\\team_img";
+					Path filePath = Paths.get(uploadDir, fileName);
+					Files.write(filePath, newAvatar.getBytes());
 
-				newTeams.setAvatar(fileName);
+					newTeams.setAvatar(fileName);
 
-			} catch (IOException e) {
-				e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				// Tạo đội
+				newTeams.setNameteam(newNameteam);
+				newTeams.setContact(newContact);
+				newTeams.setSporttypeid(newSporttypeid);
+				newTeams.setQuantity(newQuantity);
+				newTeams.setDescriptions(newDescriptions);
+				newTeams.setUsername(usernameLogin);
+				newTeams.setCreatedate(LocalDate.now());
+				teamdao.save(newTeams);
+				// Thêm ng vô đội
+//				// gửi Thông báo về cho đội trưởng
+				int teamId = newTeams.getTeamid();
+				Teamdetails newUser = new Teamdetails();
+				newUser.setJoindate(LocalDate.now());
+				newUser.setTeamid(teamId);
+				newUser.setUsername(usernameLogin);
+				newUser.setStatus(true);
+				detailDAO.save(newUser);
+				redirectAttributes.addFlashAttribute("message", "Tạo đội thành công");
+				return "redirect:/sportify/team/teamdetail/" + teamId;
+			} else {
+				redirectAttributes.addFlashAttribute("message1", "Mỗi người chỉ tạo được 1 đội");
+				return "redirect:/sportify/team";
 			}
-			// Tạo đội
-			newTeams.setNameteam(newNameteam);
-			newTeams.setContact(newContact);
-			newTeams.setSporttypeid(newSporttypeid);
-			newTeams.setQuantity(newQuantity);
-			newTeams.setDescriptions(newDescriptions);
-			newTeams.setUsername(usernameLogin);
-			newTeams.setCreatedate(LocalDate.now());
-			teamdao.save(newTeams);
-			// Thêm ng vô đội
-//			// gửi Thông báo về cho đội trưởng
-			int teamId = newTeams.getTeamid();
-			Teamdetails newUser = new Teamdetails();
-			newUser.setJoindate(LocalDate.now());
-			newUser.setTeamid(teamId);
-			newUser.setUsername(usernameLogin);
-			newUser.setStatus(true);
-			detailDAO.save(newUser);
-			redirectAttributes.addFlashAttribute("message", "Tạo đội thành công");
-			return "redirect:/sportify/team/teamdetail/" + teamId;
-//			return "redirect:/sportify/team";
 		} else {
-			redirectAttributes.addFlashAttribute("message1", "Mỗi người chỉ tạo được 1 đội");
-			return "redirect:/sportify/team";
+			return "security/login";
 		}
 
 	}
 
-	@GetMapping("/team/findTeamUsername")
+	@PostMapping("/team/findTeamUsername")
 	public String FindTeamUsername(HttpServletRequest request, Model model, HttpSession session,
-			@RequestParam(name = "page", defaultValue = "0") int page) {
-		int size = 4; // Đặt kích thước trang bạn muốn (số phần tử trên mỗi trang)
-		String usernameLogin = (String) request.getSession().getAttribute("username");
-		if (usernameLogin != null) {
-			List<Object[]> teamPage;
-			teamPage = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
-			List<Object[]> teamUsername = teamdao.findTeamUsername(usernameLogin);// Còn không nhập hay chọn gì thì sẽ đỗ toàn bộ
-			// Tạo một sublist dựa trên số trang và kích thước trang
-			int startIndex = page * size;
-			int endIndex = Math.min(startIndex + size, teamPage.size());
-			List<Object[]> pageContent = teamPage.subList(startIndex, endIndex);
-			Page<Object[]> teamPageObj = new PageImpl<>(pageContent, PageRequest.of(page, size), teamPage.size());
-			model.addAttribute("team", teamPageObj);
-			model.addAttribute("teamUser", teamUsername);
+			@RequestParam("TeamUsername") String TeamUsername) {
+		return "redirect:/sportify/team?TeamUsername=" + TeamUsername;
 
-			// Kiểm tra để hiển thị thông báo
-//		if (!searchText.isEmpty() && teamPage.size() > 0) {
-//			model.addAttribute("FoundMessage",
-//					"Tìm thấy " + teamPage.size() + " kết quả tìm kiếm của '" + searchText + "'.");
-//		}
-//		if (teamPage.size() == 0) {
-//			model.addAttribute("notFoundMessage",
-//					"Tìm thấy " + teamPage.size() + " kết quả tìm kiếm của '" + searchText + "'.");
-//		}
-			return "user/doi";
-
-		} else {
-			return "security/login";
-
-		}
 	}
 
 }

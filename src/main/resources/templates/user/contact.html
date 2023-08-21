@@ -86,7 +86,8 @@
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
+								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -218,15 +219,15 @@
 											<div class="col-12 fixed-top" id="messageDiv"
 												th:if="${message}" style="display: none;">
 												<div class="col-3 alert alert-success"
-													style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+													style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 15px;">
 													<p th:text="${message}"></p>
 
 												</div>
 											</div>
 											<div class="col-12 fixed-top" id="messageDiv1"
 												th:if="${message1}" style="display: none;">
-												<div class="col-3 alert alert-danger "
-													style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 20px;">
+												<div class="col-3 alert alert-warning "
+													style="position: fixed; top: 0px; right: 0px; z-index: 9999; font-size: 15px;">
 													<p th:text="${message1}"></p>
 
 												</div>
@@ -260,8 +261,8 @@
 								</div>
 								<div class="text">
 									<p>
-										<span>Address: </span> Công viên phần mềm Quang QTSC Building
-										1, Trung, P Q.12, Thành phố Hồ Chí Minh, Việt Nam
+										<span>Address: </span> Công viên phần mềm Quang Trung QTSC Building
+										1, Quận 12, Thành phố Hồ Chí Minh, Việt Nam
 									</p>
 								</div>
 							</div>

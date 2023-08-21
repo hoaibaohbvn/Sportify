@@ -12,6 +12,7 @@ app.controller('SportTypeController', function($scope, $http) {
 		$scope.form = {
 
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {

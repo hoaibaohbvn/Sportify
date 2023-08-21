@@ -1,4 +1,31 @@
 app.controller('DashboardController', function($scope, $http) {
+	// ràng quyền
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'R01') {
+						$scope.kiemDuyet = 'ok'
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+	
 	// dash_widget
 	$scope.dash_widget = function() {
 		// tổng product
@@ -19,79 +46,7 @@ app.controller('DashboardController', function($scope, $http) {
 		});
 	}
 
-	// đồ thị
-	$scope.barcharts = function() {
-		// Lấy dữ liệu từ API
-		$http.get("/rest/dashboard/barcharts_b").then(rp => {
-			$scope.barcharts_b = rp.data;
-		})
-		$http.get("/rest/dashboard/barcharts_a").then(resp => {
-
-			// Lưu trữ dữ liệu đã lấy từ API vào biến $scope.charr
-			$scope.barcharts_a = resp.data;
-
-			// Định nghĩa biến currentYear (nếu cần)
-			var currentYear = new Date().getFullYear() - 5;
-
-			// Tạo dữ liệu cho biểu đồ
-			var barChartData = [];
-
-			for (var i = 0; i <= 5; i++) {
-				var year = currentYear + i;
-				var a = $scope.barcharts_a[0][i] + "VND"
-				var b = $scope.barcharts_b[0][i];
-				barChartData.push({ y: year.toString(), a: a, b: b });
-			}
-
-			// Bar Chart
-			Morris.Bar({
-				element: 'bar-charts',
-				data: barChartData,
-				xkey: 'y',
-				ykeys: ['a', 'b'],
-				labels: ['Tổng doanh thu đặt sân', 'Tổng danh thu bán hàng'],
-				lineColors: ['#f43b48', '#453a94'],
-				lineWidth: '3px',
-				barColors: ['#f43b48', '#453a94'],
-				resize: true,
-				redraw: true
-			});
-		});
-	}
-	$scope.line_charts = function() {
-		// Lấy dữ liệu từ API
-		$http.get("/rest/dashboard/linecharts_b").then(rp => {
-			$scope.linecharts_b = rp.data;
-		})
-		$http.get("/rest/dashboard/linecharts_a").then(resp => {
-			// Lưu trữ dữ liệu đã lấy từ API vào biến $scope.charr
-			$scope.linecharts_a = resp.data;
-
-			// Định nghĩa biến currentYear (nếu cần)
-			var currentYear = new Date().getFullYear() - 5;
-
-			// Tạo dữ liệu cho biểu đồ
-			var lineChartData = [];
-
-			for (var i = 0; i <= 5; i++) {
-				var year = currentYear + i;
-				var a = $scope.linecharts_a[0][i]
-				var b = $scope.linecharts_b[0][i]
-				lineChartData.push({ y: year.toString(), a: a, b: b });
-			}
-			Morris.Line({
-				element: 'line-charts',
-				data: lineChartData,
-				xkey: 'y',
-				ykeys: ['a', 'b'],
-				labels: ['Tổng số phiếu đặt sân', 'Tổng số phiếu bán hàng'],
-				lineColors: ['#f43b48', '#453a94'],
-				lineWidth: '3px',
-				resize: true,
-				redraw: true
-			});
-		});
-	}
+	
 	// Tính tổng số phiếu trong tháng hiện tại và tháng trước cho bảng bookings và orders
 	$http.get("/rest/dashboard/thisthatMonth").then(rp => {
 		$scope.thisthatMonth = rp.data;
@@ -191,7 +146,7 @@ app.controller('DashboardController', function($scope, $http) {
 			$scope.percentCoc_ngay = '0%';
 		}
 		$scope.percentDone_ngay = ((countBookingDone / totalAllBooking) * 100).toFixed(1) + '%';
-		if (countBookingDone ===0) {
+		if (countBookingDone === 0) {
 			$scope.percentDone_ngay = '0%';
 		}
 		$scope.percentCancel_ngay = ((countBookingCancel / totalAllBooking) * 100).toFixed(1) + '%';
@@ -208,69 +163,69 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.countLienHe = rp.data;
 	})
 	// tong số phiếu dat san trong thang này va thang trước
-	
+
 	$http.get("/rest/dashboard/tongSoPhieuDatSan2Thang").then(rp => {
 		$scope.tongSoPhieuDatSan2Thang = rp.data;
-		
-		$scope.percentPhieuDat = ((($scope.tongSoPhieuDatSan2Thang[0][1] - $scope.tongSoPhieuDatSan2Thang[1][1])/ $scope.tongSoPhieuDatSan2Thang[1][1]) * 100)
-		if($scope.tongSoPhieuDatSan2Thang[1][1] <= 0){
+
+		$scope.percentPhieuDat = ((($scope.tongSoPhieuDatSan2Thang[0][1] - $scope.tongSoPhieuDatSan2Thang[1][1]) / $scope.tongSoPhieuDatSan2Thang[1][1]) * 100)
+		if ($scope.tongSoPhieuDatSan2Thang[1][1] <= 0) {
 			$scope.percentPhieuDat = 'Vượt trội'
-			$scope.colorDatSan = 'blue';  
-		} else if($scope.percentPhieuDat > 0){
+			$scope.colorDatSan = 'blue';
+		} else if ($scope.percentPhieuDat > 0) {
 			$scope.percentPhieuDat = '+' + ($scope.percentPhieuDat).toFixed(1) + '%'
-			$scope.colorDatSan = 'green';  
-		} else{
+			$scope.colorDatSan = 'green';
+		} else {
 			$scope.percentPhieuDat = ($scope.percentPhieuDat).toFixed(1) + '%'
-			$scope.colorDatSan = 'red'; 
+			$scope.colorDatSan = 'red';
 		}
 	})
 	// tong phieu ban hang trong thang nay va thang truoc
 	$http.get("/rest/dashboard/tongSoPhieuOrder2Thang").then(rp => {
 		$scope.tongSoPhieuOrder2Thang = rp.data;
-		
-		$scope.percentOrder = ((($scope.tongSoPhieuOrder2Thang[0][1] - $scope.tongSoPhieuOrder2Thang[1][1])/ $scope.tongSoPhieuOrder2Thang[1][1]) * 100)
-		if($scope.tongSoPhieuOrder2Thang[1][1] <= 0){
+
+		$scope.percentOrder = ((($scope.tongSoPhieuOrder2Thang[0][1] - $scope.tongSoPhieuOrder2Thang[1][1]) / $scope.tongSoPhieuOrder2Thang[1][1]) * 100)
+		if ($scope.tongSoPhieuOrder2Thang[1][1] <= 0) {
 			$scope.percentOrder = 'Vượt trội'
-			$scope.colorOrder = 'blue';  
-		} else if($scope.percentOrder > 0){
-			$scope.percentOrder = '+' +($scope.percentOrder).toFixed(1) + '%'
-			$scope.colorOrder = 'green';  
-		} else{
+			$scope.colorOrder = 'blue';
+		} else if ($scope.percentOrder > 0) {
+			$scope.percentOrder = '+' + ($scope.percentOrder).toFixed(1) + '%'
+			$scope.colorOrder = 'green';
+		} else {
 			$scope.percentOrder = ($scope.percentOrder).toFixed(1) + '%'
-			$scope.colorOrder = 'red'; 
+			$scope.colorOrder = 'red';
 		}
 	})
 	// tổng da=oanh thu booking tháng này so với tháng trước
 	$http.get("/rest/dashboard/tongDoanhThuBooking2Month").then(rp => {
 		$scope.tongDoanhThuBooking2Month = rp.data;
-		
-		$scope.percentDTBooking = ((($scope.tongDoanhThuBooking2Month[0][0] - $scope.tongDoanhThuBooking2Month[0][1])/ $scope.tongDoanhThuBooking2Month[0][1]) * 100)
-		if($scope.tongDoanhThuBooking2Month[0][1] <= 0){
+
+		$scope.percentDTBooking = ((($scope.tongDoanhThuBooking2Month[0][0] - $scope.tongDoanhThuBooking2Month[0][1]) / $scope.tongDoanhThuBooking2Month[0][1]) * 100)
+		if ($scope.tongDoanhThuBooking2Month[0][1] <= 0) {
 			$scope.percentDTBooking = 'Vượt trội'
-			$scope.colorDTBooking = 'blue';  
-		} else if($scope.percentDTBooking > 0){
+			$scope.colorDTBooking = 'blue';
+		} else if ($scope.percentDTBooking > 0) {
+			$scope.percentDTBooking = '+'+($scope.percentDTBooking).toFixed(1) + '%'
+			$scope.colorDTBooking = 'green';
+		} else {
 			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
-			$scope.colorDTBooking = 'green';  
-		} else{
-			$scope.percentDTBooking = ($scope.percentDTBooking).toFixed(1) + '%'
-			$scope.colorDTBooking = 'red'; 
+			$scope.colorDTBooking = 'red';
 		}
 	})
-	
+
 	// tổng daoanh thu order tháng này so với tháng trước
-	$http.get("/rest/dashboard/doanhThuOrder2Month").then(rp => {
-		$scope.doanhThuOrder2Month = rp.data;
-		
-		$scope.percentDTOrder = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1])/ $scope.doanhThuOrder2Month[0][1]) * 100)
-		if($scope.doanhThuOrder2Month[0][1] <= 0){
+	$http.get("/rest/dashboard/sumRevenueOrder2Month").then(rp => {
+		$scope.sumRevenueOrder2Month = rp.data;
+
+		$scope.percentDTOrder = ((($scope.sumRevenueOrder2Month[1][1] - $scope.sumRevenueOrder2Month[1][2]) / $scope.sumRevenueOrder2Month[1][2]) * 100)
+		if ($scope.sumRevenueOrder2Month[1][2] <= 0) {
 			$scope.percentDTOrder = 'Vượt trội'
-			$scope.colorDTOrder = 'blue';  
-		} else if($scope.percentDTOrder > 0){
+			$scope.colorDTOrder = 'blue';
+		} else if ($scope.percentDTOrder > 0) {
+			$scope.percentDTOrder = '+'+($scope.percentDTOrder).toFixed(1) + '%'
+			$scope.colorDTOrder = 'green';
+		} else {
 			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'
-			$scope.colorDTOrder = 'green';  
-		} else{
-			$scope.percentDTOrder = ($scope.percentDTOrder).toFixed(1) + '%'
-			$scope.colorDTOrder = 'red'; 
+			$scope.colorDTOrder = 'red';
 		}
 	})
 	// top 3 san được dặt nhiều nhat\
@@ -278,21 +233,21 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.top3SanDatNhieu = rp.data;
 	})
 	// top 3 san pham ban nhiều nhất
-	$http.get("/rest/dashboard/top3SanPhamBanNhieu").then(rp =>{
+	$http.get("/rest/dashboard/top3SanPhamBanNhieu").then(rp => {
 		$scope.top3SanPhamBanNhieu = rp.data;
 	})
 	// top 5 user dat san nhieu nhat top5UserDatSan
-	$http.get("/rest/dashboard/top5UserDatSan").then(rp =>{
+	$http.get("/rest/dashboard/top5UserDatSan").then(rp => {
 		$scope.top5UserDatSan = rp.data;
 	})
 	// top 5 user order nhieu nhat
-	$http.get("/rest/dashboard/top5UserOrder").then(rp =>{
+	$http.get("/rest/dashboard/top5UserOrder").then(rp => {
 		$scope.top5UserOrder = rp.data;
 	})
 	// thong ke order trong ngay thongKeOrderInDay
-	$http.get("/rest/dashboard/thongKeOrderInDay").then(rp =>{
+	$http.get("/rest/dashboard/thongKeOrderInDay").then(rp => {
 		$scope.thongKeOrderInDay = rp.data;
-		
+
 		var totalAllOrder = $scope.thongKeOrderInDay[0][1]
 		var countOrderDone = $scope.thongKeOrderInDay[1][1];
 		var countOrderFailure = $scope.thongKeOrderInDay[3][1];
@@ -301,10 +256,10 @@ app.controller('DashboardController', function($scope, $http) {
 			$scope.percentOrderDone_ngay = '0%';
 		}
 		$scope.percentOrderFailure_ngay = ((countOrderFailure / totalAllOrder) * 100).toFixed(1) + '%';
-		if (countOrderFailure ===0) {
+		if (countOrderFailure === 0) {
 			$scope.percentOrderFailure_ngay = '0%';
 		}
-		
+
 	})
 	// định dạng tiền tệ VND
 	$scope.formatCurrency = function(value) {
@@ -313,8 +268,11 @@ app.controller('DashboardController', function($scope, $http) {
 		return formattedValue + ' VND';
 	};
 	
+
+
+
+	
 	// gọi hàm
 	$scope.dash_widget();
-	$scope.barcharts()
-	$scope.line_charts()
+	
 });

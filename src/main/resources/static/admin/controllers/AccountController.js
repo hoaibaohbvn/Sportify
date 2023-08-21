@@ -1,4 +1,30 @@
-app.controller('AccountController', function($scope, $http) {
+app.controller('AccountController', function($scope, $http, $location) {
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'dont') {
+						$location.path("/admin/unauthorized");
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		// lấy danh sách product
@@ -17,6 +43,7 @@ app.controller('AccountController', function($scope, $http) {
 			image: "loading.jpg"
 		}
 		$scope.form.roleid = 'R03'
+		$scope.errors = [];
 	}
 
 	// hàm edit
@@ -65,7 +92,7 @@ app.controller('AccountController', function($scope, $http) {
 				})
 				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
 					//$scope.items.push(rp.data);
-					
+
 				})
 				showSuccessToast("Cấp quyền Admin thành công")
 				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
@@ -96,7 +123,7 @@ app.controller('AccountController', function($scope, $http) {
 				})
 				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
 					//$scope.items.push(rp.data);
-					
+
 				})
 				showSuccessToast("Cấp quyền Staff thành công")
 				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
@@ -112,7 +139,7 @@ app.controller('AccountController', function($scope, $http) {
 				$http.delete(`/rest/authorized/` + authorizedid).then(resp => {
 					var index = $scope.items.findIndex(p => p.authorizedid === authorizedid)
 					//$scope.items.splice(index, 1);
-					
+
 				});
 				showSuccessToast("Thu quyền Staff thành công");
 			}
@@ -125,7 +152,7 @@ app.controller('AccountController', function($scope, $http) {
 				})
 				$http.post(`/rest/authorized/create`, $scope.form).then(rp => {
 					//$scope.items.push(rp.data);
-					
+
 				})
 				showSuccessToast("Cấp quyền User thành công")
 				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
@@ -141,7 +168,7 @@ app.controller('AccountController', function($scope, $http) {
 				$http.delete(`/rest/authorized/` + authorizedid).then(resp => {
 					var index = $scope.items.findIndex(p => p.authorizedid === authorizedid)
 					//$scope.items.splice(index, 1);
-					
+
 				});
 				showSuccessToast("Thu quyền User thành công");
 				$http.get("/rest/authorized/getRole/" + item.username).then(resp => {
@@ -306,8 +333,7 @@ app.controller('AccountController', function($scope, $http) {
 	}
 
 	// search
-	$scope.searchHo = '';
-	$scope.searchTen = '';
+	$scope.keyword = ''
 	$scope.searchUser = '';
 	$scope.searchRole = '';
 	$scope.searchStatus = null;
@@ -316,11 +342,10 @@ app.controller('AccountController', function($scope, $http) {
 		$http.get('/rest/accounts/search', {
 			params:
 			{
-				ho: $scope.searchHo,
-				ten: $scope.searchTen,
+				keyword: $scope.keyword,
 				user: $scope.searchUser,
 				role: $scope.searchRole,
-				status: $scope.searchStatus 
+				status: $scope.searchStatus
 			}
 		}).then(function(response) {
 			$scope.items = response.data;

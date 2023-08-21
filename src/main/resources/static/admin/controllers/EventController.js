@@ -33,6 +33,7 @@ app.controller('EventController', function($scope, $http) {
 			image: "loading.jpg",
 			eventtype: $scope.tableData.name = "Bóng Đá"
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {

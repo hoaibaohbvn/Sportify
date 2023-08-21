@@ -1,4 +1,31 @@
 app.controller('BookingController', function($scope, $http) {
+	// ràng quyen truy cập
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'R01') {
+						$scope.kiemDuyet = 'ok'
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+	
 	// hàm đổ tất cả
 	$scope.getAll = function() {
 		$http.get("/rest/accounts/getAll").then(resp => {
@@ -31,6 +58,7 @@ app.controller('BookingController', function($scope, $http) {
 			status: true,
 			image: "loading.jpg"
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {
@@ -153,11 +181,13 @@ app.controller('BookingController', function($scope, $http) {
 	}
 	// search
 	 $scope.keyword = '';
-   	 $scope.datebook = null;
-   	 $scope.status = '';
+   	 $scope.datebook = new Date();
+   	 $scope.status = 'Đã Cọc';
    	 $scope.search = function () {
-			var momentDate = moment($scope.datebook); // xài import thư viện Moment.js
-		var dateString = momentDate.format("YYYY-MM-DD");
+			   
+				   var momentDate = moment($scope.datebook); // xài import thư viện Moment.js
+			   var dateString = momentDate.format("YYYY-MM-DD");
+			   
       $http.get('/rest/bookings/search', { params: 
       		{ 	
 				keyword: $scope.keyword, 
