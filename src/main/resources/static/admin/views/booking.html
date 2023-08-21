@@ -31,20 +31,20 @@
 		<div class="row filter-row">
 
 			<div class="col-sm-6 col-md-3">
-				<label class="focus-label">Người đặt</label>
+				<label class="focus-label">Họ tên người đặt</label>
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating"
 						ng-model="keyword" placeholder="Nhập họ hoặc tên">
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-3" ng-show="kiemDuyet === 'ok'">
 				<label class="focus-label">Ngày đặt</label>
 				<div class="form-group form-focus">
 					<input type="date" class="form-control floating"
-						ng-model="datebook" >
+						ng-model="datebook">
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-3" ng-show="kiemDuyet === 'ok'">
 				<label class="focus-label">Trạng thái</label>
 				<div class="form-group form-focus select-focus">
 
@@ -65,7 +65,6 @@
 				<div class="col-sm-6 col-md-6 mt-1">
 					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="refresh()">
 						Làm mới </a>
-
 				</div>
 
 			</div>
@@ -168,7 +167,7 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="col-form-label">Trạng thái <span
-										class="text-danger">*</span></label> <select class="select"
+										class="text-danger">*</span></label> <select class="form-control"
 										ng-model="form.bookingstatus">
 										<option ng-value="'Đã Cọc'">Đã Cọc</option>
 										<option ng-value="'Hoàn Thành'">Hoàn Thành</option>

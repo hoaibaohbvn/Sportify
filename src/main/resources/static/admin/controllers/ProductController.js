@@ -25,6 +25,7 @@ app.controller('ProductController', function($scope, $http) {
 			discountprice: 0,
 			price: 0
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {

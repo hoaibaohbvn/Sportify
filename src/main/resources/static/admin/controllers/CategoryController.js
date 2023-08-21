@@ -12,6 +12,7 @@ app.controller('CategoryController', function($scope, $http) {
 		$scope.form = {
 			
 		}
+		$scope.errors = [];
 		
 	}
 	// hàm edit

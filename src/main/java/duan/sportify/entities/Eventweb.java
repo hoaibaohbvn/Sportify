@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,6 +45,7 @@ public class Eventweb implements Serializable {
     private Integer    eventid ;
     @NotBlank(message = "{NotBlank.eventweb.nameevent}")
     //--- ENTITY DATA FIELDS 
+    @Size(max = 50, message = "{Size.eventweb.nameevent}")
     @Column(name="nameevent", nullable=false, length=50)
     private String     nameevent ;
 

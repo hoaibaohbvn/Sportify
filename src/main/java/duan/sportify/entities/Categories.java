@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,6 +50,7 @@ public class Categories implements Serializable {
     //--- ENTITY DATA FIELDS 
     @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.categories.categoryname}")
     @NotBlank(message = "{NotNull.categories.categoryname}")
+    @Size(max = 50, message = "{Size.categories.categoryname}")
     @Column(name="categoryname", nullable=false, length=50)
     private String     categoryname ;
 

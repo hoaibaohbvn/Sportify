@@ -22,13 +22,11 @@ public interface UserDAO extends JpaRepository<Users, String>{
 			+ "JOIN authorized ON users.username = authorized.username\r\n"
 			+ "JOIN roles ON authorized.roleid = roles.roleid\r\n"
 			+ "WHERE users.username like %:user%\r\n"
-			+ "AND users.firstname like %:ho%\r\n"
-			+ "AND users.lastname like %:ten%\r\n"
+			+ "AND (CONCAT(users.firstname, ' ', users.lastname) LIKE %:keyword%)\r\n"
 			+ "AND (:status IS NULL OR users.status = :status)\r\n"
 			+ "AND roles.rolename like %:role%;", nativeQuery = true)
 	List<Users> searchUserAdmin(@Param("user") String user,
-									@Param("ho") String ho,
-									@Param("ten") String ten,
+									@Param("keyword") String keyword,
 									@Param("status") Optional<Integer> status,
 									@Param("role") String role);
 

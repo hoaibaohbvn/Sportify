@@ -22,6 +22,7 @@ app.controller('FieldController', function($scope, $http) {
 			image: "loading.jpg",
 			price: 0
 		}
+		$scope.errors = [];
 	}
 	// hàm edit
 	$scope.edit = function(item) {

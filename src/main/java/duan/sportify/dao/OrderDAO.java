@@ -1,18 +1,36 @@
 package duan.sportify.dao;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import duan.sportify.entities.Bookings;
 import duan.sportify.entities.Orders;
 
 public interface OrderDAO extends JpaRepository<Orders, Integer> {
-
+	
 	@Query("SELECT o FROM Orders o WHERE o.users.username = ?1")
 	List<Orders> findByUsername(String username);
-
+	// search admin
+	@Query(value = "SELECT o.* FROM orders o \r\n"
+			+ "	        JOIN users u ON o.username = u.username \r\n"
+			+ "	        where(CONCAT(u.firstname, ' ', u.lastname) LIKE %:keyword%)\r\n"
+			+ "	        AND o.createdate LIKE %:datebook% \r\n"
+			+ "            and o.orderstatus like %:status%\r\n"
+			+ "            and  o.paymentstatus = :payment", nativeQuery = true)
+	List<Orders> findByConditions(@Param("keyword") String keyword, 
+	                                @Param("datebook") Date datebook,
+	                                @Param("status") String status,
+	                                @Param("payment") String payment);
+	// list admin 
+	@Query(value = "SELECT o.* FROM orders o \r\n"
+			+ "	        JOIN users u ON o.username = u.username where o.paymentstatus = 0 and date(o.createdate) = curdate()"
+		, nativeQuery = true)
+	List<Orders> findAllOrderAndUser();
 	// dashboarsh admim
 	// tổng dooanh thu order trong 6 năm
 	@Query(value = "SELECT \r\n"

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -46,6 +47,7 @@ public class Sporttype implements Serializable {
     private String     sporttypeid ;
     @Pattern(regexp = "^[\\p{L} ]+$", message = "{Pattern.categories.categoryname}")
     @NotBlank(message = "{NotNull.sporttype.categoryname}")
+    @Size(max=30, message = "{Size.sporttype.categoryname}")
     //--- ENTITY DATA FIELDS 
     @Column(name="categoryname", nullable=false, length=30)
     private String     categoryname ;

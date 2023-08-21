@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,6 +54,7 @@ public class Field implements Serializable {
     @Column(name="sporttypeid", nullable=false, length=6)
     private String     sporttypeid ;
     @NotBlank(message = "{NotBlank.field.namefield}")
+    @Size(max = 50, message = "{Size.field.namefield}")
     @Column(name="namefield", nullable=false, length=50)
     private String     namefield ;
     @NotBlank(message = "{NotBlank.field.descriptionfield}")

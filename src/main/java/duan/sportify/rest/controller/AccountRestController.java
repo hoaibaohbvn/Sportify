@@ -82,10 +82,9 @@ public class AccountRestController {
 	
 	@GetMapping("search")
 	public ResponseEntity<List<Users>> search(@RequestParam("user") String user,
-			@RequestParam("ho") String ho,
-			@RequestParam("ten") String ten,
+			@RequestParam("keyword") String keyword,
 			@RequestParam("status") Optional<Integer> status,
 			@RequestParam("role") String role){
-		return ResponseEntity.ok(userDAO.searchUserAdmin(user, ho, ten, status, role));
+		return ResponseEntity.ok(userDAO.searchUserAdmin(user, keyword, status, role));
 	}
 }
