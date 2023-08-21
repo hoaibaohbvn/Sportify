@@ -33,6 +33,13 @@
 	src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<style>
+body {
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+</style>
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
@@ -120,45 +127,7 @@
 		<div class="container">
 			<a class="navbar-brand" th:href="@{/sportify}"><img
 				src="/user/images/Logo3.png" style="width: 350px;" alt=""></a>
-			<div class="order-lg-last btn-group">
-				<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="flaticon-shopping-bag"></span>
-					<div class="d-flex justify-content-center align-items-center">
-						<small>{{cart.cartCount}}</small>
-					</div>
-				</a>
 
-				<!-- giỏ hàng ảo -->
-				<div class="dropdown-menu dropdown-menu-right">
-					<a class="dropdown-item text-center btn-link d-block w-100"
-						th:href="@{/sportify/order/cart}"> View All <span
-						class="ion-ios-arrow-round-forward"></span>
-					</a>
-					<div class="dropdown-item d-flex align-items-start" href="#">
-						<p class="mb-0">
-						<p class="quantity" style="color: black">Tổng số lượng:
-							{{cart.cartCount}}</p>
-						<p>
-							<a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice |
-								number: 0}}đ</a>
-						</p>
-					</div>
-					<div class="dropdown-item d-flex align-items-start"
-						ng-repeat="item in cart.items">
-						<div class="img"
-							style="background-image: url(/user/images/{{item.image}});"></div>
-						<div class="text pl-3">
-							<h4>{{item.productname}}</h4>
-							<p class="mb-0">
-								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
-									href="#" class="price ml-3">{{item.quantity * item.price |
-									number: 0}}đ</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#ftco-nav" aria-controls="ftco-nav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -241,7 +210,8 @@
 									</div>
 								</div>
 								<p class="col-4">
-									<span>Tình trạng: <span
+									<span>Tổng tiền: <span th:text="${order.totalprice}"></span>
+									</span> <br> <span>Tình trạng: <span
 										th:with="paymentStatusColor=${order.paymentstatus == true ? 'green' : 'red'}"
 										th:text="${order.paymentstatus} ? 'Đã thanh toán' : 'Chưa thanh toán'"
 										th:style="'text-align: center; color:' + ${paymentStatusColor}"></span>

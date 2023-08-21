@@ -30,9 +30,18 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookies/1.8.3/angular-cookies.min.js"></script>
+<script
 	src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<style>
+body {
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+</style>
 </head>
 
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
@@ -152,8 +161,8 @@
 							<h4>{{item.productname}}</h4>
 							<p class="mb-0">
 								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
-									href="#" class="price ml-3">{{item.quantity * item.price |
-									number: 0}}đ</a>
+									href="#" class="price ml-3">{{item.quantity * (item.price -
+									item.discountprice) | number: 0}}đ</a>
 							</p>
 						</div>
 					</div>
@@ -225,7 +234,7 @@
 				<!-- show sản phẩm -->
 				<div class="col-md-9">
 					<!-- sắp xếp -->
-					<div class="row mb-4">
+					<!-- <div class="row mb-4">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
 							<h4 class="product-select">Sắp xếp</h4>
@@ -241,11 +250,11 @@
 										class="dropdown-item" href="#">Tên Z - A </a>
 									<!--<a
 										 class="dropdown-item" href="#">Giảm giá nhiều</a> <a
-										class="dropdown-item" href="#">Giảm giá ít</a> -->
+										class="dropdown-item" href="#">Giảm giá ít</a>
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- Hiển thị thông báo tìm kiếm khi KQ =0 -->
 					<div class="col-md-12" th:if="${notFoundMessage}"
 						th:text="${notFoundMessage}"></div>
@@ -287,9 +296,19 @@
 									</div>
 									<h2 th:text="${product.productname}"></h2>
 									<p class="mb-0">
-										<span class="price"
-											th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')} + 'đ'">
+									<p>
+										Giá gốc:
+										<del>
+											<span class="price"
+												th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')} + 'đ'">
+											</span>
+										</del>
+									</p>
+									<p>
+										Giá bán: <span class="price"
+											th:text="${#numbers.formatDecimal(product.price - product.discountprice,0,'COMMA',0,'POINT')} + 'đ'">
 										</span>
+									</p>
 									</p>
 								</div>
 							</div>

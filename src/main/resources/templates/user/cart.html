@@ -29,9 +29,18 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookies/1.8.3/angular-cookies.min.js"></script>
+<script
 	src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<style>
+body {
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+</style>
 </head>
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 	<!-- login bar -->
@@ -136,7 +145,7 @@
 					</a>
 					<div class="dropdown-item d-flex align-items-start" href="#">
 						<p class="mb-0">
-						<p class="quantity" style="color: black">Tổng số lượng:
+							<p class="quantity" style="color: black">Tổng số lượng:
 							{{cart.cartCount}}</p>
 						<p>
 							<a href="#" class="price ml-3">Tổng tiền: {{cart.totalPrice |
@@ -151,21 +160,23 @@
 							<h4>{{item.productname}}</h4>
 							<p class="mb-0">
 								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
-									href="#" class="price ml-3">{{item.quantity * item.price |
+									href="#" class="price ml-3">{{item.quantity * (item.price - item.discountprice) |
 									number: 0}}đ</a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
+			<button class="navbar-toggler" type="button"
+								data-toggle="collapse" data-target="#ftco-nav"
+								aria-controls="ftco-nav" aria-expanded="false"
+								aria-label="Toggle navigation">
+								<span class="oi oi-menu"></span> Menu
 			</button>
 
 
-			<div class="collapse navbar-collapse" id="ftco-nav">
+			
+						<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a th:href="@{/sportify/field}"
 						class="nav-link">Sân</a></li>
@@ -211,7 +222,7 @@
 					<table class="table">
 						<thead class="thead-primary">
 							<tr>
-								<th>&nbsp;</th>
+								
 								<th>&nbsp;</th>
 								<th>Tên sản phẩm</th>
 								<th>Giá</th>
@@ -222,10 +233,7 @@
 						</thead>
 						<tbody>
 							<tr class="alert" role="alert" ng-repeat="item in cart.items">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" checked> <span
-										class="checkmark"></span>
-								</label></td>
+								
 								<td><img class="img" alt="Error"
 									src="/user/images/{{item.image}}"></img> <!-- <div class="img"  style="background-image: url(/user/images/prod-1.jpg);"></div> -->
 								</td>
@@ -234,7 +242,7 @@
 										<span>{{item.productname}}</span> <span></span>
 									</div>
 								</td>
-								<td class="price-tag">{{item.price | number: 0}}đ</td>
+								<td class="price-tag">{{item.price - item.discountprice | number: 0}}đ</td>
 								<td class="quantity">
 									<div class="input-group">
 										<input ng-change="cart.saveToSessionStorage()"
@@ -243,8 +251,7 @@
 											max="15">
 									</div>
 								</td>
-								<td class="price-tag total-price">{{item.quantity *
-									item.price | number: 0}}đ</td>
+								<td class="price-tag total-price">{{item.quantity * (item.price - item.discountprice) | number: 0}}đ</td>
 								<td>
 									<button ng-click="cart.removeProduct(item.productid)"
 										type="button" class="close" data-dismiss="alert"
@@ -263,7 +270,7 @@
 			</div>
 			<br>
 			<div class="row justify-content-end">
-				<div
+				<!-- <div
 					class="col col-lg-7 col-md-6 mt-7 cart-wrap ftco-animate justify-content-start">
 					<form th:action="@{/sportify/order/cart/voucher}" method="post"
 						class="">
@@ -271,14 +278,14 @@
 						<h5>Mã giảm giá:</h5>
 						<input type="text" th:value="${voucherId}" name="voucherId"
 							class="col-7">
-						<button class="btn btn-info" type="submit" ng-click="voucherDiscountPercent()">Áp dụng</button>
+						<button class="btn btn-info" type="submit"
+							ng-click="voucherDiscountPrice()">Áp dụng</button>
 					</form>
 					<div class="mr-4 col-md-8" th:if="${voucherMsg}"
 						th:text="${voucherMsg}"></div>
-					<input type="text" th:value="${discountPercent}"
-						id="voucherDiscountPercent" hidden>
-				</div>
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+					<div id="discountPercent">[[${discountPercent}]]</div>
+				</div> -->
+				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate" style="background: white;">
 					<div class="cart-total mb-3">
 						<h3>Thanh toán giỏ hàng</h3>
 						<p class="d-flex">
@@ -289,14 +296,14 @@
 							<span>Phí vận chuyển: </span> <span>{{shippingFee() |
 								number:0}}đ</span>
 						</p>
-						<p class="d-flex">
+						<!-- <p class="d-flex">
 							<span>Giảm giá: </span> <span>{{voucherDiscountPrice() |
 								number:0}}đ</span>
-						</p>
+						</p> -->
 						<hr>
 						<p class="d-flex total-price">
-							<span>Thành tiền</span> <span>{{updateTotalPrice()
-								| number: 0}}đ</span>
+							<span>Thành tiền</span> <span>{{updateTotalPrice() |
+								number: 0}}đ</span>
 						</p>
 					</div>
 					<p class="text-center">

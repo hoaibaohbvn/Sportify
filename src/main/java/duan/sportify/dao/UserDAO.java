@@ -29,6 +29,9 @@ public interface UserDAO extends JpaRepository<Users, String>{
 									@Param("keyword") String keyword,
 									@Param("status") Optional<Integer> status,
 									@Param("role") String role);
+	
+	@Query(value = "SELECT firstname, lastname, phone, email, address FROM Users WHERE username = :username", nativeQuery = true)
+	Object findByUsername(@Param("username") String username);
 
 	
 }
