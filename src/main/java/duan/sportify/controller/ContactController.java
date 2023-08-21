@@ -47,37 +47,31 @@ public class ContactController {
 
 	@PostMapping("/submit-contact")
 	public String processContactForm(Model model, HttpSession session, RedirectAttributes redirectAttributes,
-			@RequestParam("contactType") String contactType, @RequestParam String title,
+			@RequestParam("contactType") String contactType, @RequestParam String title,HttpServletRequest request,
 			@RequestParam String meesagecontact, @Valid Contacts contacts, BindingResult result) {
-		if (result.hasErrors()) {
-			return "user/contact"; // Return the form view to show validation errors
-		}
-//		LocalDateTime lastSubmissionTime = getLastSubmissionTimeForUser(userlogin); // Get the last submission time for the user from your storage
-//		LocalDateTime currentTime = LocalDateTime.now();
-//		Duration timeSinceLastSubmission = Duration.between(lastSubmissionTime, currentTime);
-//
-//		if (timeSinceLastSubmission.toHours() < 24) {
-//			// User cannot submit a new response within 24 hours
-//			redirectAttributes.addFlashAttribute("message", "Bạn chỉ có thể gửi phản hồi mới sau 24 giờ.");
-//			return "redirect:/sportify/contact";
-//		}
-		List<String> listcontacted = contactDAO.contactedInDay();
-		if(listcontacted.contains(userlogin)) {
-			 redirectAttributes.addFlashAttribute("message1", "Để hạn chế spam. Bạn chỉ có thể gửi phản hồi mới vào ngày tiếp theo.");
-		        return "redirect:/sportify/contact";
+		if(userlogin != null) {
+			if (result.hasErrors()) {
+				return "user/contact"; // Return the form view to show validation errors
+			}
+			List<String> listcontacted = contactDAO.contactedInDay();
+			if(listcontacted.contains(userlogin)) {
+				 redirectAttributes.addFlashAttribute("message1", "Để hạn chế spam. Bạn chỉ có thể gửi phản hồi mới vào ngày tiếp theo.");
+			        return "redirect:/sportify/contact";
+			}else {
+			// Lưu thông tin
+				contacts.setUsername(userlogin);
+				contacts.setTitle(title);
+				contacts.setMeesagecontact(meesagecontact);
+				contacts.setCategory(contactType);
+				LocalDate localDate = LocalDate.now();
+				Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				contacts.setDatecontact(date);
+				contactDAO.save(contacts);
+				redirectAttributes.addFlashAttribute("message", "Sportify Cảm ơn bạn đã phản hồi");
+			}
 		}else {
-		// Lưu thông tin
-			contacts.setUsername(userlogin);
-			contacts.setTitle(title);
-			contacts.setMeesagecontact(meesagecontact);
-			contacts.setCategory(contactType);
-			LocalDate localDate = LocalDate.now();
-			Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-			contacts.setDatecontact(date);
-			contactDAO.save(contacts);
-			redirectAttributes.addFlashAttribute("message", "Sportify Cảm ơn bạn đã phản hồi");
-			return "redirect:/sportify/contact"; // Chuyển đến trang contact khi đã lưu thành công.
+			return "redirect:/sportify/login";
 		}
+		return "redirect:/sportify/contact";
 	}
-
 }
