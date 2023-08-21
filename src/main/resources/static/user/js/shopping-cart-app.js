@@ -126,7 +126,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $cookies) {
 			return $scope.cart.items.map(item => {
 				return {
 					products: { productid: item.productid },
-					price: item.price,
+					price: (item.price - item.discountprice),
 					quantity: item.quantity,
 					//producTotalPrice: item.price * item.quantity 
 				}
