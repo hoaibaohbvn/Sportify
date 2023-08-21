@@ -87,8 +87,9 @@ public class OrderController {
 		}
 		List<Voucher> voucherList = voucherDAO.findByVoucherId(voucherId);
 		model.addAttribute("voucherList", voucherList);
+		Integer discountPercent;
 		if (voucherList.size()>0) {
-			Integer discountPercent;
+			
 			for (int i = 0; i < voucherList.size(); i++) {
 				Date startDateSql = (Date) voucherList.get(i).getStartdate();
 				LocalDate startDate = startDateSql.toLocalDate();
@@ -101,12 +102,16 @@ public class OrderController {
 					model.addAttribute("voucherMsg", "Đã áp dụng thành công voucher '" + voucherId + "'. Bạn được giảm " + discountPercent + "% .");
 					break;
 				} else {
+					discountPercent = 0;
+					model.addAttribute("discountPercent", discountPercent);
 					model.addAttribute("voucherMsg", "Voucher '" + voucherId + "' đã hết hạn sử dụng");
 				}
 				
 			}
 		}
 		if(voucherList.size()==0){
+			discountPercent = 0;
+			model.addAttribute("discountPercent", discountPercent);
 		    model.addAttribute("voucherMsg", "Không tìm thấy voucher '" + voucherId + "'.");
 		}
 		return "user/cart";
