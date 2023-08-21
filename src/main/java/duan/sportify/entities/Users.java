@@ -69,7 +69,7 @@ public class Users implements Serializable {
     @Column(name="address", length=100)
     private String     address ;
 
-    @Column(name="image", length=50)
+    @Column(name="image", length=50, nullable=true)
     private String     image ;
 
     @Column(name="gender")

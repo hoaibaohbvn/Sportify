@@ -195,7 +195,6 @@
 				</div>
 
 				<div class="row col-md-12 ml-5 mt-4">
-
 					<div class="row col-md-12 mb-1">
 						<div
 							class="col-md-12 d-flex justify-content-between align-items-center">
@@ -210,9 +209,16 @@
 									<div class="dropdown-menu filter-item"
 										aria-labelledby="dropdownMenuButton">
 										<a th:href="@{/sportify/team}" class="dropdown-item">Tất
-											cả</a> <a th:href="@{/sportify/team/findTeamUsername}"
-											class="dropdown-item">Team của tôi</a> <a
-											th:each="spt : ${sporttypeList}"
+											cả</a>
+
+										<form th:action="@{/sportify/team/findTeamUsername}"
+											method="post">
+											<input type="hidden" value="TeamUsername" name="TeamUsername">
+											<button type="submit" class="dropdown-item">Team của
+												tôi</button>
+										</form>
+
+										<a th:each="spt : ${sporttypeList}"
 											th:href="@{/sportify/team/{sporttypeid}(sporttypeid=${spt.sporttypeid})}"
 											th:value="${spt.sporttypeid}" class="dropdown-item"
 											th:text="${spt.categoryname}"></a>
@@ -276,7 +282,8 @@
 												rows="4"></textarea>
 										</div>
 										<div class=" col-md-12 modal-footer">
-											<button onclick="validateFormAndSubmit()" type="submit" class="btn btn-primary">Tạo</button>
+											<button onclick="validateFormAndSubmit()" type="submit"
+												class="btn btn-primary">Tạo</button>
 										</div>
 									</form>
 								</div>
@@ -289,8 +296,7 @@
 							class="col-lg-6 d-flex align-items-stretch ftco-animate">
 							<div class="blog-entry d-md-flex">
 								<img class="block-20 img bg-dark block-19"
-									th:src="@{'/user/images/' + ${teamItem[4]}}" alt=""
-									src="">
+									th:src="@{'/user/images/' + ${teamItem[4]}}" alt="" src="">
 								<div class="text p-4 bg-light d-flex flex-column">
 
 									<h3 th:text="${teamItem[2]}" class="heading mb-3"
@@ -356,15 +362,15 @@
 								<li class="ml-1 mr-1 mb-5" th:unless="${team.first}"><a
 									th:href="@{/sportify/team(page=${team.number - 1},
 									searchText=${param.searchText},
-									sporttypeid=${param.sporttypeid})}">&laquo;</a></li>
+									sporttypeid=${param.sporttypeid}, TeamUsername=${param.TeamUsername})}">&laquo;</a></li>
 								<li class="ml-1 mr-1 mb-5"
 									th:each="pageNumber : ${#numbers.sequence(1, team.totalPages)}"
 									th:unless="${team.totalPages <= 1}"><a
 									th:class="${team.number == pageNumber-1} ? 'bg-success text-white' : ''"
-									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid})}"
+									th:href="@{/sportify/team(page=${pageNumber-1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid}, TeamUsername=${param.TeamUsername})}"
 									th:text="${pageNumber}"></a></li>
 								<li class="ml-1 mr-1 mb-5" th:unless="${team.last}"><a
-									th:href="@{/sportify/team(page=${team.number + 1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid})}">&raquo;</a>
+									th:href="@{/sportify/team(page=${team.number + 1}, searchText=${param.searchText}, sporttypeid=${param.sporttypeid} , TeamUsername=${param.TeamUsername})}">&raquo;</a>
 								</li>
 							</ul>
 						</div>
@@ -509,94 +515,94 @@
 			});
 		});
 	</script>
-	
+
 	<script>
-    const nameInput = document.getElementsByName('newNameteam')[0];
-    const contactInput = document.getElementsByName('newContact')[0];
-    const quantityInput = document.getElementsByName('newQuantity')[0];
-    
-    nameInput.addEventListener('blur', function() { validateName(this); });
-    contactInput.addEventListener('blur', function() { validateContact(this); });
-    quantityInput.addEventListener('blur', function() { validateQuantity(this); });
+		const nameInput = document.getElementsByName('newNameteam')[0];
+		const contactInput = document.getElementsByName('newContact')[0];
+		const quantityInput = document.getElementsByName('newQuantity')[0];
 
+		nameInput.addEventListener('blur', function() {
+			validateName(this);
+		});
+		contactInput.addEventListener('blur', function() {
+			validateContact(this);
+		});
+		quantityInput.addEventListener('blur', function() {
+			validateQuantity(this);
+		});
 
-    function validateName(input) {
-        var value = input.value.trim();
-        var errorDiv = document.getElementById('name-error');
-        if (value === '') {
-            errorDiv.textContent = 'Tên không được để trống';
-            return false;
-        } else {
-            errorDiv.textContent = '';
-            return true;
-        }
-    }
+		function validateName(input) {
+			var value = input.value.trim();
+			var errorDiv = document.getElementById('name-error');
+			if (value === '') {
+				errorDiv.textContent = 'Tên không được để trống';
+				return false;
+			} else {
+				errorDiv.textContent = '';
+				return true;
+			}
+		}
 
-    
-    function validateContact(input) {
-        var value = input.value.trim();
-        var errorDiv = document.getElementById('contact-error');
+		function validateContact(input) {
+			var value = input.value.trim();
+			var errorDiv = document.getElementById('contact-error');
 
-        if (value === '') {
-            errorDiv.textContent = 'Không được để trống';
-            return false;
-        } else {
-            errorDiv.textContent = '';
-            return true;
-        }
-    }
+			if (value === '') {
+				errorDiv.textContent = 'Không được để trống';
+				return false;
+			} else {
+				errorDiv.textContent = '';
+				return true;
+			}
+		}
 
-    function validateQuantity(input) {
-        var value = input.value.trim();
-        var errorDiv = document.getElementById('quantity-error');
+		function validateQuantity(input) {
+			var value = input.value.trim();
+			var errorDiv = document.getElementById('quantity-error');
 
-        if (value === '') {
-            errorDiv.textContent = 'Không được để trống';
-            return false;
-        } else {
-            errorDiv.textContent = '';
-            return true;
-        }
-    }
-    
+			if (value === '') {
+				errorDiv.textContent = 'Không được để trống';
+				return false;
+			} else {
+				errorDiv.textContent = '';
+				return true;
+			}
+		}
 
+		function validateFormAndSubmit() {
+			let isValid = true; // Biến để kiểm tra tính hợp lệ của các hàm kiểm tra
+			const errorMessages = []; // Mảng lưu trữ thông báo lỗi
 
-    
+			// Kiểm tra từng hàm kiểm tra và cập nhật biến isValid
+			isValid = isValid && validateName(nameInput);
+			isValid = isValid && validateContact(contactInput);
+			isValid = isValid && validateQuantity(quantityInput);
+			// Xây dựng mảng thông báo lỗi
+			if (!validateName(nameInput)) {
+				errorMessages.push('không được để trống');
+			}
 
-    
+			if (!validateContact(contactInput)) {
+				errorMessages.push('Vui lòng kiểm tra tên');
+			}
+			if (!validateQuantity(quantityInput)) {
+				errorMessages
+						.push('Mật khẩu không được để trống hoặc phải từ 6 đến 15 ký tự');
+			}
 
-    function validateFormAndSubmit() {
-        let isValid = true; // Biến để kiểm tra tính hợp lệ của các hàm kiểm tra
-        const errorMessages = []; // Mảng lưu trữ thông báo lỗi
-
-        // Kiểm tra từng hàm kiểm tra và cập nhật biến isValid
-        isValid = isValid && validateName(nameInput);
-        isValid = isValid && validateContact(contactInput);
-        isValid = isValid && validateQuantity(quantityInput);
-        // Xây dựng mảng thông báo lỗi
-        if (!validateName(nameInput)) {
-            errorMessages.push('không được để trống');
-        }
-
-        if (!validateContact(contactInput)) {
-            errorMessages.push('Vui lòng kiểm tra tên');
-        }
-        if (!validateQuantity(quantityInput)) {
-            errorMessages.push('Mật khẩu không được để trống hoặc phải từ 6 đến 15 ký tự');
-        }
-
-
-        // Hiển thị thông báo lỗi
-        if (errorMessages.length > 0) {
-			event.preventDefault();
-            const errorMessageContainer = document.getElementById('error-message-container');
-            errorMessageContainer.innerHTML = '<ul><li>' + errorMessages.join('</li><li>') + '</li></ul>';
-        } else {
-            // Tất cả dữ liệu hợp lệ, thực hiện submit
-            document.querySelector('form').submit();
-        }
-    }
-</script>
+			// Hiển thị thông báo lỗi
+			if (errorMessages.length > 0) {
+				event.preventDefault();
+				const errorMessageContainer = document
+						.getElementById('error-message-container');
+				errorMessageContainer.innerHTML = '<ul><li>'
+						+ errorMessages.join('</li><li>') + '</li></ul>';
+			} else {
+				// Tất cả dữ liệu hợp lệ, thực hiện submit
+				document.querySelector('form').submit();
+			}
+		}
+	</script>
 
 </body>
 </html>

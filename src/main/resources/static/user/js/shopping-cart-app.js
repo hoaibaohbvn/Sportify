@@ -1,18 +1,14 @@
-const app = angular.module("shopping-cart-app", []);
+const app = angular.module("shopping-cart-app", ['ngCookies']);
 
 /*app.config(['$qProvider', function ($qProvider) {
 	$qProvider.errorOnUnhandledRejections(false);
 }])*/
 
-app.controller("shopping-cart-ctrl", function($scope, $http) {
+app.controller("shopping-cart-ctrl", function($scope, $http, $cookies) {
 	$scope.cart = {
 		items: [],
 		//thêm SP
 		addProduct(productid) {
-			//alert(productid);
-			//const testItem = { name: "Product1", img: "product1_img.png", price: "$100" };
-			//const testCart = JSON.stringify(angular.copy(testItem));
-			//localStorage.setItem("testCart", testCart);
 			var item = this.items.find(item => item.productid == productid);
 			if (item) {
 				item.quantity++;
@@ -44,7 +40,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 		},
 		//tính tổng tiền của giỏ hàng
 		get totalPrice() {
-			return this.items.map(item => item.quantity * item.price).reduce((total, quantity) => total += quantity, 0);
+			return this.items.map(item => item.quantity * (item.price - item.discountprice)).reduce((total, quantity) => total += quantity, 0);
 		},
 		//lưu giỏ hàng vào session storage
 		saveToSessionStorage() {
@@ -68,28 +64,50 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	}
 
 	//tính mã giảm giá
-	$scope.voucherDiscountPercent = function() {
-		var discountPercent = document.getElementById('voucherDiscountPercent').value;
-		sessionStorage.setItem("discountPercentStorage", discountPercent);
-	}
 	$scope.voucherDiscountPrice = function() {
-		var discountPercent2 = sessionStorage.getItem("discountPercentStorage");
-		if (discountPercent2) {
-			var voucherPrice;
-			voucherPrice = ($scope.cart.totalPrice * (discountPercent2 / 100));
-			return voucherPrice;
+		var discountPercent = $("#discountPercent").text();
+		$cookies.put("discountPercentStorage", discountPercent);
+		sessionStorage.setItem("discountPercentStorage", discountPercent);
+		var discountPercent2 = $cookies.get('discountPercentStorage');
+		if (discountPercent2 != 0) {
+			var voucherPrice2;
+			voucherPrice2 = ($scope.cart.totalPrice * (discountPercent2 / 100));
+			return voucherPrice2;
 		} else {
 			return 0;
 		}
 	}
+	$scope.voucherDiscountPrice2 = function() {
+		var discountPercent2 = $cookies.get('discountPercentStorage');
+		if (discountPercent2 != 0) {
+			var voucherPrice2;
+			voucherPrice2 = ($scope.cart.totalPrice * (discountPercent2 / 100));
+			return voucherPrice2;
+		} else {
+			return 0;
+		}
+	}
+	$scope.voucherDiscountPrice3 = function(){
+		var checkVoucher = sessionStorage.getItem("discountPercentStorage");
+		if (checkVoucher != null){
+			
+			/*var voucherPrice3;
+			voucherPrice3 = ($scope.cart.totalPrice * (checkVoucher / 100));
+			return voucherPrice3;*/
+			return alert("true")
+		} else {
+			//return $scope.voucherDiscountPrice();
+			return alert("false")
+		}
+	}
 	$scope.clearVoucher = function() {
-		sessionStorage.setItem("discountPercentStorage", 0);
+		$cookies.remove("discountPercentStorage");
 	}
 
 	//update tổng tiền
 	$scope.updateTotalPrice = function() {
 		var updatePrice;
-		updatePrice = ($scope.cart.totalPrice + $scope.shippingFee() - $scope.voucherDiscountPrice());
+		updatePrice = ($scope.cart.totalPrice + $scope.shippingFee());
 		return updatePrice;
 	}
 
@@ -97,7 +115,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 	$scope.cart.loadFromSessionStorage();
 
 	$scope.order = {
-		username: "",
+		username: $("#username").text() ,
 		createdate: new Date(),
 		address: "",
 		note: "",
@@ -108,7 +126,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 			return $scope.cart.items.map(item => {
 				return {
 					products: { productid: item.productid },
-					price: item.price,
+					price: (item.price - item.discountprice),
 					quantity: item.quantity,
 					//producTotalPrice: item.price * item.quantity 
 				}
@@ -133,5 +151,10 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
 	//tính tổng tiền order
 	$scope.orderTotalPrice = [];
-
+	
+	
+	// Custom validation function
+    $scope.validateNoSpecialCharacters = function(input) {
+      return /^[a-zA-Z0-9,./ À-Ỹà-ỹ]*$/.test(input);
+    };
 })

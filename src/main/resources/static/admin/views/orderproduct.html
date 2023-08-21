@@ -237,9 +237,9 @@
 												<tr ng-repeat="o in orderdetail">
 													<td>{{$index + 1}}</td>
 													<td>{{o.products.productname}}</td>
-													<td>{{formatCurrency(o.products.price)}}</td>
+													<td>{{formatCurrency(o.price)}}</td>
 													<td>{{o.quantity}}</td>
-													<td>{{formatCurrency(o.products.price * o.quantity)}}</td>
+													<td>{{formatCurrency(o.price * o.quantity)}}</td>
 												</tr>
 											</tbody>
 										</table>
