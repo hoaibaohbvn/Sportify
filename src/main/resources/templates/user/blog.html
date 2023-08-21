@@ -208,7 +208,7 @@
 			<form class=" d-flex  col-5" th:action="@{/sportify/search}"
 				method="post">
 				<input class="form-control rounded-0 me-2 col-9"
-					placeholder="Tìm kiếm theo tên..." aria-label="Search"
+					placeholder="Tìm kiếm theo tên..." maxlength="200" aria-label="Search"
 					type="search" th:value="${keyword}" name="keyword">
 				<button class="btn btn-success col-3 rounded-0" type="submit">Search</button>
 			</form>
