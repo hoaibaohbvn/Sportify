@@ -21,6 +21,8 @@ public interface TeamDAO extends JpaRepository<Teams, Integer> {
 			+ "	LEFT JOIN users ON teams.username = users.username\r\n"
 			+ "						GROUP BY teams.teamid;", nativeQuery = true)
 	List<Object[]> findAllTeam();
+	
+	//tìm sân theo id
 
 	@Query(value = "SELECT teams.teamid,teams.sporttypeid,teams.nameteam,teams.quantity,teams.avatar,teams.contact,teams.descriptions,teams.username,teams.createdate, sporttype.categoryname, COUNT(CASE WHEN teamdetails.status = 1 THEN teamdetails.teamid ELSE NULL END) AS count,users.firstname,users.lastname\r\n"
 			+ "			FROM teams LEFT JOIN teamdetails ON teams.teamid = teamdetails.teamid\r\n"
