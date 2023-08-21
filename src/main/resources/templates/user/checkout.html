@@ -22,12 +22,21 @@
 <link rel="stylesheet" href="/user/css/magnific-popup.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookies/1.8.3/angular-cookies.min.js"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
 <link rel="stylesheet" href="/user/css/flaticon.css">
 <link rel="stylesheet" href="/user/css/style.css">
+<style>
+body {
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+</style>
 </head>
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 
@@ -147,8 +156,8 @@
 							<h4>{{item.productname}}</h4>
 							<p class="mb-0">
 								<span class="quantity">Số lượng: {{item.quantity}}</span> <a
-									href="#" class="price ml-3">{{item.quantity * item.price |
-									number: 0}}đ</a>
+									href="#" class="price ml-3">{{item.quantity * (item.price -
+									item.discountprice) | number: 0}}đ</a>
 							</p>
 						</div>
 					</div>
@@ -202,27 +211,29 @@
 
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row justify-content-center">
+			<div class="row justify-content-center" >
 				<!-- Form điền thông tin để thanh toán -->
-				<div class="col-xl-10 ftco-animate">
-					<form action="#" class="billing-form" th:each="user : ${users}" th:object="${user}" name="myForm">
+				<div class="col-xl-10 ftco-animate" >
+					<form action="#" class="billing-form" th:each="user : ${users}"
+						th:object="${user}" name="myForm" style="background: white;">
 						<h3 class="mb-4 billing-heading">Chi tiết thanh toán đơn hàng</h3>
 						<div class="row align-items-end">
-						<div class="col-md-12">
-								<div class="form-group"  hidden>
-									<div class="form-control" id="username" >[[${#request.remoteUser}]]</div>
+							<div class="col-md-12">
+								<div class="form-group" hidden>
+									<div class="form-control" id="username">[[${#request.remoteUser}]]</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="firstname">Họ: </label> <input type="text"
-										class="form-control"  th:value="${user.firstname}" readonly>
+										class="form-control" th:value="${user.firstname}" readonly>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="lastname">Tên: </label> <input type="text"
-										class="form-control" placeholder="" value="" th:value="${user.lastname}" readonly>
+										class="form-control" placeholder="" value=""
+										th:value="${user.lastname}" readonly>
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -232,8 +243,10 @@
 									<label for="streetaddress">Địa chỉ nhận hàng: </label> <input
 										type="text" class="form-control" name="address"
 										placeholder="Địa chỉ nhà, quận, huyện, ..."
-										ng-model="order.address" ng-pattern="/^[a-zA-Z0-9,./ À-Ỹà-ỹ]*$/" required>
-										<p ng-show="myForm.address.$invalid">Vui lòng nhập địa chỉ.</p>
+										ng-model="order.address"
+										ng-pattern="/^[a-zA-Z0-9,./ À-Ỹà-ỹ]*$/" required>
+									<p ng-show="myForm.address.$invalid" style="color: red;">Vui
+										lòng nhập địa chỉ.</p>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -248,13 +261,15 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="phone">Số điện thoại: </label> <input type="text"
-										class="form-control" placeholder="" th:value="${user.phone}" readonly>
+										class="form-control" placeholder="" th:value="${user.phone}"
+										readonly>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="emailaddress">Email: </label> <input type="text"
-										class="form-control" placeholder="" th:value="${user.email}" readonly>
+										class="form-control" placeholder="" th:value="${user.email}"
+										readonly>
 								</div>
 							</div>
 						</div>
@@ -266,7 +281,7 @@
 					<hr>
 					<div class="row mt-5 pt-3 d-flex">
 						<div class="col-md-6 d-flex">
-							<div class="cart-detail cart-total p-3 p-md-4">
+							<div class="cart-detail cart-total p-3 p-md-4" style="background: white;">
 								<h3>Chi tiết giỏ hàng</h3>
 								<p class="d-flex">
 									<span>Tạm tính: </span> <span>{{cart.totalPrice |
@@ -276,10 +291,10 @@
 									<span>Phí vận chuyển: </span> <span>{{shippingFee() |
 										number:0}}đ</span>
 								</p>
-								<p class="d-flex">
+								<!-- <p class="d-flex">
 									<span>Giảm giá: </span> <span>{{voucherDiscountPrice() |
 										number:0}}đ</span>
-								</p>
+								</p> -->
 								<hr>
 								<p class="d-flex total-price">
 									<span>Thành tiền</span> <span>{{updateTotalPrice() |
@@ -288,9 +303,9 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="cart-detail p-3 p-md-4">
+							<div class="cart-detail p-3 p-md-4" style="background: white;">
 								<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
-								  <div class="form-group">
+								<div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
 											<label><input type="radio" name="optradio"
@@ -322,7 +337,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</section>

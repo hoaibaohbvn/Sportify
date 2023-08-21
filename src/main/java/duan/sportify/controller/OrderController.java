@@ -44,10 +44,17 @@ public class OrderController {
 	@Autowired
 	UserService userService;
 	
+	String userlogin = null;
+	
 	@GetMapping("/order/cart")
-	public String viewCart(Model model) {
+	public String viewCart(Model model, HttpServletRequest request) {
+		userlogin = (String) request.getSession().getAttribute("username");
+		if (userlogin == null) {
+			return "security/login";
+		} else {
+			return "user/cart";
+		}
 		
-		return "user/cart";
 	}
 	
 	@GetMapping("/order/checkout")
@@ -87,8 +94,9 @@ public class OrderController {
 		}
 		List<Voucher> voucherList = voucherDAO.findByVoucherId(voucherId);
 		model.addAttribute("voucherList", voucherList);
+		Integer discountPercent;
 		if (voucherList.size()>0) {
-			Integer discountPercent;
+			
 			for (int i = 0; i < voucherList.size(); i++) {
 				Date startDateSql = (Date) voucherList.get(i).getStartdate();
 				LocalDate startDate = startDateSql.toLocalDate();
@@ -101,12 +109,16 @@ public class OrderController {
 					model.addAttribute("voucherMsg", "Đã áp dụng thành công voucher '" + voucherId + "'. Bạn được giảm " + discountPercent + "% .");
 					break;
 				} else {
+					discountPercent = 0;
+					model.addAttribute("discountPercent", discountPercent);
 					model.addAttribute("voucherMsg", "Voucher '" + voucherId + "' đã hết hạn sử dụng");
 				}
 				
 			}
 		}
 		if(voucherList.size()==0){
+			discountPercent = 0;
+			model.addAttribute("discountPercent", discountPercent);
 		    model.addAttribute("voucherMsg", "Không tìm thấy voucher '" + voucherId + "'.");
 		}
 		return "user/cart";
