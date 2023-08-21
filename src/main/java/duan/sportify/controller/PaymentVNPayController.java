@@ -54,8 +54,8 @@ import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray;
 @RequestMapping("sportify")
 public class PaymentVNPayController {
 	private RestTemplate restTemplate = new RestTemplate();
-	String ipAddress = null;
-	String paymentUrl;
+	String ipAddress = null; // Ip máy 
+	String paymentUrl; // Url trả về
 	@Autowired
 	UserService userservice;
 	@Autowired
@@ -63,6 +63,8 @@ public class PaymentVNPayController {
     @Autowired
     BookingDetailService bookingdetailservice;
     @Autowired
+    
+    // Lấy IP người dùng từ Json API trả về
     public void ApiController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
@@ -76,6 +78,7 @@ public class PaymentVNPayController {
         }
         return null;
     }
+    // Lấy IP máy người dùng thông qua API
     @GetMapping("/getIp")
     public String getIpAddress() {
         String apiUrl = "https://api.ipify.org?format=json";
@@ -89,6 +92,7 @@ public class PaymentVNPayController {
             return "Không thể lấy dữ liệu từ API.";
         }
     }
+    // Các đối tượng cần thiết để trả về trạng thái thanh toán
     Map<String, String> vnp_Params = new HashMap<>();
     String userlogin = null;
     String phone = null;
@@ -96,6 +100,8 @@ public class PaymentVNPayController {
     int bookingidNew = 0;
     Bookings savebooking ;
     Bookingdetails savebookingdetail ;
+    
+    // Gọi API VNPay cung cấp
     @PostMapping("/getIp/create")
 	public RedirectView createPayment(
 			@RequestParam("amount") String inputMoney, HttpServletRequest request,
@@ -141,13 +147,13 @@ public class PaymentVNPayController {
 		vnp_Params.put("vnp_Version", VNPayConfig.vnp_Version);
 		vnp_Params.put("vnp_Command", VNPayConfig.vnp_Command);
 		vnp_Params.put("vnp_TmnCode", VNPayConfig.vnp_TmnCode);
-		vnp_Params.put("vnp_Amount", String.valueOf(amount));
+		vnp_Params.put("vnp_Amount", String.valueOf(amount)); // tiền hóa đơn
 		vnp_Params.put("vnp_CurrCode", "VND");
 		vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
 		vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
 		vnp_Params.put("vnp_Locale", "vn");
-		vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl);
-		vnp_Params.put("vnp_IpAddr", ipAddress);
+		vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl); // Đường dẫn trả về trạng thái thanh toán
+		vnp_Params.put("vnp_IpAddr", ipAddress); // IP máy người dùng
 		vnp_Params.put("vnp_OrderType", "250000");
 
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -194,7 +200,7 @@ public class PaymentVNPayController {
 //		return ResponseEntity.status(HttpStatus.OK).body(paymentResDTO);
 		return new RedirectView(paymentUrl);
 	}
-	
+	// Trả trạng thái thanh toán và lưu xuống DB
 	@GetMapping("/checkoutResult")
 	public String viewResult(Model model, HttpServletRequest request) {
 		// Begin process return from VNPAY
@@ -220,7 +226,7 @@ public class PaymentVNPayController {
         // Add transactionStatus to the model
         String transactionStatus;
         
-            if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+            if ("00".equals(request.getParameter("vnp_TransactionStatus"))) { // trạng thái thành công từ VNPay
                 transactionStatus = "Thành công";
                 try {
                 	bookingservice.create(savebooking);
@@ -229,7 +235,7 @@ public class PaymentVNPayController {
 					e.printStackTrace();
 				}
                 
-            } else {
+            } else { // Không thành công
                 transactionStatus = "Không thành công";
             }
          // Get the vnp_Amount from the fields map
@@ -241,8 +247,9 @@ public class PaymentVNPayController {
             // Divide by 100 to get the actual monetary value
             double amountInVND = vnp_Amount / 100;
            
-        model.addAttribute("amountInVND",amountInVND);
-        model.addAttribute("transactionStatus", transactionStatus);
+        model.addAttribute("amountInVND",amountInVND); // Tiền thanh toán
+        model.addAttribute("transactionStatus", transactionStatus); // trạng thái thanh toán
+        // Chuyển về trang kết quả thanh toán
 		return "user/ketquathanhtoan";
 	}
 	
