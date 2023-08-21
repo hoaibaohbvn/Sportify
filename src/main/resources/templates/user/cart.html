@@ -222,7 +222,7 @@ body {
 					<table class="table">
 						<thead class="thead-primary">
 							<tr>
-								<th>&nbsp;</th>
+								
 								<th>&nbsp;</th>
 								<th>Tên sản phẩm</th>
 								<th>Giá</th>
@@ -233,10 +233,7 @@ body {
 						</thead>
 						<tbody>
 							<tr class="alert" role="alert" ng-repeat="item in cart.items">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" checked> <span
-										class="checkmark"></span>
-								</label></td>
+								
 								<td><img class="img" alt="Error"
 									src="/user/images/{{item.image}}"></img> <!-- <div class="img"  style="background-image: url(/user/images/prod-1.jpg);"></div> -->
 								</td>
@@ -288,7 +285,7 @@ body {
 						th:text="${voucherMsg}"></div>
 					<div id="discountPercent">[[${discountPercent}]]</div>
 				</div> -->
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate" style="background: white;">
 					<div class="cart-total mb-3">
 						<h3>Thanh toán giỏ hàng</h3>
 						<p class="d-flex">

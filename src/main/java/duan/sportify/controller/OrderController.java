@@ -44,10 +44,17 @@ public class OrderController {
 	@Autowired
 	UserService userService;
 	
+	String userlogin = null;
+	
 	@GetMapping("/order/cart")
-	public String viewCart(Model model) {
+	public String viewCart(Model model, HttpServletRequest request) {
+		userlogin = (String) request.getSession().getAttribute("username");
+		if (userlogin == null) {
+			return "security/login";
+		} else {
+			return "user/cart";
+		}
 		
-		return "user/cart";
 	}
 	
 	@GetMapping("/order/checkout")

@@ -211,11 +211,11 @@ body {
 
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row justify-content-center">
+			<div class="row justify-content-center" >
 				<!-- Form điền thông tin để thanh toán -->
-				<div class="col-xl-10 ftco-animate">
+				<div class="col-xl-10 ftco-animate" >
 					<form action="#" class="billing-form" th:each="user : ${users}"
-						th:object="${user}" name="myForm">
+						th:object="${user}" name="myForm" style="background: white;">
 						<h3 class="mb-4 billing-heading">Chi tiết thanh toán đơn hàng</h3>
 						<div class="row align-items-end">
 							<div class="col-md-12">
@@ -281,7 +281,7 @@ body {
 					<hr>
 					<div class="row mt-5 pt-3 d-flex">
 						<div class="col-md-6 d-flex">
-							<div class="cart-detail cart-total p-3 p-md-4">
+							<div class="cart-detail cart-total p-3 p-md-4" style="background: white;">
 								<h3>Chi tiết giỏ hàng</h3>
 								<p class="d-flex">
 									<span>Tạm tính: </span> <span>{{cart.totalPrice |
@@ -303,7 +303,7 @@ body {
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="cart-detail p-3 p-md-4">
+							<div class="cart-detail p-3 p-md-4" style="background: white;">
 								<h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
 								<div class="form-group">
 									<div class="col-md-12">
