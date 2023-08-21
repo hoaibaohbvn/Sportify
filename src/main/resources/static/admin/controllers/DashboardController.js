@@ -249,8 +249,8 @@ app.controller('DashboardController', function($scope, $http) {
 		$scope.thongKeOrderInDay = rp.data;
 
 		var totalAllOrder = $scope.thongKeOrderInDay[0][1]
-		var countOrderDone = $scope.thongKeOrderInDay[1][1];
-		var countOrderFailure = $scope.thongKeOrderInDay[3][1];
+		var countOrderDone = $scope.thongKeOrderInDay[2][1];
+		var countOrderFailure = $scope.thongKeOrderInDay[1][1];
 		$scope.percentOrderDone_ngay = ((countOrderDone / totalAllOrder) * 100).toFixed(1) + '%';
 		if (countOrderDone === 0) {
 			$scope.percentOrderDone_ngay = '0%';

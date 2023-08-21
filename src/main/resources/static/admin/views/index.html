@@ -16,7 +16,9 @@
 		<div class="page-header">
 			<div class="row">
 				<div class="col-sm-12">
-					<h3 class="page-title">Welcome <strong>{{username}}</strong>!</h3>
+					<h3 class="page-title">
+						Welcome <strong>{{username}}</strong>!
+					</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item active">Dashboard</li>
 					</ul>
@@ -110,10 +112,13 @@
 										<h3>{{thongkebookingtrongngay[0][1]}}</h3>
 									</div>
 								</div>
-								<div class="col-md-6 col-6 text-center" ng-show="kiemDuyet === 'ok'">
+								<div class="col-md-6 col-6 text-center"
+									ng-show="kiemDuyet === 'ok'">
 									<div class="stats-box mb-4">
 										<p>Doanh thu</p>
-										<h3>{{formatCurrency(thongkebookingtrongngay[1][2] + (thongkebookingtrongngay[2][2] * 0.3) - (thongkebookingtrongngay[3][2] * 0.3 * 2))}}</h3>
+										<h3>{{formatCurrency(thongkebookingtrongngay[1][2] +
+											(thongkebookingtrongngay[2][2] * 0.3) -
+											(thongkebookingtrongngay[3][2] * 0.3 * 2))}}</h3>
 									</div>
 								</div>
 							</div>
@@ -164,7 +169,8 @@
 										<h3>{{thongKeOrderInDay[0][1]}}</h3>
 									</div>
 								</div>
-								<div class="col-md-6 col-6 text-center" ng-show="kiemDuyet === 'ok'">
+								<div class="col-md-6 col-6 text-center"
+									ng-show="kiemDuyet === 'ok'">
 									<div class="stats-box mb-4">
 										<p>Doanh thu</p>
 										<h3>{{formatCurrency(thongKeOrderInDay[0][2])}}</h3>
@@ -174,34 +180,35 @@
 						</div>
 						<div class="progress mb-4">
 							<div class="progress-bar bg-purple" role="progressbar"
-								ng-style="{'width': percentOrderDone_ngay" aria-valuenow="0"
-								aria-valuemin="0" aria-valuemax="100">{{percentOrderDone_ngay}}</div>
+								ng-style="{'width': percentOrderDone_ngay}"
+								aria-valuenow="{{percentOrderDone_ngay}}" aria-valuemin="0"
+								aria-valuemax="100">{{percentOrderDone_ngay}}</div>
 
 							<div class="progress-bar bg-warning" role="progressbar"
-								ng-style="{'width': percentOrderFailure_ngay" aria-valuenow="0"
-								aria-valuemin="0" aria-valuemax="100">{{percentOrderFailure_ngay}}</div>
-
-							
+								ng-style="{'width': percentOrderFailure_ngay}"
+								aria-valuenow="{{percentOrderFailure_ngay}}" aria-valuemin="0"
+								aria-valuemax="100">{{percentOrderFailure_ngay}}</div>
 						</div>
+
 
 						<div>
 							<p>
-								<i class="fa fa-dot-circle-o text-purple mr-2"></i>Đã thanh toán <span
-									class="float-right">{{thongKeOrderInDay[2][1]}}</span>
+								<i class="fa fa-dot-circle-o text-purple mr-2"></i>Đã thanh toán
+								<span class="float-right">{{thongKeOrderInDay[2][1]}}</span>
 							</p>
 							<p>
-								<i class="fa fa-dot-circle-o text-warning mr-2"></i>Chưa thanh toán <span
-									class="float-right">{{thongKeOrderInDay[1][1]}}</span>
+								<i class="fa fa-dot-circle-o text-warning mr-2"></i>Chưa thanh
+								toán <span class="float-right">{{thongKeOrderInDay[1][1]}}</span>
 							</p>
 
-							
+
 
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-12 col-lg-6 col-xl-4 d-flex" >
+			<div class="col-md-12 col-lg-6 col-xl-4 d-flex">
 				<div class="card flex-fill">
 					<div class="card-body">
 						<h4 class="card-title">
@@ -210,15 +217,18 @@
 						</h4>
 						<div class="leave-info-box" ng-repeat="contact in list3Contact">
 							<div class="media align-items-center">
-								<div class="avatar"><img alt=""
-									src="/user/images/{{contact.users.image}}"></div>
+								<div class="avatar">
+									<img alt="" src="/user/images/{{contact.users.image}}">
+								</div>
 								<div class="media-body">
-									<div class="text-sm my-0">{{contact.users.firstname + ' ' + contact.users.lastname}}</div>
+									<div class="text-sm my-0">{{contact.users.firstname + ' '
+										+ contact.users.lastname}}</div>
 								</div>
 							</div>
 							<div class="row align-items-center mt-3">
 								<div class="col-6">
-									<h6 class="mb-0">{{contact.datecontact | date: 'dd-MM-yyyy'}}</h6>
+									<h6 class="mb-0">{{contact.datecontact | date:
+										'dd-MM-yyyy'}}</h6>
 									<span class="text-sm text-muted">{{contact.title}}</span>
 								</div>
 								<div class="col-6 text-right">
@@ -242,7 +252,8 @@
 						<div class="card-body">
 							<div class="d-flex justify-content-between mb-3">
 								<div>
-									<span class="d-block">Tổng số phiếu đặt sân trong tháng này </span>
+									<span class="d-block">Tổng số phiếu đặt sân trong tháng
+										này </span>
 								</div>
 								<div>
 									<span ng-style="{ 'color': colorDatSan }">
@@ -250,7 +261,7 @@
 								</div>
 							</div>
 							<h3 class="mb-3">{{tongSoPhieuDatSan2Thang[0][1]}}</h3>
-							
+
 							<p class="mb-0">
 								Tháng trước có <span>{{tongSoPhieuDatSan2Thang[1][1]}}</span> <span>
 									phiếu đặt sân</span>
@@ -263,7 +274,8 @@
 						<div class="card-body">
 							<div class="d-flex justify-content-between mb-3">
 								<div>
-									<span class="d-block">Tổng số phiếu bán hàng trong tháng này</span>
+									<span class="d-block">Tổng số phiếu bán hàng trong tháng
+										này</span>
 								</div>
 								<div>
 									<span ng-style="{ 'color': colorOrder }">
@@ -271,7 +283,7 @@
 								</div>
 							</div>
 							<h3 class="mb-3">{{tongSoPhieuOrder2Thang[0][1]}}</h3>
-							
+
 							<p class="mb-0">
 								Tháng trước có <span>{{tongSoPhieuOrder2Thang[1][1]}}</span> <span>
 									phiếu bán hàng</span>
@@ -290,7 +302,7 @@
 								</div>
 							</div>
 							<h3 class="mb-3">{{formatCurrency(tongDoanhThuBooking2Month[0][0])}}</h3>
-							
+
 							<p class="mb-0">
 								Tháng trước <span class="text-muted">{{formatCurrency(tongDoanhThuBooking2Month[0][1])}}</span>
 							</p>
@@ -309,7 +321,7 @@
 								</div>
 							</div>
 							<h3 class="mb-3">{{formatCurrency(sumRevenueOrder2Month[1][1])}}</h3>
-							
+
 							<p class="mb-0">
 								Tháng trước <span class="text-muted">{{formatCurrency(sumRevenueOrder2Month[1][2])}}</span>
 							</p>
@@ -358,7 +370,8 @@
 			<div class="col-md-6 d-flex">
 				<div class="card card-table flex-fill">
 					<div class="card-header">
-						<h3 class="card-title mb-0">Top 3 sản phẩm bán được nhiều nhất</h3>
+						<h3 class="card-title mb-0">Top 3 sản phẩm bán được nhiều
+							nhất</h3>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
@@ -366,23 +379,23 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										
+
 										<th>Tên sản phẩm</th>
 										<th>Giá sản phẩm</th>
 										<th>Số lượt bán</th>
-										<th>Doanh thu </th>
+										<th>Doanh thu</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat = "top3pnt in  top3SanPhamBanNhieu">
+									<tr ng-repeat="top3pnt in  top3SanPhamBanNhieu">
 										<td>{{$index + 1}}</td>
-										
+
 										<td>{{top3pnt[0]}}</td>
 										<td>{{formatCurrency(top3pnt[1])}}</td>
 										<td>{{top3pnt[2]}}</td>
 										<td>{{formatCurrency(top3pnt[3])}}</td>
 									</tr>
-									
+
 								</tbody>
 							</table>
 						</div>
@@ -416,13 +429,13 @@
 								<tbody>
 									<tr ng-repeat="top5user in top5UserDatSan">
 										<td>{{$index + 1}}</td>
-										
+
 										<td>{{top5user[0] + top5user[1]}}</td>
 										<td>{{top5user[2]}}</td>
 										<td>{{top5user[3]}}</td>
 										<td>{{formatCurrency(top5user[4])}}</td>
 									</tr>
-									
+
 								</tbody>
 							</table>
 						</div>
@@ -453,7 +466,7 @@
 								<tbody>
 									<tr ng-repeat="top5userorder in top5UserOrder">
 										<td>{{$index + 1}}</td>
-										
+
 										<td>{{top5userorder[0] + top5userorder[1]}}</td>
 										<td>{{top5userorder[2]}}</td>
 										<td>{{top5userorder[3]}}</td>
