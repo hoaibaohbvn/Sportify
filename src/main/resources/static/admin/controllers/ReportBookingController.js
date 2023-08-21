@@ -1,4 +1,31 @@
-app.controller('ReportBookingController', function($scope, $http) {
+app.controller('ReportBookingController', function($scope, $http, $location) {
+	//bắt quyền truy cập
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'dont') {
+						$location.path("/admin/unauthorized");
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+	
 	// đồ thị
 	$scope.barcharts = function() {
 		// Lấy dữ liệu từ API

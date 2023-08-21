@@ -18,7 +18,7 @@
 				<div class="col">
 					<h3 class="page-title">Đơn hàng</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/admin/index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">Đơn hàng</li>
 					</ul>
 				</div>
@@ -30,33 +30,44 @@
 		<!-- Search Filter -->
 		<div class="row filter-row">
 
-			<div class="col-sm-6 col-md-3">
-				<label class="focus-label">Người đặt</label>
+			<div class="col-sm-6 col-md-2">
+				<label class="focus-label">Họ tên người đặt</label>
 				<div class="form-group form-focus">
 					<input type="text" class="form-control floating"
 						ng-model="searchName">
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-2" ng-show="kiemDuyet === 'ok'">
 				<label class="focus-label">Ngày đặt</label>
 				<div class="form-group form-focus">
 					<input type="date" class="form-control floating"
 						ng-model="searchDate">
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
-				<label class="focus-label">Trạng thái</label>
+			<div class="col-sm-2 col-md-2" ng-show="kiemDuyet === 'ok'">
+				<label class="focus-label">Trạng thái đơn hàng</label>
 				<div class="form-group form-focus select-focus">
-
 					<select ng-model="searchStatus" class="select floating">
-						<option ng-value=null>Tất cả</option>
-						<option ng-value="'Đã Cọc'">Đã Cọc</option>
+						<option ng-value="''">Tất cả</option>
+						<option ng-value="'Chờ Xác Nhận'">Chờ Xác Nhận</option>
+						<option ng-value="'Đang Giao'">Đang Giao</option>
 						<option ng-value="'Hoàn Thành'">Hoàn Thành</option>
 						<option ng-value="'Hủy Đặt'">Hủy Đặt</option>
+						<option ng-value="'Trả Hàng'">Trả Hàng</option>
 					</select>
 				</div>
 			</div>
-			<div class=" col-md-3 d-flex mt-4">
+			<div class="col-sm-2 col-md-2" ng-show="kiemDuyet === 'ok'">
+				<label class="focus-label">Trạng thái thanh toán</label>
+				<div class="form-group form-focus select-focus">
+					<select ng-model="searchPayment" class="select floating">
+						<option ng-value=null>Tất cả</option>
+						<option ng-value=1>Đã thanh toán</option>
+						<option ng-value=0>Chưa thanh toán</option>
+					</select>
+				</div>
+			</div>
+			<div class=" col-md-4 d-flex mt-4">
 				<div class="col-sm-6 col-md-6 mt-1">
 					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="search()">
 						Tìm kiếm </a>
@@ -65,7 +76,6 @@
 				<div class="col-sm-6 col-md-6 mt-1">
 					<a href="#" class="mt-1 btn btn-success btn-block" ng-click="refresh()">
 						Làm mới </a>
-
 				</div>
 
 			</div>
@@ -96,7 +106,7 @@
 								<td>{{item.createdate | date:'dd-MM-yyyy | HH:mm:ss' }}</td>
 								<td>{{item.address}}</td>
 								<td>{{item.orderstatus}}</td>
-								<td>{{item.paymentstatus?'Thành công':'Thất bại'}}</td>
+								<td>{{item.paymentstatus?'Đã thanh toán':'Chưa thanh toán'}}</td>
 								<td class="text-center">
 
 
@@ -183,9 +193,8 @@
 									<label class="col-form-label">Trạng thái thanh toán<span
 										class="text-danger">*</span></label> <select class="form-control"
 										ng-model="form.paymentstatus">
-										<option ng-value="true">Thành công</option>
-										<option ng-value="false">Thất Bại</option>
-										
+										<option ng-value="true">Đã thanh toán</option>
+										<option ng-value="false">Chưa thanh toán</option>
 									</select>
 								</div>
 							</div>
@@ -193,7 +202,7 @@
 								<div class="form-group">
 									<label class="col-form-label">Thành tiền <span
 										class="text-danger">*</span></label> <input class="form-control"
-										type="email" readonly>
+										type="text" ng-model="formatCurrency(form.totalprice)" readonly>
 								</div>
 							</div>
 							<div class="col-sm-12">
@@ -240,9 +249,7 @@
 						</div>
 
 						<div class="submit-section">
-							<button ng-if="form.orderstatus == 'Chờ Xác Nhận'" class="btn btn-primary submit-btn" ng-click="confirm()">Xác nhận đơn hàng</button>
-							<button ng-if="form.orderstatus == 'Chờ Xác Nhận'" class="btn btn-danger submit-btn" ng-click="cancel()">Hủy đơn hàng</button>
-							<button class="btn btn-info submit-btn" ng-click="update()">Chỉnh sửa đơn hàng</button>
+							<button class="btn btn-primary submit-btn" ng-click="update()">Chỉnh sửa đơn hàng</button>
 						</div>
 					</form>
 				</div>

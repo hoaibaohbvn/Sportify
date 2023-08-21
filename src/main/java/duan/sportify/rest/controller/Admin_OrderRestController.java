@@ -1,6 +1,8 @@
 package duan.sportify.rest.controller;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import duan.sportify.GlobalExceptionHandler;
@@ -40,7 +43,7 @@ public class Admin_OrderRestController {
 	}
 	@GetMapping("getAll")
 	public ResponseEntity<List<Orders>> getAll(Model model){
-		return ResponseEntity.ok(orderDAO.findAll());
+		return ResponseEntity.ok(orderDAO.findAllOrderAndUser());
 	}
 	@GetMapping("get/{id}")
 	public ResponseEntity<Orders> getOne(@PathVariable("id") Integer id) {
@@ -58,4 +61,9 @@ public class Admin_OrderRestController {
 		orderDAO.save(order);
 		return ResponseEntity.ok(order);
 	}
+	// search
+		@GetMapping("search")
+		public ResponseEntity<List<Orders>> search(@RequestParam("keyword") String keyword, @RequestParam("datebook") Date datebook,@RequestParam("status") String status, @RequestParam("payment") Optional<Integer> payment){
+			return ResponseEntity.ok(orderDAO.findByConditions(keyword, datebook, status, payment));
+		}
 }

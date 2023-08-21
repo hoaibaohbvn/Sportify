@@ -18,7 +18,7 @@
 				<div class="col">
 					<h3 class="page-title">Sự kiện</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/admin/index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">Sự kiện</li>
 					</ul>
 				</div>
@@ -97,10 +97,10 @@
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#edit" ng-click="edit(item)"><i
-												class="fa fa-pencil m-r-5"></i> Edit</a> <a
+												class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a> <a
 												class="dropdown-item" href="#" data-toggle="modal"
 												data-target="#delete" ng-click="edit(item)"><i
-												class="fa fa-trash-o m-r-5"></i> Delete</a>
+												class="fa fa-trash-o m-r-5"></i> Xóa</a>
 										</div>
 									</div>
 								</td>
@@ -141,9 +141,9 @@
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.nameevent"
 										ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="error in errors"
-										ng-if="error.field === 'nameevent' ">{{ error.message
-									}}</errors>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameevent' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -231,9 +231,9 @@
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.nameevent"
 										ng-change="clearErrors()">
-									<errors class="badge badge-danger" ng-repeat="error in errors"
-										ng-if="error.field === 'nameevent' ">{{ error.message
-									}}</errors>
+									<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'nameevent' && index === 0">{{
+										error.message }}</errors>
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -297,18 +297,18 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="form-header">
-						<h3>Delete Event</h3>
-						<p>Are you sure want to delete?</p>
+						<h3>Xóa Sự Kiện</h3>
+						<p>Bạn có muốn xóa sự kiện tên <strong>{{form.nameevent}}</strong> không?</p>
 					</div>
 					<div class="modal-btn delete-action">
 						<div class="row">
 							<div class="col-6">
 								<a href="javascript:void(0);"
-									class="btn btn-primary continue-btn" ng-click="delete(form)">Delete</a>
+									class="btn btn-primary continue-btn" ng-click="delete(form)">Xóa</a>
 							</div>
 							<div class="col-6">
 								<a href="javascript:void(0);" data-dismiss="modal"
-									class="btn btn-primary cancel-btn">Cancel</a>
+									class="btn btn-primary cancel-btn">Hủy</a>
 							</div>
 						</div>
 					</div>

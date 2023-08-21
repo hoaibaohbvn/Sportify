@@ -1,7 +1,32 @@
 app.controller('OrderController', function($scope, $http) {
+	
+	$scope.username = '';
+
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					if ($scope.listRoles[0][1] === 'R01') {
+						$scope.kiemDuyet = 'ok'
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
 	// hàm đổ tất cả
 	$scope.getAll = function() {
-		
+
 		// lấy danh sách product
 		$http.get("/rest/orders/getAll").then(resp => {
 			$scope.items = resp.data;
@@ -9,11 +34,9 @@ app.controller('OrderController', function($scope, $http) {
 				item.createdate = new Date(item.createdate)
 			})
 		});
-		
-		
 	}
-	
-	
+
+
 	// hàm edit
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
@@ -43,13 +66,13 @@ app.controller('OrderController', function($scope, $http) {
 				showErrorToast("Vui lòng kiểm tra lại form");
 			}
 			console.log($scope.errors);
-      		console.log(error);
+			console.log(error);
 		});
 	}
-	
+
 	$scope.getAll();
 
-// hàm refresh
+	// hàm refresh
 	$scope.refresh = function refreshNow() {
 		location.reload();
 	}
@@ -132,26 +155,32 @@ app.controller('OrderController', function($scope, $http) {
 		}, 2000); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
-	 $scope.searchName = '';
-   	 $scope.searchSport = null;
-   	 $scope.searchStatus = 1;
-   	 $scope.search = function () {
-			
-      $http.get('/rest/fields/search', { params: 
-      		{ 	
-				namefield: $scope.searchName, 
-      			sporttypeid: $scope.searchSport,
-      			status: $scope.searchStatus
-      		} 
-      		}).then(function (response) {
-          $scope.items = response.data;
-          
-			 console.log($scope.items);
-        })
-        .catch(function (error) {
-          console.log('Lỗi khi gửi yêu cầu:', error);
-        });
-    };
+	$scope.searchName = '';
+	$scope.searchDate = new Date();
+	$scope.searchStatus = '';
+	$scope.searchPayment = 0;
+	$scope.search = function() {
+
+		var momentDate = moment($scope.searchDate); // xài import thư viện Moment.js
+		var dateString = momentDate.format("YYYY-MM-DD");
+
+		$http.get('/rest/orders/search', {
+			params:
+			{
+				keyword: $scope.searchName,
+				datebook: dateString,
+				status: $scope.searchStatus,
+				payment: $scope.searchPayment
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+
+			console.log(dateString)
+		})
+			.catch(function(error) {
+				console.log('Lỗi khi gửi yêu cầu:', error);
+			});
+	};
 	// định dạng tiền tệ VND
 	$scope.formatCurrency = function(value) {
 		// Sử dụng filter number để định dạng thành 100,000

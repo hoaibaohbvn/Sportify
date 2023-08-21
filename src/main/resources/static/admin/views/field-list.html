@@ -18,7 +18,7 @@
 				<div class="col">
 					<h3 class="page-title">Sân thể thao</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/admin/index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">Sân thể thao</li>
 					</ul>
 				</div>
@@ -134,8 +134,8 @@
 									<label class="col-form-label">Tên sân thể thao <span
 										class="text-danger">*</span></label> <input class="form-control"
 										type="text" ng-model="form.namefield" ng-change="clearErrors()">
-										<errors class="badge badge-danger" ng-repeat=" error in errors"
-										ng-if="error.field === 'namefield' ">{{
+										<errors class="badge badge-danger" ng-repeat="(index, error) in errors"
+										ng-if="error.field === 'namefield' && index === 0">{{
 										error.message }}</errors>
 								</div>
 							</div>

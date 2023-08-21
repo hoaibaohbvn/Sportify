@@ -32,15 +32,14 @@ public interface BookingDAO extends JpaRepository<Bookings, Integer> {
 	@Query(value = "select count(*) from bookings", nativeQuery = true)
 	int countBooking();
 	// admin
-	@Query(value = "SELECT b.*\r\n"
-			+ "FROM bookings b\r\n"
-			+ "JOIN users u ON b.username = u.username\r\n"
+	@Query(value = "SELECT b.* FROM bookings b \r\n"
+			+ "	        JOIN users u ON b.username = u.username where b.bookingstatus like '%Đã Cọc%' and date(b.bookingdate) = curdate()\r\n"
 		, nativeQuery = true)
 	List<Bookings> findAllBookingAndUser();
 	// search admin
 	@Query(value = "SELECT b.* FROM bookings b "
 	        + "JOIN users u ON b.username = u.username "
-	        + "WHERE (u.firstname LIKE %:keyword% or u.lastname LIKE %:keyword%) "
+	        + "WHERE (CONCAT(u.firstname, ' ', u.lastname) LIKE %:keyword%) "
 	        + "AND b.bookingdate LIKE %:datebook% "
 	        + "AND b.bookingstatus LIKE %:status%", nativeQuery = true)
 	List<Bookings> findByConditions(@Param("keyword") String keyword, 

@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,6 +54,7 @@ public class Products implements Serializable {
     @Column(name="categoryid", nullable=false)
     private Integer    categoryid ;
     @NotBlank(message = "{NotBlank.products.nameproduct}")
+    @Size(max = 50, message = "{Size.products.nameproduct}")
     @Column(name="productname", nullable=false, length=50)
     private String     productname ;
     

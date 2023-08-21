@@ -1,5 +1,31 @@
-app.controller('ReportOrderController', function($scope, $http) {
+app.controller('ReportOrderController', function($scope, $http, $location) {
+	$scope.username = '';
 
+	$scope.getUsername = function() {
+		$http.get('http://localhost:8080/sportify/user/get-username', {
+			withCredentials: true // Bao gồm thông tin xác thực (token xác thực) trong yêu cầu
+		}).then(function(response) {
+			if (response.data.username) {
+				$scope.username = response.data.username;
+				$http.get("/rest/authorized/getRole/" + $scope.username).then(resp => {
+					$scope.listRoles = resp.data;
+					
+					if ($scope.listRoles[0][1] === 'dont') {
+						$location.path("/admin/unauthorized");
+					}
+				});
+			} else {
+				console.log('Error fetching username:', response.data.error);
+			}
+		}).catch(function(error) {
+			console.log('Error fetching username:', error);
+		});
+	};
+
+
+	$scope.getUsername(); // Gọi hàm này khi controller được tải
+
+	
 	// xử lý nút xem báo cáo
 	// lấy năm của phiếu dặt san
 	$http.get("/rest/reportOrder/getYearOrder").then(resp => {
