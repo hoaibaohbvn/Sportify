@@ -148,15 +148,35 @@ public class TeamController {
 		String username = (String) request.getSession().getAttribute("username");
 		Teams findTeamout = teamdao.findOneTeamUser(teamId, username);
 		int count = detailDAO.countUser(teamId);
-		if (findTeamout != null && count <= 1) {
+		
+		if(findTeamout != null) {
+			if(count <=1) {
+				detailDAO.deleteByUsernameAndTeamId(username, teamId);
+				detailDAO.deleteTeamId(username, teamId);
+				redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+			}else {
+				redirectAttributes.addFlashAttribute("message1", "Bạn phải nhường đội trường mới được rời team !");
+			}
+			return "redirect:/sportify/team";
+		}else {
 			detailDAO.deleteByUsernameAndTeamId(username, teamId);
-			detailDAO.deleteTeamId(username, teamId);
-			redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+			redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công !");
 			return "redirect:/sportify/team";
 		}
-		detailDAO.deleteByUsernameAndTeamId(username, teamId);
-		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
-		return "redirect:/sportify/team";
+			
+			
+//		if (findTeamout != null && count <= 1) {
+//			detailDAO.deleteByUsernameAndTeamId(username, teamId);
+//			detailDAO.deleteTeamId(username, teamId);
+//			redirectAttributes.addFlashAttribute("message", "Bạn xóa nhóm thành công !");
+//			return "redirect:/sportify/team";
+//		}
+//			if(count>1){
+//			redirectAttributes.addFlashAttribute("message1", "Trong nhóm còn thành viên khác không thể xóa!");
+//		}
+//		detailDAO.deleteByUsernameAndTeamId(username, teamId);
+//		redirectAttributes.addFlashAttribute("message", "Bạn đã rời thành công!");
+//		return "redirect:/sportify/team";
 	}
 
 	// Điều hướng đến trang chi tiết

@@ -10087,6 +10087,12 @@ a:hover span {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.limited-length4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .infouser{
 	display: flex;

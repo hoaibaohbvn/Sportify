@@ -56,9 +56,19 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
 //	    @Query("SELECT e FROM Eventweb e WHERE LOWER(e.nameevent) LIKE %:keyword% OR e.datestart = :eventDate")
 //	    List<Eventweb> searchEvents(@Param("keyword") String keyword, @Param("eventDate") Date eventDate);
 
+    // Search theo keyword
+//    @Query(value = "SELECT * FROM Eventweb " +
+//            "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
+//    Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
+    
+    // Search theo keyword và sắp xếp theo ngày mới nhất
     @Query(value = "SELECT * FROM Eventweb " +
-            "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%", nativeQuery = true)
+            "WHERE lower(nameevent) LIKE %:keyword% or datestart LIKE %:keyword%" +
+            "ORDER BY datestart DESC", nativeQuery = true)
     Page<Eventweb> searchEvents(@Param("keyword") String keyword, Pageable pageable);
+
+    
+    // tìm kiếm của admin
     @Query(value = "select * FROM eventweb\r\n"
     		+ "WHERE (nameevent LIKE %:nameevent% OR :nameevent IS NULL) "
     		+ "AND (eventtype like %:eventtype% OR :eventtype IS NULL)", nativeQuery = true)
@@ -69,17 +79,19 @@ public interface EventDAO extends JpaRepository<Eventweb, Integer>{
     Page<Eventweb> findEventsByEventType(String eventtype, Pageable pageable);
 	
    
-
+    // Tìm tin tức có loại thể thao(không phải là khuyến mãi với bảo trì)
     @Query(value = "SELECT * FROM Eventweb " +
             "WHERE lower(eventtype) not LIKE 'Bảo trì' AND lower(eventtype) not LIKE 'Khuyến mãi' " +
             "ORDER BY datestart DESC", nativeQuery = true)
     Page<Eventweb> searchbtnTheThao(Pageable pageable);
     
+    // Tìm tin tức có loại khuyến mãi
     @Query(value = "SELECT * FROM Eventweb " +
             "WHERE lower(eventtype) LIKE 'Khuyến mãi' " +
             "ORDER BY datestart DESC", nativeQuery = true)
     Page<Eventweb> searchbtnKhuyenMai(Pageable pageable);
     
+    // Tìm tin tức có loại bảo trì
     @Query(value = "SELECT * FROM Eventweb " +
             "WHERE lower(eventtype) LIKE 'Bảo trì' " +
             "ORDER BY datestart DESC", nativeQuery = true)
