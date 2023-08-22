@@ -192,7 +192,7 @@ app.controller('OrderController', function($scope, $http) {
 	function refreshPageAfterThreeSeconds() {
 		setTimeout(function() {
 			location.reload();
-		}, 2000); // 3000 milliseconds tương đương 3 giây
+		}, 100); // 3000 milliseconds tương đương 3 giây
 	}
 	// search
 	$scope.searchName = '';
