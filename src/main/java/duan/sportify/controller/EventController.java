@@ -62,6 +62,16 @@ public class EventController {
 		model.addAttribute("page", eventwebList);
 		model.addAttribute("keyword", keyword);
 		
+		// Kiểm tra để hiển thị thông báo
+		if (!keyword.isEmpty() && events.size() > 0) {
+			model.addAttribute("FoundMessage",
+					"Tìm thấy " + events.size() + " kết quả tìm kiếm cho từ khoá ' " + keyword + " '");
+		}
+		if (events.size() == 0) {
+			model.addAttribute("notFoundMessage",
+			 " Không tìm thấy sự kiện cho từ khoá ' " + keyword + " '");
+		}
+		
 		return "user/blog";
 	}
 	

@@ -212,7 +212,13 @@
 					type="search" th:value="${keyword}" name="keyword">
 				<button class="btn btn-success col-3 rounded-0" type="submit">Search</button>
 			</form>
+			
 		</div>
+		<!-- Thông báo khi có kết quả tìm kiếm -->
+			<div class="d-flex justify-content-center col-12 mt-2">
+					<div class=" col-5 justify-content-center" th:if="${FoundMessage}"
+						th:text="${FoundMessage}"></div>
+			</div>
 
 
 	</section>
@@ -229,6 +235,10 @@
 						<h2 class="col-12" style="text-align: center;">Các sự kiện
 							mới nhất</h2>
 						<hr class="col-2 mb-5 hr1">
+					</div>
+					<!-- Hiển thị thông báo tìm kiếm khi KQ =0 -->
+					<div class="row d-flex" th:if="${notFoundMessage}"
+						th:text="${notFoundMessage}">
 					</div>
 
 					<div class="row d-flex">
