@@ -53,8 +53,9 @@ public class Products implements Serializable {
     //--- ENTITY DATA FIELDS 
     @Column(name="categoryid", nullable=false)
     private Integer    categoryid ;
-    @NotBlank(message = "{NotBlank.products.nameproduct}")
     @Size(max = 50, message = "{Size.products.nameproduct}")
+    @NotBlank(message = "{NotBlank.products.nameproduct}")
+    
     @Column(name="productname", nullable=false, length=50)
     private String     productname ;
     

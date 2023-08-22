@@ -54,7 +54,6 @@ public class ContactRestController {
 		return ResponseEntity.ok(contactDAO.findById(id).get());
 	}
 	
-	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		if(!contactDAO.existsById(id)) {

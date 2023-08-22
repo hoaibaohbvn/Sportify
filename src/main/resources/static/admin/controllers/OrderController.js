@@ -50,6 +50,9 @@ app.controller('OrderController', function($scope, $http) {
 	// hàm cập nhập
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+		if(item.orderstatus === 'Hoàn Thành'){
+			item.paymentstatus = 1
+		}
 		$http.put(`/rest/orders/update/${item.orderid}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.orderid == item.orderid);
 			$scope.items[index] = item;
