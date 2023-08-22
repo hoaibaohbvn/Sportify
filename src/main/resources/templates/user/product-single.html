@@ -214,8 +214,8 @@ body {
 		</div>
 	</section>
 
-	<section class="ftco-section" >
-		<div class="container" >
+	<section class="ftco-section">
+		<div class="container">
 			<div class="row" style="background: white;">
 				<div class="col-lg-6 mb-5 ftco-animate">
 					<a href="images/prod-1.jpg" class="image-popup prod-img-bg"><img
@@ -231,30 +231,30 @@ body {
 							<span>[[${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')}]]
 								đ</span>
 						</del>
-					
+
 					</h3>
-					
-						
-						<h3>
-							Giá bán: <span>[[${#numbers.formatDecimal((product.price - product.discountprice),0,'COMMA',0,'POINT')}]]
-								đ</span>
-						</h3>
-						</p>
 
-						<div class="row mt-4">
 
-							<div class="w-100"></div>
-							<div class="col-md-12">
-								<p style="color: #000;"
-									th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'"></p>
-							</div>
+					<h3>
+						Giá bán: <span>[[${#numbers.formatDecimal((product.price -
+							product.discountprice),0,'COMMA',0,'POINT')}]] đ</span>
+					</h3>
+					</p>
+
+					<div class="row mt-4">
+
+						<div class="w-100"></div>
+						<div class="col-md-12">
+							<p style="color: #000;"
+								th:text="${product.productstatus} ? 'Còn hàng' : 'Hết hàng'"></p>
 						</div>
-						<p>
-							<a th:attr="ng-click=@{|cart.addProduct(${product.productid})|}"
-								class="btn btn-product py-3 px-5 mr-2 " style="color: white">Thêm
-								vào giỏ</a>
-						</p>
-				
+					</div>
+					<p>
+						<a th:attr="ng-click=@{|cart.addProduct(${product.productid})|}"
+							class="btn btn-product py-3 px-5 mr-2 " style="color: white">Thêm
+							vào giỏ</a>
+					</p>
+
 				</div>
 			</div>
 
@@ -278,8 +278,8 @@ body {
 						<div class="tab-pane fade show active" id="v-pills-1"
 							role="tabpanel" aria-labelledby="day-1-tab">
 							<div class="p-4">
-
-								<p>[[${product.descriptions}]]</p>
+								<div class=""
+									style="white-space: pre-line; word-wrap: break-word; font-family: 14/ 18px Arial, sans-serif; text-align: justify; font-size: 16px; line-height: 1.5;">[[${product.descriptions}]]</div>
 							</div>
 						</div>
 
