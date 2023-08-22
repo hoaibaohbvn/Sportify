@@ -203,8 +203,10 @@ public class TeamController {
 		String username = (String) request.getSession().getAttribute("username");
 		model.addAttribute("teamId", teamId);
 		// Người dùng đã đăng nhập
-		if (username != null) {
-
+		if (username == null) {
+			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
+			return "security/login";
+		} else {
 			// Người dùng tồn tại và thông tin đăng nhập chính xác
 			// Kiểm tra user đã tồn tại trong team
 			Teamdetails checkTeamUser = detailDAO.checkTeamUser(username, teamId);
@@ -252,10 +254,6 @@ public class TeamController {
 				redirectAttributes.addFlashAttribute("message1", "Team đã đủ thành viên !");
 				return "redirect:/sportify/team";
 			}
-			// Chưa đăng nhập trả về login
-		} else {
-			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "security/login";
 		}
 	}
 
@@ -284,14 +282,14 @@ public class TeamController {
 		Teams team = teamService.findById(teamId);
 		int quantity = team.getQuantity();
 		Integer countMembers = detailDAO.countUser(teamId);
-		if(countMembers < quantity) {
+		if (countMembers < quantity) {
 			Teamdetails checkOneTeamUser = detailDAO.findOneUserCheckByIdTeam0(teamId, username);
 			checkOneTeamUser.setStatus(true);
 			checkOneTeamUser.setJoindate(LocalDate.now());
 			detailDAO.save(checkOneTeamUser);
 			redirectAttributes.addFlashAttribute("message", "Xác nhận thành viên thành công !");
 			return "redirect:/sportify/team/teamdetail/" + teamId;
-		}else {
+		} else {
 			redirectAttributes.addFlashAttribute("message", "Team của bạn đã đủ thành viên !");
 			return "redirect:/sportify/team/teamdetail/" + teamId;
 		}
@@ -340,7 +338,9 @@ public class TeamController {
 			@RequestParam("newDescriptions") String newDescriptions) {
 		String usernameLogin = (String) request.getSession().getAttribute("username");
 		Teams findTeamUser = teamdao.findTeamUser(usernameLogin);
-		if (usernameLogin != null) {
+		if (usernameLogin == null) {
+			return "security/login";
+		} else {
 			if (findTeamUser == null) {
 				String fileName = newAvatar.getOriginalFilename();
 				Teams newTeams = new Teams();
@@ -381,8 +381,6 @@ public class TeamController {
 				redirectAttributes.addFlashAttribute("message1", "Mỗi người chỉ tạo được 1 đội");
 				return "redirect:/sportify/team";
 			}
-		} else {
-			return "security/login";
 		}
 
 	}
@@ -391,7 +389,6 @@ public class TeamController {
 	public String FindTeamUsername(HttpServletRequest request, Model model, HttpSession session,
 			@RequestParam("TeamUsername") String TeamUsername) {
 		return "redirect:/sportify/team?TeamUsername=" + TeamUsername;
-
 	}
 
 }
