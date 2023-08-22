@@ -63,8 +63,7 @@ public interface OrderDAO extends JpaRepository<Orders, Integer> {
 	List<Object[]> countThisMonthAndThatMonth();
 
 	// Tính tổng số doanh thu bán hàng tháng hiện tại và tháng trước cho bảng order
-	@Query(value = "SELECT \r\n"
-			+ "    paymentstatus,\r\n"
+	@Query(value = "SELECT \r\n" + "    paymentstatus,\r\n"
 			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE) AND YEAR(createdate) = YEAR(CURRENT_DATE) THEN totalprice ELSE 0 END) AS doanhthu_thang_hien_tai,\r\n"
 			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) THEN totalprice ELSE 0 END) AS doanhthu_thang_truoc\r\n"
 			+ "FROM orders\r\n"
@@ -86,15 +85,12 @@ public interface OrderDAO extends JpaRepository<Orders, Integer> {
 	List<Object[]> tongSoPhieuOrder2Thang();
 
 	// tổng doanh thu tháng này và thang trước
-	@Query(value = "SELECT\r\n" + "    SUM(CASE WHEN YEAR(o.createdate) = YEAR(CURRENT_DATE)\r\n"
-			+ "                AND MONTH(o.createdate) = MONTH(CURRENT_DATE)\r\n"
-			+ "                THEN od.price * od.quantity\r\n" + "             ELSE 0\r\n"
-			+ "        END) AS revenue_this_month,\r\n"
-			+ "    SUM(CASE WHEN YEAR(o.createdate) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)\r\n"
-			+ "                AND MONTH(o.createdate) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)\r\n"
-			+ "                THEN od.price * od.quantity\r\n" + "             ELSE 0\r\n"
-			+ "        END) AS revenue_last_month\r\n" + "FROM orders o\r\n"
-			+ "JOIN orderdetails od ON o.orderid = od.orderid\r\n" + "WHERE o.paymentstatus = 1;", nativeQuery = true)
+	@Query(value = "SELECT \r\n"
+			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE) AND YEAR(createdate) = YEAR(CURRENT_DATE) THEN totalprice ELSE 0 END) AS doanhthu_thang_hien_tai,\r\n"
+			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) THEN totalprice ELSE 0 END) AS doanhthu_thang_truoc\r\n"
+			+ "FROM orders\r\n"
+			+ "WHERE MONTH(createdate) >= MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE) and paymentstatus =1\r\n"
+			+ "GROUP BY paymentstatus;", nativeQuery = true)
 	List<Object[]> doanhThuOrder2Month();
 
 	// top 3 sản phẩm bán nhiều nhất
@@ -119,25 +115,14 @@ public interface OrderDAO extends JpaRepository<Orders, Integer> {
 	List<Object[]> top5UserOrder();
 
 	// thông kê don ban hang trong ngày
-	@Query(value = "SELECT\r\n"
-			+ "    'Tổng số order' AS description,\r\n"
-			+ "    COUNT(*) AS value,\r\n"
-			+ "     SUM(CASE WHEN paymentstatus = 1 THEN totalprice  ELSE 0 END) AS doanhthu\r\n"
-			+ "FROM orders\r\n"
-			+ "WHERE date(createdate) = curdate() \r\n"
-			+ "UNION ALL\r\n"
-			+ "SELECT\r\n"
-			+ "    'Chưa thanh toán' AS description,\r\n"
-			+ "    COUNT(*) AS value,\r\n"
-			+ "    IFNULL(SUM(totalprice), 0) AS doanhthu\r\n"
-			+ "FROM orders\r\n"
-			+ "WHERE paymentstatus = 0 AND date(createdate) = curdate()\r\n"
-			+ "UNION ALL\r\n"
-			+ "SELECT\r\n"
-			+ "    'Đã thanh toán' AS description,\r\n"
-			+ "    COUNT(*) AS value,\r\n"
-			+ "    IFNULL(SUM(totalprice), 0) AS doanhthu\r\n"
-			+ "FROM orders\r\n"
+	@Query(value = "SELECT\r\n" + "    'Tổng số order' AS description,\r\n" + "    COUNT(*) AS value,\r\n"
+			+ "     SUM(CASE WHEN paymentstatus = 1 THEN totalprice  ELSE 0 END) AS doanhthu\r\n" + "FROM orders\r\n"
+			+ "WHERE date(createdate) = curdate() \r\n" + "UNION ALL\r\n" + "SELECT\r\n"
+			+ "    'Chưa thanh toán' AS description,\r\n" + "    COUNT(*) AS value,\r\n"
+			+ "    IFNULL(SUM(totalprice), 0) AS doanhthu\r\n" + "FROM orders\r\n"
+			+ "WHERE paymentstatus = 0 AND date(createdate) = curdate()\r\n" + "UNION ALL\r\n" + "SELECT\r\n"
+			+ "    'Đã thanh toán' AS description,\r\n" + "    COUNT(*) AS value,\r\n"
+			+ "    IFNULL(SUM(totalprice), 0) AS doanhthu\r\n" + "FROM orders\r\n"
 			+ "WHERE paymentstatus = 1 AND date(createdate) = curdate();", nativeQuery = true)
 	List<Object[]> thongKeOrderInDay();
 

@@ -77,17 +77,18 @@ app.controller('DashboardController', function($scope, $http) {
 
 	})
 	// Tính tổng số doanh thu bán hàng tháng hiện tại và tháng trước cho bảng order
-	$http.get("/rest/dashboard/sumRevenueOrder2Month").then(rp => {
-		$scope.sumRevenueOrder2Month = rp.data;
-		var revenue_this_month_order = $scope.sumRevenueOrder2Month[0][0];
-		var revenue_last_month_order = $scope.sumRevenueOrder2Month[0][1];
-		var percentGrowthOrder = ((revenue_this_month_order - revenue_last_month_order) / revenue_last_month_order * 100).toFixed(2);
-		if (percentGrowthOrder > 0) {
-			$scope.setColor3 = 'green'
-			$scope.percentGrowthOrder = '+' + percentGrowthOrder + '%'
+	$http.get("/rest/dashboard/doanhThuOrder2Month").then(rp => {
+		$scope.doanhThuOrder2Month = rp.data;
+		$scope.tangtruong = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1]) / $scope.doanhThuOrder2Month[0][1]) * 100).toFixed(1);
+		if ($scope.doanhThuOrder2Month[0][1] <= 0) {
+			$scope.tangtruong = 'Vượt trội'
+			$scope.colorDTOrder = 'blue';
+		} else if ($scope.tangtruong > 0) {
+			$scope.tangtruong = '+' + ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1]) / $scope.doanhThuOrder2Month[0][1]) * 100).toFixed(1) + '%'
+			$scope.colorDTOrder = 'green';
 		} else {
-			$scope.setColor3 = 'red'
-			$scope.percentGrowthOrder = percentGrowthOrder + '%'
+			$scope.tangtruong = ((($scope.doanhThuOrder2Month[0][0] - $scope.doanhThuOrder2Month[0][1]) / $scope.doanhThuOrder2Month[0][1]) * 100).toFixed(1) + '%'
+			$scope.colorDTOrder = 'red';
 		}
 	})
 	// // tính tổng hoàn tiền tháng này và tháng trước

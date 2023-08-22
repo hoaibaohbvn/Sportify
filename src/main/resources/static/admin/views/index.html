@@ -317,13 +317,13 @@
 									<span class="d-block">Doanh thu bán hàng trong tháng này</span>
 								</div>
 								<div>
-									<span ng-style="{ 'color': colorDTOrder }">{{percentDTOrder}}</span>
+									<span ng-style="{ 'color': colorDTOrder }">{{tangtruong}}</span>
 								</div>
 							</div>
-							<h3 class="mb-3">{{formatCurrency(sumRevenueOrder2Month[1][1])}}</h3>
+							<h3 class="mb-3">{{formatCurrency(doanhThuOrder2Month[0][0])}}</h3>
 
 							<p class="mb-0">
-								Tháng trước <span class="text-muted">{{formatCurrency(sumRevenueOrder2Month[1][2])}}</span>
+								Tháng trước <span class="text-muted">{{formatCurrency(doanhThuOrder2Month[0][1])}}</span>
 							</p>
 						</div>
 					</div>
