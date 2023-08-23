@@ -45,6 +45,13 @@ input[type="date"]:out-of-range {
 	color: white;
 }
 </style>
+<style>
+body {
+	background-image: url('/user/images/bgAll.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+</style>
 <body onload="setMinMaxDates()">
 
 	<div class="wrap" style="z-index: 9; position: relative">
@@ -82,8 +89,8 @@ input[type="date"]:out-of-range {
 						style="display: block;">
 						<p class="mb-0">
 							<a th:href="@{/sportify/login}" class="mr-2"
-								style="color: white;">Đăng nhập |</a> 
-							<a th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
+								style="color: white;">Đăng nhập |</a> <a
+								th:href="@{/sportify/signup}" style="color: white;">Đăng kí</a>
 						</p>
 					</div>
 
@@ -108,8 +115,9 @@ input[type="date"]:out-of-range {
 							aria-labelledby="dropdownMenuButton">
 							<a th:href="@{/sportify/profile}" class="dropdown-item">Thông
 								tin</a> <a th:href="@{/sportify/field/profile/historybooking}"
-								class="dropdown-item" href="#">Lịch sử đặt sân</a><a th:href="@{/sportify/order/historyList}"
-								class="dropdown-item" href="#">Lịch sử đặt hàng</a> <a
+								class="dropdown-item" href="#">Lịch sử đặt sân</a><a
+								th:href="@{/sportify/order/historyList}" class="dropdown-item"
+								href="#">Lịch sử đặt hàng</a> <a
 								th:if="${authorized.roleid== 'R01' or authorized.roleid== 'R02'}"
 								th:href="@{/sportify/admin}" class="dropdown-item">Quản trị</a>
 							<a th:href="@{/sportify/logoff}" class="dropdown-item">Đăng
@@ -123,7 +131,7 @@ input[type="date"]:out-of-range {
 			</div>
 		</div>
 	</div>
-	
+
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
@@ -185,8 +193,7 @@ input[type="date"]:out-of-range {
 				</div>
 
 
-				<form 
-					th:action="@{/sportify/field/search}" method="post"
+				<form th:action="@{/sportify/field/search}" method="post"
 					class=" mb-4 pb-4 d-flex justify-content-center col-11 ">
 
 					<input
@@ -288,13 +295,14 @@ input[type="date"]:out-of-range {
             							<path
 												d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
          								 </svg>
-										<b class="text-info font-weight-bold" th:text="${e.address}"></b>
+										<b class="" th:text="${e.address}"></b>
 									</div>
 									<p>
-										Giá tiền / 1 giờ: <span class="text-danger font-weight-bold"
+										<span class="text-success font-weight-bold"> Giá tiền /
+											1 giờ: </span> <span class="text-danger font-weight-bold"
 											th:text="${#numbers.formatCurrency(e.price)}"></span>
 									</p>
-									
+
 									<div class="submit-section align-self-end mt-auto">
 										<a
 											th:href="@{/sportify/field/detail/{idField}(idField=${e.fieldid})}">

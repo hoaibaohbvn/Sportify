@@ -282,7 +282,12 @@ public class FieldController {
         // Định dạng thành chuỗi "dd/MM/yyyy"
         String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         double phuthu = 0; // giá phụ thu
-		if (userlogin != null) { // Kiểm tra đã có tài khoản đăng nhập
+		if (userlogin == null) {
+			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
+						return "redirect:/sportify/login";
+		}else {
+			
+			 // Kiểm tra đã có tài khoản đăng nhập
 			List<Field> fieldListById = fieldservice.findFieldById(idField); // Tìm sân theo id đã chọn
 			double giasan = fieldListById.get(0).getPrice(); // giá tiền gốc của sân
 			String nameSportype = fieldservice.findNameSporttypeById(idField); // Tìm tên môn thể thao của sân đã chọn
@@ -347,12 +352,8 @@ public class FieldController {
 			model.addAttribute("dateselect",dateselect);
 			model.addAttribute("nameSportype",nameSportype);
 			model.addAttribute("formattedDate",formattedDate);
-
 			model.addAttribute("fieldListById",fieldListById);
 		
-		}else {
-			// Người dùng không tồn tại hoặc thông tin đăng nhập không chính xác
-			return "redirect:/sportify/login";
 		}
 		// Gọi trang checkout
 		return "user/checkout-dat-san";

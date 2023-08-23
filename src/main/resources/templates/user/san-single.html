@@ -211,7 +211,7 @@
   					<path
 							d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
 					</svg>
-					<b class="text-info font-weight-bold" th:text="${e.address}"></b>
+					<b class="font-italic" th:text="${e.address}"></b>
 					<p></p>
 					<span class="text-danger font-weight-bold"
 						th:text="${#numbers.formatCurrency(e.price)}"></span> / <span
@@ -237,15 +237,15 @@
 								placeholder="Search" aria-label="Search" th:value="${date}"/>
 
 							<button style="border: 2px solid #28a745;"
-								class=" btn btn-outline-success col-3 " type="submit">Tìm kiếm</button>
+								class=" btn btn-success col-3 " type="submit">Tìm kiếm</button>
 						</form>
 
 						<!-- End tim kiếm -->
 						<!-- Ca -->
 						
 						<div  class="col-12" th:unless="${#strings.isEmpty(date)}">
-						<span class="ml-1 mt-3 mb-1 font-weight-bold">Các giờ trống bạn có thể đặt của ngày <b class="font-weight-bold text-primary" th:text="${formattedDate}"></b></span>
-							<select style="border: 3px solid gray; font-weight: lighter;"
+						<span class="ml-1 mt-3 mb-1">Các giờ trống bạn có thể đặt của ngày <b class="font-weight-bold text-primary" th:text="${formattedDate}"></b></span>
+							<select style="border: 2px solid gray; font-weight: lighter;"
 								name="nameshift"
 								class=" form-control custom-select mb-3 col-12"
 								 id="inputGroupSelect01">
