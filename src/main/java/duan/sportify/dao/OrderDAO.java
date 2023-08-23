@@ -86,11 +86,10 @@ public interface OrderDAO extends JpaRepository<Orders, Integer> {
 
 	// tổng doanh thu tháng này và thang trước
 	@Query(value = "SELECT \r\n"
-			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE) AND YEAR(createdate) = YEAR(CURRENT_DATE) THEN totalprice ELSE 0 END) AS doanhthu_thang_hien_tai,\r\n"
-			+ "    SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) THEN totalprice ELSE 0 END) AS doanhthu_thang_truoc\r\n"
+			+ "    COALESCE(SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE) AND YEAR(createdate) = YEAR(CURRENT_DATE) THEN totalprice ELSE 0 END), 0) AS doanhthu_thang_hien_tai,\r\n"
+			+ "    COALESCE(SUM(CASE WHEN MONTH(createdate) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) THEN totalprice ELSE 0 END), 0) AS doanhthu_thang_truoc\r\n"
 			+ "FROM orders\r\n"
-			+ "WHERE MONTH(createdate) >= MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE) and paymentstatus =1\r\n"
-			+ "GROUP BY paymentstatus;", nativeQuery = true)
+			+ "WHERE MONTH(createdate) >= MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(createdate) = YEAR(CURRENT_DATE) AND paymentstatus = 1;", nativeQuery = true)
 	List<Object[]> doanhThuOrder2Month();
 
 	// top 3 sản phẩm bán nhiều nhất
