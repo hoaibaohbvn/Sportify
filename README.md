@@ -2,13 +2,13 @@
 # Sportify - Giải Pháp dặt sân thể thao
 - Sportify là một website đột phá trong lĩnh vực quản lý sân thể thao, được phát triển bởi một đội ngũ trẻ đam mê công nghệ thông tin và yêu thể thao. Với Sportify, chúng tôi muốn tạo ra một cộng đồng thể thao sôi động và chuyên nghiệp, nơi mọi người có thể dễ dàng tìm kiếm và tham gia các hoạt động thể thao yêu thích một cách tiện lợi và đáng nhớ.
 2. HƯỚNG DẪN CÀI ĐẶT
-      a. Cài dặt Java
+  * Cài đặt Java
 - Download JDK SE17
 - link tải: http://www.oracle.com/technetwork/java/javase/downloads/index.html
-      b. Môi trường
+  * Môi trường
 - Spring Tool Suite 4
 - Link cài đặt: https://spring.io/tools
-    c. Hệ Quản trị cơ sở dữ liệu
+  * Hệ Quản trị cơ sở dữ liệu
 - MySQL 8.0.33
 - Link cài đặt: MySQL :: MySQL Community Downloads
 3. HƯỚNG DẪN SỬ DỤNG
