@@ -23,8 +23,9 @@
     - Tài khoản mẩu quyền user:
       + username: adminsportify
       + password: adminsportify
- 4. CÁC TINH NĂNG CHÍNH
-*Đối với trang người dùng
+    - Tài liệu tham khảo: Document/Giải pháp đặt sân thể thao.docx
+ 4. CÁC TÍNH NĂNG CHÍNH
+* Đối với trang người dùng
    - Đặt sân
      + Người dùng có thề đặt sân trông theo ý muốn của mình khi có tài khoản đăng nhập
    - Mua sắm
@@ -33,7 +34,7 @@
      + Người dùng có thể tạo đội thể thao cho riêng mình khi có tài khoản
    - Sự kiện
      + Người dùng có thể xem các sự kiện như giải đấu, khuyến mãi, bảo trì sân bóng...
-*Đối với trang quản trị
+* Đối với trang quản trị
   - Nhân viên:
      + Nhân viên có thể quản lý các hóa đơn trong ngày
   - Quản trị
