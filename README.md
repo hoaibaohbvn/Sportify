@@ -1,5 +1,5 @@
 1. TIÊU ĐỂ VÀ MÔ TẢ
-# Sportify - Giải Pháp dặt sân thể thao
+# Sportify - Giải Pháp đặt sân thể thao
 - Sportify là một website đột phá trong lĩnh vực quản lý sân thể thao, được phát triển bởi một đội ngũ trẻ đam mê công nghệ thông tin và yêu thể thao. Với Sportify, chúng tôi muốn tạo ra một cộng đồng thể thao sôi động và chuyên nghiệp, nơi mọi người có thể dễ dàng tìm kiếm và tham gia các hoạt động thể thao yêu thích một cách tiện lợi và đáng nhớ.
 2. HƯỚNG DẪN CÀI ĐẶT
   * Cài đặt Java
