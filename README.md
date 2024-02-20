@@ -39,7 +39,9 @@
      + Nhân viên có thể quản lý các hóa đơn trong ngày
   - Quản trị
      + Quản trị có thế thêm các sân thể thao, sự kiện, xem các báo cáo và xuất báo cáo thông kê theo như cầu
-
+ 4. CÁC HÌNH ẢNH VỀ DỰ ÁN
+  - Trang chủ
+    ![Screenshot 2024-02-20 153850](https://github.com/hoaibaohbvn/Sportify/assets/54605058/834fcd25-6888-42aa-8da6-7f43881df9b1)
 # Hi vọng bạn sẽ thích thú với dự án này của chúng tôi, TeamDevSportify xin nhận mọi gạch đá từ phía bạn vì những gạch đá đó sẽ giúp cho ngôi nhà (Dự án Sportify) thêm hoàn thiện hơn
 # Liên hệ góp ý: teamdev.sportify@gmail.com
 
