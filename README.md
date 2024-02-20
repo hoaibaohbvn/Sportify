@@ -40,8 +40,26 @@
   - Quản trị
      + Quản trị có thế thêm các sân thể thao, sự kiện, xem các báo cáo và xuất báo cáo thông kê theo như cầu
  4. CÁC HÌNH ẢNH VỀ DỰ ÁN
-  - Trang chủ
+  - Màn hình trang chủ
     ![Screenshot 2024-02-20 153850](https://github.com/hoaibaohbvn/Sportify/assets/54605058/834fcd25-6888-42aa-8da6-7f43881df9b1)
+  - Màn hình trang sân
+    ![Screenshot 2024-02-20 154253](https://github.com/hoaibaohbvn/Sportify/assets/54605058/c2fc29db-a18e-4fee-bb43-cb17cd499b6e)
+  - Màn hình chi tiết sân
+    ![Screenshot 2024-02-20 154413](https://github.com/hoaibaohbvn/Sportify/assets/54605058/7da0af62-20cb-40e6-b7f7-a67718ba39b0)
+  - Màn hình đặt sân
+    ![Screenshot 2024-02-20 154645](https://github.com/hoaibaohbvn/Sportify/assets/54605058/993e4362-0c8d-4ebd-b962-c5db30a8bd3a)
+  - Màn hình trang đội
+    ![Screenshot 2024-02-20 154311](https://github.com/hoaibaohbvn/Sportify/assets/54605058/f934dfa5-0456-48ac-bf3e-7c2701ad0b35)
+  - Màn hình trang cửa hàng
+    ![Screenshot 2024-02-20 154344](https://github.com/hoaibaohbvn/Sportify/assets/54605058/c19c75ef-2108-415b-91e7-0b9687aa70ce)
+  - Màn hình trang tin tức
+    ![Screenshot 2024-02-20 154330](https://github.com/hoaibaohbvn/Sportify/assets/54605058/e101daac-e858-4e6f-a45e-3b0bdb7061ff)
+  - Màn hình trang quản trị
+    ![Screenshot 2024-02-20 154452](https://github.com/hoaibaohbvn/Sportify/assets/54605058/d7a9a1ba-9d9e-4ddb-ab93-a7bf1222fb10)
+  - Màn hình trang báo cáo thống kê
+    ![Screenshot 2024-02-20 154538](https://github.com/hoaibaohbvn/Sportify/assets/54605058/984ee499-49f5-4953-985c-42b1b6497e14)
+  - Hình ảnh về EER Diagram
+    ![Screenshot 2024-02-20 155848](https://github.com/hoaibaohbvn/Sportify/assets/54605058/92edcf82-d62b-4a32-b34c-e65db6783f02)
 # Hi vọng bạn sẽ thích thú với dự án này của chúng tôi, TeamDevSportify xin nhận mọi gạch đá từ phía bạn vì những gạch đá đó sẽ giúp cho ngôi nhà (Dự án Sportify) thêm hoàn thiện hơn
 # Liên hệ góp ý: teamdev.sportify@gmail.com
 
